@@ -4,25 +4,24 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
-@Table(name = "item")
-public class Item {
+@Table(name = "saleHasState")
+public class SaleHasState {
 
     @Id
     @Column(name = "id")
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "price")
-    private BigDecimal price;
-
     @Column(name = "name")
-    private String name;
+    private Date date;
 
-    @ManyToOne(targetEntity = ItemCategory.class)
-    private ItemCategory category;
+    private String comment;
+
+    private Sale sale;
+
+    private SaleState saleState;
 }

@@ -6,23 +6,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "item")
-public class Item {
+@Table(name = "shippingAddress")
+public class ShippingAddress {
 
     @Id
     @Column(name = "id")
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "city")
+    private String city;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "address")
+    private String address;
 
-    @ManyToOne(targetEntity = ItemCategory.class)
-    private ItemCategory category;
+    @ManyToOne
+    private ShippingType shippingType;
 }
