@@ -21,6 +21,30 @@ public class SaleState {
     @Column(name = "name")
     private String name;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Byte getState() {
+        return state;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public static enum State {
         NEW((byte)0),
         RESERVED((byte)1),
