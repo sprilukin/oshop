@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:applicationContext-persistence.xml")
+@ContextConfiguration({"classpath:applicationContext-persistence.xml", "classpath:applicationContext-dao.xml"})
 @TransactionConfiguration(defaultRollback=true, transactionManager="transactionManager")
 public class CustomerDaoTest {
 
@@ -33,7 +33,7 @@ public class CustomerDaoTest {
     private SessionFactory sessionFactory;
 
     @Resource
-    private CustomerDao customerDao;
+    private GenericDao<Customer, Integer> customerDao;
 
     @Test
     public void ttt() {

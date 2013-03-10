@@ -4,25 +4,30 @@ import org.hibernate.Criteria;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> implements GenericDao<T, ID> {
+public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> implements GenericDao<T, ID> {
 
     @Resource
     private SessionFactory sessionFactory;
 
-    protected abstract Class<T> getDomainClass();
+    private Class<T> entityClass;
 
-    protected Session getSession() {
+    public GenericDaoImpl(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
     public Criteria createCriteria() {
-        return getSession().createCriteria(getDomainClass());
+        return getSession().createCriteria(entityClass);
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +37,7 @@ public abstract class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serial
 
     @SuppressWarnings("unchecked")
     public T get(ID id) {
-        return (T) getSession().get(getDomainClass(), id);
+        return (T) getSession().get(entityClass, id);
     }
 
     @SuppressWarnings("unchecked")
