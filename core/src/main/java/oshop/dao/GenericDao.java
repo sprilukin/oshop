@@ -10,76 +10,25 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
+public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
-    @Resource
-    private SessionFactory sessionFactory;
+    public Criteria createCriteria();
 
-    protected abstract Class<T> getDomainClass();
+    public List<T> findAll(Criteria criteria);
 
-    protected Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    public T get(ID id);
 
-    protected Criteria createCriteria() {
-        return getSession().createCriteria(getDomainClass());
-    }
+    public T findUnique(Criteria criteria);
 
-    @SuppressWarnings("unchecked")
-    public List<T> findAll(Criteria criteria) {
-        return criteria.list();
-    }
+    public List<T> list(Integer page, Integer limit);
 
-    @SuppressWarnings("unchecked")
-    public T get(ID id) {
-        return (T) getSession().get(getDomainClass(), id);
-    }
+    public List<T> list(Criteria criteria, Integer page, Integer limit);
 
-    @SuppressWarnings("unchecked")
-    protected T findUnique(Criteria criteria) {
-        return (T)criteria.uniqueResult();
-    }
+    public ID add(T entity);
 
-    public List<T> list(Integer page, Integer limit) {
-        return list(null, page, limit);
-    }
+    public void update(T entity);
 
-    public List<T> list(Criteria criteria, Integer page, Integer limit) {
-        if (criteria == null) {
-            criteria = createCriteria();
-        }
+    public void remove(ID id);
 
-        int safePageNumber = page != null ? page : 0;
-        int safeLimitNumber = (limit != null && limit > 0) ? limit : Integer.MAX_VALUE;
-
-        criteria.setMaxResults(safeLimitNumber).setFirstResult(safePageNumber * safeLimitNumber);
-
-        return findAll(criteria);
-    }
-
-    @SuppressWarnings("unchecked")
-    public ID add(T entity) {
-        if (entity.getId() != null) {
-            throw new IllegalStateException("Id should be empty for new object");
-        }
-
-        return (ID)getSession().save(entity);
-    }
-
-    public void update(T entity) {
-        getSession().update(entity);
-    }
-
-    public void remove(ID id) {
-        T entity = get(id);
-        if (entity != null) {
-            throw new ObjectNotFoundException(id, getClass().getName());
-        }
-
-        remove(entity);
-    }
-
-    public void remove(T entity) {
-        getSession().delete(entity);
-    }
+    public void remove(T entity);
 }

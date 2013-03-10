@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import oshop.model.Customer;
 
 @Repository
-public class CustomerDao extends GenericDao<Customer, Integer> {
+public class CustomerDao extends GenericDaoImpl<Customer, Integer> {
 
     @Override
     protected Class<Customer> getDomainClass() {
