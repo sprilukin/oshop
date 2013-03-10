@@ -4,12 +4,14 @@ import org.hibernate.Criteria;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
+@Transactional(readOnly = true)
 public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
     public Criteria createCriteria();
@@ -24,11 +26,15 @@ public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
     public List<T> list(Criteria criteria, Integer page, Integer limit);
 
+    @Transactional(readOnly = false)
     public ID add(T entity);
 
+    @Transactional(readOnly = false)
     public void update(T entity);
 
+    @Transactional(readOnly = false)
     public void remove(ID id);
 
+    @Transactional(readOnly = false)
     public void remove(T entity);
 }
