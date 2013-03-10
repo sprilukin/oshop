@@ -8,12 +8,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer extends BaseEntity<Integer> {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+//    @Id
+//    @Column(name = "id")
+//    @GeneratedValue
+//    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -26,14 +26,6 @@ public class Customer {
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

@@ -4,12 +4,13 @@ import org.hibernate.Criteria;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class GenericDao<T, ID extends Serializable> {
+public abstract class GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
     @Resource
     private SessionFactory sessionFactory;
@@ -58,6 +59,10 @@ public abstract class GenericDao<T, ID extends Serializable> {
 
     @SuppressWarnings("unchecked")
     public ID add(T entity) {
+        if (entity.getId() != null) {
+            throw new IllegalStateException("Id should be empty for new object");
+        }
+
         return (ID)getSession().save(entity);
     }
 
