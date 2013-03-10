@@ -33,7 +33,11 @@ public class BaseDaoTest {
     private SessionFactory sessionFactory;
 
     protected void setUpDb(String pathToDataSet) throws Exception {
-        DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getDataSet(pathToDataSet));
+        setUpDb(pathToDataSet, DatabaseOperation.INSERT);
+    }
+
+    protected void setUpDb(String pathToDataSet, DatabaseOperation operation) throws Exception {
+        operation.execute(getConnection(), getDataSet(pathToDataSet));
     }
 
     private IDataSet getDataSet(String pathToDataSet) throws Exception {

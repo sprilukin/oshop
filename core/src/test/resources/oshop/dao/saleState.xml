@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <salestate id="1" version="0" state="0" name="NEW"/>
+    <salestate id="2" version="0" state="1" name="RESERVED"/>
+    <salestate id="3" version="0" state="2" name="MONEY_RECEIVED"/>
+    <salestate id="4" version="0" state="3" name="SENT"/>
+    <salestate id="5" version="0" state="4" name="DELIVERED"/>
+    <salestate id="6" version="0" state="5" name="CANCELED"/>
+</dataset>
