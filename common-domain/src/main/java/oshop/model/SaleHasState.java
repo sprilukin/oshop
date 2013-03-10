@@ -2,6 +2,7 @@ package oshop.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -10,12 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "saleHasState")
-public class SaleHasState {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+public class SaleHasState extends BaseEntity<Integer> {
 
     @Column(name = "date")
     private Date date;
@@ -23,19 +19,11 @@ public class SaleHasState {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Sale sale;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private SaleState saleState;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Date getDate() {
         return date;

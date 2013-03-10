@@ -8,23 +8,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "shippingType")
-public class ShippingType {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+public class ShippingType extends BaseEntity<Integer> {
 
     @Column(name = "name")
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

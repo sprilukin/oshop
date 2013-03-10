@@ -2,6 +2,7 @@ package oshop.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -10,12 +11,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "item")
-public class Item {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+public class Item extends BaseEntity<Integer> {
 
     @Column(name = "price")
     private BigDecimal price;
@@ -23,19 +19,11 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ItemCategory category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Album album;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public BigDecimal getPrice() {
         return price;

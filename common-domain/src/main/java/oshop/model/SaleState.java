@@ -8,26 +8,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "saleState")
-public class SaleState {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+public class SaleState extends BaseEntity<Integer> {
 
     @Column(name = "state")
     private Byte state;
 
     @Column(name = "name")
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Byte getState() {
         return state;

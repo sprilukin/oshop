@@ -8,26 +8,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "discountType")
-public class DiscountType {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+public class DiscountType extends BaseEntity<Integer> {
 
     @Column(name = "type")
     private Byte type;
 
     @Column(name = "description")
     private String description;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Byte getType() {
         return type;

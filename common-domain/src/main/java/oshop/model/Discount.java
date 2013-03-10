@@ -2,6 +2,7 @@ package oshop.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -11,12 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "discount")
-public class Discount {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Integer id;
+public class Discount extends BaseEntity<Integer> {
 
     @Column(name = "description")
     private String description;
@@ -27,19 +23,11 @@ public class Discount {
     @Column(name = "endDate")
     private Date endDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private DiscountType discountType;
 
     @Column(name = "amount")
     private BigDecimal amount;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;

@@ -10,11 +10,6 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class Customer extends BaseEntity<Integer> {
 
-//    @Id
-//    @Column(name = "id")
-//    @GeneratedValue
-//    private Integer id;
-
     @Column(name = "name")
     private String name;
 
