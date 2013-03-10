@@ -1,5 +1,8 @@
 package oshop.dao;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import oshop.model.DiscountType;
 import oshop.model.SaleState;
@@ -25,6 +28,12 @@ public class DictionariesTest extends BaseDaoTest {
 
         List<SaleState> saleStateList =  saleStateDao.list(null, null);
         assertEquals(6, saleStateList.size());
+
+        Criteria criteria =  saleStateDao.createCriteria();
+        criteria.add(Restrictions.eq("state", SaleState.State.CANCELED.getType()));
+
+        SaleState state = saleStateDao.findUnique(criteria);
+        assertEquals(SaleState.State.CANCELED.getType(), (byte)state.getState());
     }
 
     @Test
