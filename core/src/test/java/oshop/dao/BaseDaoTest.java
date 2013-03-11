@@ -22,8 +22,8 @@ import static org.junit.Assert.assertNotNull;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
-        "classpath:applicationContext-persistence.xml",
-        "classpath:applicationContext-dao.xml"})
+        "classpath:META-INF/applicationContext-persistence.xml",
+        "classpath:META-INF/applicationContext-dao.xml"})
 @TransactionConfiguration(
         defaultRollback = true,
         transactionManager = "transactionManager")
