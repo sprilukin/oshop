@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+
+    <bean id="albumDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.Album" />
+    </bean>
+    <bean id="customerDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.Customer" />
+    </bean>
+    <bean id="discountDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.Discount" />
+    </bean>
+    <bean id="discountTypeDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.DiscountType" />
+    </bean>
+    <bean id="itemDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.Item" />
+    </bean>
+    <bean id="itemCategoryDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.ItemCategory" />
+    </bean>
+    <bean id="saleDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.Sale" />
+    </bean>
+    <bean id="saleHasStateDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.SaleHasState" />
+    </bean>
+    <bean id="saleStateDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.SaleState" />
+    </bean>
+    <bean id="shippingAddressDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.ShippingAddress" />
+    </bean>
+    <bean id="shippingTypeDao" class="oshop.dao.GenericDaoImpl">
+        <constructor-arg type="java.lang.Class" value="oshop.model.ShippingType" />
+    </bean>
+</beans>
