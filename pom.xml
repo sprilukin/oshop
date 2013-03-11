@@ -52,5 +52,34 @@
                 </configuration>
             </plugin>
         </plugins>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>oshop-dev</id>
+            <properties>
+                <jdbc.profile.driverClassName>org.hsqldb.jdbcDriver</jdbc.profile.driverClassName>
+                <jdbc.profile.dialect>org.hibernate.dialect.HSQLDialect</jdbc.profile.dialect>
+                <jdbc.profile.databaseurl>jdbc:hsqldb:mem:testdb</jdbc.profile.databaseurl>
+                <jdbc.profile.username>sa</jdbc.profile.username>
+                <jdbc.profile.password></jdbc.profile.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>oshop-test</id>
+            <properties>
+                <jdbc.profile.driverClassName>org.hsqldb.jdbcDriver</jdbc.profile.driverClassName>
+                <jdbc.profile.dialect>org.hibernate.dialect.HSQLDialect</jdbc.profile.dialect>
+                <jdbc.profile.databaseurl>jdbc:hsqldb:mem:testdb</jdbc.profile.databaseurl>
+                <jdbc.profile.username>sa</jdbc.profile.username>
+                <jdbc.profile.password></jdbc.profile.password>
+            </properties>
+        </profile>
+    </profiles>
 </project>
