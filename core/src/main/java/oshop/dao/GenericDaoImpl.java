@@ -4,8 +4,6 @@ import org.hibernate.Criteria;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
@@ -19,12 +17,15 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     private Class<T> entityClass;
 
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
+    public GenericDaoImpl() {
     }
 
-    public GenericDaoImpl(Class<T> entityClass) {
+    public void setEntityClass(Class<T> entityClass) {
         this.entityClass = entityClass;
+    }
+
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     public Criteria createCriteria() {
