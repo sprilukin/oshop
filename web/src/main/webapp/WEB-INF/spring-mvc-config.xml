@@ -18,6 +18,7 @@
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <resources mapping="/resources/**" location="/resources/"/>
+    <resources mapping="/favicon.ico" location="/favicon.ico"/>
 
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/jsp/"/>

@@ -15,10 +15,10 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Transactional
 @Controller
 @RequestMapping("/api/item")
-public class ItemControllerImpl {
+@Transactional
+public class ItemController {
 
     @Resource
     private GenericDao<Item, Integer> itemDao;
@@ -28,11 +28,6 @@ public class ItemControllerImpl {
             @RequestParam(value = "category", required = false) Integer categoryId,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "limit", required = false) Integer limit) throws Exception {
-
-        Item item = new Item();
-        item.setName("ffff");
-        item.setPrice(new BigDecimal(10.0));
-        itemDao.add(item);
 
         Criteria criteria = itemDao.createCriteria();
         if (categoryId != null) {
