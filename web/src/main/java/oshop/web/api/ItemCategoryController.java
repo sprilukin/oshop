@@ -2,7 +2,9 @@ package oshop.web.api;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,7 @@ import oshop.model.ItemCategory;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/api/itemCategory")
+@RequestMapping("/api/itemCategories")
 @Transactional
 public class ItemCategoryController {
 
@@ -30,15 +32,12 @@ public class ItemCategoryController {
             consumes={MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ItemCategory addUser(@RequestBody ItemCategory itemCategory){
-        Integer id = itemCategoryDao.add(itemCategory);
-        return itemCategoryDao.get(id);
-    }
-
-    @RequestMapping(value="/test", method=RequestMethod.POST)
-    @ResponseBody
-    public String addUser(@RequestBody String test){
-        log.debug(test);
-        return test;
+    public ResponseEntity<?> addCategory(@RequestBody ItemCategory itemCategory){
+        if (itemCategory.getName() != null) {
+            Integer id = itemCategoryDao.add(itemCategory);
+            return new ResponseEntity<ItemCategory>(itemCategoryDao.get(id), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<ErrorMessageResponse>(new ErrorMessageResponse("Category name can not be null"), HttpStatus.BAD_REQUEST);
+        }
     }
 }

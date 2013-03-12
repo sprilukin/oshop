@@ -42,7 +42,7 @@ public class ItemCategoryControllerTest {
     }
 
     @Test
-    public void getAccount() throws Exception {
+    public void testAddCategory() throws Exception {
         ItemCategory category = new ItemCategory();
         category.setName("name1");
 
@@ -50,12 +50,29 @@ public class ItemCategoryControllerTest {
         String categoryAsString = mapper.writeValueAsString(category);
 
         this.mockMvc.perform(
-                post("/api/itemCategory/add")
+                put("/api/itemCategories/add")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(categoryAsString))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.name").value("name1"));
+    }
+
+    @Test
+    public void testAddCategoryWithNullName() throws Exception {
+        ItemCategory category = new ItemCategory();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String categoryAsString = mapper.writeValueAsString(category);
+
+        this.mockMvc.perform(
+                put("/api/itemCategories/add")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(categoryAsString))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.message").value("Category name can not be null"));
     }
 }
