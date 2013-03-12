@@ -27,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 @TransactionConfiguration(
         defaultRollback = true,
         transactionManager = "transactionManager")
-public class BaseDaoTest {
+public abstract class BaseDaoTest {
 
     @Resource
     private SessionFactory sessionFactory;
