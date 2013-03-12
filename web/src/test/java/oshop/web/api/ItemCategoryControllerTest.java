@@ -114,7 +114,7 @@ public class ItemCategoryControllerTest {
         }
 
         MvcResult result = this.mockMvc.perform(
-                get("/api/items").accept(MediaType.APPLICATION_JSON))
+                get("/api/itemCategories/" + itemCategory.getId() + "/items").accept(MediaType.APPLICATION_JSON))
 
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))

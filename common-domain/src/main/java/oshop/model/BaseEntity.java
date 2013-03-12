@@ -23,11 +23,7 @@ public class BaseEntity<ID extends Serializable> {
 
     @Version
     @Column(name = "version")
-    private int version = 0;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "lastUpdate")
-    private Date lastUpdate;
+    private long version = 0;
 
     public ID getId() {
         return id;
@@ -37,19 +33,11 @@ public class BaseEntity<ID extends Serializable> {
         this.id = id;
     }
 
-    public int getVersion() {
+    public long getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(long version) {
         this.version = version;
-    }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Date lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 }
