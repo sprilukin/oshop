@@ -16,12 +16,17 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     private SessionFactory sessionFactory;
 
     private Class<T> entityClass;
+    private Integer listLimit = 1000;
 
     public GenericDaoImpl() {
     }
 
     public void setEntityClass(Class<T> entityClass) {
         this.entityClass = entityClass;
+    }
+
+    public void setListLimit(Integer listLimit) {
+        this.listLimit = listLimit;
     }
 
     private Session getSession() {
@@ -57,7 +62,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         }
 
         int safePageNumber = page != null ? page : 0;
-        int safeLimitNumber = (limit != null && limit > 0) ? limit : Integer.MAX_VALUE;
+        int safeLimitNumber = (limit != null && limit > 0) ? limit : listLimit;
 
         criteria.setMaxResults(safeLimitNumber).setFirstResult(safePageNumber * safeLimitNumber);
 

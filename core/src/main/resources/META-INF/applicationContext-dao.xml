@@ -5,37 +5,41 @@
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="true">
 
-    <bean id="albumDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="genericDao" class="oshop.dao.GenericDaoImpl" abstract="true">
+        <property name="listLimit" value="1000" />
+    </bean>
+
+    <bean id="albumDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Album" />
     </bean>
-    <bean id="customerDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="customerDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Customer" />
     </bean>
-    <bean id="discountDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="discountDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Discount" />
     </bean>
-    <bean id="discountTypeDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="discountTypeDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.DiscountType" />
     </bean>
-    <bean id="itemDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="itemDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Item" />
     </bean>
-    <bean id="itemCategoryDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="itemCategoryDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ItemCategory" />
     </bean>
-    <bean id="saleDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="saleDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Sale" />
     </bean>
-    <bean id="saleHasStateDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="saleHasStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.SaleHasState" />
     </bean>
-    <bean id="saleStateDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="saleStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.SaleState" />
     </bean>
-    <bean id="shippingAddressDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="shippingAddressDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ShippingAddress" />
     </bean>
-    <bean id="shippingTypeDao" class="oshop.dao.GenericDaoImpl">
+    <bean id="shippingTypeDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ShippingType" />
     </bean>
 </beans>
