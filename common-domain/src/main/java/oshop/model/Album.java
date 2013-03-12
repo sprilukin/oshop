@@ -3,18 +3,22 @@ package oshop.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "album")
 public class Album extends BaseEntity<Integer> {
 
+    @NotNull
+    @Size(min = 1)
     @Column(name = "name")
     private String name;
 
+    @NotNull
+    @Size(min = 1)
     @Column(name = "description")
     private String surname;
 
