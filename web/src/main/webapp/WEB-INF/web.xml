@@ -9,12 +9,6 @@
     <display-name>oshop</display-name>
     <distributable/>
 
-    <!-- Enable escaping of form submission contents -->
-    <!--<context-param>-->
-        <!--<param-name>defaultHtmlEscape</param-name>-->
-        <!--<param-value>true</param-value>-->
-    <!--</context-param>-->
-
     <!-- Context Configuration locations for Spring XML files -->
     <context-param>
         <param-name>contextConfigLocation</param-name>

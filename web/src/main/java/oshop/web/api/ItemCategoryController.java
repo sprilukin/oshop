@@ -24,8 +24,11 @@ public class ItemCategoryController {
     @Resource
     private GenericDao<ItemCategory, Integer> itemCategoryDao;
 
-    @RequestMapping(value="/add", method=RequestMethod.POST,
-            consumes={MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(
+            value="/add",
+            method=RequestMethod.PUT,
+            consumes={MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ItemCategory addUser(@RequestBody ItemCategory itemCategory){
         Integer id = itemCategoryDao.add(itemCategory);

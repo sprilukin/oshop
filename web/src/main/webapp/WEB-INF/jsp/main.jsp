@@ -9,7 +9,7 @@
     <script type="text/javascript">
         $(function() {
             $("#fff").on("submit", function() {
-                $.ajax("api/itemCategory/add", {
+                $.ajax("api/itemCategory/add?_method=PUT", {
                     type: "POST",
                     contentType: "application/json",
                     dataType: "json",
