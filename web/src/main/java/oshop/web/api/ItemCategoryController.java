@@ -20,6 +20,7 @@ import oshop.model.ItemCategory;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -42,7 +43,7 @@ public class ItemCategoryController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @Transactional(readOnly = false)
-    public ItemCategory addCategory(@RequestBody @Valid ItemCategory itemCategory) {
+    public ItemCategory add(@RequestBody @Valid ItemCategory itemCategory) {
         Integer id = itemCategoryDao.add(itemCategory);
         return itemCategoryDao.get(id);
     }
@@ -52,7 +53,7 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ItemCategory getById(@PathVariable Integer id) {
+    public ItemCategory findById(@PathVariable Integer id) {
         return itemCategoryDao.get(id);
     }
 
@@ -83,12 +84,16 @@ public class ItemCategoryController {
             @PathVariable Integer id,
             @RequestParam(value = "limit", required = false) Integer limit,
             @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "name", required = false) String name) {
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "price", required = false) BigDecimal price) {
 
         Criteria criteria = itemDao.createCriteria();
-        criteria.add(Restrictions.eq("itemCategory.id", id));
+        criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
         if (name != null) {
             criteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
+        }
+        if (price != null) {
+            criteria.add(Restrictions.eq("price", price));
         }
 
         return itemDao.list(criteria, offset, limit);

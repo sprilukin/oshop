@@ -11,10 +11,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+import oshop.model.Item;
 import oshop.model.ItemCategory;
+
+import java.math.BigDecimal;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -30,6 +36,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         defaultRollback = true,
         transactionManager = "transactionManager")
 public class ItemCategoryControllerTest {
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private WebApplicationContext wac;
@@ -62,8 +70,6 @@ public class ItemCategoryControllerTest {
     @Test
     public void testAddCategoryWithNullName() throws Exception {
         ItemCategory category = new ItemCategory();
-
-        ObjectMapper mapper = new ObjectMapper();
         String categoryAsString = mapper.writeValueAsString(category);
 
         this.mockMvc.perform(
@@ -74,5 +80,39 @@ public class ItemCategoryControllerTest {
                 .andExpect(status().isBadRequest());
                 //.andExpect(content().contentType("application/json"))
                 //.andExpect(jsonPath("$.message").value("Category name can not be null"));
+    }
+
+    @Test
+    public void ttt() throws Exception {
+        ItemCategory itemCategory = addItemCategory("category1");
+
+        Item item = new Item();
+        item.setName("item1");
+        item.setPrice(new BigDecimal(10));
+        item.setCategory(itemCategory);
+
+        this.mockMvc.perform(
+                put("/api/items/add")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(item)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.name").value("item1"))
+                .andExpect(jsonPath("$.price").value(10));
+    }
+
+    private ItemCategory addItemCategory(String name) throws Exception {
+        ItemCategory category = new ItemCategory();
+        category.setName(name);
+
+        String categoryAsString = mapper.writeValueAsString(category);
+        MvcResult result = this.mockMvc.perform(
+                put("/api/itemCategories/add")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(categoryAsString)).andReturn();
+
+        return mapper.readValue(result.getResponse().getContentAsByteArray(), ItemCategory.class);
     }
 }
