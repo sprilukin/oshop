@@ -32,13 +32,6 @@ public class ItemCategoryController {
         return itemCategoryDao.get(id);
     }
 
-    @RequestMapping(value="/add2", method=RequestMethod.POST,
-            consumes={MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public String addUser2(@RequestBody String itemCategory){
-        return itemCategory;
-    }
-
     @RequestMapping(value="/test", method=RequestMethod.POST)
     @ResponseBody
     public String addUser(@RequestBody String test){

@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration({
-        "classpath*:WEB-INF/spring-mvc-config.xml",
-        "classpath*:WEB-INF/applicationContext.xml",
+        "classpath*:spring-mvc-config.xml",
+        "classpath*:applicationContext.xml",
         "classpath*:META-INF/applicationContext*.xml"})
 @Transactional
 @TransactionConfiguration(
