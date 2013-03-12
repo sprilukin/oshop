@@ -1,5 +1,7 @@
 package oshop.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "item")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Item extends BaseEntity<Integer> {
 
     @Column(name = "price")
@@ -21,7 +24,6 @@ public class Item extends BaseEntity<Integer> {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "categoryId", referencedColumnName = "person_id")
     private ItemCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)

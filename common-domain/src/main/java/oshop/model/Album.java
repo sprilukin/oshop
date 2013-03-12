@@ -1,5 +1,7 @@
 package oshop.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "album")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Album extends BaseEntity<Integer> {
 
     @NotNull

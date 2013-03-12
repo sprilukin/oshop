@@ -51,7 +51,7 @@ public class ItemController {
     }
 
     @RequestMapping(
-            value = "/",
+            value = "",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
