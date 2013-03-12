@@ -1,5 +1,6 @@
 package oshop.web.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+import oshop.model.ItemCategory;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -43,9 +43,19 @@ public class ItemCategoryControllerTest {
 
     @Test
     public void getAccount() throws Exception {
-        this.mockMvc.perform(get("/accounts/1").accept(MediaType.APPLICATION_JSON))
+        ItemCategory category = new ItemCategory();
+        category.setName("name1");
+
+        ObjectMapper mapper = new ObjectMapper();
+        String categoryAsString = mapper.writeValueAsString(category);
+
+        this.mockMvc.perform(
+                post("/api/itemCategory/add")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(categoryAsString))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.name").value("Lee"));
+                .andExpect(jsonPath("$.name").value("name1"));
     }
 }
