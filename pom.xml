@@ -73,7 +73,7 @@
                 <jdbc.profile.driverClassName>com.mysql.jdbc.Driver</jdbc.profile.driverClassName>
                 <jdbc.profile.dialect>org.hibernate.dialect.MySQLInnoDBDialect</jdbc.profile.dialect>
                 <jdbc.profile.databaseurl>jdbc:mysql://localhost:3306/oshop</jdbc.profile.databaseurl>
-                <jdbc.profile.hbm2ddl>update</jdbc.profile.hbm2ddl>
+                <jdbc.profile.hbm2ddl>create</jdbc.profile.hbm2ddl>
                 <jdbc.profile.username>root</jdbc.profile.username>
                 <jdbc.profile.password>password</jdbc.profile.password>
             </properties>

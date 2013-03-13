@@ -28,31 +28,7 @@ import java.util.Arrays;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration({
-        "classpath*:spring-mvc-config.xml",
-        "classpath*:applicationContext.xml",
-        "classpath*:META-INF/applicationContext*.xml"})
-@Transactional
-@TransactionConfiguration(
-        defaultRollback = true,
-        transactionManager = "transactionManager")
-public class ItemCategoryControllerTest {
-
-    private static final Log log = LogFactory.getLog(ItemCategoryControllerTest.class);
-
-    private ObjectMapper mapper = new ObjectMapper();
-
-    @Autowired
-    private WebApplicationContext wac;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-    }
+public class ItemCategoryControllerTest extends BaseControllerTest {
 
     @Test
     public void testAddCategory() throws Exception {
@@ -88,23 +64,6 @@ public class ItemCategoryControllerTest {
     }
 
     @Test
-    public void testAddItemWithCategory() throws Exception {
-        ItemCategory itemCategory = addItemCategory("category1");
-
-        Item item = createItem(itemCategory, "item1", new BigDecimal(10));
-
-        this.mockMvc.perform(
-                put("/api/items/add")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(item)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.name").value("item1"))
-                .andExpect(jsonPath("$.price").value(10));
-    }
-
-    @Test
     public void testListItems() throws Exception {
         ItemCategory itemCategory = addItemCategory("category1");
 
@@ -126,42 +85,5 @@ public class ItemCategoryControllerTest {
                 .andExpect(jsonPath("$[2].price").value(10)).andReturn();
 
         log.debug(new String(result.getResponse().getContentAsByteArray()));
-    }
-
-    private ItemCategory addItemCategory(String name) throws Exception {
-        ItemCategory category = new ItemCategory();
-        category.setName(name);
-
-        String categoryAsString = mapper.writeValueAsString(category);
-        MvcResult result = this.mockMvc.perform(
-                put("/api/itemCategories/add")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(categoryAsString)).andReturn();
-
-        return mapper.readValue(result.getResponse().getContentAsByteArray(), ItemCategory.class);
-    }
-
-    private Item addItem(Item item) throws Exception {
-        String itemAsString = mapper.writeValueAsString(item);
-        MvcResult result = this.mockMvc.perform(
-                put("/api/items/add")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(itemAsString)).andReturn();
-
-        return mapper.readValue(result.getResponse().getContentAsByteArray(), Item.class);
-    }
-
-    private Item createItem(ItemCategory category, String name, BigDecimal price) {
-        Item item = new Item();
-
-        ItemCategory cat = new ItemCategory();
-        cat.setId(category.getId());
-        item.setCategory(cat);
-        item.setName(name);
-        item.setPrice(price);
-
-        return item;
     }
 }
