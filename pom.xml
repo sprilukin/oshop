@@ -70,11 +70,11 @@
         <profile>
             <id>oshop-dev</id>
             <properties>
-                <jdbc.profile.driverClassName>org.hsqldb.jdbcDriver</jdbc.profile.driverClassName>
-                <jdbc.profile.dialect>org.hibernate.dialect.HSQLDialect</jdbc.profile.dialect>
-                <jdbc.profile.databaseurl>jdbc:hsqldb:mem:testdb</jdbc.profile.databaseurl>
-                <jdbc.profile.username>sa</jdbc.profile.username>
-                <jdbc.profile.password></jdbc.profile.password>
+                <jdbc.profile.driverClassName>com.mysql.jdbc.Driver</jdbc.profile.driverClassName>
+                <jdbc.profile.dialect>org.hibernate.dialect.MySQLInnoDBDialect</jdbc.profile.dialect>
+                <jdbc.profile.databaseurl>jdbc:mysql://localhost:3306/oshop</jdbc.profile.databaseurl>
+                <jdbc.profile.username>root</jdbc.profile.username>
+                <jdbc.profile.password>password</jdbc.profile.password>
             </properties>
         </profile>
         <profile>
