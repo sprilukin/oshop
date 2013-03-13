@@ -1,4 +1,4 @@
-package oshop.web.api;
+package oshop.web.api.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

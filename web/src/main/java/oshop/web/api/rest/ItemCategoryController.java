@@ -1,4 +1,4 @@
-package oshop.web.api;
+package oshop.web.api.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -80,37 +80,10 @@ public class ItemCategoryController {
 
         Criteria criteria = itemCategoryDao.createCriteria();
 
-        //Adding filters
-        applyFilters(filters, criteria);
-
-        //Adding sorters
-        applySorters(sorters, criteria);
+        ControllerUtils.applyFilters(filters, criteria);
+        ControllerUtils.applySorters(sorters, criteria);
 
         return itemCategoryDao.list(criteria, offset, limit);
-    }
-
-    private void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
-        Disjunction disjunction = Restrictions.disjunction();
-        for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
-            for (String likeExpression: entry.getValue()) {
-                disjunction.add(Restrictions.like(entry.getKey(), likeExpression, MatchMode.ANYWHERE));
-            }
-        }
-
-        criteria.add(disjunction);
-    }
-
-    private void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
-        for (Map.Entry<String, List<String>> entry: sorters.entrySet()) {
-            String fieldName = entry.getKey();
-            String sortType = entry.getValue().get(0);
-
-            if ("asc".equalsIgnoreCase(sortType)) {
-                criteria.addOrder(Order.asc(fieldName));
-            } else if ("desc".equals(sortType)) {
-                criteria.addOrder(Order.desc(fieldName));
-            }
-        }
     }
 
     @RequestMapping(

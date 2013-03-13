@@ -1,4 +1,4 @@
-package oshop.web.api;
+package oshop.web.api.rest;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
