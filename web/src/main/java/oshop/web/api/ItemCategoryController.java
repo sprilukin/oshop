@@ -81,6 +81,15 @@ public class ItemCategoryController {
         Criteria criteria = itemCategoryDao.createCriteria();
 
         //Adding filters
+        applyFilters(filters, criteria);
+
+        //Adding sorters
+        applySorters(sorters, criteria);
+
+        return itemCategoryDao.list(criteria, offset, limit);
+    }
+
+    private void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
         Disjunction disjunction = Restrictions.disjunction();
         for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
             for (String likeExpression: entry.getValue()) {
@@ -89,17 +98,19 @@ public class ItemCategoryController {
         }
 
         criteria.add(disjunction);
+    }
 
-        //Adding sorters
+    private void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
         for (Map.Entry<String, List<String>> entry: sorters.entrySet()) {
-            if ("acc".equals(entry.getValue().get(0).toLowerCase())) {
-                criteria.addOrder(Order.asc(entry.getKey()));
-            } else if ("desc".equals(entry.getValue().get(0).toLowerCase())) {
-                criteria.addOrder(Order.desc(entry.getKey()));
+            String fieldName = entry.getKey();
+            String sortType = entry.getValue().get(0);
+
+            if ("asc".equalsIgnoreCase(sortType)) {
+                criteria.addOrder(Order.asc(fieldName));
+            } else if ("desc".equals(sortType)) {
+                criteria.addOrder(Order.desc(fieldName));
             }
         }
-
-        return itemCategoryDao.list(criteria, offset, limit);
     }
 
     @RequestMapping(

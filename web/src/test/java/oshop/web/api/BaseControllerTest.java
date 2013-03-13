@@ -67,6 +67,12 @@ public abstract class BaseControllerTest {
         return mapper.readValue(result.getResponse().getContentAsByteArray(), ItemCategory.class);
     }
 
+    protected void addItemCategories(String... names) throws Exception {
+        for (String name: names) {
+            addItemCategory(name);
+        }
+    }
+
     protected Item addItem(Item item) throws Exception {
         String itemAsString = mapper.writeValueAsString(item);
         MvcResult result = this.mockMvc.perform(

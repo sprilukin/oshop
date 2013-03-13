@@ -50,18 +50,48 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
 
     @Test
     public void testListItemCategoriesWithFiltersAndSorters() throws Exception {
-        addItemCategory("category1");
-        addItemCategory("category2");
-        addItemCategory("category3");
+        addItemCategories("category1", "category2", "category3");
 
-        MvcResult result = this.mockMvc.perform(
-                get("/api/itemCategories/filter;name=category1,category2/sort;name=desc")
+        this.mockMvc.perform(
+                get("/api/itemCategories/filter;name=category1,category3/sort;name=desc")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].name").value("category3"))
+                .andExpect(jsonPath("$[1].name").value("category1"));
 
-        logResponse(result);
+        //Test filter only
+        this.mockMvc.perform(
+                get("/api/itemCategories/filter;name=category2/sort")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].name").value("category2"));
+
+        //Test sort only
+        this.mockMvc.perform(
+                get("/api/itemCategories/filter/sort;name=asc?limit=1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].name").value("category1"));
+    }
+
+    @Test
+    public void testListItemCategoriesById() throws Exception {
+        Integer id = addItemCategory("category1").getId();
+        addItemCategories("category2", "category3");
+
+        this.mockMvc.perform(
+                get("/api/itemCategories/" + id)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.name").value("category1"));
     }
 
     @Test
