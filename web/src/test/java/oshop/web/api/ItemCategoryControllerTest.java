@@ -1,24 +1,9 @@
 package oshop.web.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultHandler;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
 
@@ -64,6 +49,22 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testListItemCategoriesWithFiltersAndSorters() throws Exception {
+        addItemCategory("category1");
+        addItemCategory("category2");
+        addItemCategory("category3");
+
+        MvcResult result = this.mockMvc.perform(
+                get("/api/itemCategories/filter;name=category1,category2/sort;name=desc")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json")).andReturn();
+
+        logResponse(result);
+    }
+
+    @Test
     public void testListItems() throws Exception {
         ItemCategory itemCategory = addItemCategory("category1");
 
@@ -84,6 +85,6 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[2].price").value(10))
                 .andExpect(jsonPath("$[2].price").value(10)).andReturn();
 
-        log.debug(new String(result.getResponse().getContentAsByteArray()));
+        logResponse(result);
     }
 }

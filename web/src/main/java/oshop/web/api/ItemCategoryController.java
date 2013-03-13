@@ -3,11 +3,14 @@ package oshop.web.api;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/itemCategories")
@@ -49,30 +53,62 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(
+            value = "/[filter/][sort/]",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public List<ItemCategory> list(
+            @MatrixVariable(pathVar="filter/", required = false) Map<String, String> filters,
+            @MatrixVariable(pathVar="sort/", required = false) Map<String, String> sorters,
+            @RequestParam(value = "limit", required = false) Integer limit,
+            @RequestParam(value = "offset", required = false) Integer offset) {
+
+        Criteria criteria = itemCategoryDao.createCriteria();
+        return itemCategoryDao.list(criteria, offset, limit);
+    }
+
+    @RequestMapping(
+            value = "/{filter}/{sort}",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public List<ItemCategory> listWithFiltersAndOrders(
+            @MatrixVariable(pathVar="filter", required = false) Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) Map<String, List<String>> sorters,
+            @RequestParam(value = "limit", required = false) Integer limit,
+            @RequestParam(value = "offset", required = false) Integer offset) {
+
+        Criteria criteria = itemCategoryDao.createCriteria();
+
+        //Adding filters
+        Disjunction disjunction = Restrictions.disjunction();
+        for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
+            for (String likeExpression: entry.getValue()) {
+                disjunction.add(Restrictions.like(entry.getKey(), likeExpression, MatchMode.ANYWHERE));
+            }
+        }
+
+        criteria.add(disjunction);
+
+        //Adding sorters
+        for (Map.Entry<String, List<String>> entry: sorters.entrySet()) {
+            if ("acc".equals(entry.getValue().get(0).toLowerCase())) {
+                criteria.addOrder(Order.asc(entry.getKey()));
+            } else if ("desc".equals(entry.getValue().get(0).toLowerCase())) {
+                criteria.addOrder(Order.desc(entry.getKey()));
+            }
+        }
+
+        return itemCategoryDao.list(criteria, offset, limit);
+    }
+
+    @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ItemCategory findById(@PathVariable Integer id) {
         return itemCategoryDao.get(id);
-    }
-
-    @RequestMapping(
-            value = "/",
-            method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<ItemCategory> list(
-            @RequestParam(value = "limit", required = false) Integer limit,
-            @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "name", required = false) String name) {
-
-        Criteria criteria = itemCategoryDao.createCriteria();
-        if (name != null) {
-            criteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
-        }
-
-        return itemCategoryDao.list(criteria, offset, limit);
     }
 
     @RequestMapping(
