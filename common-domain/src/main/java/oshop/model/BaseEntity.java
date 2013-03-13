@@ -25,6 +25,10 @@ public class BaseEntity<ID extends Serializable> {
     @Column(name = "version")
     private long version = 0;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "lastUpdate")
+    private Date lastUpdate;
+
     public ID getId() {
         return id;
     }
@@ -39,5 +43,13 @@ public class BaseEntity<ID extends Serializable> {
 
     public void setVersion(long version) {
         this.version = version;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

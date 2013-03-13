@@ -3,9 +3,6 @@ package oshop.web.api.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -23,7 +20,6 @@ import oshop.model.ItemCategory;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +45,24 @@ public class ItemCategoryController {
     @Transactional(readOnly = false)
     public ItemCategory add(@RequestBody @Valid ItemCategory itemCategory) {
         Integer id = itemCategoryDao.add(itemCategory);
+        return itemCategoryDao.get(id);
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.DELETE,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Transactional(readOnly = false)
+    public void delete(@PathVariable Integer id) {
+        itemCategoryDao.remove(id);
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ItemCategory get(@PathVariable Integer id) {
         return itemCategoryDao.get(id);
     }
 
@@ -85,15 +99,6 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ItemCategory findById(@PathVariable Integer id) {
-        return itemCategoryDao.get(id);
-    }
-
-    @RequestMapping(
             value = "/{id}/items",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -101,18 +106,30 @@ public class ItemCategoryController {
     public List<Item> items(
             @PathVariable Integer id,
             @RequestParam(value = "limit", required = false) Integer limit,
-            @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "price", required = false) BigDecimal price) {
+            @RequestParam(value = "offset", required = false) Integer offset) {
 
         Criteria criteria = itemDao.createCriteria();
         criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-        if (name != null) {
-            criteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
-        }
-        if (price != null) {
-            criteria.add(Restrictions.eq("price", price));
-        }
+        return itemDao.list(criteria, offset, limit);
+    }
+
+    @RequestMapping(
+            value = "/{id}/items/{filter}/{sort}",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public List<Item> itemsWithFiltersAndSorters(
+            @PathVariable Integer id,
+            @MatrixVariable(pathVar="filter", required = false) Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) Map<String, List<String>> sorters,
+            @RequestParam(value = "limit", required = false) Integer limit,
+            @RequestParam(value = "offset", required = false) Integer offset) {
+
+        Criteria criteria = itemDao.createCriteria();
+        criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
+
+        ControllerUtils.applyFilters(filters, criteria);
+        ControllerUtils.applySorters(sorters, criteria);
 
         return itemDao.list(criteria, offset, limit);
     }

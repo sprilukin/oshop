@@ -8,6 +8,7 @@ import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> implements GenericDao<T, ID> {
@@ -75,10 +76,12 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
             throw new IllegalStateException("Id should be empty for new object");
         }
 
+        entity.setLastUpdate(new Date());
         return (ID)getSession().save(entity);
     }
 
     public void update(T entity) {
+        entity.setLastUpdate(new Date());
         getSession().update(entity);
     }
 
