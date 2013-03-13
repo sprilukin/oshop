@@ -49,6 +49,29 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testListItemCategories() throws Exception {
+        addItemCategories("category1", "category2", "category3");
+
+        this.mockMvc.perform(
+                get("/api/itemCategories/")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].name").value("category1"))
+                .andExpect(jsonPath("$[1].name").value("category2"))
+                .andExpect(jsonPath("$[2].name").value("category3"));
+
+        this.mockMvc.perform(
+                get("/api/itemCategories/?offset=1&limit=1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].name").value("category2"));
+    }
+
+    @Test
     public void testListItemCategoriesWithFiltersAndSorters() throws Exception {
         addItemCategories("category1", "category2", "category3");
 

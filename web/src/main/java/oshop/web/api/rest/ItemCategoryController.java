@@ -53,13 +53,11 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(
-            value = "/[filter/][sort/]",
+            value = "/",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public List<ItemCategory> list(
-            @MatrixVariable(pathVar="filter/", required = false) Map<String, String> filters,
-            @MatrixVariable(pathVar="sort/", required = false) Map<String, String> sorters,
             @RequestParam(value = "limit", required = false) Integer limit,
             @RequestParam(value = "offset", required = false) Integer offset) {
 
@@ -72,7 +70,7 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public List<ItemCategory> listWithFiltersAndOrders(
+    public List<ItemCategory> listWithFiltersAndSorters(
             @MatrixVariable(pathVar="filter", required = false) Map<String, List<String>> filters,
             @MatrixVariable(pathVar="sort", required = false) Map<String, List<String>> sorters,
             @RequestParam(value = "limit", required = false) Integer limit,
