@@ -84,6 +84,12 @@ public abstract class BaseControllerTest {
         return mapper.readValue(result.getResponse().getContentAsByteArray(), Item.class);
     }
 
+    protected void addItems(Item... items) throws Exception {
+        for (Item item: items) {
+            addItem(item);
+        }
+    }
+
     protected Item createItem(ItemCategory category, String name, BigDecimal price) {
         Item item = new Item();
 

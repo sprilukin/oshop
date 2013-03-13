@@ -49,6 +49,17 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testRemove() throws Exception {
+        Integer id = addItemCategory("category1").getId();
+
+        this.mockMvc.perform(
+                delete("/api/itemCategories/" + id)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void testListItemCategories() throws Exception {
         addItemCategories("category1", "category2", "category3");
 
@@ -122,9 +133,7 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
         ItemCategory itemCategory = addItemCategory("category1");
 
         Item item = createItem(itemCategory, "item1", new BigDecimal(10));
-        for (Item i: Arrays.asList(item, item, item)) {
-            addItem(i);
-        }
+        addItems(item, item, item);
 
         MvcResult result = this.mockMvc.perform(
                 get("/api/itemCategories/" + itemCategory.getId() + "/items").accept(MediaType.APPLICATION_JSON))
@@ -139,5 +148,26 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[2].price").value(10)).andReturn();
 
         logResponse(result);
+    }
+
+    @Test
+    public void testListItemsWithOrderingAndFiltering() throws Exception {
+        ItemCategory itemCategory = addItemCategory("category1");
+
+        addItems(createItem(itemCategory, "item1", new BigDecimal(10.01)),
+                createItem(itemCategory, "item2", new BigDecimal(10.1)),
+                createItem(itemCategory, "item3", new BigDecimal(10.2)));
+
+        this.mockMvc.perform(
+                get("/api/itemCategories/" + itemCategory.getId() + "/items/filter;name=item/sort;name=asc").accept(MediaType.APPLICATION_JSON))
+
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].name").value("item1"))
+                .andExpect(jsonPath("$[1].name").value("item2"))
+                .andExpect(jsonPath("$[2].name").value("item3"))
+                .andExpect(jsonPath("$[0].price").value(10.01))
+                .andExpect(jsonPath("$[1].price").value(10.1))
+                .andExpect(jsonPath("$[2].price").value(10.2));
     }
 }

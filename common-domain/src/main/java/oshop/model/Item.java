@@ -5,19 +5,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 @Table(name = "item")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Item extends BaseEntity<Integer> {
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
     @Column(name = "name")
@@ -34,7 +32,8 @@ public class Item extends BaseEntity<Integer> {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        //this.price = price;
+        this.price = price != null ? price.setScale(2, RoundingMode.HALF_UP) : null;
     }
 
     public String getName() {

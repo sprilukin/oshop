@@ -87,7 +87,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     public void remove(ID id) {
         T entity = get(id);
-        if (entity != null) {
+        if (entity == null) {
             throw new ObjectNotFoundException(id, getClass().getName());
         }
 
