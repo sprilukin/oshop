@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>YYY</title>
-    <script type="text/javascript" src="resources/js/jquery-1.8.2.js"></script>
     <script type="text/javascript">
         $(function() {
             $("#fff").on("submit", function() {

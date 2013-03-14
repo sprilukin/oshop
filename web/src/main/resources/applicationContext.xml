@@ -11,4 +11,15 @@
     <context:component-scan base-package="oshop">
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="cacheSeconds" value="15"/>
+        <property name="fallbackToSystemLocale" value="false"/>
+        <property name="basenames">
+            <list>
+                <value>/WEB-INF/bundles/messages</value>
+            </list>
+        </property>
+    </bean>
 </beans>
