@@ -1,8 +1,3 @@
-<%
-    /*throw new Exception();*/
-    Integer c = 0;
-    Integer v = 1 / c;
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
