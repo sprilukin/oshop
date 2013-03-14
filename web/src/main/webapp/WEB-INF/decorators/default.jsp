@@ -15,10 +15,10 @@
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-responsive.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/jquery-ui-1.10.1.custom.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/main.css'/>" />
-    <script type="text/javascript" src="<c:url value='/resources/js/jquery-1.9.1.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/jquery-ui-1.10.1.custom.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/mustache.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/lib/jquery-1.9.1.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/lib/jquery-ui-1.10.1.custom.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/lib/bootstrap.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/lib/mustache.js'/>"></script>
     <script type="text/javascript">
         window.oshop = {
             contextPath: "${pageContext.request.contextPath}"
