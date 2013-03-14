@@ -132,8 +132,10 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
     public void testListItems() throws Exception {
         ItemCategory itemCategory = addItemCategory("category1");
 
-        Item item = createItem(itemCategory, "item1", new BigDecimal(10));
-        addItems(item, item, item);
+        addItems(
+                createItem(itemCategory, "item1", new BigDecimal(10.1)),
+                createItem(itemCategory, "item2", new BigDecimal(10.01)),
+                createItem(itemCategory, "item3", new BigDecimal(10.001)));
 
         MvcResult result = this.mockMvc.perform(
                 get("/api/itemCategories/" + itemCategory.getId() + "/items").accept(MediaType.APPLICATION_JSON))
@@ -141,11 +143,11 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$[0].name").value("item1"))
-                .andExpect(jsonPath("$[1].name").value("item1"))
-                .andExpect(jsonPath("$[2].name").value("item1"))
-                .andExpect(jsonPath("$[2].price").value(10))
-                .andExpect(jsonPath("$[2].price").value(10))
-                .andExpect(jsonPath("$[2].price").value(10)).andReturn();
+                .andExpect(jsonPath("$[1].name").value("item2"))
+                .andExpect(jsonPath("$[2].name").value("item3"))
+                .andExpect(jsonPath("$[0].price").value(10.1))
+                .andExpect(jsonPath("$[1].price").value(10.01))
+                .andExpect(jsonPath("$[2].price").value(10.0)).andReturn();
 
         logResponse(result);
     }

@@ -16,9 +16,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+import oshop.dao.GenericDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -37,11 +39,16 @@ public abstract class BaseControllerTest {
 
     protected static final Log log = LogFactory.getLog(BaseControllerTest.class);
 
-    protected ObjectMapper mapper = new ObjectMapper();
-
     @Autowired
     private WebApplicationContext wac;
 
+    @Resource
+    private GenericDao<ItemCategory, Integer> itemCategoryDao;
+
+    @Resource
+    private GenericDao<Item, Integer> itemDao;
+
+    protected ObjectMapper mapper = new ObjectMapper();
     protected MockMvc mockMvc;
 
     @Before
@@ -57,14 +64,8 @@ public abstract class BaseControllerTest {
         ItemCategory category = new ItemCategory();
         category.setName(name);
 
-        String categoryAsString = mapper.writeValueAsString(category);
-        MvcResult result = this.mockMvc.perform(
-                put("/api/itemCategories/add")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(categoryAsString)).andReturn();
-
-        return mapper.readValue(result.getResponse().getContentAsByteArray(), ItemCategory.class);
+        category.setId(itemCategoryDao.add(category));
+        return category;
     }
 
     protected void addItemCategories(String... names) throws Exception {
@@ -74,14 +75,8 @@ public abstract class BaseControllerTest {
     }
 
     protected Item addItem(Item item) throws Exception {
-        String itemAsString = mapper.writeValueAsString(item);
-        MvcResult result = this.mockMvc.perform(
-                put("/api/items/add")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(itemAsString)).andReturn();
-
-        return mapper.readValue(result.getResponse().getContentAsByteArray(), Item.class);
+        item.setId(itemDao.add(item));
+        return item;
     }
 
     protected void addItems(Item... items) throws Exception {
