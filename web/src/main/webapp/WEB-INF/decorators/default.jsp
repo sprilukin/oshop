@@ -27,7 +27,6 @@
         }
     </script>
 
-
     <decorator:head/>
 </head>
 <body>
