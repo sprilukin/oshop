@@ -7,24 +7,25 @@
     <title>Item Categories</title>
     <script type="text/javascript">
         $(function () {
-            var applyTemplate = function(templateId, model) {
+            var applyTemplate = function (templateId, model) {
                 return Mustache.to_html($("#" + templateId).html(), model);
             };
 
             $("#addItemCategoryButton").on("click", function () {
-                $.ajax("api/itemCategories/add?_method=PUT", {
-                    type: "POST",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: JSON.stringify({"name": $("#addItemCategory").val()}),
-                    success: function (obj) {
-                        console.log(obj);
+                oshop.itemCategories.add(
+                        JSON.stringify({"name": $("#addItemCategory").val()}),
+                        function(obj) {
+                            console.log(obj);
 
-                        $("#itemCategoriesTable").append(applyTemplate("itemCategoryTemplate", obj));
-                    }
-                });
+                            $("#itemCategoriesTable").append(applyTemplate("itemCategoryTemplate", obj));
+                        },
+                        function() {
+                            console.log(arguments);
+                        });
+            });
 
-                return false;
+            $("#modalB").on("click", function () {
+                $("#myModal").modal();
             });
         })
     </script>
@@ -59,28 +60,30 @@
             <td>1</td>
             <td>Mark</td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Mark</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Mark</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Mark</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Mark</td>
-        </tr>
         </tbody>
     </table>
 
     <div class="input-append">
         <input class="input-large" id="addItemCategory" type="text" placeholder="category name">
         <button id="addItemCategoryButton" class="btn" type="submit">Add</button>
+    </div>
+
+    <a href="#myModal" id="modalB" role="button" class="btn">Launch demo modal</a>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+        </div>
+        <div class="modal-body">
+            <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 </div>
 </body>

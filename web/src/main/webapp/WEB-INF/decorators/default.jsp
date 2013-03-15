@@ -23,9 +23,11 @@
     <script type="text/javascript" src="<c:url value='/resources/js/lib/mustache.js'/>"></script>
     <script type="text/javascript">
         window.oshop = {
-            contextPath: "${pageContext.request.contextPath}"
+            contextPath: "${pageContext.request.contextPath}",
+            addContextToUrl: function(url) {return this.contextPath + url}
         }
     </script>
+    <script type="text/javascript" src="<c:url value='/resources/js/api.js'/>"></script>
 
     <decorator:head/>
 </head>
