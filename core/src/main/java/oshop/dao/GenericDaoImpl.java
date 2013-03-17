@@ -39,7 +39,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> findAll(Criteria criteria) {
+    public List<T> list(Criteria criteria) {
         return criteria.list();
     }
 
@@ -49,7 +49,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     }
 
     @SuppressWarnings("unchecked")
-    public T findUnique(Criteria criteria) {
+    public T get(Criteria criteria) {
         return (T)criteria.uniqueResult();
     }
 
@@ -67,7 +67,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
         criteria.setMaxResults(safeLimitNumber).setFirstResult(safePageNumber * safeLimitNumber);
 
-        return findAll(criteria);
+        return list(criteria);
     }
 
     @SuppressWarnings("unchecked")

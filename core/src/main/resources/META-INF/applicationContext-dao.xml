@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        default-lazy-init="true">
 
+    <context:component-scan base-package="oshop.dao">
+        <context:include-filter expression="org.springframework.stereotype.Repository" type="annotation"/>
+    </context:component-scan>
+
     <bean id="genericDao" class="oshop.dao.GenericDaoImpl" abstract="true">
-        <property name="listLimit" value="1000" />
+        <property name="listLimit" value="${list.limit}" />
     </bean>
 
     <bean id="albumDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">

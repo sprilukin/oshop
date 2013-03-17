@@ -13,11 +13,11 @@ public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
     public Criteria createCriteria();
 
-    public List<T> findAll(Criteria criteria);
-
     public T get(ID id);
 
-    public T findUnique(Criteria criteria);
+    public T get(Criteria criteria);
+
+    public List<T> list(Criteria criteria);
 
     public List<T> list(Integer page, Integer limit);
 
