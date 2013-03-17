@@ -13,7 +13,7 @@ import oshop.model.BaseEntity;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Repository
+@Repository("searchDao")
 public class GenericSearchDaoImpl implements GenericSearchDao {
 
     @Value("${list.limit}")

@@ -3,6 +3,7 @@ package oshop.web.api.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
+import oshop.dao.GenericSearchDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
+import oshop.web.api.dto.GenericListDto;
 import oshop.web.api.dto.ValidationFailedDto;
 import oshop.web.api.rest.adapter.EmptyResultCheckRestCallbackAdapter;
 import oshop.web.api.rest.adapter.GenericRestCallbackAdapter;
@@ -44,6 +47,9 @@ public class ItemCategoryController {
 
     @Resource
     private GenericDao<ItemCategory, Integer> itemCategoryDao;
+
+    @Resource
+    private GenericSearchDao searchDao;
 
     @Resource
     private GenericDao<Item, Integer> itemDao;
@@ -100,11 +106,13 @@ public class ItemCategoryController {
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EmptyResultCheckRestCallbackAdapter<List<ItemCategory>>() {
+        return new EmptyResultCheckRestCallbackAdapter<GenericListDto<List<ItemCategory>>>() {
             @Override
-            protected List<ItemCategory> getResult() throws Exception {
-                Criteria criteria = itemCategoryDao.createCriteria();
-                return itemCategoryDao.list(criteria, offset, limit);
+            protected GenericListDto<List<ItemCategory>> getResult() throws Exception {
+                Number size = searchDao.get(itemCategoryDao.createCriteria().setProjection(Projections.rowCount()));
+                List<ItemCategory> list = itemCategoryDao.list(itemCategoryDao.createCriteria(), offset, limit);
+
+                return new GenericListDto<List<ItemCategory>>(list, size);
             }
         }.invoke();
     }
@@ -120,15 +128,18 @@ public class ItemCategoryController {
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EmptyResultCheckRestCallbackAdapter<List<ItemCategory>>() {
+        return new EmptyResultCheckRestCallbackAdapter<GenericListDto<List<ItemCategory>>>() {
             @Override
-            protected List<ItemCategory> getResult() throws Exception {
+            protected GenericListDto<List<ItemCategory>> getResult() throws Exception {
                 Criteria criteria = itemCategoryDao.createCriteria();
 
                 ControllerUtils.applyFilters(filters, criteria);
                 ControllerUtils.applySorters(sorters, criteria);
 
-                return itemCategoryDao.list(criteria, offset, limit);
+                Integer count = itemCategoryDao.list(criteria).size();
+                List<ItemCategory> list = itemCategoryDao.list(criteria, offset, limit);
+
+                return new GenericListDto<List<ItemCategory>>(list, count);
             }
         }.invoke();
     }

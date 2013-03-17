@@ -1,14 +1,19 @@
 package oshop.web.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collection;
 
 
-public class GenericListDto<T extends Collection<K>, K> {
+public class GenericListDto<T extends Collection> {
 
+    @JsonProperty("values")
     private T list;
-    private Integer size;
 
-    public GenericListDto(T list, Integer size) {
+    @JsonProperty("size")
+    private Number size;
+
+    public GenericListDto(T list, Number size) {
         this.list = list;
         this.size = size;
     }
@@ -21,11 +26,11 @@ public class GenericListDto<T extends Collection<K>, K> {
         this.list = list;
     }
 
-    public Integer getSize() {
+    public Number getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(Number size) {
         this.size = size;
     }
 }

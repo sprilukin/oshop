@@ -79,9 +79,10 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$[0].name").value("category1"))
-                .andExpect(jsonPath("$[1].name").value("category2"))
-                .andExpect(jsonPath("$[2].name").value("category3"));
+                .andExpect(jsonPath("$.size").value(3))
+                .andExpect(jsonPath("$.values.[0].name").value("category1"))
+                .andExpect(jsonPath("$.values.[1].name").value("category2"))
+                .andExpect(jsonPath("$.values.[2].name").value("category3"));
 
         this.mockMvc.perform(
                 get("/api/itemCategories/?offset=1&limit=1")
@@ -89,7 +90,8 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$[0].name").value("category2"));
+                .andExpect(jsonPath("$.size").value(3))
+                .andExpect(jsonPath("$.values.[0].name").value("category2"));
     }
 
     @Test
@@ -112,8 +114,9 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$[0].name").value("category3"))
-                .andExpect(jsonPath("$[1].name").value("category1"));
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.values.[0].name").value("category3"))
+                .andExpect(jsonPath("$.values.[1].name").value("category1"));
 
         //Test filter only
         this.mockMvc.perform(
@@ -122,7 +125,8 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$[0].name").value("category2"));
+                .andExpect(jsonPath("$.size").value(1))
+                .andExpect(jsonPath("$.values.[0].name").value("category2"));
 
         //Test sort only
         this.mockMvc.perform(
@@ -131,7 +135,8 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$[0].name").value("category1"));
+                .andExpect(jsonPath("$.size").value(3))
+                .andExpect(jsonPath("$.values.[0].name").value("category1"));
     }
 
     @Test
