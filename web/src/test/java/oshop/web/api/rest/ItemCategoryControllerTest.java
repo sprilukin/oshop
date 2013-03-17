@@ -43,9 +43,10 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(categoryAsString))
-                .andExpect(status().isBadRequest());
-                //.andExpect(content().contentType("application/json"))
-                //.andExpect(jsonPath("$.message").value("Category name can not be null"));
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.error").value("Validation failed"))
+                .andExpect(jsonPath("$.fields.name").value("may not be null"));
     }
 
     @Test
@@ -57,6 +58,15 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testRemoveNotExisting() throws Exception {
+        this.mockMvc.perform(
+                delete("/api/itemCategories/" + 1)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -80,6 +90,16 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$[0].name").value("category2"));
+    }
+
+    @Test
+    public void testListEmptyItemCategories() throws Exception {
+        this.mockMvc.perform(
+                get("/api/itemCategories/")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andExpect(content().bytes(new byte[]{}));
     }
 
     @Test
@@ -112,6 +132,16 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$[0].name").value("category1"));
+    }
+
+    @Test
+    public void testEmptyListItemCategoriesWithFiltersAndSorters() throws Exception {
+
+        this.mockMvc.perform(
+                get("/api/itemCategories/filter;name=category1,category3/sort;name=desc")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 
     @Test

@@ -1,9 +1,13 @@
 package oshop.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import oshop.dao.exception.NotFoundException;
 import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
@@ -15,6 +19,9 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     @Resource
     private SessionFactory sessionFactory;
+
+    @Resource
+    private MessageSource messageSource;
 
     private Class<T> entityClass;
     private Integer listLimit = 1000;
@@ -45,12 +52,26 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     @SuppressWarnings("unchecked")
     public T get(ID id) {
-        return (T) getSession().get(entityClass, id);
+        T entity = (T) getSession().get(entityClass, id);
+        if (entity != null) {
+            return entity;
+        } else {
+            throw new NotFoundException(
+                    messageSource.getMessage("error.entity.by.id.not.found",
+                            new Object[]{id}, LocaleContextHolder.getLocale()));
+        }
     }
 
     @SuppressWarnings("unchecked")
     public T get(Criteria criteria) {
-        return (T)criteria.uniqueResult();
+        T entity = (T)criteria.uniqueResult();
+        if (entity != null) {
+            return entity;
+        } else {
+            throw new NotFoundException(
+                    messageSource.getMessage("error.entity.not.found",
+                            new Object[]{entityClass}, LocaleContextHolder.getLocale()));
+        }
     }
 
     public List<T> list(Integer page, Integer limit) {
@@ -88,7 +109,9 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     public void remove(ID id) {
         T entity = get(id);
         if (entity == null) {
-            throw new ObjectNotFoundException(id, getClass().getName());
+            throw new NotFoundException(
+                    messageSource.getMessage("error.entity.by.id.not.found",
+                            new Object[]{id}, LocaleContextHolder.getLocale()));
         }
 
         remove(entity);

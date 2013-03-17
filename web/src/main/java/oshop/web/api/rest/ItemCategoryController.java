@@ -4,9 +4,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
+import oshop.web.api.dto.ValidationFailedDto;
+import oshop.web.api.rest.adapter.EmptyResultCheckRestCallbackAdapter;
+import oshop.web.api.rest.adapter.GenericRestCallbackAdapter;
+import oshop.web.api.rest.adapter.ResponseBuilder;
+import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
+import oshop.web.api.rest.adapter.ValidationFailedRestCallbackAdapter;
+import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,9 +55,18 @@ public class ItemCategoryController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @Transactional(readOnly = false)
-    public ItemCategory add(@RequestBody @Valid ItemCategory itemCategory) {
-        Integer id = itemCategoryDao.add(itemCategory);
-        return itemCategoryDao.get(id);
+    public ResponseEntity<?> add(@RequestBody @Valid final ItemCategory itemCategory, final BindingResult result) {
+        if (result.hasErrors()) {
+            return new ValidationFailedRestCallbackAdapter().invoke(result);
+        } else {
+            return new ReturningRestCallbackAdapter<ItemCategory>() {
+                @Override
+                protected ItemCategory getResult() throws Exception {
+                    Integer id = itemCategoryDao.add(itemCategory);
+                    return itemCategoryDao.get(id);
+                }
+            }.invoke();
+        }
     }
 
     @RequestMapping(
@@ -53,8 +74,12 @@ public class ItemCategoryController {
             method = RequestMethod.DELETE,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     @Transactional(readOnly = false)
-    public void delete(@PathVariable Integer id) {
-        itemCategoryDao.remove(id);
+    public ResponseEntity<?> delete(@PathVariable final Integer id) {
+        return new VoidRestCallbackAdapter() {
+            @Override
+            protected void perform() throws Exception {
+                itemCategoryDao.remove(id);            }
+        }.invoke();
     }
 
     @RequestMapping(
@@ -71,12 +96,17 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public List<ItemCategory> list(
-            @RequestParam(value = "limit", required = false) Integer limit,
-            @RequestParam(value = "offset", required = false) Integer offset) {
+    public ResponseEntity<?> list(
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        Criteria criteria = itemCategoryDao.createCriteria();
-        return itemCategoryDao.list(criteria, offset, limit);
+        return new EmptyResultCheckRestCallbackAdapter<List<ItemCategory>>() {
+            @Override
+            protected List<ItemCategory> getResult() throws Exception {
+                Criteria criteria = itemCategoryDao.createCriteria();
+                return itemCategoryDao.list(criteria, offset, limit);
+            }
+        }.invoke();
     }
 
     @RequestMapping(
@@ -84,18 +114,23 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public List<ItemCategory> listWithFiltersAndSorters(
-            @MatrixVariable(pathVar="filter", required = false) Map<String, List<String>> filters,
-            @MatrixVariable(pathVar="sort", required = false) Map<String, List<String>> sorters,
-            @RequestParam(value = "limit", required = false) Integer limit,
-            @RequestParam(value = "offset", required = false) Integer offset) {
+    public ResponseEntity<?> listWithFiltersAndSorters(
+            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        Criteria criteria = itemCategoryDao.createCriteria();
+        return new EmptyResultCheckRestCallbackAdapter<List<ItemCategory>>() {
+            @Override
+            protected List<ItemCategory> getResult() throws Exception {
+                Criteria criteria = itemCategoryDao.createCriteria();
 
-        ControllerUtils.applyFilters(filters, criteria);
-        ControllerUtils.applySorters(sorters, criteria);
+                ControllerUtils.applyFilters(filters, criteria);
+                ControllerUtils.applySorters(sorters, criteria);
 
-        return itemCategoryDao.list(criteria, offset, limit);
+                return itemCategoryDao.list(criteria, offset, limit);
+            }
+        }.invoke();
     }
 
     @RequestMapping(

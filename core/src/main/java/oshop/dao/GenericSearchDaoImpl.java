@@ -4,7 +4,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
+import oshop.dao.exception.NotFoundException;
 import oshop.model.BaseEntity;
 
 import javax.annotation.Resource;
@@ -19,6 +22,9 @@ public class GenericSearchDaoImpl implements GenericSearchDao {
     @Resource
     private SessionFactory sessionFactory;
 
+    @Resource
+    private MessageSource messageSource;
+
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
@@ -29,7 +35,13 @@ public class GenericSearchDaoImpl implements GenericSearchDao {
 
     @SuppressWarnings("unchecked") //Developer responsible for correct type check
     public <T> T get(Criteria criteria) {
-        return (T)criteria.uniqueResult();
+        T result = (T)criteria.uniqueResult();
+        if (result == null) {
+            throw new NotFoundException(
+                    messageSource.getMessage("error.not.found", null, LocaleContextHolder.getLocale()));
+        } else {
+            return result;
+        }
     }
 
     @SuppressWarnings("unchecked") //Developer responsible for correct type check
