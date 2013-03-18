@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ItemCategory extends BaseEntity<Integer> {
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
 

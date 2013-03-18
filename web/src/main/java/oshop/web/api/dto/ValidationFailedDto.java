@@ -24,11 +24,11 @@ public class ValidationFailedDto {
         this.error = error;
     }
 
-    public Map<String, String> getMap() {
+    public Map<String, String> getFields() {
         return fields;
     }
 
-    public void setMap(Map<String, String> fields) {
+    public void setFields(Map<String, String> fields) {
         this.fields = fields;
     }
 }
