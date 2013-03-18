@@ -88,6 +88,9 @@
                 <jdbc.profile.username>sa</jdbc.profile.username>
                 <jdbc.profile.password></jdbc.profile.password>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 </project>

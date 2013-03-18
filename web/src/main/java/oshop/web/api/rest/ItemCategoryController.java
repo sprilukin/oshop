@@ -154,6 +154,7 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
+    //TODO: use ResponseEntity<?>
     public List<Item> items(
             @PathVariable Integer id,
             @RequestParam(value = "limit", required = false) Integer limit,
@@ -169,6 +170,7 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
+    //TODO: use ResponseEntity<?>
     public List<Item> itemsWithFiltersAndSorters(
             @PathVariable Integer id,
             @MatrixVariable(pathVar="filter", required = false) Map<String, List<String>> filters,

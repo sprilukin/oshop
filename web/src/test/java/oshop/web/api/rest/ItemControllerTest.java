@@ -28,6 +28,6 @@ public class ItemControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.name").value("item1"))
-                .andExpect(jsonPath("$.price").value(10));
+                .andExpect(jsonPath("$.price").value(10.0));
     }
 }
