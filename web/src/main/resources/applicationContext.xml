@@ -16,9 +16,10 @@
         <property name="useCodeAsDefaultMessage" value="true"/>
         <property name="cacheSeconds" value="15"/>
         <property name="fallbackToSystemLocale" value="false"/>
+        <property name="defaultEncoding" value="UTF-8"/>
         <property name="basenames">
             <list>
-                <value>/WEB-INF/bundles/messages</value>
+                <value>classpath:messages</value>
             </list>
         </property>
     </bean>

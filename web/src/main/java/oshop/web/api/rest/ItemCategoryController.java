@@ -93,8 +93,13 @@ public class ItemCategoryController {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ItemCategory get(@PathVariable Integer id) {
-        return itemCategoryDao.get(id);
+    public ResponseEntity<?> get(@PathVariable final Integer id) {
+        return new ReturningRestCallbackAdapter<ItemCategory>() {
+            @Override
+            protected ItemCategory getResult() throws Exception {
+                return itemCategoryDao.get(id);
+            }
+        }.invoke();
     }
 
     @RequestMapping(
