@@ -1,4 +1,4 @@
-package oshop.web.api.rest;
+package oshop.web.ui;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +12,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/main")
-public class MainController {
-
-    @Resource
-    private GenericDao<Item, Integer> itemDao;
+@RequestMapping(value = "/itemCategories")
+public class ItemCategoriesController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String listItems() throws Exception {
-        return "main";
+    public String main() throws Exception {
+        return "itemCategories";
     }
 }

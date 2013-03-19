@@ -1,27 +1,25 @@
 window.oshop = window.oshop || {};
 
-(function (context, Mustache) {
+(function (oshop, utils) {
 
-    var applyTemplate = function (template, model) {
-        return Mustache.to_html(template, model);
-    };
+    oshop.itemCategories = (function () {
 
-    context.itemCategories = (function() {
-
-        var URL_TEMPLATE = context.addContextToUrl("/api/itemCategories/{{params}}");
+        var URL_TEMPLATE = "/api/itemCategories/{{params}}";
 
         return {
             add: function (category, onSuccess, onFail) {
-                $.ajax(applyTemplate(URL_TEMPLATE, {params: "add?_method=PUT"}), {
-                    type: "POST",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: category
-                }).done(function () {
-                    onSuccess.apply(this, arguments);
-                }).fail(function (xhr, error, statusText) {
-                    onFail.call(this, JSON.parse(xhr.responseText), parseInt(xhr.status));
-                });
+                utils.restCall(
+                    utils.applyTemplate(URL_TEMPLATE, {params: "add"}),
+                    {
+                        method: "PUT",
+                        data: category,
+                        success: function () {
+                            onSuccess.apply(this, arguments);
+                        },
+                        fail: function (json, status) {
+                            onFail.call(this, json, status);
+                        }
+                    });
             },
 
             list: {
@@ -38,4 +36,4 @@ window.oshop = window.oshop || {};
         }
     })();
 
-})(window.oshop, Mustache);
+})(window.oshop, window.oshop.utils);

@@ -21,12 +21,14 @@
     <script type="text/javascript" src="<c:url value='/resources/js/lib/jquery-ui-1.10.1.custom.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/lib/bootstrap.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/lib/mustache.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/lib/underscore.js'/>"></script>
     <script type="text/javascript">
         window.oshop = {
             contextPath: "${pageContext.request.contextPath}",
             addContextToUrl: function(url) {return this.contextPath + url}
         }
     </script>
+    <script type="text/javascript" src="<c:url value='/resources/js/common.utils.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/api.js'/>"></script>
 
     <decorator:head/>
