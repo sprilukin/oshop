@@ -15,6 +15,7 @@
                     function(obj) {
                         $("#itemCategoriesTable").find("tbody").append(utils.applyTemplate("#itemCategoryTemplate", obj));
                         $("#addItemCategory").val("");
+                        $("#addCategoryModal").modal("hide");
                     },
                     function(json, statusCode) {
                         $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);

@@ -48,7 +48,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="general.close"/></button>
-            <button class="btn btn-primary"><spring:message code="item.category.add"/></button>
+            <button id="addItemCategoryButton" class="btn btn-primary"><spring:message code="item.category.add"/></button>
         </div>
     </div>
 </div>
@@ -61,11 +61,12 @@
     </tr>
 </script>
 <script type="template/mustache" id="itemCategoriesTemplate">
-    <table id="itemCategoriesTable" class="table table-bordered">
+    <table id="itemCategoriesTable" class="table table-striped table-hover">
         <thead>
         <tr>
             <th class="span1">#</th>
             <th><spring:message code="item.category.column.name"/></th>
+            <th class="span1"></th>
         </tr>
         </thead>
         <tbody>
@@ -73,6 +74,20 @@
         <tr>
             <td>{{id}}</td>
             <td>{{name}}</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                        <li><a tabindex="-1" href="#">Action</a></li>
+                        <li><a tabindex="-1" href="#">Another action</a></li>
+                        <li><a tabindex="-1" href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a tabindex="-1" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         {{/values}}
         </tbody>
