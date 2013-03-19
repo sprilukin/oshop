@@ -6,10 +6,7 @@
 <head>
     <title>Item Categories</title>
     <script type="text/javascript">
-        $(function () {
-            var applyTemplate = function (templateId, model) {
-                return Mustache.to_html($("#" + templateId).html(), model);
-            };
+        $(function (utils, itemCategories) {
 
             $("#addItemCategoryButton").on("click", function () {
                 $("#addItemCategoryGroup").removeClass("error").find(".help-inline").html("");
@@ -17,14 +14,10 @@
                 oshop.itemCategories.add(
                         JSON.stringify({"name": $("#addItemCategory").val()}),
                         function(obj) {
-                            console.log(obj);
-
-                            $("#itemCategoriesTable").append(applyTemplate("itemCategoryTemplate", obj));
+                            $("#itemCategoriesTable").append(oshop.utils.applyTemplate("#itemCategoryTemplate", obj));
                             $("#addItemCategory").val("");
                         },
                         function(json, statusCode) {
-                            console.log(arguments);
-
                             $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
                         });
             });
@@ -32,7 +25,7 @@
             $("#modalB").on("click", function () {
                 $("#myModal").modal();
             });
-        })
+        });
     </script>
     <script type="template/mustache" id="itemCategoryTemplate">
         <tr>

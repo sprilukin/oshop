@@ -3,18 +3,12 @@
     oshop.utils = (function() {
 
         return {
-            applyTemplate: function (template, model, destination) {
+            applyTemplate: function (template, model) {
                 if (template.indexOf("#") === 0) {
                     template = $(template).html();
                 }
 
-                var html = Mustache.to_html(template, model);
-
-                if (destination) {
-                    $(destination).html(html);
-                }
-
-                return html;
+                return Mustache.to_html(template, model);
             },
 
             restCall: function(url, params) {
