@@ -2,6 +2,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <!DOCTYPE html>
 <html>
@@ -38,9 +39,9 @@
 
 <%--<%@include file="/common/header.jsp"%>--%>
 
-<div class="container-fluid">
+<div class="">
     <%--<%@ include file="/common/messages.jsp" %>--%>
-    <div class="row-fluid">
+    <div class="">
         <decorator:body/>
     </div>
 </div>

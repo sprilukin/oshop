@@ -13,7 +13,7 @@
                 api.add(
                     JSON.stringify({"name": $("#addItemCategory").val()}),
                     function(obj) {
-                        $("#itemCategoriesTable").append(utils.applyTemplate("#itemCategoryTemplate", obj));
+                        $("#itemCategoriesTable").find("tbody").append(utils.applyTemplate("#itemCategoryTemplate", obj));
                         $("#addItemCategory").val("");
                     },
                     function(json, statusCode) {
@@ -29,10 +29,10 @@
         var loadAllItemCategories = function() {
             api.list(
                 function(obj) {
-                    $("#itemCategoriesTable").html(utils.applyTemplate("#itemCategoriesTemplate", obj));
+                    $("#itemCategoriesTableContainer").html(utils.applyTemplate("#itemCategoriesTemplate", obj));
                 },
                 function(json, statusCode) {
-                    $("#itemCategoriesTable").html(utils.applyTemplate("#itemCategoriesTemplate", []));
+                    $("#itemCategoriesTableContainer").html(utils.applyTemplate("#itemCategoriesTemplate", []));
                 });
         };
 

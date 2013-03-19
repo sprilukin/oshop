@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>Item Categories</title>
+    <title><spring:message code="item.categories.title"/></title>
     <script type="text/javascript" src="<c:url value='/resources/js/itemCategories.js'/>"></script>
     <script type="text/javascript">
         $(oshop.itemCategories.init);
@@ -13,55 +13,42 @@
 <body>
 
 <div class="container">
-    <h1>Item Categories</h1>
+    <h1><spring:message code="item.categories.title"/></h1>
 
     <form class="form-search">
-        <div class="input-append">
-            <input type="text" class="span10 search-query">
-            <button type="submit" class="btn">Search</button>
-        </div>
+        <input type="text" class="search-query" placeholder="<spring:message code="search.help.text"/>">
     </form>
 
-    <table id="itemCategoriesTable" class="table table-bordered">
-        <thead>
-        <tr>
-            <th class="span1">#</th>
-            <th>Category Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>Mark</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="control-group" id="addItemCategoryGroup">
-        <label class="control-label" for="addItemCategory"><spring:message code="item.category.name"/></label>
-        <div class="controls">
-            <input class="input-large" id="addItemCategory" type="text" placeholder="category name" required="required">
-            <span class="help-inline"> </span>
-        </div>
+    <div id="itemCategoriesTableContainer">
+        <%-- item categories table will be placed here --%>
     </div>
 
-    <button id="addItemCategoryButton" class="btn" type="submit">Add</button>
-
-    <a href="#myModal" id="modalB" role="button" class="btn">Launch demo modal</a>
+    <a href="#addCategoryModal" role="button" class="btn btn-primary" data-toggle="modal">
+        <i class="icon-plus icon-white"> </i>
+        <spring:message code="item.category.add"/>
+    </a>
 
     <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
+    <div id="addCategoryModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Modal header</h3>
+            <h3 id="addCategoryModalLabel"><spring:message code="item.category.add.category"/></h3>
         </div>
         <div class="modal-body">
-            <p>One fine body…</p>
+            <p>
+            <div id="addItemCategoryGroup" class="control-group form-horizontal">
+                <label class="control-label" for="addItemCategory"><spring:message code="item.category.name"/></label>
+
+                <div class="controls">
+                    <input class="input-large" id="addItemCategory" type="text" required="required">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            </p>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary">Save changes</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="general.close"/></button>
+            <button class="btn btn-primary"><spring:message code="item.category.add"/></button>
         </div>
     </div>
 </div>
@@ -74,20 +61,22 @@
     </tr>
 </script>
 <script type="template/mustache" id="itemCategoriesTemplate">
-    <thead>
-    <tr>
-        <th class="span1">#</th>
-        <th>Category Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#values}}
-    <tr>
-        <td>{{id}}</td>
-        <td>{{name}}</td>
-    </tr>
-    {{/values}}
-    </tbody>
+    <table id="itemCategoriesTable" class="table table-bordered">
+        <thead>
+        <tr>
+            <th class="span1">#</th>
+            <th><spring:message code="item.category.column.name"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#values}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+        </tr>
+        {{/values}}
+        </tbody>
+    </table>
 </script>
 
 </body>
