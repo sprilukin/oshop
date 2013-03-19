@@ -12,15 +12,20 @@
             };
 
             $("#addItemCategoryButton").on("click", function () {
+                $("#addItemCategoryGroup").removeClass("error").find(".help-inline").html("");
+
                 oshop.itemCategories.add(
                         JSON.stringify({"name": $("#addItemCategory").val()}),
                         function(obj) {
                             console.log(obj);
 
                             $("#itemCategoriesTable").append(applyTemplate("itemCategoryTemplate", obj));
+                            $("#addItemCategory").val("");
                         },
-                        function() {
+                        function(json, statusCode) {
                             console.log(arguments);
+
+                            $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
                         });
             });
 
@@ -48,6 +53,14 @@
 
 <div class="container">
     <h1>Item Categories</h1>
+
+    <form class="form-search">
+        <div class="input-append">
+            <input type="text" class="span10 search-query">
+            <button type="submit" class="btn">Search</button>
+        </div>
+    </form>
+
     <table id="itemCategoriesTable" class="table table-bordered">
         <thead>
         <tr>
@@ -63,10 +76,15 @@
         </tbody>
     </table>
 
-    <div class="input-append">
-        <input class="input-large" id="addItemCategory" type="text" placeholder="category name">
-        <button id="addItemCategoryButton" class="btn" type="submit">Add</button>
+    <div class="control-group" id="addItemCategoryGroup">
+        <label class="control-label" for="addItemCategory"><spring:message code="item.category.name"/></label>
+        <div class="controls">
+            <input class="input-large" id="addItemCategory" type="text" placeholder="category name" required="required">
+            <span class="help-inline"> </span>
+        </div>
     </div>
+
+    <button id="addItemCategoryButton" class="btn" type="submit">Add</button>
 
     <a href="#myModal" id="modalB" role="button" class="btn">Launch demo modal</a>
 

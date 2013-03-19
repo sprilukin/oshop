@@ -19,8 +19,8 @@ window.oshop = window.oshop || {};
                     data: category
                 }).done(function () {
                     onSuccess.apply(this, arguments);
-                }).fail(function () {
-                    onFail.apply(this, arguments);
+                }).fail(function (xhr, error, statusText) {
+                    onFail.call(this, JSON.parse(xhr.responseText), parseInt(xhr.status));
                 });
             },
 
