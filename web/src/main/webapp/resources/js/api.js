@@ -1,8 +1,8 @@
-window.oshop = window.oshop || {};
-
 (function (oshop, utils) {
 
-    oshop.itemCategories = (function () {
+    oshop.api = {};
+
+    oshop.api.itemCategories = (function () {
 
         var URL_TEMPLATE = "/api/itemCategories/{{params}}";
 

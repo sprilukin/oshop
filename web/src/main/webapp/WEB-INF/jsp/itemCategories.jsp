@@ -5,41 +5,9 @@
 <html>
 <head>
     <title>Item Categories</title>
+    <script type="text/javascript" src="<c:url value='/resources/js/itemCategories.js'/>"></script>
     <script type="text/javascript">
-        $(function (utils, itemCategories) {
-
-            $("#addItemCategoryButton").on("click", function () {
-                $("#addItemCategoryGroup").removeClass("error").find(".help-inline").html("");
-
-                oshop.itemCategories.add(
-                        JSON.stringify({"name": $("#addItemCategory").val()}),
-                        function(obj) {
-                            $("#itemCategoriesTable").append(oshop.utils.applyTemplate("#itemCategoryTemplate", obj));
-                            $("#addItemCategory").val("");
-                        },
-                        function(json, statusCode) {
-                            $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
-                        });
-            });
-
-            $("#modalB").on("click", function () {
-                $("#myModal").modal();
-            });
-        });
-    </script>
-    <script type="template/mustache" id="itemCategoryTemplate">
-        <tr>
-            <td>{{id}}</td>
-            <td>{{name}}</td>
-        </tr>
-    </script>
-    <script type="template/mustache" id="itemCategoriesTemplate">
-        {{#itemCategories}}
-        <tr>
-            <td>{{id}}</td>
-            <td>{{name}}</td>
-        </tr>
-        {{itemCategories}}
+        $(oshop.itemCategories.init);
     </script>
 </head>
 <body>
@@ -97,5 +65,22 @@
         </div>
     </div>
 </div>
+
+<%-- templates --%>
+<script type="template/mustache" id="itemCategoryTemplate">
+    <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+    </tr>
+</script>
+<script type="template/mustache" id="itemCategoriesTemplate">
+    {{#itemCategories}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+    </tr>
+    {{itemCategories}}
+</script>
+
 </body>
 </html>

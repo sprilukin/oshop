@@ -1,4 +1,4 @@
-(function (oshop, $, Mustache) {
+(function (oshop, $, Mustache, _) {
 
     oshop.utils = (function() {
 
@@ -39,4 +39,4 @@
         }
     })();
 
-})(window.oshop, jQuery, Mustache);
+})(window.oshop, jQuery, Mustache, _);
