@@ -3,6 +3,7 @@
 
         var init = function() {
             attachListeners();
+            loadAllItemCategories();
         };
 
         var attachListeners = function() {
@@ -23,6 +24,16 @@
             $("#modalB").on("click", function () {
                 $("#myModal").modal();
             });
+        };
+
+        var loadAllItemCategories = function() {
+            api.list(
+                function(obj) {
+                    $("#itemCategoriesTable").html(utils.applyTemplate("#itemCategoriesTemplate", obj));
+                },
+                function(json, statusCode) {
+                    $("#itemCategoriesTable").html(utils.applyTemplate("#itemCategoriesTemplate", []));
+                });
         };
 
         return {

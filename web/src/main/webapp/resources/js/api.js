@@ -22,8 +22,16 @@
                     });
             },
 
-            list: {
-
+            list: function (onSuccess, onFail) {
+                utils.restCall(
+                    utils.applyTemplate(URL_TEMPLATE, {params: ""}),
+                    {method: "GET",
+                        success: function () {
+                            onSuccess.apply(this, arguments);
+                        },
+                        fail: function (json, status) {
+                            onFail.call(this, json, status);
+                        }});
             },
 
             get: {

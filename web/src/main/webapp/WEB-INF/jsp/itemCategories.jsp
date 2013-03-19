@@ -74,12 +74,20 @@
     </tr>
 </script>
 <script type="template/mustache" id="itemCategoriesTemplate">
-    {{#itemCategories}}
+    <thead>
+    <tr>
+        <th class="span1">#</th>
+        <th>Category Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#values}}
     <tr>
         <td>{{id}}</td>
         <td>{{name}}</td>
     </tr>
-    {{itemCategories}}
+    {{/values}}
+    </tbody>
 </script>
 
 </body>
