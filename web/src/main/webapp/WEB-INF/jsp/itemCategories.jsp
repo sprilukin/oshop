@@ -76,10 +76,10 @@
             <td>{{name}}</td>
             <td>
                 <div class="btn-group">
-                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                    <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                    <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
                         <li><a tabindex="-1" href="#">Action</a></li>
                         <li><a tabindex="-1" href="#">Another action</a></li>
                         <li><a tabindex="-1" href="#">Something else here</a></li>

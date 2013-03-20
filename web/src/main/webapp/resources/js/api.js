@@ -13,8 +13,8 @@
                     {
                         method: "PUT",
                         data: category,
-                        success: function () {
-                            onSuccess.apply(this, arguments);
+                        success: function (json, status) {
+                            onSuccess.call(this, json, status);
                         },
                         fail: function (json, status) {
                             onFail.call(this, json, status);
@@ -26,8 +26,8 @@
                 utils.restCall(
                     utils.applyTemplate(URL_TEMPLATE, {params: ""}),
                     {method: "GET",
-                        success: function () {
-                            onSuccess.apply(this, arguments);
+                        success: function (json, status) {
+                            onSuccess.call(this, json, status);
                         },
                         fail: function (json, status) {
                             onFail.call(this, json, status);

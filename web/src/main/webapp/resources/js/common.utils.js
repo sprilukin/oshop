@@ -30,10 +30,10 @@
                     contentType: "application/json",
                     dataType: "json",
                     data: params.data
-                }).done(function () {
-                    params.success && params.success.apply(this, arguments);
+                }).done(function (json, statusAsText, xhr) {
+                    params.success && params.success.call(this, json, xhr.status);
                 }).fail(function (xhr, error, statusText) {
-                    params.fail && params.fail.call(this, JSON.parse(xhr.responseText), parseInt(xhr.status));
+                    params.fail && params.fail.call(this, JSON.parse(xhr.responseText), xhr.status);
                 });
             }
         }

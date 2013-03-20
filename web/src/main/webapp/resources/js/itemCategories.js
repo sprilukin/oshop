@@ -7,38 +7,41 @@
         };
 
         var attachListeners = function() {
-            $("#addItemCategoryButton").on("click", function () {
+            _.each(clickListeners, function(value, key) {
+                $(key).on("click", value);
+            })
+        };
+
+        var loadAllItemCategories = function() {
+            api.itemCategories.list(
+                function(json) {
+                    json = json || [];
+                    $("#itemCategoriesTableContainer").html(utils.applyTemplate("#itemCategoriesTemplate", json));
+                },
+                function(json) {
+                    $("#itemCategoriesTableContainer").html(utils.applyTemplate("#itemCategoriesTemplate", []));
+                });
+        };
+
+        var clickListeners = {
+            "#addItemCategoryButton": function () {
                 $("#addItemCategoryGroup").removeClass("error").find(".help-inline").html("");
 
-                api.add(
+                api.itemCategories.add(
                     JSON.stringify({"name": $("#addItemCategory").val()}),
-                    function(obj) {
-                        $("#itemCategoriesTable").find("tbody").append(utils.applyTemplate("#itemCategoryTemplate", obj));
+                    function(json, statusCode) {
+                        $("#itemCategoriesTable").find("tbody").append(utils.applyTemplate("#itemCategoryTemplate", json));
                         $("#addItemCategory").val("");
                         $("#addCategoryModal").modal("hide");
                     },
                     function(json, statusCode) {
                         $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
                     });
-            });
-
-            $("#modalB").on("click", function () {
-                $("#myModal").modal();
-            });
-        };
-
-        var loadAllItemCategories = function() {
-            api.list(
-                function(obj) {
-                    $("#itemCategoriesTableContainer").html(utils.applyTemplate("#itemCategoriesTemplate", obj));
-                },
-                function(json, statusCode) {
-                    $("#itemCategoriesTableContainer").html(utils.applyTemplate("#itemCategoriesTemplate", []));
-                });
+            }
         };
 
         return {
             init : init
         }
     })()
-})(jQuery, window.oshop, window.oshop.api.itemCategories, window.oshop.utils);
+})(jQuery, window.oshop, window.oshop.api, window.oshop.utils);
