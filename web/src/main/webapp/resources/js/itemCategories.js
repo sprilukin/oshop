@@ -23,6 +23,12 @@
                 });
         };
 
+        var removeItemCategory = function(id) {
+            api.itemCategories.delete(id, function() {
+                loadAllItemCategories();
+            });
+        };
+
         var clickListeners = {
             "#addItemCategoryButton": function () {
                 $("#addItemCategoryGroup").removeClass("error").find(".help-inline").html("");
@@ -37,6 +43,16 @@
                     function(json, statusCode) {
                         $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
                     });
+            },
+            "#itemCategoriesTableContainer": function(event) {
+                var target = $(event.target).parent("li");
+                if (target.size() > 0) {
+                    var id = target.attr("data-id");
+                    var action = target.attr("data-action");
+                    if (action === "delete") {
+                        removeItemCategory(id);
+                    }
+                }
             }
         };
 

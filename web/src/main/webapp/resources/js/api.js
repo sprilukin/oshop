@@ -14,10 +14,10 @@
                         method: "PUT",
                         data: category,
                         success: function (json, status) {
-                            onSuccess.call(this, json, status);
+                            onSuccess && onSuccess(json, status);
                         },
                         fail: function (json, status) {
-                            onFail.call(this, json, status);
+                            onFail && onFail(json, status);
                         }
                     });
             },
@@ -27,10 +27,10 @@
                     utils.applyTemplate(URL_TEMPLATE, {params: ""}),
                     {method: "GET",
                         success: function (json, status) {
-                            onSuccess.call(this, json, status);
+                            onSuccess && onSuccess(json, status);
                         },
                         fail: function (json, status) {
-                            onFail.call(this, json, status);
+                            onFail && onFail(json, status);
                         }});
             },
 
@@ -38,8 +38,18 @@
 
             },
 
-            delete: {
-
+            delete: function (id, onSuccess, onFail) {
+                utils.restCall(
+                    utils.applyTemplate(URL_TEMPLATE, {params: id}),
+                    {
+                        method: "DELETE",
+                        success: function (json, status) {
+                            onSuccess && onSuccess(json, status);
+                        },
+                        fail: function (json, status) {
+                            onFail && onFail(json, status);
+                        }
+                    });
             }
         }
     })();

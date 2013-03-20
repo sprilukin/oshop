@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class VoidRestCallbackAdapter extends GenericRestCallbackAdapter {
     @Override
-    protected ResponseEntity getResponse() throws Exception {
+    protected ResponseEntity<String> getResponse() throws Exception {
         perform();
-        return new ResponseBuilder().status(HttpStatus.OK).build();
+        return new ResponseBuilder<String>().status(HttpStatus.OK).body("OK").build();
     }
 
     protected abstract void perform() throws Exception;

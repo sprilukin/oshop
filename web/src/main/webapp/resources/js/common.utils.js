@@ -22,7 +22,8 @@
 
                 //Adding _method to url
                 if (_.indexOf(["GET", "POST"], params.method.toUpperCase()) == -1) {
-                    url += ((url.indexOf("?") > 0) ? "&" : "?") + "_method=" + params.method
+                    url += ((url.indexOf("?") > 0) ? "&" : "?") + "_method=" + params.method;
+                    params.method = "POST";
                 }
 
                 $.ajax(oshop.addContextToUrl(url), {
