@@ -58,6 +58,17 @@
     <tr>
         <td>{{id}}</td>
         <td>{{name}}</td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+                    <li><a tabindex="-1" href="#"><i class="icon-pencil"></i> <spring:message code="general.modify"/></a></li>
+                    <li><a tabindex="-1" href="#"><i class="icon-trash"></i> <spring:message code="general.remove"/></a></li>
+                </ul>
+            </div>
+        </td>
     </tr>
 </script>
 <script type="template/mustache" id="itemCategoriesTemplate">
@@ -80,11 +91,8 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a tabindex="-1" href="#">Action</a></li>
-                        <li><a tabindex="-1" href="#">Another action</a></li>
-                        <li><a tabindex="-1" href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a tabindex="-1" href="#">Separated link</a></li>
+                        <li><a tabindex="-1" href="#"><i class="icon-pencil"></i> <spring:message code="general.modify"/></a></li>
+                        <li><a tabindex="-1" href="#"><i class="icon-trash"></i> <spring:message code="general.remove"/></a></li>
                     </ul>
                 </div>
             </td>
