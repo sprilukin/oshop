@@ -24,8 +24,6 @@ import oshop.model.ItemCategory;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 
-import static org.springframework.test.util.AssertionErrors.assertEquals;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration({
@@ -99,13 +97,5 @@ public abstract class BaseControllerTest {
         item.setPrice(price);
 
         return item;
-    }
-
-    public ResultMatcher contentStringUtf8Matcher(final String expectedContent) {
-        return new ResultMatcher() {
-            public void match(MvcResult result) throws Exception {
-                assertEquals("Response content", expectedContent, new String(result.getResponse().getContentAsByteArray()));
-            }
-        };
     }
 }

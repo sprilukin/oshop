@@ -14,7 +14,8 @@
         <spring.version>3.2.0.RELEASE</spring.version>
         <hibernate.version>4.1.1.Final</hibernate.version>
         <jpa.version>2.0-cr-1</jpa.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.encoding>UTF-8</java.encoding>
+        <project.build.sourceEncoding>${java.encoding}</project.build.sourceEncoding>
     </properties>
 
     <modules>
@@ -50,6 +51,20 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <encoding>${java.encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>file.encoding</name>
+                            <value>${java.encoding}</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>
