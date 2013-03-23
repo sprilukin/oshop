@@ -7,8 +7,8 @@
         };
 
         var attachListeners = function() {
-            _.each(clickListeners, function(value, key) {
-                $(key).on("click", value);
+            _.each(listeners, function(value, key) {
+                $(key).on(value.events, value.selector, value.data, value.handler);
             })
         };
 
@@ -23,14 +23,15 @@
                 });
         };
 
-        var removeItemCategory = function(id) {
-            api.itemCategories.delete(id, function() {
-                loadAllItemCategories();
-            });
-        };
+        var itemCategoryActions = {
+            "removeItemCategory": function (id) {
+                api.itemCategories.delete(id, function () {
+                    loadAllItemCategories();
+                });
+            }};
 
-        var clickListeners = {
-            "#addItemCategoryButton": function () {
+        var listeners = {
+            "#addItemCategoryButton": {events: "click", handler: function () {
                 $("#addItemCategoryGroup").removeClass("error").find(".help-inline").html("");
 
                 api.itemCategories.add(
@@ -43,17 +44,12 @@
                     function(json, statusCode) {
                         $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
                     });
-            },
-            "#itemCategoriesTableContainer": function(event) {
-                var target = $(event.target).parent("li");
-                if (target.size() > 0) {
-                    var id = target.attr("data-id");
-                    var action = target.attr("data-action");
-                    if (action === "delete") {
-                        removeItemCategory(id);
-                    }
-                }
-            }
+            }},
+            "#itemCategoriesTableContainer": {events: "click", selector: "li", handler: function(event) {
+                var menuItem = $(this);
+                var id = menuItem.attr("data-id");
+                itemCategoryActions[menuItem.attr("data-action")](id);
+            }}
         };
 
         return {

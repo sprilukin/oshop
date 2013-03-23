@@ -7,8 +7,12 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
-                <li data-action="modify" data-id="{{id}}"><a tabindex="-1" href="#"><i class="icon-pencil"></i> <spring:message code="general.modify"/></a></li>
-                <li data-action="delete" data-id="{{id}}"><a tabindex="-1" href="#"><i class="icon-trash"></i> <spring:message code="general.remove"/></a></li>
+                <li data-action="modifyItemCategory" data-id="{{id}}">
+                    <a tabindex="-1" href="#"><i class="icon-pencil"></i> <spring:message code="general.modify"/></a>
+                </li>
+                <li data-action="removeItemCategory" data-id="{{id}}">
+                    <a tabindex="-1" href="#"><i class="icon-trash"></i> <spring:message code="general.remove"/></a>
+                </li>
             </ul>
         </div>
     </td>
