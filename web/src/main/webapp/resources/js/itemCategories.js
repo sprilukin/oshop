@@ -28,7 +28,13 @@
                 api.itemCategories.delete(id, function () {
                     loadAllItemCategories();
                 });
-            }};
+            },
+            "modifyItemCategory": function (id) {
+                api.itemCategories.delete(id, function () {
+                    loadAllItemCategories();
+                });
+            }
+        };
 
         var listeners = {
             "#addItemCategoryButton": {events: "click", handler: function () {

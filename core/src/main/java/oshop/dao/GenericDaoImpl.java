@@ -1,8 +1,7 @@
 package oshop.dao;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.ObjectNotFoundException;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.MessageSource;
@@ -38,11 +37,19 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     }
 
     private Session getSession() {
-        return sessionFactory.getCurrentSession();
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.setFlushMode(FlushMode.AUTO);
+        return currentSession;
+    }
+
+    private Session getReadOnlySession() {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.setFlushMode(FlushMode.MANUAL);
+        return currentSession;
     }
 
     public Criteria createCriteria() {
-        return getSession().createCriteria(entityClass);
+        return getReadOnlySession().createCriteria(entityClass);
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +59,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     @SuppressWarnings("unchecked")
     public T get(ID id) {
-        T entity = (T) getSession().get(entityClass, id);
+        T entity = (T) getReadOnlySession().get(entityClass, id);
         if (entity != null) {
             return entity;
         } else {
@@ -103,7 +110,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     public void update(T entity) {
         entity.setLastUpdate(new Date());
-        getSession().update(entity);
+        getSession().update(getSession().merge(entity));
     }
 
     public void remove(ID id) {

@@ -1,14 +1,12 @@
 package oshop.web.api.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
-import oshop.model.Item;
 import oshop.model.ItemCategory;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -20,7 +18,6 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
         ItemCategory category = new ItemCategory();
         category.setName("name1");
 
-        ObjectMapper mapper = new ObjectMapper();
         String categoryAsString = mapper.writeValueAsString(category);
 
         this.mockMvc.perform(
@@ -67,13 +64,14 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
     public void testGetItemCategoryByIdNotExists() throws Exception {
         Integer id = addItemCategory("category1").getId();
 
-        this.mockMvc.perform(
+       this.mockMvc.perform(
                 get("/api/itemCategories/" + (id + 1))
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string("\"Object with given id not found\""));
+                .andExpect(contentStringUtf8Matcher("\"" + messageSource.getMessage("error.entity.by.id.not.found",
+                        new Object[]{id}, LocaleContextHolder.getLocale()) + "\""));
     }
 
     @Test
@@ -85,6 +83,20 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        ItemCategory itemCategory = addItemCategory("category1");
+        itemCategory.setName("category2");
+
+        this.mockMvc.perform(
+                put("/api/itemCategories/" + itemCategory.getId())
+                        .content(mapper.writeValueAsString(itemCategory))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("category2"));
     }
 
     @Test

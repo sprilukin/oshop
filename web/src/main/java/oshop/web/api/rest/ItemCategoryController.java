@@ -103,6 +103,29 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.PUT,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> update(
+            @PathVariable final Integer id,
+            @RequestBody @Valid final ItemCategory itemCategory, final BindingResult result) {
+
+        if (result.hasErrors()) {
+            return new ValidationFailedRestCallbackAdapter().invoke(result);
+        } else {
+            return new ReturningRestCallbackAdapter<ItemCategory>() {
+                @Override
+                protected ItemCategory getResult() throws Exception {
+                    itemCategory.setId(id);
+                    itemCategoryDao.update(itemCategory);
+                    return itemCategoryDao.get(id);
+                }
+            }.invoke();
+        }
+    }
+
+    @RequestMapping(
             value = "/",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})

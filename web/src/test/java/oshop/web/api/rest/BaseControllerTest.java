@@ -6,13 +6,14 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.context.MessageSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -23,7 +24,7 @@ import oshop.model.ItemCategory;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -47,6 +48,9 @@ public abstract class BaseControllerTest {
 
     @Resource
     private GenericDao<Item, Integer> itemDao;
+
+    @Resource
+    protected MessageSource messageSource;
 
     protected ObjectMapper mapper = new ObjectMapper();
     protected MockMvc mockMvc;
@@ -95,5 +99,13 @@ public abstract class BaseControllerTest {
         item.setPrice(price);
 
         return item;
+    }
+
+    public ResultMatcher contentStringUtf8Matcher(final String expectedContent) {
+        return new ResultMatcher() {
+            public void match(MvcResult result) throws Exception {
+                assertEquals("Response content", expectedContent, new String(result.getResponse().getContentAsByteArray()));
+            }
+        };
     }
 }

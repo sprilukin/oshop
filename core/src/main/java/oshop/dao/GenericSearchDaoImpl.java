@@ -1,6 +1,7 @@
 package oshop.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,9 @@ public class GenericSearchDaoImpl implements GenericSearchDao {
     private MessageSource messageSource;
 
     private Session getSession() {
-        return sessionFactory.getCurrentSession();
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.setFlushMode(FlushMode.MANUAL);
+        return currentSession;
     }
 
     public <T extends BaseEntity> Criteria createCriteria(Class<T> entityClass) {
