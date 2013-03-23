@@ -30,9 +30,8 @@
                 });
             },
             "modifyItemCategory": function (id) {
-                api.itemCategories.delete(id, function () {
-                    loadAllItemCategories();
-                });
+                $("#itemCategoryId").val(id);
+                $("#editCategoryModal").modal("show");
             }
         };
 
@@ -48,13 +47,28 @@
                         $("#addCategoryModal").modal("hide");
                     },
                     function(json, statusCode) {
-                        $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(json.fields.name);
+                        var validationMsg = utils.applyTemplate("#fieldValidationTemplate", json.fields.name);
+                        $("#addItemCategoryGroup").addClass("error").find(".help-inline").html(validationMsg);
+                    });
+            }},
+            "#editItemCategoryButton": {events: "click", handler: function () {
+                $("#editItemCategoryGroup").removeClass("error").find(".help-inline").html("");
+
+                api.itemCategories.update( $("#itemCategoryId").val(),
+                    JSON.stringify({"name": $("#editItemCategory").val()}),
+                    function(json, statusCode) {
+                        loadAllItemCategories();
+                    },
+                    function(json, statusCode) {
+                        var validationMsg = utils.applyTemplate("#fieldValidationTemplate", json.fields.name);
+                        $("#editItemCategoryGroup").addClass("error").find(".help-inline").html(validationMsg);
                     });
             }},
             "#itemCategoriesTableContainer": {events: "click", selector: "li", handler: function(event) {
                 var menuItem = $(this);
                 var id = menuItem.attr("data-id");
-                itemCategoryActions[menuItem.attr("data-action")](id);
+                var itemCategoryAction = itemCategoryActions[menuItem.attr("data-action")];
+                itemCategoryAction && itemCategoryAction(id);
             }}
         };
 

@@ -28,7 +28,7 @@
         <spring:message code="item.category.add"/>
     </a>
 
-    <!-- Modal -->
+    <!-- Add Category Modal -->
     <div id="addCategoryModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -51,9 +51,44 @@
             <button id="addItemCategoryButton" class="btn btn-primary"><spring:message code="item.category.add"/></button>
         </div>
     </div>
+
+    <!-- Edit Category Modal -->
+    <div id="editCategoryModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="editCategoryModalLabel"><spring:message code="item.category.edit.category"/></h3>
+        </div>
+        <div class="modal-body">
+            <p>
+            <div class="control-group form-horizontal">
+                <label class="control-label" for="itemCategoryId">#</label>
+
+                <div class="controls">
+                    <input class="input-large" id="itemCategoryId" type="text" required="required" disabled="disabled">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div id="editItemCategoryGroup" class="control-group form-horizontal">
+                <label class="control-label" for="addItemCategory"><spring:message code="item.category.name"/></label>
+
+                <div class="controls">
+                    <input class="input-large" id="editItemCategory" type="text" required="required">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="general.close"/></button>
+            <button id="editItemCategoryButton" class="btn btn-primary"><spring:message code="item.category.edit"/></button>
+        </div>
+    </div>
 </div>
 
 <%-- templates --%>
+<script type="template/mustache" id="fieldValidationTemplate">
+    <%@include file="validationEntry.jsp"%>
+</script>
 <script type="template/mustache" id="itemCategoryTemplate">
     <%@include file="tableRow.jsp"%>
 </script>
