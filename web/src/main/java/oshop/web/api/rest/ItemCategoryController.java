@@ -49,7 +49,7 @@ public class ItemCategoryController {
     private GenericDao<Item, Integer> itemDao;
 
     @RequestMapping(
-            value = "/add",
+            value = "/",
             method = RequestMethod.PUT,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})

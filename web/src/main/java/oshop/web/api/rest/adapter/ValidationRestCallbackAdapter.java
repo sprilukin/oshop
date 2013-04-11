@@ -31,20 +31,21 @@ public class ValidationRestCallbackAdapter implements RestCallback {
             builder.status(HttpStatus.BAD_REQUEST);
 
             Map<String, List<String>> fieldErrorsMap = new HashMap<String, List<String>>();
-            for (FieldError error: result.getFieldErrors()) {
-                List<String> fieldErrorsList = fieldErrorsMap.get(error.getField());
-                if (fieldErrorsList == null) {
-                    fieldErrorsList = new ArrayList<String>();
-                    fieldErrorsMap.put(error.getField(), fieldErrorsList);
-                }
-
-
-                fieldErrorsList.add(error.getDefaultMessage());
-            }
-
             Map<String, String> errors = new HashMap<String, String>();
+
             for (ObjectError error: result.getAllErrors()) {
-                if (!(error instanceof FieldError)) {
+                if (error instanceof FieldError) {
+                    FieldError fieldError = (FieldError)error;
+
+                    List<String> fieldErrorsList = fieldErrorsMap.get(fieldError.getField());
+                    if (fieldErrorsList == null) {
+                        fieldErrorsList = new ArrayList<String>();
+                        fieldErrorsMap.put(fieldError.getField(), fieldErrorsList);
+                    }
+
+
+                    fieldErrorsList.add(fieldError.getDefaultMessage());
+                } else {
                     errors.put(error.getObjectName(), error.getDefaultMessage());
                 }
             }

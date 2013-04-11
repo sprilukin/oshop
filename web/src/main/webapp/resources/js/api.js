@@ -9,7 +9,7 @@
         return {
             add: function (category, onSuccess, onFail) {
                 utils.restCall(
-                    utils.applyTemplate(URL_TEMPLATE, {params: "add"}),
+                    utils.applyTemplate(URL_TEMPLATE, {params: ""}),
                     {
                         method: "PUT",
                         data: category,

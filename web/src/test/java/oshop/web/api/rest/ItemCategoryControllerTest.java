@@ -22,7 +22,7 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
         String categoryAsString = mapper.writeValueAsString(category);
 
         this.mockMvc.perform(
-                put("/api/itemCategories/add")
+                put("/api/itemCategories/")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(categoryAsString))
@@ -37,7 +37,7 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
         String categoryAsString = mapper.writeValueAsString(category);
 
         this.mockMvc.perform(
-                put("/api/itemCategories/add")
+                put("/api/itemCategories/")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(categoryAsString))
