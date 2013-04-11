@@ -23,10 +23,5 @@ public abstract class GenericRestCallbackAdapter<T> implements RestCallback {
         }
     }
 
-    @Override
-    public ResponseEntity<ValidationFailedDto> invoke(BindingResult result) {
-        throw new IllegalStateException("Method not supported");
-    }
-
     protected abstract ResponseEntity<T> getResponse() throws Exception;
 }

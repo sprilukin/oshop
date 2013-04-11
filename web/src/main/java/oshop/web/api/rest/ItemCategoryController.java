@@ -5,13 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,17 +22,13 @@ import oshop.dao.GenericSearchDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
 import oshop.web.api.dto.GenericListDto;
-import oshop.web.api.dto.ValidationFailedDto;
 import oshop.web.api.rest.adapter.EmptyResultCheckRestCallbackAdapter;
-import oshop.web.api.rest.adapter.GenericRestCallbackAdapter;
-import oshop.web.api.rest.adapter.ResponseBuilder;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
-import oshop.web.api.rest.adapter.ValidationFailedRestCallbackAdapter;
+import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,17 +56,14 @@ public class ItemCategoryController {
     @ResponseBody
     @Transactional(readOnly = false)
     public ResponseEntity<?> add(@RequestBody @Valid final ItemCategory itemCategory, final BindingResult result) {
-        if (result.hasErrors()) {
-            return new ValidationFailedRestCallbackAdapter().invoke(result);
-        } else {
-            return new ReturningRestCallbackAdapter<ItemCategory>() {
-                @Override
-                protected ItemCategory getResult() throws Exception {
-                    Integer id = itemCategoryDao.add(itemCategory);
-                    return itemCategoryDao.get(id);
-                }
-            }.invoke();
-        }
+        return new ValidationRestCallbackAdapter(result,
+                new ReturningRestCallbackAdapter<ItemCategory>() {
+                    @Override
+                    protected ItemCategory getResult() throws Exception {
+                        Integer id = itemCategoryDao.add(itemCategory);
+                        return itemCategoryDao.get(id);
+                    }
+                }).invoke();
     }
 
     @RequestMapping(
@@ -111,18 +102,15 @@ public class ItemCategoryController {
             @PathVariable final Integer id,
             @RequestBody @Valid final ItemCategory itemCategory, final BindingResult result) {
 
-        if (result.hasErrors()) {
-            return new ValidationFailedRestCallbackAdapter().invoke(result);
-        } else {
-            return new ReturningRestCallbackAdapter<ItemCategory>() {
-                @Override
-                protected ItemCategory getResult() throws Exception {
-                    itemCategory.setId(id);
-                    itemCategoryDao.update(itemCategory);
-                    return itemCategoryDao.get(id);
-                }
-            }.invoke();
-        }
+        return new ValidationRestCallbackAdapter(result,
+                new ReturningRestCallbackAdapter<ItemCategory>() {
+                    @Override
+                    protected ItemCategory getResult() throws Exception {
+                        itemCategory.setId(id);
+                        itemCategoryDao.update(itemCategory);
+                        return itemCategoryDao.get(id);
+                    }
+                }).invoke();
     }
 
     @RequestMapping(
