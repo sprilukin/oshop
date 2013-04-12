@@ -26,6 +26,7 @@
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <resources mapping="/resources/**" location="/resources/"/>
+    <resources mapping="/templates/**" location="/templates/"/>
     <resources mapping="/favicon.ico" location="/favicon.ico"/>
 
     <view-controller path="/main2"/>

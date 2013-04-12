@@ -4,8 +4,12 @@
         <pattern>/40*.jsp</pattern>
         <pattern>/api/*</pattern>
         <pattern>/resources/*</pattern>
+        <pattern>/templates/*</pattern>
     </excludes>
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
+    </decorator>
+    <decorator name="backbone" page="backbone.jsp">
+        <pattern>/backbone/app</pattern>
     </decorator>
 </decorators>
