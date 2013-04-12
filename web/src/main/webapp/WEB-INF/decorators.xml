@@ -10,6 +10,6 @@
         <pattern>/*</pattern>
     </decorator>
     <decorator name="backbone" page="backbone.jsp">
-        <pattern>/backbone/app</pattern>
+        <pattern>/app</pattern>
     </decorator>
 </decorators>

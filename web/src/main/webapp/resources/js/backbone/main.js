@@ -9,6 +9,7 @@ require.config({
         underscore: 'lib/underscore',
         backbone: 'lib/backbone',
         mustache: 'lib/mustache',
+        bootstrap: 'lib/bootstrap',
         // Require.js plugins
         text: 'lib/require.text',
 
@@ -17,6 +18,9 @@ require.config({
         templates: '../../templates'
     },
     shim: {
+        bootstrap: {
+            deps: ["jquery"]
+        },
         underscore: {
             exports: '_'
         },
@@ -33,9 +37,43 @@ require([
     'jquery',
     'underscore',
     'backbone',
-    'text'
-], function($, _, Backbone, text){
-    Backbone.history.start();
+    'mustache',
+    'text',
+    'text!templates/itemCategories.html',
+    'bootstrap'
+], function($, _, Backbone, Mustache, text, itemCategoryTemplate){
 
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            '': 'home'
+        }
+    });
+
+    var ItemCategoriesCollection = Backbone.Collection.extend({
+        url: function () {
+            return "api/v2/itemCategories/"
+        }
+    });
+
+    var AppView = Backbone.View.extend({
+        el: '.container',
+        render: function () {
+            var that = this;
+            var itemCategories = new ItemCategoriesCollection();
+            itemCategories.fetch({
+                success: function (collection) {
+                    that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: collection.models}));
+                }
+            });
+        }
+    });
+
+    var view = new AppView();
+    var router = new AppRouter();
+    router.on('route:home', function () {
+        view.render();
+    });
+
+    Backbone.history.start();
     console.log("It works");
 });

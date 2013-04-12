@@ -1,0 +1,32 @@
+<table id="itemCategoriesTable" class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th class="span1">#</th>
+        <th>item.category.column.name</th>
+        <th class="span1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#itemCategories}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{attributes.name}}</td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+                    <li data-action="modifyItemCategory">
+                        <a tabindex="-1" href="#edit/{{id}}"><i class="icon-pencil"></i> general.modify</a>
+                    </li>
+                    <li data-action="removeItemCategory">
+                        <a tabindex="-1" href="#delete/{{id}}"><i class="icon-trash"></i> general.remove</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {{/itemCategories}}
+    </tbody>
+</table>
