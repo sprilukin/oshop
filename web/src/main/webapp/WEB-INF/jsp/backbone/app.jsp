@@ -18,6 +18,6 @@
 
 </div>
 
-<script data-main="resources/js/backbone/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>
+<script data-main="resources/js/bb/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>
 </body>
 </html>

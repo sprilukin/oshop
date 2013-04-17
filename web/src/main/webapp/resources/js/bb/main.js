@@ -39,9 +39,10 @@ require([
     'backbone',
     'mustache',
     'text',
+    'bb/ajaxUtils',
     'text!templates/itemCategories.html',
     'bootstrap'
-], function($, _, Backbone, Mustache, text, itemCategoryTemplate){
+], function($, _, Backbone, Mustache, text, ajaxUtils, itemCategoryTemplate){
 
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -50,8 +51,22 @@ require([
     });
 
     var ItemCategoriesCollection = Backbone.Collection.extend({
+        total: null,
         url: function () {
-            return "api/v2/itemCategories/"
+            return "api/itemCategories/"
+        },
+        fetch: function(params) {
+            var collection = this;
+
+            ajaxUtils.restCall(this.url(), {
+                method: "GET",
+                success: function (json, status) {
+                    console.log(json);
+                    collection.total = json.size;
+                    collection.reset(json.values);
+                    params.success && params.success(collection, status);
+                }
+            });
         }
     });
 
@@ -75,5 +90,4 @@ require([
     });
 
     Backbone.history.start();
-    console.log("It works");
 });
