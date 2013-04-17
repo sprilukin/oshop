@@ -39,10 +39,10 @@ require([
     'backbone',
     'mustache',
     'text',
-    'bb/ajaxUtils',
+    'bb/restApi',
     'text!templates/itemCategories.html',
     'bootstrap'
-], function($, _, Backbone, Mustache, text, ajaxUtils, itemCategoryTemplate){
+], function ($, _, Backbone, Mustache, text, restApi, itemCategoryTemplate) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -55,17 +55,14 @@ require([
         url: function () {
             return "api/itemCategories/"
         },
-        fetch: function(params) {
+        fetch: function (params) {
             var collection = this;
 
-            ajaxUtils.restCall(this.url(), {
-                method: "GET",
-                success: function (json, status) {
-                    console.log(json);
-                    collection.total = json.size;
-                    collection.reset(json.values);
-                    params.success && params.success(collection, status);
-                }
+            restApi.itemCategories.list(function (json, status) {
+                console.log(json);
+                collection.total = json.size;
+                collection.reset(json.values);
+                params.success && params.success(collection, status);
             });
         }
     });
