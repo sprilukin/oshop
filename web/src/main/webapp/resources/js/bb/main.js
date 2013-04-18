@@ -1,5 +1,3 @@
-// Require.js allows us to configure shortcut alias
-// Their usage will become more apparent futher along in the tutorial.
 require.config({
     baseUrl: "resources/js",
     paths: {
@@ -12,9 +10,6 @@ require.config({
         bootstrap: 'lib/bootstrap',
         // Require.js plugins
         text: 'lib/require.text',
-
-        // Just a short cut so we can put our html outside the js dir
-        // When you have HTML/CSS designers this aids in keeping them out of the js directory
         templates: '../../templates'
     },
     shim: {
@@ -31,8 +26,6 @@ require.config({
     }
 });
 
-// Let's kick off the application
-
 require([
     'jquery',
     'underscore',
@@ -44,26 +37,32 @@ require([
     'bootstrap'
 ], function ($, _, Backbone, Mustache, text, restApi, itemCategoryTemplate) {
 
-    var AppRouter = Backbone.Router.extend({
-        routes: {
-            '': 'home'
-        }
-    });
-
     var ItemCategoriesCollection = Backbone.Collection.extend({
         total: null,
         url: function () {
             return "api/itemCategories/"
         },
-        fetch: function (params) {
-            var collection = this;
 
-            restApi.itemCategories.list(function(json, status) {
-                collection.total = json.size;
-                collection[params.reset ? 'reset' : 'set'](json.values, params);
-                params.success && params.success(collection, json, params);
-                collection.trigger('sync', collection, json, params);
-            });
+        parse: function(json) {
+            this.total = json.size;
+            return json.values;
+        }
+
+        /*fetch: function (params) {
+         var collection = this;
+
+         restApi.itemCategories.list(function(json, status) {
+         collection.total = json.size;
+         collection[params.reset ? 'reset' : 'set'](json.values, params);
+         params.success && params.success(collection, json, params);
+         collection.trigger('sync', collection, json, params);
+         });
+         }*/
+    });
+
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            '': 'home'
         }
     });
 
@@ -73,9 +72,8 @@ require([
             var that = this;
             var itemCategories = new ItemCategoriesCollection();
             itemCategories.fetch({
-                success: function (collection, json) {
-                    //that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: collection.models}));
-                    that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: json.values}));
+                success: function (collection) {
+                    that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: collection.models}));
                 }
             });
         }
