@@ -58,11 +58,11 @@ require([
         fetch: function (params) {
             var collection = this;
 
-            restApi.itemCategories.list(function (json, status) {
-                console.log(json);
+            restApi.itemCategories.list(function(json, status) {
                 collection.total = json.size;
-                collection.reset(json.values);
-                params.success && params.success(collection, status);
+                collection[params.reset ? 'reset' : 'set'](json.values, params);
+                params.success && params.success(collection, json, params);
+                collection.trigger('sync', collection, json, params);
             });
         }
     });
@@ -73,8 +73,9 @@ require([
             var that = this;
             var itemCategories = new ItemCategoriesCollection();
             itemCategories.fetch({
-                success: function (collection) {
-                    that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: collection.models}));
+                success: function (collection, json) {
+                    //that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: collection.models}));
+                    that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: json.values}));
                 }
             });
         }
