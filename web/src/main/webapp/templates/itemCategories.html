@@ -6,8 +6,13 @@
         <th class="span1"></th>
     </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total: {{total}}</td>
+        </tr>
+    </tfoot>
     <tbody>
-    {{#itemCategories}}
+    {{#models}}
     <tr>
         <td>{{id}}</td>
         <td>{{attributes.name}}</td>
@@ -27,6 +32,6 @@
             </div>
         </td>
     </tr>
-    {{/itemCategories}}
+    {{/models}}
     </tbody>
 </table>

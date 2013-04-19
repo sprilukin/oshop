@@ -37,7 +37,7 @@ require([
     'bootstrap'
 ], function ($, _, Backbone, Mustache, text, restApi, itemCategoryTemplate) {
 
-    var ItemCategoriesCollection = Backbone.Collection.extend({
+    var ItemCategories = Backbone.Collection.extend({
         total: null,
         url: function () {
             return "api/itemCategories/"
@@ -47,18 +47,9 @@ require([
             this.total = json.size;
             return json.values;
         }
-
-        /*fetch: function (params) {
-         var collection = this;
-
-         restApi.itemCategories.list(function(json, status) {
-         collection.total = json.size;
-         collection[params.reset ? 'reset' : 'set'](json.values, params);
-         params.success && params.success(collection, json, params);
-         collection.trigger('sync', collection, json, params);
-         });
-         }*/
     });
+
+    var itemCategories = new ItemCategories();
 
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -70,10 +61,9 @@ require([
         el: '.container',
         render: function () {
             var that = this;
-            var itemCategories = new ItemCategoriesCollection();
             itemCategories.fetch({
                 success: function (collection) {
-                    that.$el.html(Mustache.render(itemCategoryTemplate, {itemCategories: collection.models}));
+                    that.$el.html(Mustache.render(itemCategoryTemplate, collection));
                 }
             });
         }
