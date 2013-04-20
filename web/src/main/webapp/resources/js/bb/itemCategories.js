@@ -9,8 +9,9 @@ define([
     'bb/warningView',
     'text',
     'text!templates/itemCategories.html',
+    'text!templates/editItemCategory.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, warningView, text, itemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, warningView, text, itemCategoryTemplate, editItemCategoryTemplate) {
 
     var ItemCategories = Backbone.Collection.extend({
 
@@ -29,7 +30,7 @@ define([
 
     var AppView = Backbone.View.extend({
 
-        el: '#itemCategoriesTableContainer',
+        el: '.itemCategories',
 
         render: function () {
             var that = this;
@@ -41,6 +42,23 @@ define([
         }
     });
     var view = new AppView();
+
+    var EditItemCategoryView = Backbone.View.extend({
+
+        el: '.editItemCategoryPlaceholder',
+
+        render: function (options) {
+            this.$el.html(Mustache.render(editItemCategoryTemplate, _.extend({
+                title: "Add/Edit",
+                nameTitle: "Name",
+                close: "Close",
+                submit: "Add/Edit"
+            }, options.model)));
+
+            $(this.$el).find(".editItemCategory").modal({show: true});
+        }
+    });
+    var editItemCategoryView = new EditItemCategoryView();
 
     var ItemCategoriesRouter = Backbone.Router.extend({
 
@@ -70,6 +88,11 @@ define([
                 warningView.render(Mustache.render("Item Category with id {{id}} not found", {id: id}));
                 this.navigate("", {trigger: true});
             }
+        },
+
+        add: function() {
+            editItemCategoryView.render({mode: "add"});
+            this.navigate("", {trigger: true});
         }
     });
     var router = new ItemCategoriesRouter();

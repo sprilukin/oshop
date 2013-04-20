@@ -8,7 +8,11 @@
 </head>
 <body>
 
-<div id="itemCategoriesTableContainer">
+<div class="itemCategories">
+    <%-- item categories table will be placed here --%>
+</div>
+
+<div class="editItemCategoryPlaceholder">
     <%-- item categories table will be placed here --%>
 </div>
 
