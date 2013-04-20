@@ -30,7 +30,7 @@ define([
 
     var AppView = Backbone.View.extend({
 
-        el: '.itemCategories',
+        el: '.appContainer',
 
         render: function () {
             var that = this;
@@ -45,7 +45,7 @@ define([
 
     var EditItemCategoryView = Backbone.View.extend({
 
-        el: '.editItemCategoryPlaceholder',
+        el: '.appContainer',
 
         render: function (options) {
             this.$el.html(Mustache.render(editItemCategoryTemplate, _.extend({
@@ -55,7 +55,11 @@ define([
                 submit: "Add/Edit"
             }, options.model)));
 
-            $(this.$el).find(".editItemCategory").modal({show: true});
+            var dialog = $(this.$el).find(".editItemCategory");
+            dialog.modal({show: true});
+            dialog.on("hidden", function() {
+                options.onClose && options.onClose();
+            })
         }
     });
     var editItemCategoryView = new EditItemCategoryView();
@@ -91,8 +95,10 @@ define([
         },
 
         add: function() {
-            editItemCategoryView.render({mode: "add"});
-            this.navigate("", {trigger: true});
+            var that = this;
+            editItemCategoryView.render({mode: "add", onClose: function() {
+                that.navigate("", {trigger: true});
+            }});
         }
     });
     var router = new ItemCategoriesRouter();

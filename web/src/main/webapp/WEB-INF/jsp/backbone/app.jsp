@@ -8,12 +8,8 @@
 </head>
 <body>
 
-<div class="itemCategories">
-    <%-- item categories table will be placed here --%>
-</div>
+<div class="appContainer">
 
-<div class="editItemCategoryPlaceholder">
-    <%-- item categories table will be placed here --%>
 </div>
 
 <script data-main="resources/js/bb/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>
