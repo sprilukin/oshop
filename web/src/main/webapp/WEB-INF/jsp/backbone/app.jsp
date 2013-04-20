@@ -8,14 +8,8 @@
 </head>
 <body>
 
-<div class="container">
-    <h1><spring:message code="item.categories.title"/></h1>
-
-    <a href="#test" class="btn btn-info">CLickme</a>
-    <div id="itemCategoriesTableContainer">
-        <%-- item categories table will be placed here --%>
-    </div>
-
+<div id="itemCategoriesTableContainer">
+    <%-- item categories table will be placed here --%>
 </div>
 
 <script data-main="resources/js/bb/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>

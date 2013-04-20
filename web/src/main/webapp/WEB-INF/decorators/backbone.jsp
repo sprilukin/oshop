@@ -23,6 +23,10 @@
     <decorator:head/>
 </head>
 <body>
-<decorator:body/>
+
+<div class="container">
+    <div class="warning"><%-- placeholder for warnings --%></div>
+    <decorator:body/>
+</div>
 </body>
 </html>

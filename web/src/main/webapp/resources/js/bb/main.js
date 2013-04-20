@@ -31,11 +31,11 @@ require([
     'underscore',
     'backbone',
     'mustache',
+    'bb/warningView',
     'text',
-    'bb/restApi',
     'text!templates/itemCategories.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, text, restApi, itemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, warningView, text, itemCategoryTemplate) {
 
     var ItemCategories = Backbone.Collection.extend({
         total: null,
@@ -48,17 +48,10 @@ require([
             return json.values;
         }
     });
-
     var itemCategories = new ItemCategories();
 
-    var AppRouter = Backbone.Router.extend({
-        routes: {
-            '': 'home'
-        }
-    });
-
     var AppView = Backbone.View.extend({
-        el: '.container',
+        el: '#itemCategoriesTableContainer',
         render: function () {
             var that = this;
             itemCategories.fetch({
@@ -68,10 +61,36 @@ require([
             });
         }
     });
-
     var view = new AppView();
+
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            '': 'home',
+            'add': 'add',
+            'edit/:id': 'edit',
+            'delete/:id': 'remove'
+        },
+
+        home: function() {
+            view.render();
+        },
+
+        remove: function(id) {
+            var itemCategory = itemCategories.get(id);
+            if (itemCategory) {
+                itemCategory.destroy({wait: true});
+            } else {
+                warningView.render(Mustache.render("Item Category {{id}} not found", {id: id}));
+                this.navigate("", {trigger: true});
+            }
+        }
+    });
+
     var router = new AppRouter();
-    router.on('route:home', function () {
+    itemCategories.on('all', function() {
+        console.log(arguments);
+    });
+    itemCategories.on('destroy', function() {
         view.render();
     });
 

@@ -68,8 +68,8 @@ public class ItemCategoryController {
 
     @RequestMapping(
             value = "/{id}",
-            method = RequestMethod.DELETE,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
+            method = RequestMethod.DELETE
+            /*consumes = {MediaType.APPLICATION_JSON_VALUE}*/)
     @Transactional(readOnly = false)
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         return new VoidRestCallbackAdapter() {
