@@ -2,7 +2,7 @@
  * REST API
  */
 define([
-    'bb/ajaxUtils',
+    'router/ajaxUtils',
     'mustache'
 ], function (ajaxUtils, Mustache) {
 

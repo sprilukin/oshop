@@ -18,5 +18,5 @@ define([
         }
     });
 
-    return new WarningView();
+    return WarningView;
 });

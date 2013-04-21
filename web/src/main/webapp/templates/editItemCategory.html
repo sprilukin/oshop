@@ -7,22 +7,22 @@
             <h3 id="editCategoryModalLabel">{{title}}</h3>
         </div>
         <div class="modal-body">
-            {{#id}}
+            {{#model}}
             <div class="control-group form-horizontal">
                 <label class="control-label" for="itemCategoryId">#</label>
 
                 <div class="controls">
-                    <input class="input-large" id="itemCategoryId" type="text" required="required" value="{{id}}" disabled="disabled">
+                    <input class="input-large" id="itemCategoryId" type="text" required="required" value="{{model.id}}" disabled="disabled">
                     <span class="help-inline"> </span>
                 </div>
             </div>
-            {{/id}}
+            {{/model}}
 
             <div id="editItemCategoryGroup" class="control-group form-horizontal">
                 <label class="control-label" for="editItemCategory">{{nameTitle}}</label>
 
                 <div class="controls">
-                    <input class="input-large" id="editItemCategory" type="text" required="required" value="{{name}}">
+                    <input class="input-large" id="editItemCategory" type="text" required="required" value="{{#model}}{{model.name}}{{/model}}">
                     <span class="help-inline"> </span>
                 </div>
             </div>
