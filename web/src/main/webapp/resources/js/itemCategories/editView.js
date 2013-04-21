@@ -34,7 +34,7 @@ define([
                 nameTitle: "Name",
                 close: "Close",
                 submit: this.mode,
-                model: this.model
+                model: this.model.attributes
             }));
 
             this.dialog = $(this.$el).find(".editItemCategory");

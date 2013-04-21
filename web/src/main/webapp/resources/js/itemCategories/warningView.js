@@ -12,8 +12,8 @@ define([
 
     var WarningView = Backbone.View.extend({
         el: '.warning',
-        render: function (warning) {
-            this.$el.html(Mustache.render(warningTemplate, {warning: warning}));
+        render: function () {
+            this.$el.html(Mustache.render(warningTemplate, {warning: this.model}));
             this.$el.find(".alert").alert();
         }
     });

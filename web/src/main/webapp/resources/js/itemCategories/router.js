@@ -12,20 +12,17 @@ define([
     'itemCategories/warningView'
 ], function ($, _, Backbone, Mustache, Model, ListView, EditView, WarningView) {
 
-    var listView = new ListView();
-    var warningView = new WarningView();
-
     var ItemCategoriesRouter = Backbone.Router.extend({
 
         routes: {
             '': 'list',
-            'add': 'add',
+            'add': 'edit',
             'edit/:id': 'edit',
             'delete/:id': 'remove'
         },
 
         list: function() {
-            listView.render();
+            new ListView().render();
         },
 
         remove: function(id) {
@@ -39,19 +36,35 @@ define([
                     that.navigate("", {trigger: true});
                 },
                 error: function(model, xhr) {
-                    warningView.render(JSON.parse(xhr.responseText));
+                    new WarningView({model: JSON.parse(xhr.responseText)}).render();
                     that.navigate("", {trigger: true});
                 }
             });
         },
 
-        add: function() {
+        edit: function(id) {
             var that = this;
-            var editView = new EditView({model: new Model()});
-            editView.render();
-            editView.on("close", function() {
-                that.navigate("", {trigger: true});
-            });
+
+            var renderEditView = function(model) {
+                var editView = new EditView({model: model});
+                editView.render();
+                editView.on("close", function() {
+                    that.navigate("", {trigger: true});
+                });
+            };
+
+            var model = new Model();
+            if (typeof id !== "undefined") {
+                model.set("id", id);
+                model.fetch({
+                    wait: true,
+                    success: function (model) {
+                        renderEditView(model);
+                    }
+                });
+            } else {
+                renderEditView(model);
+            }
         }
     });
 

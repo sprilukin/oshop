@@ -7,7 +7,7 @@
             <h3 id="editCategoryModalLabel">{{title}}</h3>
         </div>
         <div class="modal-body">
-            {{#model}}
+            {{#model.id}}
             <div class="control-group form-horizontal">
                 <label class="control-label" for="itemCategoryId">#</label>
 
@@ -16,13 +16,13 @@
                     <span class="help-inline"> </span>
                 </div>
             </div>
-            {{/model}}
+            {{/model.id}}
 
             <div id="editItemCategoryGroup" class="control-group form-horizontal">
                 <label class="control-label" for="editItemCategory">{{nameTitle}}</label>
 
                 <div class="controls">
-                    <input class="input-large" id="editItemCategory" type="text" required="required" value="{{#model}}{{model.name}}{{/model}}">
+                    <input class="input-large" id="editItemCategory" type="text" required="required" value="{{model.name}}">
                     <span class="help-inline"> </span>
                 </div>
             </div>
