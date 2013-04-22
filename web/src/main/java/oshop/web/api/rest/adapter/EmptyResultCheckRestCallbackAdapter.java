@@ -2,7 +2,7 @@ package oshop.web.api.rest.adapter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import oshop.web.api.dto.GenericListDto;
+import oshop.web.dto.GenericListDto;
 
 public abstract class EmptyResultCheckRestCallbackAdapter<T extends GenericListDto> extends ReturningRestCallbackAdapter<T> {
     @Override

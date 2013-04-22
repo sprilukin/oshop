@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import oshop.web.api.dto.ValidationFailedDto;
+import oshop.web.dto.ValidationFailedDto;
 import oshop.web.api.rest.RestCallback;
 
 import java.util.ArrayList;

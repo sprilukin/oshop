@@ -1,4 +1,4 @@
-package oshop.web.api.dto;
+package oshop.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

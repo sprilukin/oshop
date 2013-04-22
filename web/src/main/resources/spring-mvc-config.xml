@@ -14,6 +14,12 @@
             <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
         </message-converters>
     </annotation-driven>
+    
+    <interceptors>
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <beans:property name="paramName" value="lang"/>
+        </beans:bean>
+    </interceptors>
 
     <!--<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
         <beans:property name="pathMatcher" ref="optionalPathMatcher"/>
@@ -35,6 +41,11 @@
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/jsp/"/>
         <beans:property name="suffix" value=".jsp"/>
+    </beans:bean>
+
+    <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <beans:property name="defaultLocale" value="en" />
+        <beans:property name="cookieMaxAge" value="100000" />
     </beans:bean>
 
 </beans:beans>

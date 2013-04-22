@@ -21,7 +21,7 @@ import oshop.dao.GenericDao;
 import oshop.dao.GenericSearchDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
-import oshop.web.api.dto.GenericListDto;
+import oshop.web.dto.GenericListDto;
 import oshop.web.api.rest.adapter.EmptyResultCheckRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;

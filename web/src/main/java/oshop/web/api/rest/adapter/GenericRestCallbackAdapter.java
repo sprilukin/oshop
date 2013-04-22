@@ -2,9 +2,7 @@ package oshop.web.api.rest.adapter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import oshop.dao.exception.NotFoundException;
-import oshop.web.api.dto.ValidationFailedDto;
 import oshop.web.api.rest.RestCallback;
 
 public abstract class GenericRestCallbackAdapter<T> implements RestCallback {
