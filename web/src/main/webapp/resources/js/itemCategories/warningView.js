@@ -12,9 +12,18 @@ define([
 
     var WarningView = Backbone.View.extend({
         el: '.warning',
+
+        events: {
+            "closed .alert": "onClosed"
+        },
+
         render: function () {
             this.$el.html(Mustache.render(warningTemplate, {warning: this.model}));
             this.$el.find(".alert").alert();
+        },
+
+        onClosed: function() {
+            this.undelegateEvents();
         }
     });
 

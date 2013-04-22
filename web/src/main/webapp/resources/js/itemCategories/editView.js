@@ -8,17 +8,17 @@ define([
     'mustache',
     'itemCategories/model',
     'text',
-    'text!templates/itemCategories.html',
     'text!templates/editItemCategory.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, Model, text, itemCategoryTemplate, editItemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, Model, text, editItemCategoryTemplate) {
 
     var EditItemCategoryView = Backbone.View.extend({
 
         el: '.appContainer',
 
         events: {
-            "click #editItemCategoryButton": "edit"
+            "click #editItemCategoryButton": "submit",
+            "hidden .editItemCategory": "onHidden"
         },
 
         initialize: function(options) {
@@ -37,15 +37,17 @@ define([
                 model: this.model.attributes
             }));
 
-            this.dialog = $(this.$el).find(".editItemCategory");
-            this.dialog.modal({show: true});
-            this.dialog.on("hidden", function() {
-                that.trigger("close");
-            })
+            var dialog = $(this.$el).find(".editItemCategory");
+            dialog.modal({show: true});
         },
 
-        edit: function() {
-            this.dialog.modal("hide");
+        onHidden: function() {
+            this.undelegateEvents();
+            this.trigger("close");
+        },
+
+        submit: function() {
+            $(this.$el).find(".editItemCategory").modal("hide");
         }
     });
 
