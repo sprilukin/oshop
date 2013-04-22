@@ -98,6 +98,7 @@ public class ItemCategoryController {
             method = RequestMethod.PUT,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
+    @Transactional(readOnly = false)
     public ResponseEntity<?> update(
             @PathVariable final Integer id,
             @RequestBody @Valid final ItemCategory itemCategory, final BindingResult result) {

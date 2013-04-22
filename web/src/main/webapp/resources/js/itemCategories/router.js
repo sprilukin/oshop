@@ -37,7 +37,6 @@ define([
                 },
                 error: function(model, xhr) {
                     new WarningView({model: JSON.parse(xhr.responseText)}).render();
-                    that.navigate("", {trigger: true});
                 }
             });
         },

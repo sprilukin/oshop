@@ -111,6 +111,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     public void update(T entity) {
         entity.setLastUpdate(new Date());
         getSession().update(getSession().merge(entity));
+        getSession().flush();
     }
 
     public void remove(ID id) {
