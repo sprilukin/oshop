@@ -6,11 +6,12 @@ define([
     'underscore',
     'backbone',
     'mustache',
+    'itemCategories/messages',
     'itemCategories/model',
     'text',
     'text!templates/editItemCategory.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, Model, text, editItemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, messages, Model, text, editItemCategoryTemplate) {
 
     var EditItemCategoryView = Backbone.View.extend({
 

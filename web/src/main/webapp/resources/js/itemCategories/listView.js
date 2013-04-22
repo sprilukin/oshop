@@ -6,12 +6,13 @@ define([
     'underscore',
     'backbone',
     'mustache',
+    'itemCategories/messages',
     'itemCategories/collection',
     'text',
     'text!templates/itemCategories.html',
     'text!templates/editItemCategory.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, Collection, text, itemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, messages, Collection, text, itemCategoryTemplate) {
 
     var collection = new Collection();
 
@@ -23,7 +24,8 @@ define([
             var that = this;
             collection.fetch({
                 success: function (collection) {
-                    that.$el.html(Mustache.render(itemCategoryTemplate, collection));
+                    var model = _.extend({}, collection, messages);
+                    that.$el.html(Mustache.render(itemCategoryTemplate, model));
                 }
             });
         }

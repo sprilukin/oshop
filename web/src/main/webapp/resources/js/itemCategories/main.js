@@ -10,7 +10,8 @@ require.config({
         bootstrap: 'lib/bootstrap',
         // Require.js plugins
         text: 'lib/require.text',
-        templates: '../../templates'
+        templates: '../../templates',
+        messages: '../../i18n/messages'
     },
     shim: {
         bootstrap: {
