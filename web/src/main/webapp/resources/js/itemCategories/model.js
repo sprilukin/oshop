@@ -15,7 +15,9 @@ define([
         },
 
         validate: function(attributes) {
-            console.log(attributes);
+            if (!attributes.name) {
+                //return "Name should not be empty";
+            }
         }
     });
 

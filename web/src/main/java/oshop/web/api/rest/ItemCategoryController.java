@@ -50,7 +50,7 @@ public class ItemCategoryController {
 
     @RequestMapping(
             value = "/",
-            method = RequestMethod.PUT,
+            method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
