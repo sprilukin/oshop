@@ -16,14 +16,14 @@ define([
 
         routes: {
             '': 'defineRoute',
-            'itemCategory/list': 'list',
-            'itemCategory/add': 'edit',
-            'itemCategory/edit/:id': 'edit',
-            'itemCategory/delete/:id': 'remove'
+            'list': 'list',
+            'add': 'edit',
+            'edit/:id': 'edit',
+            'delete/:id': 'remove'
         },
 
         defineRoute: function() {
-            this.navigate("itemCategory/list", {trigger: true});
+            this.navigate("list", {trigger: true});
         },
 
         list: function(options) {
@@ -31,13 +31,13 @@ define([
 
             var listView = new ListView(options);
             listView.on("itemCategory:add", function() {
-                that.navigate("itemCategory/add", {trigger: true});
+                that.navigate("add", {trigger: true});
             });
             listView.on("itemCategory:edit", function(data) {
-                that.navigate("itemCategory/edit/" + data.id, {trigger: true});
+                that.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
             });
             listView.on("itemCategory:delete", function(data) {
-                that.navigate("itemCategory/delete/" + data.id, {trigger: true});
+                that.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true});
             });
             listView.render();
         },
@@ -50,7 +50,7 @@ define([
             itemCategory.destroy({
                 wait: true,
                 success: function() {
-                    that.navigate("itemCategory/list", {trigger: true});
+                    that.navigate("list", {trigger: true});
                 },
                 error: function(model, xhr) {
                     new WarningView({model: JSON.parse(xhr.responseText)}).render();
@@ -65,7 +65,7 @@ define([
                 var editView = new EditView({model: model});
                 editView.render();
                 editView.on("close", function() {
-                    that.navigate("itemCategory/list", {trigger: true});
+                    that.navigate("list", {trigger: true});
                 });
             };
 

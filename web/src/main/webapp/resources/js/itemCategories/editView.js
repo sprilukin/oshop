@@ -32,10 +32,10 @@ define([
 
         render: function () {
             this.$el.html(Mustache.render(editItemCategoryTemplate, {
-                title: this.mode,
-                nameTitle: "Name",
-                close: "Close",
-                submit: this.mode,
+                title: this.mode === "add" ? messages["item_category_add_category"] : messages["item_category_edit_category"],
+                nameTitle: messages["item_category_column_name"],
+                close: messages["general_close"],
+                submit: this.mode === "add" ? messages["item_category_add"] : messages["item_category_edit"],
                 model: this.model.attributes
             }));
 
