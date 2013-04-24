@@ -5,8 +5,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'mustache'
-], function ($, _, Backbone, Mustache) {
+    'mustache',
+    'common/messages'
+], function ($, _, Backbone, Mustache, messages) {
 
     var ItemCategory = Backbone.Model.extend({
 
@@ -16,7 +17,7 @@ define([
 
         validate: function(attributes) {
             if (!attributes.name) {
-                //return "Name should not be empty";
+                return messages["ui_validation_not_blank"];
             }
         }
     });
