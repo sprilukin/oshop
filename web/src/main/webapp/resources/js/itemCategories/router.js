@@ -9,7 +9,7 @@ define([
     'itemCategories/model',
     'itemCategories/listView',
     'itemCategories/editView',
-    'warningView'
+    'common/warningView'
 ], function ($, _, Backbone, Mustache, Model, ListView, EditView, WarningView) {
 
     var ItemCategoriesRouter = Backbone.Router.extend({

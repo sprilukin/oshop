@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'itemCategories/messages',
+    'common/messages',
     'itemCategories/collection',
     'text',
     'text!templates/itemCategories/itemCategories.html',
