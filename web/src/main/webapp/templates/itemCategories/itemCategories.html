@@ -23,10 +23,10 @@
                 </button>
                 <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
                     <li data-action="modifyItemCategory">
-                        <a tabindex="-1" href="#edit/{{id}}"><i class="icon-pencil"></i> {{general_modify}}</a>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="editItemCategory"><i class="icon-pencil"></i> {{general_modify}}</a>
                     </li>
                     <li data-action="removeItemCategory">
-                        <a tabindex="-1" href="#delete/{{id}}"><i class="icon-trash"></i> {{general_remove}}</a>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="deleteItemCategory"><i class="icon-trash"></i> {{general_remove}}</a>
                     </li>
                 </ul>
             </div>
@@ -36,7 +36,7 @@
     </tbody>
 </table>
 
-<a href="#add" role="button" class="btn btn-primary">
+<a href="#" role="button" class="btn btn-primary addItemCategory">
     <i class="icon-plus icon-white"> </i>
     {{item_category_add_category}}
 </a>

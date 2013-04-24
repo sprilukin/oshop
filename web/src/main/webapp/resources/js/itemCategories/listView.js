@@ -9,8 +9,8 @@ define([
     'itemCategories/messages',
     'itemCategories/collection',
     'text',
-    'text!templates/itemCategories.html',
-    'text!templates/editItemCategory.html',
+    'text!templates/itemCategories/itemCategories.html',
+    'text!templates/itemCategories/editItemCategory.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, Collection, text, itemCategoryTemplate) {
 
@@ -20,6 +20,12 @@ define([
 
         el: '.appContainer',
 
+        events: {
+            "click a.addItemCategory": "addItemCategory",
+            "click a.editItemCategory": "editItemCategory",
+            "click a.deleteItemCategory": "deleteItemCategory"
+        },
+
         render: function () {
             var that = this;
             collection.fetch({
@@ -28,6 +34,21 @@ define([
                     that.$el.html(Mustache.render(itemCategoryTemplate, model));
                 }
             });
+        },
+
+        addItemCategory: function(event) {
+            this.trigger("itemCategory:add");
+            event.preventDefault();
+        },
+
+        editItemCategory: function(event) {
+            this.trigger("itemCategory:edit", {id: $(event.currentTarget).attr("data-id")});
+            event.preventDefault();
+        },
+
+        deleteItemCategory: function(event) {
+            this.trigger("itemCategory:delete", {id: $(event.currentTarget).attr("data-id")});
+            event.preventDefault();
         }
     });
 

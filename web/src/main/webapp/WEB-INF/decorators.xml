@@ -9,7 +9,4 @@
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
     </decorator>
-    <decorator name="backbone" page="backbone.jsp">
-        <pattern>/app</pattern>
-    </decorator>
 </decorators>

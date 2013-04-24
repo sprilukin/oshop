@@ -9,7 +9,7 @@ define([
     'itemCategories/messages',
     'itemCategories/model',
     'text',
-    'text!templates/editItemCategory.html',
+    'text!templates/itemCategories/editItemCategory.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, Model, text, editItemCategoryTemplate) {
 

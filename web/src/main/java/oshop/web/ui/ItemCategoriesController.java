@@ -10,6 +10,6 @@ public class ItemCategoriesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String main() throws Exception {
-        return "itemCategories/itemCategories";
+        return "itemCategories";
     }
 }
