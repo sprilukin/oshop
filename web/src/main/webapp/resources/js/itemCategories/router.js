@@ -30,26 +30,18 @@ define([
         initialize: function () {
             var that = this;
 
-            collection.on("all", function () {
-                console.log("collection", arguments);
-            });
-
             listView.on("add",function () {
                 that.navigate("add", {trigger: true});
             }).on("edit",function (data) {
-                    that.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
-                }).on("delete",function (data) {
-                    that.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true});
-                }).on("all", function () {
-                    console.log("listView", arguments);
-                });
+                that.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
+            }).on("delete",function (data) {
+                that.navigate(Mustache.render("delete/{{id}}", {id: data.id}));
+            });
 
             editView.on("close",function () {
                 that.navigate("list");
                 collection.fetch();
-            }).on("all", function () {
-                    console.log("editView", arguments);
-                });
+            });
         },
 
         defineRoute: function () {

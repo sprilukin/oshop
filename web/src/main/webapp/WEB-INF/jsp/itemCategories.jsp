@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<h1><spring:message code="item.categories.title"/></h1>
+
 <div id="listItemCategories"></div>
 <div id="editItemCategories"></div>
 
