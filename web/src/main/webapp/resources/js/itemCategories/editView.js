@@ -15,22 +15,20 @@ define([
 
     var EditItemCategoryView = Backbone.View.extend({
 
-        el: '.appContainer',
+        el: '#editItemCategories',
 
         events: {
-            "click #editItemCategoryButton": "onSubmit",
+            "click .editItemCategoryButton": "onSubmit",
             "hidden .editItemCategory": "onHidden"
         },
 
-        initialize: function(options) {
-            this.model = options.model || new Model();
-            this.mode = typeof options.model.id !== "undefined" ? "edit" : "add";
+        render: function (model) {
+            this.model = model;
+            this.mode = typeof model.id !== "undefined" ? "edit" : "add";
 
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
-        },
 
-        render: function () {
             this.$el.html(Mustache.render(editItemCategoryTemplate, {
                 title: this.mode === "add" ? messages["item_category_add_category"] : messages["item_category_edit_category"],
                 nameTitle: messages["item_category_column_name"],
@@ -39,16 +37,16 @@ define([
                 model: this.model.attributes
             }));
 
-            this.dialog = $(this.$el).find(".editItemCategory");
+            this.dialog = this.$el.find(".editItemCategory");
             this.dialog.modal({show: true});
         },
 
         hideValidation: function() {
-            $("#editItemCategoryGroup").removeClass("error").find(".help-inline").html();
+            this.$el.find(".editItemCategoryGroup").removeClass("error").find(".help-inline").html();
         },
 
         renderValidation: function(errors) {
-            $("#editItemCategoryGroup").addClass("error").find(".help-inline").html(errors.name);
+            this.$el.find(".editItemCategoryGroup").addClass("error").find(".help-inline").html(errors.name);
         },
 
         onIvalid: function(model, error, attrs) {
@@ -61,7 +59,8 @@ define([
         },
 
         onHidden: function() {
-            this.undelegateEvents();
+            this.model = null;
+
             this.trigger("close");
         },
 
@@ -70,7 +69,7 @@ define([
 
             this.hideValidation();
 
-            this.model.save({"name": $("#editItemCategory").val()}, {
+            this.model.save({"name": this.$el.find("#itemCategoryName").val()}, {
                 wait: true,
                 success: function() {
                     that.dialog.modal("hide");

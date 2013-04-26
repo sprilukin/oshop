@@ -7,10 +7,15 @@ define([
     'backbone',
     'mustache',
     'itemCategories/model',
+    'itemCategories/collection',
     'itemCategories/listView',
     'itemCategories/editView',
     'common/warningView'
-], function ($, _, Backbone, Mustache, Model, ListView, EditView, WarningView) {
+], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView) {
+
+    var collection = new Collection();
+    var listView = new ListView({collection: collection});
+    var editView = new EditView();
 
     var ItemCategoriesRouter = Backbone.Router.extend({
 
@@ -22,64 +27,75 @@ define([
             'delete/:id': 'remove'
         },
 
-        defineRoute: function() {
-            this.navigate("list", {trigger: true});
-        },
-
-        list: function(options) {
+        initialize: function () {
             var that = this;
 
-            var listView = new ListView(options);
-            listView.on("itemCategory:add", function() {
+            collection.on("all", function () {
+                console.log("collection", arguments);
+            });
+
+            listView.on("add",function () {
                 that.navigate("add", {trigger: true});
-            });
-            listView.on("itemCategory:edit", function(data) {
-                that.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
-            });
-            listView.on("itemCategory:delete", function(data) {
-                that.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true});
-            });
+            }).on("edit",function (data) {
+                    that.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
+                }).on("delete",function (data) {
+                    that.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true});
+                }).on("all", function () {
+                    console.log("listView", arguments);
+                });
+
+            editView.on("close",function () {
+                that.navigate("list");
+                collection.fetch();
+            }).on("all", function () {
+                    console.log("editView", arguments);
+                });
+        },
+
+        defineRoute: function () {
+            var that = this;
+
+            that.navigate("list");
+            collection.fetch();
+        },
+
+        list: function (options) {
             listView.render();
         },
 
-        remove: function(id) {
+        remove: function (id) {
             var that = this;
 
             var itemCategory = new Model();
             itemCategory.set("id", id);
             itemCategory.destroy({
                 wait: true,
-                success: function() {
-                    that.navigate("list", {trigger: true});
+                success: function () {
+                    that.navigate("list");
+                    collection.fetch();
                 },
-                error: function(model, xhr) {
+                error: function (model, xhr) {
                     new WarningView({model: JSON.parse(xhr.responseText)}).render();
+                    that.navigate("list");
                 }
             });
         },
 
-        edit: function(id) {
+        edit: function (id) {
             var that = this;
 
-            var renderEditView = function(model) {
-                var editView = new EditView({model: model});
-                editView.render();
-                editView.on("close", function() {
-                    that.navigate("list", {trigger: true});
-                });
-            };
-
             var model = new Model();
+
             if (typeof id !== "undefined") {
                 model.set("id", id);
                 model.fetch({
                     wait: true,
                     success: function (model) {
-                        renderEditView(model);
+                        editView.render(model);
                     }
                 });
             } else {
-                renderEditView(model);
+                editView.render(model);
             }
         }
     });
