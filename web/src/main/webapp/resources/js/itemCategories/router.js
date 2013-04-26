@@ -20,8 +20,7 @@ define([
     var ItemCategoriesRouter = Backbone.Router.extend({
 
         routes: {
-            '': 'defineRoute',
-            'list': 'list',
+            '': 'list',
             'add': 'edit',
             'edit/:id': 'edit',
             'delete/:id': 'remove'
@@ -35,23 +34,16 @@ define([
             }).on("edit",function (data) {
                 that.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
             }).on("delete",function (data) {
-                that.navigate(Mustache.render("delete/{{id}}", {id: data.id}));
+                that.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});
             });
 
             editView.on("close",function () {
-                that.navigate("list");
-                collection.fetch();
+                that.navigate("", {trigger: true});
             });
         },
 
-        defineRoute: function () {
-            var that = this;
-
-            that.navigate("list");
-            collection.fetch();
-        },
-
         list: function (options) {
+            collection.fetch();
             listView.render();
         },
 
@@ -63,12 +55,11 @@ define([
             itemCategory.destroy({
                 wait: true,
                 success: function () {
-                    that.navigate("list");
-                    collection.fetch();
+                    that.navigate("", {trigger: true});
                 },
                 error: function (model, xhr) {
                     new WarningView({model: JSON.parse(xhr.responseText)}).render();
-                    that.navigate("list");
+                    that.navigate("", {trigger: true});
                 }
             });
         },

@@ -14,12 +14,17 @@ define([
         el: '.warning',
 
         events: {
-            "closed .alert": "onClosed"
+            "closed .alert": "onClosed",
+            "click .alert": "close"
         },
 
         render: function () {
             this.$el.html(Mustache.render(warningTemplate, {warning: this.model}));
             this.$el.find(".alert").alert();
+        },
+
+        close: function() {
+            this.$el.find(".alert").alert("close");
         },
 
         onClosed: function() {
