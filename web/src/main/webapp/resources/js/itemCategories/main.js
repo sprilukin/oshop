@@ -1,8 +1,8 @@
 require([
     'backbone',
-    'itemCategories/router'
-], function (Backbone, Router) {
+    'itemCategories/controller'
+], function (Backbone, Controller) {
 
-    var router = new Router();
+    var controller = new Controller();
     Backbone.history.start();
 });
