@@ -7,7 +7,7 @@ public abstract class VoidRestCallbackAdapter extends GenericRestCallbackAdapter
     @Override
     protected ResponseEntity<String> getResponse() throws Exception {
         perform();
-        return new ResponseBuilder<String>().status(HttpStatus.OK).body("OK").build();
+        return new ResponseBuilder<String>().status(HttpStatus.NO_CONTENT).build();
     }
 
     protected abstract void perform() throws Exception;

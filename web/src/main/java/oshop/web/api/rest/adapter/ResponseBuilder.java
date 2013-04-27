@@ -35,7 +35,7 @@ public class ResponseBuilder<T> {
     }
 
     public ResponseEntity<T> build() {
-        if (body != null && !headers.isEmpty()) {
+        if (body != null && headers != null && !headers.isEmpty()) {
             return new ResponseEntity<T>(body, headers, status);
         } else if (body != null) {
             return new ResponseEntity<T>(body, status);

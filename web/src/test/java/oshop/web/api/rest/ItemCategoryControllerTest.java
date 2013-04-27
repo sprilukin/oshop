@@ -86,7 +86,7 @@ public class ItemCategoryControllerTest extends BaseControllerTest {
                 delete("/api/itemCategories/" + id)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @Test

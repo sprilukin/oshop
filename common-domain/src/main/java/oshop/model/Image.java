@@ -20,7 +20,7 @@ public class Image extends BaseEntity<Integer> {
     private byte[] data;
 
     @NotNull
-    @Pattern(regexp = "^image/[\\w]+$")
+    //@Pattern(regexp = "^image/[\\w]+$")
     private String contentType;
 
     public byte[] getData() {

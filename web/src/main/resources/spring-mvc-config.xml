@@ -25,18 +25,11 @@
         <beans:property name="pathMatcher" ref="optionalPathMatcher"/>
     </beans:bean>-->
 
-    <context:component-scan base-package="oshop.web" use-default-filters="false">
-        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
-    </context:component-scan>
-
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <resources mapping="/resources/**" location="/resources/"/>
     <resources mapping="/templates/**" location="/templates/"/>
     <resources mapping="/favicon.ico" location="/favicon.ico"/>
-
-    <view-controller path="/main2"/>
-    <view-controller path="/main3"/>
 
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/jsp/"/>
@@ -49,4 +42,7 @@
         <beans:property name="cookieName" value="lang"/>
     </beans:bean>
 
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+    <beans:import resource="spring-mvc-controllers.xml"/>
 </beans:beans>
