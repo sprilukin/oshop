@@ -19,7 +19,8 @@ define([
 
         events: {
             "click .editItemCategoryButton": "onSubmit",
-            "hidden .editItemCategory": "onHidden"
+            "hidden .editItemCategory": "onHidden",
+            "keypress .editItemCategory input": "onKeyPress"
         },
 
         render: function (model) {
@@ -39,6 +40,7 @@ define([
 
             this.dialog = this.$el.find(".editItemCategory");
             this.dialog.modal({show: true});
+            this.$el.find("#itemCategoryName").focus();
         },
 
         hideValidation: function() {
@@ -62,6 +64,13 @@ define([
             this.model = null;
 
             this.trigger("close");
+        },
+
+        onKeyPress: function(event) {
+            var code = (event.keyCode ? event.keyCode : event.which);
+            if(code == 13) {
+                this.onSubmit();
+            }
         },
 
         onSubmit: function() {
