@@ -47,4 +47,7 @@
     <bean id="shippingTypeDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ShippingType" />
     </bean>
+    <bean id="imageDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+        <property name="entityClass" value="oshop.model.Image" />
+    </bean>
 </beans>
