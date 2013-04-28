@@ -4,11 +4,12 @@
 
 <html>
 <head>
-    <title><spring:message code="item.categories.title"/></title>
+    <title>jquery upload</title>
 </head>
 <body>
 
-<h1><spring:message code="item.categories.title"/></h1>
+
+<h1>Update files</h1>
 
 <form class="" action="/api/images/update?id=3&id=4" method="post" enctype="multipart/form-data">
     <label for="file" title="File:"></label>
@@ -25,30 +26,25 @@
 
 <h1>jquery upload</h1>
 
-<form id="fileupload" class="" action="/api/images/" method="post" enctype="multipart/form-data">
-    <label for="file" title="File:"></label>
+<button id="enableUpload" class="btn btn-info">Enable</button>
+<button id="disableUpload" class="btn btn-danger">Disable</button>
 
-    <div class="control-group">
-        <label class="control-label" for="file">File</label>
-        <div class="controls">
-            <input name="files[0]" type="file" />
-            <button type="submit" class="btn">Submit</button>
+<div>
+    <form id="fileUpload" action="/api/images/?width=150" method="post">
+        <input name="files[0]" type="file" multiple="multiple" />
+    </form>
+
+    <div class="fileupload-progress fade">
+        <!-- The global progress bar -->
+        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="bar" style="width: 100%;"></div>
         </div>
+        <!-- The extended global progress information -->
+        <div class="progress-extended">&nbsp;</div>
     </div>
-</form>
 
-<div class="fileupload-progress fade">
-    <!-- The global progress bar -->
-    <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <div class="bar" style="width: 100%;"></div>
+    <div id="images">
     </div>
-    <!-- The extended global progress information -->
-    <div class="progress-extended">&nbsp;</div>
-</div>
-
-<div id="images">
-    <%--<img src="/api/images/3" alt="ttt">
-    <img src="/api/images/4" alt="ttt">--%>
 </div>
 
 <script src="<c:url value='/resources/js/lib/require.js'/>"></script>
@@ -62,12 +58,12 @@ require([
 ], function($, fileupload, _) {
 
     $(function() {
-        $('#fileupload').fileupload({
+        $('#fileUpload').fileupload({
             dataType: 'json',
             done: function (e, data) {
                 $('.fileupload-progress').removeClass("in");
                 _.each(data.result, function (id) {
-                    $('<img>').attr("src", "/api/images/" + id).appendTo($("#images"));
+                    $('<img>').attr("src", "/api/images/" + id)/*.attr("width", "50px")*/.appendTo($("#images"));
                 });
             },
             add: function(e, data) {
@@ -78,6 +74,13 @@ require([
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('.fileupload-progress').find('.bar').css('width', progress + '%');
             }
+        });
+
+        $("#enableUpload").on("click", function() {
+            $('#fileUpload').fileupload('enable');
+        });
+        $("#disableUpload").on("click", function() {
+            $('#fileUpload').fileupload('disable');
         });
     })
 })

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import oshop.dao.GenericDao;
 import oshop.model.Image;
+import oshop.utils.ImageConverterService;
 import oshop.web.api.rest.adapter.HttpCacheRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
@@ -36,6 +37,9 @@ public class ImageController {
     public static final String IF_MODIFIED_SINCE_HEADER_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
 
     private static final Log log = LogFactory.getLog(ImageController.class);
+
+    @Resource
+    private ImageConverterService imageConverterService;
 
     @Resource
     private GenericDao<Image, Integer> imageDao;
@@ -69,7 +73,9 @@ public class ImageController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @Transactional(readOnly = false)
-    public ResponseEntity<?> addViaFormSubmit(final FileUploadDto uploadDto) {
+    public ResponseEntity<?> addViaFormSubmit(
+            final FileUploadDto uploadDto,
+            final @RequestParam(value = "width", required = false) Integer maxWidth) {
         return new ReturningRestCallbackAdapter<List<Integer>>() {
             @Override
             protected List<Integer> getResult() throws Exception {
@@ -80,9 +86,20 @@ public class ImageController {
                         throw new Exception("No image to save");
                     }
 
+                    String contentType = file.getContentType();
+                    byte[] imageData = file.getBytes();
+                    if (maxWidth != null) {
+                        contentType = MediaType.IMAGE_PNG_VALUE;
+                        imageData = imageConverterService.deflate(imageData, maxWidth, MediaType.IMAGE_PNG.getSubtype());
+                        if (imageData == file.getBytes()) {
+                            contentType = file.getContentType();
+                        }
+                    }
+
+
                     Image image = new Image();
-                    image.setContentType(file.getContentType());
-                    image.setData(file.getBytes());
+                    image.setContentType(contentType);
+                    image.setData(imageData);
 
                     ids.add(imageDao.add(image));
                 }
