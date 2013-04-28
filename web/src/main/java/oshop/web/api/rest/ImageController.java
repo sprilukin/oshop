@@ -33,6 +33,8 @@ import java.util.Locale;
 @Transactional(readOnly = true)
 public class ImageController {
 
+    public static final String IF_MODIFIED_SINCE_HEADER_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
+
     private static final Log log = LogFactory.getLog(ImageController.class);
 
     @Resource
@@ -121,7 +123,7 @@ public class ImageController {
                 this.setLastModified(image.getLastUpdate().getTime());
 
                 if (ifModifiedSinceHeader != null) {
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(IF_MODIFIED_SINCE_HEADER_PATTERN, Locale.US);
                     Date ifModifiedSinceDate = simpleDateFormat.parse(ifModifiedSinceHeader);
                     this.setIfModifiedSince(ifModifiedSinceDate.getTime());
                 }

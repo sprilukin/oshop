@@ -32,6 +32,10 @@
                 backbone: 'lib/backbone',
                 mustache: 'lib/mustache',
                 bootstrap: 'lib/bootstrap',
+                //fileupload
+                fileupload: 'lib/fileup/jquery.fileupload',
+                iframeTransport: 'lib/fileup/jquery.iframe-transport',
+                jqueryUiWidget: 'lib/fileup/jquery.ui-widget',
                 // Require.js plugins
                 text: 'lib/require.text',
                 templates: '../../templates',
