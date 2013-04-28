@@ -7,11 +7,12 @@ define([
     'backbone',
     'mustache',
     'common/messages',
+    'common/fileUploadView',
     'itemCategories/model',
     'text',
     'text!templates/itemCategories/editItemCategory.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, Model, text, editItemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, messages, FileUploadView, Model, text, editItemCategoryTemplate) {
 
     var EditItemCategoryView = Backbone.View.extend({
 
@@ -41,6 +42,9 @@ define([
             this.dialog = this.$el.find(".editItemCategory");
             this.dialog.modal({show: true});
             this.$el.find("#itemCategoryName").focus();
+
+            this.fileUpload = new FileUploadView({element: this.$el.find(".fileUploadGroup .controls"), width: "50", multiple: "true"});
+            this.fileUpload.render();
         },
 
         hideValidation: function() {
@@ -63,6 +67,11 @@ define([
         onHidden: function() {
             this.model = null;
 
+            if (!this.submitted) {
+                this.fileUpload.cancel();
+            }
+            this.fileUpload.destroy();
+
             this.trigger("close");
         },
 
@@ -81,6 +90,7 @@ define([
             this.model.save({"name": this.$el.find("#itemCategoryName").val()}, {
                 wait: true,
                 success: function() {
+                    that.submitted = true;
                     that.dialog.modal("hide");
                 }
             });

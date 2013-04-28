@@ -1,0 +1,15 @@
+<div class="fileUploadWidget">
+    <form class="fileUpload" action="/api/images/{{#width}}?width={{width}}{{/width}}" method="post">
+        <input name="files[0]" type="file" {{#multiple}}multiple="multiple"{{/multiple}} />
+    </form>
+
+    <div class="fileupload-progress fade in" style="display: none">
+        <div class="progress progress-success progress-striped active" role="progressbar"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+
+            <div class="bar" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <div class="imagesPreview"></div>
+</div>
