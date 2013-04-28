@@ -7,8 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import oshop.dao.GenericDao;
 import oshop.model.Image;
+import oshop.web.api.rest.adapter.HttpCacheRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 import oshop.web.dto.FileUploadDto;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/api/images")
@@ -103,14 +107,24 @@ public class ImageController {
             method = RequestMethod.GET,
             produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> get(@PathVariable final Integer id) {
-        return new ReturningRestCallbackAdapter<byte[]>() {
+    public ResponseEntity<?> get(
+            @PathVariable final Integer id,
+            final @RequestHeader(value = "If-Modified-Since", required = false) String ifModifiedSinceHeader) {
+
+        return new HttpCacheRestCallbackAdapter<byte[]>() {
             @Override
             protected byte[] getResult() throws Exception {
                 Image image = imageDao.get(id);
 
                 this.getHeaders().setContentType(MediaType.parseMediaType(image.getContentType()));
-                this.getHeaders().setContentLength(image.getData().length);
+                this.setSize(image.getData().length);
+                this.setLastModified(image.getLastUpdate().getTime());
+
+                if (ifModifiedSinceHeader != null) {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+                    Date ifModifiedSinceDate = simpleDateFormat.parse(ifModifiedSinceHeader);
+                    this.setIfModifiedSince(ifModifiedSinceDate.getTime());
+                }
 
                 return image.getData();
             }
