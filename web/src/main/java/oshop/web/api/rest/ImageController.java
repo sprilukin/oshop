@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import oshop.dao.GenericDao;
 import oshop.model.Image;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
@@ -29,7 +31,7 @@ public class ImageController {
     private GenericDao<Image, Integer> imageDao;
 
     @RequestMapping(
-            value = "/",
+            value = "/raw",
             method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -45,6 +47,25 @@ public class ImageController {
                 Image image = new Image();
                 image.setContentType(requestEntity.getHeaders().getContentType().toString());
                 image.setData(requestEntity.getBody());
+
+                return imageDao.add(image);
+            }
+        }.invoke();
+    }
+
+    @RequestMapping(
+            value = "/",
+            method = RequestMethod.POST,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    @Transactional(readOnly = false)
+    public ResponseEntity<?> addViaFormSubmit(final  MultipartFile file, final HttpEntity<byte[]> requestEntity) {
+        return new ReturningRestCallbackAdapter<Integer>() {
+            @Override
+            protected Integer getResult() throws Exception {
+                Image image = new Image();
+                image.setContentType(file.getContentType());
+                image.setData(file.getBytes());
 
                 return imageDao.add(image);
             }
@@ -83,7 +104,7 @@ public class ImageController {
     }
 
     @RequestMapping(
-            value = "/{id}",
+            value = "/raw/{id}",
             method = RequestMethod.PUT)
     @ResponseBody
     @Transactional(readOnly = false)
@@ -101,6 +122,27 @@ public class ImageController {
                 Image image = imageDao.get(id);
                 image.setContentType(requestEntity.getHeaders().getContentType().toString());
                 image.setData(requestEntity.getBody());
+                imageDao.update(image);
+            }
+        }.invoke();
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.PUT)
+    @ResponseBody
+    @Transactional(readOnly = false)
+    public ResponseEntity<?> updateViaFormSubmit(
+            @PathVariable final Integer id,
+            final @RequestParam MultipartFile file) {
+
+        return new VoidRestCallbackAdapter() {
+            @Override
+            protected void perform() throws Exception {
+                Image image = imageDao.get(id);
+                image.setContentType(file.getContentType());
+                image.setData(file.getBytes());
+
                 imageDao.update(image);
             }
         }.invoke();
