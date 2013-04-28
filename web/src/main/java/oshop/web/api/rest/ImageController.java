@@ -59,7 +59,7 @@ public class ImageController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @Transactional(readOnly = false)
-    public ResponseEntity<?> addViaFormSubmit(final  MultipartFile file, final HttpEntity<byte[]> requestEntity) {
+    public ResponseEntity<?> addViaFormSubmit(final  MultipartFile file) {
         return new ReturningRestCallbackAdapter<Integer>() {
             @Override
             protected Integer getResult() throws Exception {
