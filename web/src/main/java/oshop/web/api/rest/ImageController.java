@@ -17,8 +17,11 @@ import oshop.dao.GenericDao;
 import oshop.model.Image;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
+import oshop.web.dto.FileUploadDto;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/images")
@@ -59,15 +62,21 @@ public class ImageController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @Transactional(readOnly = false)
-    public ResponseEntity<?> addViaFormSubmit(final @RequestParam MultipartFile file) {
-        return new ReturningRestCallbackAdapter<Integer>() {
+    public ResponseEntity<?> addViaFormSubmit(final FileUploadDto uploadDto) {
+        return new ReturningRestCallbackAdapter<List<Integer>>() {
             @Override
-            protected Integer getResult() throws Exception {
-                Image image = new Image();
-                image.setContentType(file.getContentType());
-                image.setData(file.getBytes());
+            protected List<Integer> getResult() throws Exception {
+                List<Integer> ids = new ArrayList<Integer>(uploadDto.getFiles().size());
 
-                return imageDao.add(image);
+                for (MultipartFile file: uploadDto.getFiles()) {
+                    Image image = new Image();
+                    image.setContentType(file.getContentType());
+                    image.setData(file.getBytes());
+
+                    ids.add(imageDao.add(image));
+                }
+
+                return ids;
             }
         }.invoke();
     }

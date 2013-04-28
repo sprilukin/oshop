@@ -10,10 +10,24 @@
 
 <h1><spring:message code="item.categories.title"/></h1>
 
-<form id="ttt" action="/api/images/" method="post">
+<form class="" action="/api/images/" method="post" enctype="multipart/form-data">
     <label for="file" title="File:"></label>
-    <input id="file" name="file" type="file" />
-    <input id="submit" name="submitName" type="submit" title="submmitTitle"/>
+
+    <div class="control-group">
+        <label class="control-label" for="file">File</label>
+        <div class="controls">
+            <input id="file" name="files[0]" type="file" />
+            <input id="file2" name="files[1]" type="file" />
+            <button type="submit" class="btn">Submit</button>
+        </div>
+    </div>
 </form>
+
+<div>
+    <img src="/api/images/1" />
+    <img src="/api/images/2" />
+    <img src="/api/images/3" />
+    <img src="/api/images/4" />
+</div>
 </body>
 </html>
