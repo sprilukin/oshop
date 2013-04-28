@@ -10,7 +10,7 @@
 
 <h1><spring:message code="item.categories.title"/></h1>
 
-<form class="" action="/api/images/" method="post" enctype="multipart/form-data">
+<form class="" action="/api/images/update?id=3&id=4" method="post" enctype="multipart/form-data">
     <label for="file" title="File:"></label>
 
     <div class="control-group">
@@ -24,8 +24,8 @@
 </form>
 
 <div>
-    <img src="/api/images/5" alt="ttt">
-    <img src="/api/images/6" alt="ttt">
+    <img src="/api/images/3" alt="ttt">
+    <img src="/api/images/4" alt="ttt">
 </div>
 </body>
 </html>

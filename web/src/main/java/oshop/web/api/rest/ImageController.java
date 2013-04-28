@@ -101,7 +101,7 @@ public class ImageController {
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET,
-            produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+            produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<?> get(@PathVariable final Integer id) {
         return new ReturningRestCallbackAdapter<byte[]>() {
@@ -163,25 +163,28 @@ public class ImageController {
     }
 
 
-    //URL's like /api/images/;id=1,2,3
     @RequestMapping(
-            value = "/",
-            method = RequestMethod.PUT)
+            value = "/update",
+            method = {RequestMethod.POST})
     @ResponseBody
     @Transactional(readOnly = false)
     public ResponseEntity<?> updateMultipleViaFormSubmit(
-            @PathVariable final Integer id,
-            @MatrixVariable(required = true, value = "id") String matrixVars,
-            final @RequestParam MultipartFile file) {
+            final @RequestParam List<String> id,
+            final FileUploadDto uploadDto) {
 
         return new VoidRestCallbackAdapter() {
             @Override
             protected void perform() throws Exception {
-                Image image = imageDao.get(id);
-                image.setContentType(file.getContentType());
-                image.setData(file.getBytes());
 
-                imageDao.update(image);
+                for (int i = 0; i < uploadDto.getFiles().size(); i++) {
+                    MultipartFile file = uploadDto.getFiles().get(i);
+
+                    Image image = imageDao.get(Integer.valueOf(id.get(i)));
+                    image.setContentType(file.getContentType());
+                    image.setData(file.getBytes());
+
+                    imageDao.update(image);
+                }
             }
         }.invoke();
     }
