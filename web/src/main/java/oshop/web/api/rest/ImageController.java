@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,6 +70,10 @@ public class ImageController {
                 List<Integer> ids = new ArrayList<Integer>(uploadDto.getFiles().size());
 
                 for (MultipartFile file: uploadDto.getFiles()) {
+                    if (file.getBytes() == null || file.getBytes().length == 0) {
+                        throw new Exception("No image to save");
+                    }
+
                     Image image = new Image();
                     image.setContentType(file.getContentType());
                     image.setData(file.getBytes());
@@ -83,8 +88,7 @@ public class ImageController {
 
     @RequestMapping(
             value = "/{id}",
-            method = RequestMethod.DELETE
-            /*consumes = {MediaType.APPLICATION_JSON_VALUE}*/)
+            method = RequestMethod.DELETE)
     @Transactional(readOnly = false)
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         return new VoidRestCallbackAdapter() {
@@ -97,7 +101,7 @@ public class ImageController {
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+            produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseBody
     public ResponseEntity<?> get(@PathVariable final Integer id) {
         return new ReturningRestCallbackAdapter<byte[]>() {
@@ -105,7 +109,8 @@ public class ImageController {
             protected byte[] getResult() throws Exception {
                 Image image = imageDao.get(id);
 
-                this.setContentType(MediaType.parseMediaType(image.getContentType()));
+                this.getHeaders().setContentType(MediaType.parseMediaType(image.getContentType()));
+                this.getHeaders().setContentLength(image.getData().length);
 
                 return image.getData();
             }
@@ -143,6 +148,30 @@ public class ImageController {
     @Transactional(readOnly = false)
     public ResponseEntity<?> updateViaFormSubmit(
             @PathVariable final Integer id,
+            final @RequestParam MultipartFile file) {
+
+        return new VoidRestCallbackAdapter() {
+            @Override
+            protected void perform() throws Exception {
+                Image image = imageDao.get(id);
+                image.setContentType(file.getContentType());
+                image.setData(file.getBytes());
+
+                imageDao.update(image);
+            }
+        }.invoke();
+    }
+
+
+    //URL's like /api/images/;id=1,2,3
+    @RequestMapping(
+            value = "/",
+            method = RequestMethod.PUT)
+    @ResponseBody
+    @Transactional(readOnly = false)
+    public ResponseEntity<?> updateMultipleViaFormSubmit(
+            @PathVariable final Integer id,
+            @MatrixVariable(required = true, value = "id") String matrixVars,
             final @RequestParam MultipartFile file) {
 
         return new VoidRestCallbackAdapter() {

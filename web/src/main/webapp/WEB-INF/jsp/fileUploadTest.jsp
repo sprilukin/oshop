@@ -24,10 +24,8 @@
 </form>
 
 <div>
-    <img src="/api/images/1" />
-    <img src="/api/images/2" />
-    <img src="/api/images/3" />
-    <img src="/api/images/4" />
+    <img src="/api/images/5" alt="ttt">
+    <img src="/api/images/6" alt="ttt">
 </div>
 </body>
 </html>
