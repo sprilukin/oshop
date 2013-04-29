@@ -43,13 +43,8 @@ define([
             this.$el = options.element;
             this.width = options.width;
             this.multiple = options.multiple;
-            this.collection = new FileUploadCollection();
+            this.collection = new FileUploadCollection(_.map(options.images, function(id) {return {id: id, original: true}}));
         },
-
-        /*events: {
-            "closed .alert": "onClosed",
-            "click .alert": "close"
-        },*/
 
         render: function () {
             var that = this;
@@ -65,7 +60,8 @@ define([
             if (!this.imagePreviewView) {
                 this.imagePreviewView = new ImagePreviewView({
                     collection: this.collection
-                })
+                });
+                this.imagePreviewView.render();
             }
         },
 
@@ -79,9 +75,7 @@ define([
             var that = this;
             this.$el.find('.fileupload-progress').hide();
 
-            this.collection.add(_.map(data.result, function(id) {
-                return new FileUploadModel({id: id});
-            }), {silent: true});
+            this.collection.add(_.map(data.result, function(id) {return {id: id, original: false}}), {silent: true});
             this.collection.trigger("sync");
 
             this.trigger("uploaded", {ids: data.result});
@@ -98,7 +92,9 @@ define([
 
         cancel: function() {
             this.collection.each(function(model) {
-                model.destroy();
+                if (!model.get("original")) {
+                    model.destroy();
+                }
             });
         }
     });

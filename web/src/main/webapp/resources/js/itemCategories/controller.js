@@ -63,10 +63,6 @@ define([
             this.editView.on("close",function () {
                 that.router.navigate("", {trigger: true});
             });
-
-            this.router.on("all", function() {
-                console.log(arguments);
-            })
         },
 
         list: function () {

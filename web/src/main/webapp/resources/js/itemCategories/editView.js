@@ -43,7 +43,12 @@ define([
             this.dialog.modal({show: true});
             this.$el.find("#itemCategoryName").focus();
 
-            this.fileUpload = new FileUploadView({element: this.$el.find(".fileUploadGroup .controls"), width: "50", multiple: "true"});
+            this.fileUpload = new FileUploadView({
+                element: this.$el.find(".fileUploadGroup .controls"),
+                width: "150",
+                multiple: "true",
+                images: this.model.get("images")
+            });
             this.fileUpload.render();
         },
 
