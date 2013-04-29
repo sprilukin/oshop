@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-responsive.css'/>" />
+    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-image-gallery.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/jquery-ui-1.10.1.custom.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/main.css'/>" />
 
@@ -36,6 +37,9 @@
                 fileupload: 'lib/fileup/jquery.fileupload',
                 iframeTransport: 'lib/fileup/jquery.iframe-transport',
                 jqueryUiWidget: 'lib/fileup/jquery.ui-widget',
+                //image-gallery
+                "load-image": 'lib/load-image',
+                "image-gallery": 'lib/bootstrap-image-gallery',
                 // Require.js plugins
                 text: 'lib/require.text',
                 templates: '../../templates',
@@ -62,8 +66,13 @@
 <body>
 
 <div class="container">
-    <div class="warning"><%-- placeholder for warnings --%></div>
+    <%-- placeholder for warnings --%>
+    <div class="warning"></div>
+
     <decorator:body/>
+
+    <%-- image gallery --%>
+    <div id="imageGallery"></div>
 </div>
 </body>
 </html>
