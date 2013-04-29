@@ -24,6 +24,20 @@ define([
         model: FileUploadModel
     });
 
+    var ImagePreviewView = Backbone.View.extend({
+
+        el: ".imagesPreview",
+
+        initialize: function(options) {
+            this.collection = options.collection;
+            this.collection.on("sync", this.render, this);
+        },
+
+        render: function () {
+            this.$el.html(Mustache.render(fileUploadPreviewTemplate, {images: this.collection.models}));
+        }
+    });
+
     var FileUploadView = Backbone.View.extend({
         initialize: function(options) {
             this.$el = options.element;
@@ -47,6 +61,12 @@ define([
                 add:  _.bind(that.add, that),
                 progressall: _.bind(that.onProgress, that)
             });
+
+            if (!this.imagePreviewView) {
+                this.imagePreviewView = new ImagePreviewView({
+                    collection: this.collection
+                })
+            }
         },
 
         add: function(e, data) {
@@ -58,13 +78,13 @@ define([
         done: function (e, data) {
             var that = this;
             this.$el.find('.fileupload-progress').hide();
-            _.each(data.result, function (id) {
+
+            this.collection.add(_.map(data.result, function(id) {
                 var model = new FileUploadModel();
                 model.set("id", id);
-                that.collection.add(model);
-
-                that.$el.find(".imagesPreview").append(Mustache.render(fileUploadPreviewTemplate, {id: id}));
-            });
+                return  model;
+            }), {silent: true});
+            this.collection.trigger("sync");
 
             this.trigger("uploaded", {ids: data.result});
         },
