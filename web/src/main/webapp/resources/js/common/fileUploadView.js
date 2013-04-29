@@ -80,9 +80,7 @@ define([
             this.$el.find('.fileupload-progress').hide();
 
             this.collection.add(_.map(data.result, function(id) {
-                var model = new FileUploadModel();
-                model.set("id", id);
-                return  model;
+                return new FileUploadModel({id: id});
             }), {silent: true});
             this.collection.trigger("sync");
 

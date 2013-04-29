@@ -76,8 +76,7 @@ define([
         remove: function (id) {
             var that = this;
 
-            var itemCategory = new Model();
-            itemCategory.set("id", id);
+            var itemCategory = new Model({"id": id});
             itemCategory.destroy({
                 wait: true,
                 success: function () {
