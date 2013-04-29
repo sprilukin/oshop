@@ -44,6 +44,7 @@ define([
             this.width = options.width;
             this.multiple = options.multiple;
             this.collection = new FileUploadCollection(_.map(options.images, function(id) {return {id: id, original: true}}));
+            this.toRemoveCollection = new FileUploadCollection();
         },
 
         render: function () {
@@ -71,11 +72,30 @@ define([
             data.submit();
         },
 
+        getImageIds: function() {
+            return this.collection.map(function(model) {
+                return model.id;
+            });
+        },
+
         done: function (e, data) {
             var that = this;
             this.$el.find('.fileupload-progress').hide();
 
-            this.collection.add(_.map(data.result, function(id) {return {id: id, original: false}}), {silent: true});
+            var models = _.map(data.result, function (id) {
+                return {id: id, original: false}
+            });
+
+            if (this.multiple) {
+                this.collection.add(models, {silent: true});
+            } else {
+                this.collection.each(function(model) {
+                    !model.get("original") && model.destroy();
+                    model.get("original") && this.toRemoveCollection.add(model);
+                }, this);
+                this.collection.reset(models, {silent: true});
+            }
+
             this.collection.trigger("sync");
 
             this.trigger("uploaded", {ids: data.result});
@@ -90,12 +110,22 @@ define([
             this.$el.find(".fileUpload").fileupload("destroy");
         },
 
+        submit: function() {
+            this.toRemoveCollection.each(function(model) {
+                model.destroy();
+            });
+
+            this.destroy();
+        },
+
         cancel: function() {
             this.collection.each(function(model) {
                 if (!model.get("original")) {
                     model.destroy();
                 }
             });
+
+            this.destroy();
         }
     });
 

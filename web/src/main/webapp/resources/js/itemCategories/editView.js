@@ -25,6 +25,7 @@ define([
         },
 
         render: function (model) {
+            this.submitted = false;
             this.model = model;
             this.mode = typeof model.id !== "undefined" ? "edit" : "add";
 
@@ -46,8 +47,8 @@ define([
             this.fileUpload = new FileUploadView({
                 element: this.$el.find(".fileUploadGroup .controls"),
                 width: "150",
-                multiple: "true",
-                images: this.model.get("images")
+                multiple: false,
+                images: this.model.get("imageId") ? [this.model.get("imageId")] : []
             });
             this.fileUpload.render();
         },
@@ -72,10 +73,7 @@ define([
         onHidden: function() {
             this.model = null;
 
-            if (!this.submitted) {
-                this.fileUpload.cancel();
-            }
-            this.fileUpload.destroy();
+            this.submitted ? this.fileUpload.submit() : this.fileUpload.cancel();
 
             this.trigger("close");
         },
@@ -92,7 +90,11 @@ define([
 
             this.hideValidation();
 
-            this.model.save({"name": this.$el.find("#itemCategoryName").val()}, {
+            var imageId = _.find(this.fileUpload.getImageIds(), function(id) {
+                return true;
+            }) || null;
+
+            this.model.save({"name": this.$el.find("#itemCategoryName").val(), imageId: imageId}, {
                 wait: true,
                 success: function() {
                     that.submitted = true;
