@@ -50,6 +50,7 @@ define([
         },
 
         add: function(e, data) {
+            this.$el.find('.fileupload-progress .bar').css('width', 0 + '%');
             this.$el.find('.fileupload-progress').show();
             data.submit();
         },
