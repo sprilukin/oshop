@@ -2,8 +2,8 @@
     <thead>
     <tr>
         <th class="span1">#</th>
-        <th></th>
-        <th>{{item_category_column_name}}</th>
+        <th class="span1">{{item_category_column_name}}</th>
+        <th class="span1"></th>
         <th class="span1"></th>
     </tr>
     </thead>
@@ -16,6 +16,7 @@
     {{#models}}
     <tr>
         <td>{{id}}</td>
+        <td>{{attributes.name}}</td>
         <td>
             {{#attributes.imageId}}
             <div data-toggle="modal-gallery" data-target="#modal-gallery">
@@ -25,7 +26,6 @@
             </div>
             {{/attributes.imageId}}
         </td>
-        <td>{{attributes.name}}</td>
         <td>
             <div class="btn-group">
                 <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
