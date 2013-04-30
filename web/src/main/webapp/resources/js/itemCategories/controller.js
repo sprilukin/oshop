@@ -17,6 +17,7 @@ define([
 
         routes: {
             '': 'list',
+            'list/:page': 'list',
             'add': 'edit',
             'edit/:id': 'edit',
             'delete/:id': 'remove'
@@ -26,8 +27,8 @@ define([
             this.controller = options.controller;
         },
 
-        list: function (options) {
-            this.controller.list();
+        list: function (page) {
+            this.controller.list(parseInt(page) || 1);
         },
 
         remove: function (id) {
@@ -51,6 +52,7 @@ define([
     _.extend(ItemCategoriesController.prototype, {
         initialize: function() {
             var that = this;
+            this.page = 1;
 
             this.listView.on("add",function () {
                 that.router.navigate("add", {trigger: true});
@@ -65,8 +67,18 @@ define([
             });
         },
 
-        list: function () {
-            this.collection.fetch();
+        list: function (page) {
+            var that = this;
+            var itemsPerPage = 5;
+            this.page = page;
+
+            this.collection.fetch(
+                {data: {limit: itemsPerPage, offset: that.page - 1},
+                    success: function() {
+                        that.collection.limit = itemsPerPage;
+                        that.collection.page = that.page;
+                    }
+                });
         },
 
         remove: function (id) {

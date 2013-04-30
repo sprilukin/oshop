@@ -1,0 +1,14 @@
+<div class="pagination pagination pagination-right">
+    <ul>
+        {{#pages}}
+        <li class="{{#active}}active{{/active}} {{#disabled}}disabled{{/disabled}}">
+            {{^disabled}}
+            <a href="#list/{{page}}">{{& label}}</a>
+            {{/disabled}}
+            {{#disabled}}
+            <span>{{& label}}</span>
+            {{/disabled}}
+        </li>
+        {{/pages}}
+    </ul>
+</div>
