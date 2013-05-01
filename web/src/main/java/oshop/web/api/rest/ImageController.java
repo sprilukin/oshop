@@ -2,11 +2,13 @@ package oshop.web.api.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 import oshop.web.dto.FileUploadDto;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,20 +89,8 @@ public class ImageController {
                         throw new Exception("No image to save");
                     }
 
-                    String contentType = file.getContentType();
-                    byte[] imageData = file.getBytes();
-                    if (maxWidth != null) {
-                        contentType = MediaType.IMAGE_PNG_VALUE;
-                        imageData = imageConverterService.deflate(imageData, maxWidth, MediaType.IMAGE_PNG.getSubtype());
-                        if (imageData == file.getBytes()) {
-                            contentType = file.getContentType();
-                        }
-                    }
-
-
                     Image image = new Image();
-                    image.setContentType(contentType);
-                    image.setData(imageData);
+                    fillImageWithData(image, file, maxWidth);
 
                     ids.add(imageDao.add(image));
                 }
@@ -118,6 +109,26 @@ public class ImageController {
             @Override
             protected void perform() throws Exception {
                 imageDao.remove(id);            }
+        }.invoke();
+    }
+
+    // /api/images/batch;ids=1,2,3/delete
+    @RequestMapping(
+            value = "/{batch}/delete",
+            method = RequestMethod.DELETE)
+    @Transactional(readOnly = false)
+    public ResponseEntity<?> batchDelete(
+            @MatrixVariable(value = "ids", pathVar="batch", required = true) final List<Integer> ids) {
+        return new VoidRestCallbackAdapter() {
+            @Override
+            protected void perform() throws Exception {
+                imageDao.executeQuery("delete from Image where id in :ids", new GenericDao.QueryManipulator() {
+                    @Override
+                    public void manipulateWithQuery(Query query) {
+                        query.setParameterList("ids", ids);
+                    }
+                });
+            }
         }.invoke();
     }
 
@@ -195,14 +206,15 @@ public class ImageController {
         }.invoke();
     }
 
-
+    // /api/images/batch;ids=1,2,3/update
     @RequestMapping(
-            value = "/update",
+            value = "/{batch}/update",
             method = {RequestMethod.POST})
     @ResponseBody
     @Transactional(readOnly = false)
     public ResponseEntity<?> updateMultipleViaFormSubmit(
-            final @RequestParam List<String> id,
+            final @MatrixVariable(value = "ids", pathVar="batch", required = true) List<Integer> ids,
+            final @RequestParam(value = "width", required = false) Integer maxWidth,
             final FileUploadDto uploadDto) {
 
         return new VoidRestCallbackAdapter() {
@@ -211,14 +223,31 @@ public class ImageController {
 
                 for (int i = 0; i < uploadDto.getFiles().size(); i++) {
                     MultipartFile file = uploadDto.getFiles().get(i);
+                    if (file.getBytes() == null || file.getBytes().length == 0) {
+                        throw new Exception("No image to save");
+                    }
 
-                    Image image = imageDao.get(Integer.valueOf(id.get(i)));
-                    image.setContentType(file.getContentType());
-                    image.setData(file.getBytes());
+                    Image image = imageDao.get(ids.get(i));
+                    fillImageWithData(image, file, maxWidth);
 
                     imageDao.update(image);
                 }
             }
         }.invoke();
+    }
+
+    private void fillImageWithData(Image image, MultipartFile file, Integer maxWidth) throws IOException {
+        String contentType = file.getContentType();
+        byte[] imageData = file.getBytes();
+        if (maxWidth != null) {
+            contentType = MediaType.IMAGE_PNG_VALUE;
+            imageData = imageConverterService.deflate(imageData, maxWidth, MediaType.IMAGE_PNG.getSubtype());
+            if (imageData == file.getBytes()) {
+                contentType = file.getContentType();
+            }
+        }
+
+        image.setContentType(contentType);
+        image.setData(imageData);
     }
 }

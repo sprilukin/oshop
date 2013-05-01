@@ -11,7 +11,7 @@
 
 <h1>Update files</h1>
 
-<form class="" action="/api/images/update?id=3&id=4" method="post" enctype="multipart/form-data">
+<form class="" action="/api/images/batch;ids=6,7/update?width=150" method="post" enctype="multipart/form-data">
     <label for="file" title="File:"></label>
 
     <div class="control-group">
@@ -23,6 +23,11 @@
         </div>
     </div>
 </form>
+
+<div>
+    <img src="/api/images/6">
+    <img src="/api/images/7">
+</div>
 
 <h1>jquery upload</h1>
 

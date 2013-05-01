@@ -2,6 +2,7 @@ package oshop.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.MessageSource;
@@ -46,6 +47,15 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.setFlushMode(FlushMode.MANUAL);
         return currentSession;
+    }
+
+    @Override
+    public void executeQuery(String queryString, QueryManipulator queryManipulator) {
+        Query query = getSession().createQuery(queryString);
+        if (queryManipulator != null) {
+            queryManipulator.manipulateWithQuery(query);
+        }
+        query.executeUpdate();
     }
 
     public Criteria createCriteria() {
