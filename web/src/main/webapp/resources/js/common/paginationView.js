@@ -40,8 +40,8 @@ define([
             return _.union(
                 //Previous buttons
                 [
-                    {disabled: isFirst, active: false, page: 1, label: "&#171;"},
-                    {disabled: isFirst, active: false, page: this.page - 1, label: "&#60;"}
+                    {disabled: isFirst, active: false, page: 1, isFirst: true},
+                    {disabled: isFirst, active: false, page: this.page - 1, isPrevious: true}
                 ],
 
                 _.map(_.range(paginationPageStart, paginationPageEnd + 1), function(index) {
@@ -50,8 +50,8 @@ define([
 
                 //Next buttons
                 [
-                    {disabled: isLast, active: false, page: collection.page + 1, label: "&#62;"},
-                    {disabled: isLast, active: false, page: pagesCount, label: "&#187;"}
+                    {disabled: isLast, active: false, page: collection.page + 1, isNext: true},
+                    {disabled: isLast, active: false, page: pagesCount, isLast: true}
                 ]
             )
         }

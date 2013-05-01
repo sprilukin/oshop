@@ -4,10 +4,25 @@
         {{#pages}}
         <li class="{{#active}}active{{/active}} {{#disabled}}disabled{{/disabled}}">
             {{^disabled}}
-            <a href="#list/{{page}}">{{& label}}</a>
+            <a href="#list/{{page}}">
             {{/disabled}}
             {{#disabled}}
-            <span>{{& label}}</span>
+            <span>
+            {{/disabled}}
+                {{^label}}
+                    {{#isFirst}}&laquo;{{/isFirst}}
+                    {{#isLast}}&raquo;{{/isLast}}
+                    {{#isPrevious}}&lt;{{/isPrevious}}
+                    {{#isNext}}&gt;{{/isNext}}
+                {{/label}}
+                {{#label}}
+                    {{label}}
+                {{/label}}
+            {{#disabled}}
+            </span>
+            {{/disabled}}
+            {{^disabled}}
+            </a>
             {{/disabled}}
         </li>
         {{/pages}}
