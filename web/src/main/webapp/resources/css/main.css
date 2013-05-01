@@ -6,3 +6,8 @@
     position: absolute;
     top: 0;
 }
+
+.scrollable-table {
+    max-height: 640px;
+    overflow: auto;
+}

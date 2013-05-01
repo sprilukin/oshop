@@ -22,9 +22,8 @@
     <spring:message code="item.category.add.category"/>
 </a>
 
+<div id="listItemCategories" class="scrollable-table"></div>
 <div class="forPagination"></div>
-
-<div id="listItemCategories"></div>
 <div id="editItemCategories"></div>
 
 <script data-main="itemCategories/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>

@@ -69,7 +69,7 @@ define([
 
         list: function (page) {
             var that = this;
-            var itemsPerPage = 5;
+            var itemsPerPage = 10;
             this.page = page;
 
             this.collection.fetch(
