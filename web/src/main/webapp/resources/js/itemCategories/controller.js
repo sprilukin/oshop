@@ -10,8 +10,9 @@ define([
     'itemCategories/collection',
     'itemCategories/listView',
     'itemCategories/editView',
-    'common/warningView'
-], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView) {
+    'common/warningView',
+    'common/paginationView'
+], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView, PaginationView) {
 
     var ItemCategoriesRouter = Backbone.Router.extend({
 
@@ -44,6 +45,7 @@ define([
         this.collection = new Collection();
         this.listView = new ListView({collection: this.collection});
         this.editView = new EditView();
+        this.paginationView = new PaginationView({collection: this.collection});
         this.router = new ItemCategoriesRouter({controller: this});
 
         this.initialize();
@@ -54,9 +56,7 @@ define([
             var that = this;
             this.page = 1;
 
-            this.listView.on("add",function () {
-                that.router.navigate("add", {trigger: true});
-            }).on("edit",function (data) {
+            this.listView.on("edit",function (data) {
                 that.router.navigate(Mustache.render("edit/{{id}}", {id: data.id}), {trigger: true});
             }).on("delete",function (data) {
                 that.router.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});

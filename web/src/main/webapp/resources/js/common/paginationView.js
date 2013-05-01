@@ -13,36 +13,47 @@ define([
     var PaginationView = Backbone.View.extend({
         el: '.forPagination',
 
-        initialize: function(options) {
-            this.total = options.total;
-            this.page = options.page;
-            this.limit = options.limit;
-
-            this.pagesCount = Math.ceil(this.total / this.limit);
-            this.isFirst = this.page == 1;
-            this.isLast = this.page == this.pagesCount;
-
-            this.paginationPageStart = Math.max(this.isLast ? this.pagesCount - 5 : this.page - 2, 1);
-            this.paginationPageEnd = Math.min(this.paginationPageStart + 5, this.pagesCount);
-
-            var previousButtons = [
-                {disabled: this.isFirst, active: false, page: 1, label: "&#171;"},
-                {disabled: this.isFirst, active: false, page: this.page - 1, label: "&#60;"}
-            ];
-            var nextButtons = [
-                {disabled: this.isLast, active: false, page: this.page + 1, label: "&#62;"},
-                {disabled: this.isLast, active: false, page: this.pagesCount, label: "&#187;"}
-            ];
-            var pagesToShow = _.range(this.paginationPageStart, this.paginationPageEnd + 1);
-            var pagesToShowButtons = _.map(pagesToShow, function(index) {
-                return {disabled: false, active: index == this.page, page: index, label: index}
+        initialize: function() {
+            this.collection.on("sync", function() {
+                this.render();
             }, this);
-
-            this.model = _.union(previousButtons, pagesToShowButtons, nextButtons);
         },
 
         render: function () {
-            this.$el.html(Mustache.render(paginationTemplate, {pages: this.model}));
+            var paginationDataForRendering = this.getPaginationDataForRendering(this.collection);
+
+            this.$el.html(Mustache.render(paginationTemplate, {
+                total: this.collection.total,
+                pages: paginationDataForRendering
+            }));
+        },
+
+        getPaginationDataForRendering: function(collection) {
+
+            var pagesCount = Math.ceil(collection.total / collection.limit);
+            var isFirst = collection.page == 1;
+            var isLast = (collection.page == pagesCount);
+
+            var paginationPageStart = Math.max(isLast ? pagesCount - 5 : collection.page - 2, 1);
+            var paginationPageEnd = Math.min(paginationPageStart + 5, pagesCount);
+
+            return _.union(
+                //Previous buttons
+                [
+                    {disabled: isFirst, active: false, page: 1, label: "&#171;"},
+                    {disabled: isFirst, active: false, page: this.page - 1, label: "&#60;"}
+                ],
+
+                _.map(_.range(paginationPageStart, paginationPageEnd + 1), function(index) {
+                    return {disabled: false, active: index == collection.page, page: index, label: index}
+                }, this),
+
+                //Next buttons
+                [
+                    {disabled: isLast, active: false, page: collection.page + 1, label: "&#62;"},
+                    {disabled: isLast, active: false, page: pagesCount, label: "&#187;"}
+                ]
+            )
         }
     });
 

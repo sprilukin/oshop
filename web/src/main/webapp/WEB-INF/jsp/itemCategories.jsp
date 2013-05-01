@@ -10,6 +10,20 @@
 
 <h1><spring:message code="item.categories.title"/></h1>
 
+<form class="form-search">
+    <div class="input-append">
+        <input type="text" class="span2 search-query">
+        <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+</form>
+
+<a href="#add" role="button" class="btn btn-primary addItemCategory">
+    <i class="icon-plus icon-white"> </i>
+    <spring:message code="item.category.add.category"/>
+</a>
+
+<div class="forPagination"></div>
+
 <div id="listItemCategories"></div>
 <div id="editItemCategories"></div>
 

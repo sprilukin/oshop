@@ -8,19 +8,17 @@ define([
     'mustache',
     'common/imageGallery',
     'common/messages',
-    'common/paginationView',
     'text',
     'text!templates/itemCategories/itemCategories.html',
     'text!templates/itemCategories/editItemCategory.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, imageGallery, messages, PaginationView, text, itemCategoryTemplate) {
+], function ($, _, Backbone, Mustache, imageGallery, messages, text, itemCategoryTemplate) {
 
     var ItemCategoriesView = Backbone.View.extend({
 
         el: '#listItemCategories',
 
         events: {
-            "click a.addItemCategory": "addItemCategory",
             "click a.editItemCategory": "editItemCategory",
             "click a.deleteItemCategory": "deleteItemCategory"
         },
@@ -34,13 +32,6 @@ define([
         render: function () {
             var model = _.extend({}, this.collection, messages);
             this.$el.html(Mustache.render(itemCategoryTemplate, model));
-
-            new PaginationView(this.collection).render();
-        },
-
-        addItemCategory: function(event) {
-            this.trigger("add");
-            event.preventDefault();
         },
 
         editItemCategory: function(event) {
