@@ -85,10 +85,6 @@ public class ImageController {
                 List<Integer> ids = new ArrayList<Integer>(uploadDto.getFiles().size());
 
                 for (MultipartFile file: uploadDto.getFiles()) {
-                    if (file.getBytes() == null || file.getBytes().length == 0) {
-                        throw new Exception("No image to save");
-                    }
-
                     Image image = new Image();
                     fillImageWithData(image, file, maxWidth);
 
@@ -223,9 +219,6 @@ public class ImageController {
 
                 for (int i = 0; i < uploadDto.getFiles().size(); i++) {
                     MultipartFile file = uploadDto.getFiles().get(i);
-                    if (file.getBytes() == null || file.getBytes().length == 0) {
-                        throw new Exception("No image to save");
-                    }
 
                     Image image = imageDao.get(ids.get(i));
                     fillImageWithData(image, file, maxWidth);
@@ -236,7 +229,11 @@ public class ImageController {
         }.invoke();
     }
 
-    private void fillImageWithData(Image image, MultipartFile file, Integer maxWidth) throws IOException {
+    private void fillImageWithData(Image image, MultipartFile file, Integer maxWidth) throws Exception {
+        if (file.getBytes() == null || file.getBytes().length == 0) {
+            throw new Exception("No image to save");
+        }
+
         String contentType = file.getContentType();
         byte[] imageData = file.getBytes();
         if (maxWidth != null) {
