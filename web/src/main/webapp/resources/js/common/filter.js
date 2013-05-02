@@ -34,8 +34,27 @@ define([
             return this;
         },
 
+        reset: function() {
+            this.fields = [];
+        },
+
         format: function() {
             return Mustache.render(this.filterTemplate, {fields: this.fields})
+        },
+
+        parse: function(filterAsString) {
+            this.reset();
+
+            if (!filterAsString) {
+                return;
+            }
+
+            _.each(filterAsString.split(";"), function(field) {
+                if (field && field.indexOf("=") > -1) {
+                    var pair = field.split("=");
+                    this.set(pair[0], pair[1]);
+                }
+            }, this);
         }
     });
 
