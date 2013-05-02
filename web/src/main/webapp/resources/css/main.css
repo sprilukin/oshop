@@ -2,6 +2,10 @@
     display: block;
 }
 
+.inline {
+    display: inline;
+}
+
 .warning {
     position: absolute;
     top: 0;
@@ -14,4 +18,12 @@
 .scrollable-table {
     max-height: 640px;
     overflow: auto;
+}
+
+.entity-controls {
+    margin-bottom: 20px;
+}
+
+.search {
+    margin-bottom: 20px;
 }

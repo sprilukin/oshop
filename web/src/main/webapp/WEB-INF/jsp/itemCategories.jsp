@@ -10,20 +10,19 @@
 
 <h1><spring:message code="item.categories.title"/></h1>
 
-<form class="form-search">
-    <div class="input-append">
-        <input type="text" class="span2 search-query">
-        <button type="submit" class="btn"><i class="icon-search"></i></button>
+<div class="row-fluid span12 entity-controls">
+    <div class="search inline span3"></div>
+
+    <div class="inline span3 offset6">
+        <a href="#add" role="button" class="btn btn-primary addItemCategory">
+            <i class="icon-plus icon-white"> </i>
+            <spring:message code="item.category.add.category"/>
+        </a>
     </div>
-</form>
+</div>
 
-<a href="#add" role="button" class="btn btn-primary addItemCategory">
-    <i class="icon-plus icon-white"> </i>
-    <spring:message code="item.category.add.category"/>
-</a>
-
-<div id="listItemCategories" class="scrollable-table"></div>
-<div class="forPagination"></div>
+<div id="listItemCategories" class="scrollable-table row-fluid span12"></div>
+<div class="row-fluid span12 forPagination"></div>
 <div id="editItemCategories"></div>
 
 <script data-main="itemCategories/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>

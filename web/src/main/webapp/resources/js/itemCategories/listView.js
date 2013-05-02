@@ -19,7 +19,6 @@ define([
         el: '#listItemCategories',
 
         events: {
-            "click a.editItemCategory": "editItemCategory",
             "click a.deleteItemCategory": "deleteItemCategory"
         },
 
@@ -32,11 +31,6 @@ define([
         render: function () {
             var model = _.extend({}, this.collection, messages);
             this.$el.html(Mustache.render(itemCategoryTemplate, model));
-        },
-
-        editItemCategory: function(event) {
-            this.trigger("edit", {id: $(event.currentTarget).attr("data-id")});
-            event.preventDefault();
         },
 
         deleteItemCategory: function(event) {
