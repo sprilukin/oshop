@@ -18,14 +18,17 @@ define([
             "submit .form-search": "search"
         },
 
-        initialize: function() {
+        initialize: function(options) {
             this.collection.on("sync", function() {
                 this.render();
             }, this);
+
+            this.fieldName = options.fieldName;
+            this.filter = options.filter;
         },
 
         render: function () {
-            this.$el.html(Mustache.render(searchTemplate, {query: this.query}));
+            this.$el.html(Mustache.render(searchTemplate, {query: this.filter.get(this.fieldName)}));
         },
 
         search: function(event) {

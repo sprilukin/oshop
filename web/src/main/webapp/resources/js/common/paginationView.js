@@ -15,10 +15,21 @@ define([
     var PaginationView = Backbone.View.extend({
         el: '.forPagination',
 
+        events: {
+            "click a": "onClick"
+        },
+
         initialize: function() {
             this.collection.on("sync", function() {
                 this.render();
             }, this);
+        },
+
+        onClick: function(event) {
+            var page = $(event.currentTarget).attr("data-page");
+            event.preventDefault();
+
+            this.trigger("page:change", page);
         },
 
         render: function () {

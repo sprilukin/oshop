@@ -7,39 +7,47 @@ define([
     'mustache'
 ], function ($, Backbone, Mustache) {
 
-    var DEFAULT_FILTER_TEMPLATE = "{{#fields}}{{name}}={{value}};{{/fields}}";
+    var DEFAULT_FILTER_TEMPLATE = "{{#filters}}{{name}}={{value}};{{/filters}}";
 
     var Filter = function(options) {
         options = _.extend({
             template: DEFAULT_FILTER_TEMPLATE,
-            fields: []
+            filters: []
         }, options);
 
         this.filterTemplate = options.template;
-        this.fields = options.fields;
+        this.filters = options.filters;
     };
 
     _.extend(Filter.prototype, {
         set: function(name, value) {
-            var existingValue = _.find(this.fields, function(field) {
+            var existingFilter = _.find(this.filters, function(field) {
                 return field.name === name;
             });
 
-            if (existingValue) {
-                existingValue.value = value;
+            if (existingFilter) {
+                existingFilter.value = value;
             } else {
-                this.fields.push({name: name, value: value});
+                this.filters.push({name: name, value: value});
             }
 
             return this;
         },
 
+        get: function(name) {
+            var existingFilter = _.find(this.filters, function(field) {
+                return field.name === name;
+            });
+
+            return existingFilter && existingFilter.value;
+        },
+
         reset: function() {
-            this.fields = [];
+            this.filters = [];
         },
 
         format: function() {
-            return Mustache.render(this.filterTemplate, {fields: this.fields})
+            return Mustache.render(this.filterTemplate, {filters: this.filters}) || ";"
         },
 
         parse: function(filterAsString) {

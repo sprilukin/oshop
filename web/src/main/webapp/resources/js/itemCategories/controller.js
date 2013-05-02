@@ -44,11 +44,14 @@ define([
     });
 
     var ItemCategoriesController = function() {
+        this.page = 1;
+        this.filter = new Filter();
+
         this.collection = new Collection();
         this.listView = new ListView({collection: this.collection});
         this.editView = new EditView();
         this.paginationView = new PaginationView({collection: this.collection});
-        this.searchView = new SearchView({collection: this.collection});
+        this.searchView = new SearchView({collection: this.collection, filter: this.filter, fieldName: "name"});
         this.router = new ItemCategoriesRouter({controller: this});
 
         this.initialize();
@@ -57,14 +60,17 @@ define([
     _.extend(ItemCategoriesController.prototype, {
         initialize: function() {
             var that = this;
-            this.page = 1;
-            this.filter = new Filter();
 
             this.listView.on("delete",function (data) {
                 this.router.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});
             }, this);
 
             this.editView.on("close",function () {
+                this.router.navigate(this.getListUrl(), {trigger: true});
+            }, this);
+
+            this.paginationView.on("page:change",function (page) {
+                this.page = parseInt(page, 10);
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
 
