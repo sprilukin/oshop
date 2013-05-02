@@ -1,6 +1,7 @@
 <div class="fileUploadWidget">
     <form class="fileUpload" action="/api/images/{{#width}}?width={{width}}{{/width}}" method="post">
-        <input name="files[0]" type="file" {{#multiple}}multiple="multiple"{{/multiple}} />
+        <input class="block" name="files[0]" type="file" {{#multiple}}multiple="multiple"{{/multiple}} />
+        <span class="help-inline error"></span>
     </form>
 
     <div class="fileupload-progress fade in" style="display: none">

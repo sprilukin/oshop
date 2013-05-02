@@ -55,6 +55,8 @@ define([
                 dataType: 'json',
                 done: _.bind(that.done, that),
                 add:  _.bind(that.add, that),
+                fail:  _.bind(that.fail, that),
+                always:  _.bind(that.always, that),
                 progressall: _.bind(that.onProgress, that)
             });
 
@@ -69,6 +71,7 @@ define([
         add: function(e, data) {
             this.$el.find('.fileupload-progress .bar').css('width', 0 + '%');
             this.$el.find('.fileupload-progress').show();
+            this.$el.find('.help-inline').html("").hide();
             data.submit();
         },
 
@@ -78,9 +81,16 @@ define([
             });
         },
 
+        fail: function (event, xhr) {
+            this.$el.find('.help-inline').html(JSON.parse(xhr.jqXHR.responseText)).show();
+        },
+
+        always: function () {
+            this.$el.find('.fileupload-progress').hide();
+        },
+
         done: function (e, data) {
             var that = this;
-            this.$el.find('.fileupload-progress').hide();
 
             var models = _.map(data.result, function (id) {
                 return {id: id, original: false}
