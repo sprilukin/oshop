@@ -6,19 +6,26 @@ define([
     'underscore',
     'backbone',
     'mustache'
-], function ($, _, Backbone) {
+], function ($, _, Backbone, Mustache) {
 
     var ItemCategories = Backbone.Collection.extend({
 
         total: null,
 
         url: function () {
-            return "api/itemCategories/"
+            return Mustache.render("api/itemCategories/filter;{{filter}}/sort;{{sort}}", {
+                filter: this.filter
+            })
         },
 
         parse: function(json) {
-            this.total = json.size;
-            return json.values;
+            if (json) {
+                this.total = json.size;
+                return json.values;
+            } else {
+                this.total = 0;
+                return [];
+            }
         }
     });
 

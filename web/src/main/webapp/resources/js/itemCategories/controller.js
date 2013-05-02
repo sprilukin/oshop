@@ -19,7 +19,7 @@ define([
 
         routes: {
             '': 'list',
-            'list/:page': 'list',
+            'list/filter;:filter/:page': 'list',
             'add': 'edit',
             'edit/:id': 'edit',
             'delete/:id': 'remove'
@@ -29,8 +29,8 @@ define([
             this.controller = options.controller;
         },
 
-        list: function (page) {
-            this.controller.list(parseInt(page) || 1);
+        list: function (filter, page) {
+            this.controller.list(filter, parseInt(page) || 1);
         },
 
         remove: function (id) {
@@ -57,28 +57,41 @@ define([
         initialize: function() {
             var that = this;
             this.page = 1;
+            this.filter = {
+                name: ""
+            };
+
 
             this.listView.on("delete",function (data) {
-                that.router.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});
-            });
+                this.router.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});
+            }, this);
 
             this.editView.on("close",function () {
-                that.router.navigate("", {trigger: true});
-            });
+                this.router.navigate(this.getListUrl(), {trigger: true});
+            }, this);
+
+            this.searchView.on("search",function (term) {
+                this.filter.name = term;
+                this.router.navigate(this.getListUrl(), {trigger: true});
+            }, this);
         },
 
-        list: function (page) {
-            var that = this;
+        getFilterString: function() {
+            return Mustache.render("name={{name}}", this.filter);
+        },
+
+        getListUrl: function() {
+            return Mustache.render("list/filter;{{filter}}/{{page}}", {filter: this.getFilterString(), page: this.page})
+        },
+
+        list: function (filter, page) {
             var itemsPerPage = 10;
             this.page = page;
 
-            this.collection.fetch(
-                {data: {limit: itemsPerPage, offset: that.page - 1},
-                    success: function() {
-                        that.collection.limit = itemsPerPage;
-                        that.collection.page = that.page;
-                    }
-                });
+            this.collection.limit = itemsPerPage;
+            this.collection.page = this.page;
+            this.collection.filter = /*this.getFilterString()*/filter;
+            this.collection.fetch({data: {limit: itemsPerPage, offset: this.page - 1}});
         },
 
         remove: function (id) {
@@ -88,11 +101,11 @@ define([
             itemCategory.destroy({
                 wait: true,
                 success: function () {
-                    that.router.navigate("", {trigger: true});
+                    that.router.navigate(that.getListUrl(), {trigger: true});
                 },
                 error: function (model, xhr) {
                     new WarningView({model: JSON.parse(xhr.responseText)}).render();
-                    that.router.navigate("", {trigger: true});
+                    that.router.navigate(that.getListUrl(), {trigger: true});
                 }
             });
         },

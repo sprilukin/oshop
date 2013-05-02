@@ -22,11 +22,9 @@ define([
         },
 
         render: function () {
-            var paginationDataForRendering = this.getPaginationDataForRendering(this.collection);
-
             this.$el.html(Mustache.render(paginationTemplate, {
                 total: this.collection.total,
-                pages: paginationDataForRendering
+                pages: this.collection.total > 0 ? this.getPaginationDataForRendering(this.collection) : []
             }));
         },
 
