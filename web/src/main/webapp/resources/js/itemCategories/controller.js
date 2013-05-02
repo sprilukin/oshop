@@ -45,6 +45,7 @@ define([
 
     var ItemCategoriesController = function() {
         this.page = 1;
+        this.itemsPerPage = 10;
         this.filter = new Filter();
 
         this.collection = new Collection();
@@ -75,6 +76,7 @@ define([
             }, this);
 
             this.searchView.on("search",function (query) {
+                this.page = 1;
                 this.filter.set("name", query);
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
@@ -85,14 +87,13 @@ define([
         },
 
         list: function (filter, page) {
-            var itemsPerPage = 10;
             this.page = parseInt(page, 10) || this.page;
             this.filter.parse(filter);
 
-            this.collection.limit = itemsPerPage;
+            this.collection.limit = this.itemsPerPage;
             this.collection.page = this.page;
             this.collection.filter = this.filter.format();
-            this.collection.fetch({data: {limit: itemsPerPage, offset: this.page - 1}});
+            this.collection.fetch({data: {limit: this.itemsPerPage, offset: this.page - 1}});
         },
 
         remove: function (id) {
@@ -102,6 +103,9 @@ define([
             itemCategory.destroy({
                 wait: true,
                 success: function () {
+                    var maxPageCount = Math.ceil((that.collection.total - 1) / that.collection.limit);
+                    that.page = Math.min(that.page, maxPageCount);
+
                     that.router.navigate(that.getListUrl(), {trigger: true});
                 },
                 error: function (model, xhr) {

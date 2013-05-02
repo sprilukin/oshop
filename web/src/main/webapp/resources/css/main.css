@@ -6,18 +6,8 @@
     display: inline;
 }
 
-.warning {
-    position: absolute;
-    top: 0;
-}
-
 .error {
     color: #b94a48;
-}
-
-.scrollable-table {
-    max-height: 640px;
-    overflow: auto;
 }
 
 .entity-controls {

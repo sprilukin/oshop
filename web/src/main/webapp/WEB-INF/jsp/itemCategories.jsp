@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div id="listItemCategories" class="scrollable-table row-fluid span12"></div>
+<div id="listItemCategories" class="row-fluid span12"></div>
 <div class="row-fluid span12 forPagination"></div>
 <div id="editItemCategories"></div>
 
