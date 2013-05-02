@@ -12,8 +12,9 @@ define([
     'itemCategories/editView',
     'common/warningView',
     'common/paginationView',
-    'common/searchView'
-], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView, PaginationView, SearchView) {
+    'common/searchView',
+    'common/filter'
+], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView, PaginationView, SearchView, Filter) {
 
     var ItemCategoriesRouter = Backbone.Router.extend({
 
@@ -30,7 +31,7 @@ define([
         },
 
         list: function (filter, page) {
-            this.controller.list(filter, parseInt(page) || 1);
+            this.controller.list(filter, page);
         },
 
         remove: function (id) {
@@ -57,10 +58,7 @@ define([
         initialize: function() {
             var that = this;
             this.page = 1;
-            this.filter = {
-                name: ""
-            };
-
+            this.filter = new Filter();
 
             this.listView.on("delete",function (data) {
                 this.router.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});
@@ -70,27 +68,23 @@ define([
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
 
-            this.searchView.on("search",function (term) {
-                this.filter.name = term;
+            this.searchView.on("search",function (query) {
+                this.filter.set("name", query);
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
         },
 
-        getFilterString: function() {
-            return Mustache.render("name={{name}}", this.filter);
-        },
-
         getListUrl: function() {
-            return Mustache.render("list/filter;{{filter}}/{{page}}", {filter: this.getFilterString(), page: this.page})
+            return Mustache.render("list/filter;{{filter}}/{{page}}", {filter: this.filter.format(), page: this.page})
         },
 
         list: function (filter, page) {
             var itemsPerPage = 10;
-            this.page = page;
+            this.page = parseInt(page, 10) || this.page;
 
             this.collection.limit = itemsPerPage;
             this.collection.page = this.page;
-            this.collection.filter = /*this.getFilterString()*/filter;
+            this.collection.filter = this.filter.format();
             this.collection.fetch({data: {limit: itemsPerPage, offset: this.page - 1}});
         },
 
