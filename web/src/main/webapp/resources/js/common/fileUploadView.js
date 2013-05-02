@@ -21,7 +21,28 @@ define([
     });
 
     var FileUploadCollection = Backbone.Collection.extend({
-        model: FileUploadModel
+        model: FileUploadModel,
+
+        batchRemoveUrl: function(models) {
+            var joinedIds = (models
+                ? _.map(models, function(model) {return model.id})
+                : this.map(function(model) {return model.id})).join(",");
+
+            return Mustache.render("api/images/batch;ids={{ids}}/delete?_method=DELETE", {ids: joinedIds});
+        },
+
+        destroy: function(models) {
+            if (this.length > 0) {
+                $.ajax(this.batchRemoveUrl(models), {
+                    accepts: "json",
+                    context: this,
+                    dataType: "json",
+                    type: "POST"
+                }).done(function(data) {
+                    models ? this.remove(models) : this.reset();
+                })
+            }
+        }
     });
 
     var ImagePreviewView = Backbone.View.extend({
@@ -121,19 +142,17 @@ define([
         },
 
         submit: function() {
-            this.toRemoveCollection.each(function(model) {
-                model.destroy();
-            });
+            this.toRemoveCollection.destroy();
 
             this.destroy();
         },
 
         cancel: function() {
-            this.collection.each(function(model) {
-                if (!model.get("original")) {
-                    model.destroy();
-                }
+            var notOriginalImages = this.collection.filter(function(model) {
+                return !model.get("original");
             });
+
+            this.collection.destroy(notOriginalImages);
 
             this.destroy();
         }
