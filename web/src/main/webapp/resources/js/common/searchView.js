@@ -13,6 +13,10 @@ define([
     var SearchView = Backbone.View.extend({
         el: '.search',
 
+        events: {
+            "submit .form-search": "search"
+        },
+
         initialize: function() {
             this.collection.on("sync", function() {
                 this.render();
@@ -21,6 +25,11 @@ define([
 
         render: function () {
             this.$el.html(Mustache.render(searchTemplate, {searchTerm: "test"}));
+        },
+
+        search: function(event) {
+            this.trigger("search", {term: $(event.currentTarget).find("input.search-query").val()});
+            event.preventDefault();
         }
     });
 
