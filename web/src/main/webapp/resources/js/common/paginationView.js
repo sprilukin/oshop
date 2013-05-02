@@ -10,6 +10,8 @@ define([
     'bootstrap'
 ], function ($, Backbone, Mustache, text, paginationTemplate) {
 
+    var paginationItemsPerPage = 5;
+
     var PaginationView = Backbone.View.extend({
         el: '.forPagination',
 
@@ -31,17 +33,21 @@ define([
         getPaginationDataForRendering: function(collection) {
 
             var pagesCount = Math.ceil(collection.total / collection.limit);
-            var isFirst = collection.page == 1;
-            var isLast = (collection.page == pagesCount);
 
-            var paginationPageStart = Math.max(isLast ? pagesCount - 5 : collection.page - 2, 1);
-            var paginationPageEnd = Math.min(paginationPageStart + 5, pagesCount);
+            //pagination of paginator
+            var pagitationPagesCount = Math.ceil(pagesCount / paginationItemsPerPage);
+            var currentPaginationPage = Math.floor((collection.page - 1) / paginationItemsPerPage) + 1;
+            var isFirst = currentPaginationPage == 1;
+            var isLast = (currentPaginationPage == pagitationPagesCount);
+
+            var paginationPageStart = (currentPaginationPage - 1) * paginationItemsPerPage + 1;
+            var paginationPageEnd = Math.min(paginationPageStart + paginationItemsPerPage - 1, pagesCount);
 
             return _.union(
                 //Previous buttons
                 [
                     {disabled: isFirst, active: false, page: 1, isFirst: true},
-                    {disabled: isFirst, active: false, page: this.page - 1, isPrevious: true}
+                    {disabled: isFirst, active: false, page: (currentPaginationPage - 1) * paginationItemsPerPage, isPrevious: true}
                 ],
 
                 _.map(_.range(paginationPageStart, paginationPageEnd + 1), function(index) {
@@ -50,7 +56,7 @@ define([
 
                 //Next buttons
                 [
-                    {disabled: isLast, active: false, page: collection.page + 1, isNext: true},
+                    {disabled: isLast, active: false, page: currentPaginationPage * paginationItemsPerPage + 1, isNext: true},
                     {disabled: isLast, active: false, page: pagesCount, isLast: true}
                 ]
             )
