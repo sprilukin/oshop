@@ -16,6 +16,7 @@
     <title><decorator:title/> | <spring:message code="webapp.name"/></title>
 
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap.css'/>" />
+    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/darkstrap.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-responsive.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-image-gallery.css'/>" />
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/jquery-ui-1.10.1.custom.css'/>" />
