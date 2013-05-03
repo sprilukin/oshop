@@ -52,7 +52,7 @@
         <beans:property name="basenamePrefix" value="theme-" />
     </beans:bean>
     <beans:bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
-        <beans:property name="defaultThemeName" value="black" />
+        <beans:property name="defaultThemeName" value="default" />
         <beans:property name="cookieName" value="theme" />
         <beans:property name="cookieMaxAge" value="100000" />
     </beans:bean>
