@@ -2,11 +2,9 @@
  * Item Categories module
  */
 define([
-    'jquery',
-    'underscore',
     'backbone',
     'mustache'
-], function ($, _, Backbone, Mustache) {
+], function (Backbone, Mustache) {
 
     var ItemCategories = Backbone.Collection.extend({
 
@@ -14,7 +12,8 @@ define([
 
         url: function () {
             return Mustache.render("api/itemCategories/filter;{{filter}}/sort;{{sort}}", {
-                filter: this.filter
+                filter: this.filter,
+                sort: this.sort
             })
         },
 

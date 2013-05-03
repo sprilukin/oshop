@@ -2,10 +2,9 @@
  * Fiter
  */
 define([
-    'jquery',
-    'backbone',
+    'underscore',
     'mustache'
-], function ($, Backbone, Mustache) {
+], function (_, Mustache) {
 
     var DEFAULT_FILTER_TEMPLATE = "{{#filters}}{{name}}={{value}};{{/filters}}";
 
