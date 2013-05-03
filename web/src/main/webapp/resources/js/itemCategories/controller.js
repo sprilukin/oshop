@@ -87,7 +87,7 @@ define([
         },
 
         list: function (filter, page) {
-            this.page = parseInt(page, 10) || this.page;
+            this.page = parseInt(page, 10) || 1;
             this.filter.parse(filter);
 
             this.collection.limit = this.itemsPerPage;
