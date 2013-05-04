@@ -1,19 +1,14 @@
-<table id="itemCategoriesTable" class="table table-striped table-hover">
+<table id="itemCategoriesTable" class="table table-striped table-hover sorted">
     <thead>
     <tr>
         <th class="span1">
-            #
-            <span class="badge badge-info">
-                <i class="icon-chevron-up icon-white"></i>
-            </span>
-            <i class="icon-remove"></i>
+            {{general_id}}
+            <span class="sorter" data-column="id"></span>
         </th>
         <th class="span1">
             {{item_category_column_name}}
-            <span class="badge badge-info">
-                <i class="icon-chevron-down icon-white"></i>
-            </span>
-            <i class="icon-remove"></i></th>
+            <span class="sorter" data-column="name"></span>
+        </th>
         <th class="span1"></th>
         <th class="span1"></th>
     </tr>

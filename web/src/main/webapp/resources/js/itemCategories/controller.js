@@ -51,7 +51,7 @@ define([
         this.sorter = new Sorter();
 
         this.collection = new Collection();
-        this.listView = new ListView({collection: this.collection});
+        this.listView = new ListView({collection: this.collection, sorter: this.sorter});
         this.editView = new EditView();
         this.paginationView = new PaginationView({collection: this.collection});
         this.searchView = new SearchView({collection: this.collection, filter: this.filter, fieldName: "name"});
@@ -80,6 +80,11 @@ define([
                 this.filter.set("name", query);
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
+
+            this.sorter.on("sort:change", function() {
+                this.page = 1;
+                this.router.navigate(this.getListUrl(), {trigger: true});
+            }, this);
         },
 
         getListUrl: function() {
@@ -90,7 +95,7 @@ define([
         list: function (filter, sort, page) {
             this.page = parseInt(page, 10) || 1;
             this.filter.parse(filter);
-            this.sorter.parse(sort);
+            this.sorter.parse(sort, {silent:true});
 
             this.collection.limit = this.itemsPerPage;
             this.collection.page = this.page;

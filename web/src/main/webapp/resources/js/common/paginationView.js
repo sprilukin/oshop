@@ -7,8 +7,9 @@ define([
     'mustache',
     'text',
     'text!templates/pagination.html',
+    'common/messages',
     'bootstrap'
-], function ($, Backbone, Mustache, text, paginationTemplate) {
+], function ($, Backbone, Mustache, text, paginationTemplate, messages) {
 
     var paginationItemsPerPage = 5;
 
@@ -33,10 +34,10 @@ define([
         },
 
         render: function () {
-            this.$el.html(Mustache.render(paginationTemplate, {
+            this.$el.html(Mustache.render(paginationTemplate, _.extend({
                 total: this.collection.total,
                 pages: this.collection.total > 0 ? this.getPaginationDataForRendering(this.collection) : []
-            }));
+            }, messages)));
         },
 
         getPaginationDataForRendering: function(collection) {
