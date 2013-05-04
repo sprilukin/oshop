@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class ControllerUtils {
 
+    public static final String ASC_SORT = "asc";
+    public static final String DESC_SORT = "desc";
+
     public static void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
         Disjunction disjunction = Restrictions.disjunction();
         for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
@@ -27,9 +30,9 @@ public class ControllerUtils {
             String fieldName = entry.getKey();
             String sortType = entry.getValue().get(0);
 
-            if ("asc".equalsIgnoreCase(sortType)) {
+            if (ASC_SORT.equalsIgnoreCase(sortType)) {
                 criteria.addOrder(Order.asc(fieldName));
-            } else if ("desc".equals(sortType)) {
+            } else if (DESC_SORT.equals(sortType)) {
                 criteria.addOrder(Order.desc(fieldName));
             }
         }

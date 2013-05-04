@@ -25,19 +25,13 @@ import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 import oshop.web.dto.FileUploadDto;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/api/images")
 @Transactional(readOnly = true)
 public class ImageController {
-
-    public static final String IF_MODIFIED_SINCE_HEADER_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
 
     private static final Log log = LogFactory.getLog(ImageController.class);
 
@@ -147,9 +141,7 @@ public class ImageController {
                 this.setLastModified(image.getLastUpdate().getTime());
 
                 if (ifModifiedSinceHeader != null) {
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(IF_MODIFIED_SINCE_HEADER_PATTERN, Locale.US);
-                    Date ifModifiedSinceDate = simpleDateFormat.parse(ifModifiedSinceHeader);
-                    this.setIfModifiedSince(ifModifiedSinceDate.getTime());
+                    this.setIfModifiedSince(ifModifiedSinceHeader);
                 }
 
                 return image.getData();

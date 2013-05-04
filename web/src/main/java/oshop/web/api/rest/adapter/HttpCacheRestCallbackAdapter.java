@@ -3,7 +3,13 @@ package oshop.web.api.rest.adapter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public abstract class HttpCacheRestCallbackAdapter<T> extends ReturningRestCallbackAdapter<T> {
+
+    public static final String IF_MODIFIED_SINCE_HEADER_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
 
     private Long lastModified;
     private Long ifModifiedSince;
@@ -13,8 +19,10 @@ public abstract class HttpCacheRestCallbackAdapter<T> extends ReturningRestCallb
         this.lastModified = lastModified;
     }
 
-    protected void setIfModifiedSince(Long ifModifiedSince) {
-        this.ifModifiedSince = ifModifiedSince;
+    protected void setIfModifiedSince(String ifModifiedSinceHeader) throws Exception {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(IF_MODIFIED_SINCE_HEADER_PATTERN, Locale.US);
+        Date ifModifiedSinceDate = simpleDateFormat.parse(ifModifiedSinceHeader);
+        this.ifModifiedSince = ifModifiedSinceDate.getTime();
     }
 
     protected void setSize(int size) {
