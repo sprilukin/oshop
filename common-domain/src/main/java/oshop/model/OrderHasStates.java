@@ -5,20 +5,23 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "saleHasState")
-public class SaleHasState extends BaseEntity<Integer> {
+@Table(name = "orderHasStates")
+public class OrderHasStates extends BaseEntity<Integer> {
 
     @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     @Column(name = "comment")
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Sale sale;
+    private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private OrderState orderState;
@@ -39,12 +42,12 @@ public class SaleHasState extends BaseEntity<Integer> {
         this.comment = comment;
     }
 
-    public Sale getSale() {
-        return sale;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setSale(Sale sale) {
-        this.sale = sale;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public OrderState getOrderState() {

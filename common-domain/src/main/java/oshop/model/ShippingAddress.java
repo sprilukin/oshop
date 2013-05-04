@@ -1,14 +1,11 @@
 package oshop.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "shippingAddress")
@@ -20,8 +17,15 @@ public class ShippingAddress extends BaseEntity<Integer> {
     @Column(name = "address")
     private String address;
 
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private ShippingType shippingType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
     public String getCity() {
         return city;
@@ -45,5 +49,21 @@ public class ShippingAddress extends BaseEntity<Integer> {
 
     public void setShippingType(ShippingType shippingType) {
         this.shippingType = shippingType;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

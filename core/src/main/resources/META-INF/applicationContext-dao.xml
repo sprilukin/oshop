@@ -29,11 +29,11 @@
     <bean id="itemCategoryDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ItemCategory" />
     </bean>
-    <bean id="saleDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
-        <property name="entityClass" value="oshop.model.Sale" />
+    <bean id="orderDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+        <property name="entityClass" value="oshop.model.Order" />
     </bean>
     <bean id="saleHasStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
-        <property name="entityClass" value="oshop.model.SaleHasState" />
+        <property name="entityClass" value="oshop.model.OrderHasStates" />
     </bean>
     <bean id="saleStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.OrderState" />
