@@ -26,8 +26,14 @@
     <bean id="itemDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Item" />
     </bean>
+    <bean id="productDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+        <property name="entityClass" value="oshop.model.Product" />
+    </bean>
     <bean id="itemCategoryDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ItemCategory" />
+    </bean>
+    <bean id="productCategoryDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+        <property name="entityClass" value="oshop.model.ProductCategory" />
     </bean>
     <bean id="orderDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Order" />
