@@ -61,7 +61,7 @@ define([
 
     var FileUploadView = Backbone.View.extend({
         initialize: function(options) {
-            this.$el = options.element;
+            this.setElement(options.element);
             this.width = options.width;
             this.multiple = options.multiple;
             this.collection = new FileUploadCollection(_.map(options.images, function(id) {return {id: id, original: true}}));
