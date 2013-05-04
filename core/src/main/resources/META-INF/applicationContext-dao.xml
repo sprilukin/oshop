@@ -14,9 +14,6 @@
         <property name="listLimit" value="${list.limit}" />
     </bean>
 
-    <bean id="albumDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
-        <property name="entityClass" value="oshop.model.Album" />
-    </bean>
     <bean id="customerDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Customer" />
     </bean>
@@ -39,7 +36,7 @@
         <property name="entityClass" value="oshop.model.SaleHasState" />
     </bean>
     <bean id="saleStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
-        <property name="entityClass" value="oshop.model.SaleState" />
+        <property name="entityClass" value="oshop.model.OrderState" />
     </bean>
     <bean id="shippingAddressDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.ShippingAddress" />

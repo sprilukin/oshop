@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <orderstate id="1" version="0" name="NEW" label="New"/>
+    <orderstate id="2" version="0" name="RESERVED" label="Reserved"/>
+    <orderstate id="3" version="0" name="MONEY_RECEIVED" label="Money Recieved"/>
+    <orderstate id="4" version="0" name="SENT" label="Sent"/>
+    <orderstate id="5" version="0" name="DELIVERED" label="Delivered"/>
+    <orderstate id="6" version="0" name="CANCELED" label="Canceled"/>
+</dataset>

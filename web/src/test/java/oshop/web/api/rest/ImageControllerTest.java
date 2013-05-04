@@ -22,7 +22,7 @@ public class ImageControllerTest extends BaseControllerTest {
         byte[] imageData = new byte[10];
 
         this.mockMvc.perform(
-                post("/api/images/")
+                post("/api/images/raw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.parseMediaType(contentType))
                         .content(imageData))

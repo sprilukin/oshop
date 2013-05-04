@@ -1,5 +1,7 @@
 package oshop.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,19 +14,14 @@ import java.util.Date;
 
 @Entity
 @Table(name = "discount")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Discount extends BaseEntity<Integer> {
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "startDate")
-    private Date startDate;
-
-    @Column(name = "endDate")
-    private Date endDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private DiscountType discountType;
+    @Column(name = "type")
+    private Byte type;
 
     @Column(name = "amount")
     private BigDecimal amount;
@@ -37,35 +34,45 @@ public class Discount extends BaseEntity<Integer> {
         this.description = description;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public DiscountType getDiscountType() {
-        return discountType;
-    }
-
-    public void setDiscountType(DiscountType discountType) {
-        this.discountType = discountType;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public static enum Type {
+        PERCENT_DISCOUNT((byte)0),
+        FIXED_DISCOUNT((byte)1),
+        FIXED_PRICE((byte)2);
+
+        private byte type;
+
+        Type(byte type) {
+            this.type = type;
+        }
+
+        public byte getType() {
+            return type;
+        }
+
+        public static Type fromByte(byte value) {
+            for (Type type: Type.values()) {
+                if (type.getType() == value) {
+                    return type;
+                }
+            }
+
+            return null;
+        }
     }
 }

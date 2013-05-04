@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <discount id="1" version="0" description="PERCENT_DISCOUNT" type="0" amount="10.2"/>
+    <discount id="2" version="0" description="FIXED_DISCOUNT" type="1" amount="5"/>
+    <discount id="3" version="0" description="FIXED_PRICE" type="2" amount="6"/>
+</dataset>

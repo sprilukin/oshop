@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Entity
-@Table(name = "item")
+@Table(name = "product")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Item extends BaseEntity<Integer> {
+public class Product extends BaseEntity<Integer> {
 
     @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
@@ -22,15 +22,16 @@ public class Item extends BaseEntity<Integer> {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ItemCategory category;
+    private ProductCategory category;
+
+    private Integer imageId;
 
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
-        //this.price = price;
-        this.price = price != null ? price.setScale(2, RoundingMode.HALF_UP) : null;
+        this.price = EntityUtils.round(price);
     }
 
     public String getName() {
@@ -41,11 +42,19 @@ public class Item extends BaseEntity<Integer> {
         this.name = name;
     }
 
-    public ItemCategory getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ItemCategory category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 }

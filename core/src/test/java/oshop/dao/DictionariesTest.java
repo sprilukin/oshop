@@ -3,8 +3,8 @@ package oshop.dao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
-import oshop.model.DiscountType;
-import oshop.model.SaleState;
+import oshop.model.Discount;
+import oshop.model.OrderState;
 
 import javax.annotation.Resource;
 
@@ -16,30 +16,30 @@ public class DictionariesTest extends BaseDaoTest {
 
 
     @Resource
-    private GenericDao<SaleState, Integer> saleStateDao;
+    private GenericDao<OrderState, Integer> saleStateDao;
 
     @Resource
-    private GenericDao<DiscountType, Integer> discountTypeDao;
+    private GenericDao<Discount, Integer> discountDao;
 
     @Test
-    public void testSaleStateItems() throws Exception {
-        setUpDb("oshop/dao/saleState.xml");
+    public void testOrderStateItems() throws Exception {
+        setUpDb("oshop/dao/orderState.xml");
 
-        List<SaleState> saleStateList =  saleStateDao.list(null, null);
-        assertEquals(6, saleStateList.size());
+        List<OrderState> orderStateList =  saleStateDao.list(null, null);
+        assertEquals(6, orderStateList.size());
 
         Criteria criteria =  saleStateDao.createCriteria();
-        criteria.add(Restrictions.eq("state", SaleState.State.CANCELED.getType()));
+        criteria.add(Restrictions.eq("name", "CANCELED"));
 
-        SaleState state = saleStateDao.get(criteria);
-        assertEquals(SaleState.State.CANCELED.getType(), (byte)state.getState());
+        OrderState state = saleStateDao.get(criteria);
+        assertEquals("CANCELED", state.getName());
     }
 
     @Test
-    public void testDiscountTypeItems() throws Exception {
-        setUpDb("oshop/dao/discountType.xml");
+    public void testDiscountItems() throws Exception {
+        setUpDb("oshop/dao/discount.xml");
 
-        List<DiscountType> discountTypeList =  discountTypeDao.list(null, null);
+        List<Discount> discountTypeList =  discountDao.list(null, null);
         assertEquals(3, discountTypeList.size());
     }
 }

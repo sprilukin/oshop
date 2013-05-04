@@ -17,9 +17,6 @@ public class CustomerDaoTest extends BaseDaoTest {
     public void ttt() {
         Customer customer = new Customer();
         customer.setName("Name");
-        customer.setSurname("Surname");
-        customer.setFatherName("FatherName");
-        customer.setPhoneNumber("234345345345");
 
         Integer id = customerDao.add(customer);
 
