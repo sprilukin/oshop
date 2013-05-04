@@ -12,7 +12,6 @@ define([
 
     var SearchView = Backbone.View.extend({
         el: '.search',
-        query: "",
 
         events: {
             "submit .form-search": "search"
@@ -32,8 +31,8 @@ define([
         },
 
         search: function(event) {
-            this.query = $(event.currentTarget).find("input.search-query").val();
-            this.trigger("search", this.query);
+            var query = $(event.currentTarget).find("input.search-query").val();
+            this.filter.set(this.fieldName, query);
             event.preventDefault();
         }
     });

@@ -3,8 +3,9 @@
  */
 define([
     'underscore',
+    'backbone',
     'mustache'
-], function (_, Mustache) {
+], function (_, Backbone, Mustache) {
 
     var DEFAULT_FILTER_TEMPLATE = "{{#filters}}{{name}}={{value}};{{/filters}}";
 
@@ -19,7 +20,7 @@ define([
     };
 
     _.extend(Filter.prototype, {
-        set: function(name, value) {
+        set: function(name, value, options) {
             var existingFilter = _.find(this.filters, function(field) {
                 return field.name === name;
             });
@@ -30,7 +31,9 @@ define([
                 this.filters.push({name: name, value: value});
             }
 
-            return this;
+            if (!options || !options.silent) {
+                this.trigger("filter:change");
+            }
         },
 
         get: function(name) {
@@ -49,7 +52,7 @@ define([
             return Mustache.render(this.filterTemplate, {filters: this.filters}) || ";"
         },
 
-        parse: function(filterAsString) {
+        parse: function(filterAsString, options) {
             this.reset();
 
             if (!filterAsString) {
@@ -59,11 +62,17 @@ define([
             _.each(filterAsString.split(";"), function(field) {
                 if (field && field.indexOf("=") > -1) {
                     var pair = field.split("=");
-                    this.set(pair[0], pair[1]);
+                    this.set(pair[0], pair[1], {silent: true});
                 }
             }, this);
+
+            if (!options || !options.silent) {
+                this.trigger("filter:change");
+            }
         }
     });
+
+    _.extend(Filter.prototype, Backbone.Events);
 
     return Filter;
 });

@@ -75,9 +75,8 @@ define([
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
 
-            this.searchView.on("search",function (query) {
+            this.filter.on("filter:change", function() {
                 this.page = 1;
-                this.filter.set("name", query);
                 this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
 
@@ -94,7 +93,7 @@ define([
 
         list: function (filter, sort, page) {
             this.page = parseInt(page, 10) || 1;
-            this.filter.parse(filter);
+            this.filter.parse(filter, {silent:true});
             this.sorter.parse(sort, {silent:true});
 
             this.collection.limit = this.itemsPerPage;
