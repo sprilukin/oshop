@@ -144,14 +144,16 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @Override
             protected GenericListDto<List<T>> getResult() throws Exception {
                 Criteria criteria = getDao().createCriteria();
-
                 ControllerUtils.applyFilters(filters, criteria);
-                ControllerUtils.applySorters(sorters, criteria);
 
-                Integer count = getDao().list(criteria).size();
+                criteria.setProjection(Projections.rowCount());
+                Number size = searchDao.get(criteria);
+
+                ControllerUtils.resetCriteria(criteria);
+                ControllerUtils.applySorters(sorters, criteria);
                 List<T> list = getDao().list(criteria, offset, limit);
 
-                return new GenericListDto<List<T>>(list, count);
+                return new GenericListDto<List<T>>(list, size);
             }
         }.invoke();
     }

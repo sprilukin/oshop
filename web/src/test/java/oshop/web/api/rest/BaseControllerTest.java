@@ -13,13 +13,14 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import oshop.dao.GenericDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
+import oshop.model.Product;
+import oshop.model.ProductCategory;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -45,7 +46,13 @@ public abstract class BaseControllerTest {
     private GenericDao<ItemCategory, Integer> itemCategoryDao;
 
     @Resource
+    private GenericDao<ProductCategory, Integer> productCategoryDao;
+
+    @Resource
     private GenericDao<Item, Integer> itemDao;
+
+    @Resource
+    private GenericDao<Product, Integer> productDao;
 
     @Resource
     protected MessageSource messageSource;
@@ -76,6 +83,20 @@ public abstract class BaseControllerTest {
         }
     }
 
+    protected ProductCategory addProductCategory(String name) throws Exception {
+        ProductCategory category = new ProductCategory();
+        category.setName(name);
+
+        category.setId(productCategoryDao.add(category));
+        return category;
+    }
+
+    protected void addProductCategories(String... names) throws Exception {
+        for (String name: names) {
+            addProductCategory(name);
+        }
+    }
+
     protected Item addItem(Item item) throws Exception {
         item.setId(itemDao.add(item));
         return item;
@@ -97,5 +118,28 @@ public abstract class BaseControllerTest {
         item.setPrice(price);
 
         return item;
+    }
+
+    protected Product addProduct(Product product) throws Exception {
+        product.setId(productDao.add(product));
+        return product;
+    }
+
+    protected void addProducts(Product... poducts) throws Exception {
+        for (Product poduct: poducts) {
+            addProduct(poduct);
+        }
+    }
+
+    protected Product createProduct(ProductCategory category, String name, BigDecimal price) {
+        Product product = new Product();
+
+        ProductCategory cat = new ProductCategory();
+        cat.setId(category.getId());
+        product.setCategory(cat);
+        product.setName(name);
+        product.setPrice(price);
+
+        return product;
     }
 }
