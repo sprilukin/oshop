@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
-import oshop.web.api.rest.adapter.EmptyResultCheckRestCallbackAdapter;
-import oshop.web.dto.GenericListDto;
+import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
+import oshop.web.converter.DefaultNoDetachConverter;
+import oshop.web.converter.EntityDetachConverter;
+import oshop.web.converter.ProductConverter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,6 +45,11 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
         return productCategoryDao;
     }
 
+    @Override
+    protected EntityDetachConverter<ProductCategory, Integer> getDefaultConverter() {
+        return new DefaultNoDetachConverter<ProductCategory, Integer>();
+    }
+
     @RequestMapping(
             value = "/{id}/products",
             method = RequestMethod.GET,
@@ -53,19 +60,22 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EmptyResultCheckRestCallbackAdapter<GenericListDto<List<Product>>>() {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter()) {
+
             @Override
-            protected GenericListDto<List<Product>> getResult() throws Exception {
+            protected Long getSize() throws Exception {
                 Criteria criteria = productDao.createCriteria();
                 criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
                 criteria.setProjection(Projections.rowCount());
 
-                Number size = getSearchDao().get(criteria);
+                return getSearchDao().get(criteria);
+            }
 
-                ControllerUtils.resetCriteria(criteria);
-                List<Product> list = productDao.list(criteria, offset, limit);
-
-                return new GenericListDto<List<Product>>(list, size);
+            @Override
+            protected List<Product> getList() throws Exception {
+                Criteria criteria = productDao.createCriteria();
+                criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
+                return productDao.list(criteria, offset, limit);
             }
         }.invoke();
     }
@@ -82,20 +92,23 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EmptyResultCheckRestCallbackAdapter<GenericListDto<List<Product>>>() {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter()) {
+
             @Override
-            protected GenericListDto<List<Product>> getResult() throws Exception {
+            protected Long getSize() throws Exception {
                 Criteria criteria = productDao.createCriteria();
                 criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-
                 ControllerUtils.applyFilters(filters, criteria);
-                Number size = getSearchDao().get(criteria.setProjection(Projections.rowCount()));
+                return getSearchDao().get(criteria.setProjection(Projections.rowCount()));
+            }
 
-                ControllerUtils.resetCriteria(criteria);
+            @Override
+            protected List<Product> getList() throws Exception {
+                Criteria criteria = productDao.createCriteria();
+                criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
+                ControllerUtils.applyFilters(filters, criteria);
                 ControllerUtils.applySorters(sorters, criteria);
-                List<Product> list = productDao.list(criteria, offset, limit);
-
-                return new GenericListDto<List<Product>>(list, size);
+                return productDao.list(criteria, offset, limit);
             }
         }.invoke();
     }

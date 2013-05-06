@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
 import oshop.dao.GenericSearchDao;
 import oshop.model.BaseEntity;
-import oshop.web.api.rest.adapter.EmptyResultCheckRestCallbackAdapter;
-import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
+import oshop.web.api.rest.adapter.EntityDetachingRestCallbackAdapter;
+import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
-import oshop.web.dto.GenericListDto;
+import oshop.web.converter.EntityDetachConverter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -36,6 +36,8 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
     private static final Log log = LogFactory.getLog(BaseController.class);
 
     protected abstract GenericDao<T, ID> getDao();
+
+    protected abstract EntityDetachConverter<T, ID> getDefaultConverter();
 
     @Resource
     private GenericSearchDao searchDao;
@@ -53,7 +55,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
     @Transactional(readOnly = false)
     public ResponseEntity<?> add(@RequestBody @Valid final T entity, final BindingResult result) {
         return new ValidationRestCallbackAdapter(result,
-                new ReturningRestCallbackAdapter<T>() {
+                new EntityDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
                     @Override
                     protected T getResult() throws Exception {
                         ID id = getDao().add(entity);
@@ -80,7 +82,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<?> get(@PathVariable final ID id) {
-        return new ReturningRestCallbackAdapter<T>() {
+        return new EntityDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
             @Override
             protected T getResult() throws Exception {
                 return getDao().get(id);
@@ -99,7 +101,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestBody @Valid final T entity, final BindingResult result) {
 
         return new ValidationRestCallbackAdapter(result,
-                new ReturningRestCallbackAdapter<T>() {
+                new EntityDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
                     @Override
                     protected T getResult() throws Exception {
                         entity.setId(id);
@@ -118,13 +120,16 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EmptyResultCheckRestCallbackAdapter<GenericListDto<List<T>>>() {
-            @Override
-            protected GenericListDto<List<T>> getResult() throws Exception {
-                Number size = searchDao.get(getDao().createCriteria().setProjection(Projections.rowCount()));
-                List<T> list = getDao().list(getDao().createCriteria(), offset, limit);
+        return new EntityListDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
 
-                return new GenericListDto<List<T>>(list, size);
+            @Override
+            protected Long getSize() throws Exception {
+                return searchDao.get(getDao().createCriteria().setProjection(Projections.rowCount()));
+            }
+
+            @Override
+            protected List<T> getList() throws Exception {
+                return getDao().list(getDao().createCriteria(), offset, limit);
             }
         }.invoke();
     }
@@ -140,20 +145,24 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EmptyResultCheckRestCallbackAdapter<GenericListDto<List<T>>>() {
+        return new EntityListDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
+
             @Override
-            protected GenericListDto<List<T>> getResult() throws Exception {
+            protected Long getSize() throws Exception {
                 Criteria criteria = getDao().createCriteria();
                 ControllerUtils.applyFilters(filters, criteria);
 
                 criteria.setProjection(Projections.rowCount());
-                Number size = searchDao.get(criteria);
+                return searchDao.get(criteria);
+            }
 
-                ControllerUtils.resetCriteria(criteria);
+            @Override
+            protected List<T> getList() throws Exception {
+                Criteria criteria = getDao().createCriteria();
+                ControllerUtils.applyFilters(filters, criteria);
                 ControllerUtils.applySorters(sorters, criteria);
-                List<T> list = getDao().list(criteria, offset, limit);
 
-                return new GenericListDto<List<T>>(list, size);
+                return getDao().list(criteria, offset, limit);
             }
         }.invoke();
     }
