@@ -120,16 +120,16 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
+        return new EntityListDetachingRestCallbackAdapter<T, ID>(getDefaultConverter(), searchDao) {
 
             @Override
-            protected Long getSize() throws Exception {
-                return searchDao.get(getDao().createCriteria().setProjection(Projections.rowCount()));
+            protected Criteria getCriteria() {
+                return getDao().createCriteria();
             }
 
             @Override
-            protected List<T> getList() throws Exception {
-                return getDao().list(getDao().createCriteria(), offset, limit);
+            protected List<T> getList(Criteria criteria) {
+                return getDao().list(criteria, offset, limit);
             }
         }.invoke();
     }
@@ -145,23 +145,19 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<T, ID>(getDefaultConverter()) {
+        return new EntityListDetachingRestCallbackAdapter<T, ID>(getDefaultConverter(), searchDao) {
 
             @Override
-            protected Long getSize() throws Exception {
-                Criteria criteria = getDao().createCriteria();
-                ControllerUtils.applyFilters(filters, criteria);
-
-                criteria.setProjection(Projections.rowCount());
-                return searchDao.get(criteria);
-            }
-
-            @Override
-            protected List<T> getList() throws Exception {
+            protected Criteria getCriteria() {
                 Criteria criteria = getDao().createCriteria();
                 ControllerUtils.applyFilters(filters, criteria);
                 ControllerUtils.applySorters(sorters, criteria);
 
+                return criteria;
+            }
+
+            @Override
+            protected List<T> getList(Criteria criteria) {
                 return getDao().list(criteria, offset, limit);
             }
         }.invoke();

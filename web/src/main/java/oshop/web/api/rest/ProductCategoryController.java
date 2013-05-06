@@ -3,7 +3,6 @@ package oshop.web.api.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -60,21 +59,18 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter()) {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter(), getSearchDao()) {
 
             @Override
-            protected Long getSize() throws Exception {
+            protected Criteria getCriteria() {
                 Criteria criteria = productDao.createCriteria();
                 criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-                criteria.setProjection(Projections.rowCount());
 
-                return getSearchDao().get(criteria);
+                return criteria;
             }
 
             @Override
-            protected List<Product> getList() throws Exception {
-                Criteria criteria = productDao.createCriteria();
-                criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
+            protected List<Product> getList(Criteria criteria) {
                 return productDao.list(criteria, offset, limit);
             }
         }.invoke();
@@ -92,22 +88,20 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter()) {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter(), getSearchDao()) {
 
             @Override
-            protected Long getSize() throws Exception {
-                Criteria criteria = productDao.createCriteria();
-                criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-                ControllerUtils.applyFilters(filters, criteria);
-                return getSearchDao().get(criteria.setProjection(Projections.rowCount()));
-            }
-
-            @Override
-            protected List<Product> getList() throws Exception {
+            protected Criteria getCriteria() {
                 Criteria criteria = productDao.createCriteria();
                 criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
                 ControllerUtils.applyFilters(filters, criteria);
                 ControllerUtils.applySorters(sorters, criteria);
+
+                return criteria;
+            }
+
+            @Override
+            protected List<Product> getList(Criteria criteria) {
                 return productDao.list(criteria, offset, limit);
             }
         }.invoke();
