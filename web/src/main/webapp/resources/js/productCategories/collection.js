@@ -14,7 +14,7 @@ define([
         url: function () {
             return Mustache.render(context + "/api/productCategories/filter;{{filter}}/sort;{{sort}}", {
                 filter: this.filter,
-                sort: this.sort
+                sorter: this.sorter
             })
         },
 

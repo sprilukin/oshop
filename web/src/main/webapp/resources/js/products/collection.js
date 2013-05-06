@@ -24,7 +24,7 @@ define([
         url: function () {
             return Mustache.render(this.template, {
                 filter: this.filter,
-                sort: this.sort
+                sorter: this.sorter
             })
         },
 

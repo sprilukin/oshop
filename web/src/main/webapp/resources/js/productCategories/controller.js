@@ -99,7 +99,7 @@ define([
             this.collection.limit = this.itemsPerPage;
             this.collection.page = this.page;
             this.collection.filter = this.filter.format();
-            this.collection.sort = this.sorter.format();
+            this.collection.sorter = this.sorter.format();
             this.collection.fetch({data: {limit: this.itemsPerPage, offset: this.page - 1}});
         },
 
