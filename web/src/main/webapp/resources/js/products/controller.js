@@ -49,8 +49,9 @@ define([
         this.itemsPerPage = 10;
         this.filter = new Filter();
         this.sorter = new Sorter();
+        this.productCategoryId = $("#productCategoryId").attr("data-id");
 
-        this.collection = new Collection({productCategoryId: $("#productCategoryId").attr("data-id")});
+        this.collection = new Collection({productCategoryId: this.productCategoryId});
         this.listView = new ListView({collection: this.collection, sorter: this.sorter});
         this.editView = new EditView();
         this.paginationView = new PaginationView({collection: this.collection});

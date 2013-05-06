@@ -10,7 +10,7 @@ public abstract class BaseEntityDetachConverter<T extends BaseEntity<ID>, ID ext
         implements EntityDetachConverter<T, ID> {
 
     protected abstract Class<T> entityClass();
-    protected abstract void detach(T entity, T detachedEntity);
+    protected abstract void detach(T entity, T detachedEntity) throws Exception;
 
     @Override
     public T detach(T entity)  throws Exception {
