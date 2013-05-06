@@ -1,4 +1,4 @@
-package oshop.utils;
+package oshop.services;
 
 import org.springframework.stereotype.Component;
 

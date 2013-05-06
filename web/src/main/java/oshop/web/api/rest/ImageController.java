@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import oshop.dao.GenericDao;
 import oshop.model.Image;
-import oshop.utils.ImageConverterService;
+import oshop.services.ImageConverterService;
 import oshop.web.api.rest.adapter.HttpCacheRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
