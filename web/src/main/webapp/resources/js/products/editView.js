@@ -31,13 +31,11 @@ define([
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
 
-            this.$el.html(Mustache.render(editEntityTemplate, {
+            this.$el.html(Mustache.render(editEntityTemplate, _.extend({
                 title: this.mode === "add" ? messages["products_add_product"] : messages["products_edit_product"],
-                nameTitle: messages["products_column_name"],
-                close: messages["general_close"],
                 submit: this.mode === "add" ? messages["products_add"] : messages["products_edit"],
                 model: this.model.attributes
-            }));
+            }, messages)));
 
             this.dialog = this.$(".editEntityModal");
             this.dialog.modal({show: true});
@@ -93,12 +91,17 @@ define([
                 return true;
             }) || null;
 
-            this.model.save({"name": this.$("#field_name").val(), imageId: imageId}, {
-                wait: true,
+            this.model.save(
+                {
+                    "name": this.$("#field_name").val(),
+                    imageId: imageId,
+                    price: this.$("#field_price").val()
+                },
+
+                {wait: true,
                 success: function() {
                     that.submitted = true;
-                    that.dialog.modal("hide");
-                }
+                    that.dialog.modal("hide");}
             });
         }
     });

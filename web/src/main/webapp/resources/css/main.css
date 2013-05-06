@@ -21,3 +21,8 @@
 span.sort {
     cursor: pointer;
 }
+
+.form-horizontal .value-div {
+    padding-top: 5px;
+    text-align: left;
+}

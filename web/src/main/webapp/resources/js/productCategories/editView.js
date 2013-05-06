@@ -30,13 +30,11 @@ define([
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
 
-            this.$el.html(Mustache.render(editEntityTemplate, {
+            this.$el.html(Mustache.render(editEntityTemplate, _.extend({
                 title: this.mode === "add" ? messages["product_category_add_category"] : messages["product_category_edit_category"],
-                nameTitle: messages["product_category_column_name"],
-                close: messages["general_close"],
                 submit: this.mode === "add" ? messages["product_category_add"] : messages["product_category_edit"],
                 model: this.model.attributes
-            }));
+            }, messages)));
 
             this.dialog = this.$(".editEntityModal");
             this.dialog.modal({show: true});

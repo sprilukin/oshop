@@ -6,8 +6,18 @@
             <h3 id="editEntityModalLabel">{{title}}</h3>
         </div>
         <div class="modal-body">
+            {{#model.id}}
+            <div class="control-group form-horizontal field-name">
+                <label class="control-label">{{general_id}}</label>
+
+                <div class="controls">
+                    <div class="value-div">{{model.id}}</div>
+                </div>
+            </div>
+            {{/model.id}}
+
             <div class="control-group form-horizontal editEntityGroup">
-                <label class="control-label" for="field_name">{{nameTitle}}</label>
+                <label class="control-label" for="field_name">{{product_category_column_name}}</label>
 
                 <div class="controls">
                     <input class="input-large" id="field_name" type="text" required="required" value="{{model.name}}">
@@ -16,7 +26,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">{{close}}</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{{general_close}}</button>
             <button class="btn btn-primary editEntitySubmitButton">{{submit}}</button>
         </div>
     </div>

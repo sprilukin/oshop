@@ -6,11 +6,32 @@
             <h3 id="editEntityModalLabel">{{title}}</h3>
         </div>
         <div class="modal-body">
-            <div class="control-group form-horizontal editEntityGroup">
-                <label class="control-label" for="field_name">{{nameTitle}}</label>
+            {{#model.id}}
+            <div class="control-group form-horizontal field-name">
+                <label class="control-label">{{general_id}}</label>
+
+                <div class="controls">
+                    <div class="value-div">{{model.id}}</div>
+                </div>
+            </div>
+            {{/model.id}}
+            <div class="control-group form-horizontal field-name">
+                <label class="control-label" for="field_name">{{products_column_name}}</label>
 
                 <div class="controls">
                     <input class="input-large" id="field_name" type="text" required="required" value="{{model.name}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-price">
+                <label class="control-label" for="field_price">{{products_column_price}}</label>
+
+                <div class="controls">
+                    <div class="input-prepend input-append">
+                        <span class="add-on">₴</span>
+                        <input class="input-large span1" id="field_price" type="text" required="required" value="{{model.price}}">
+                        <span class="add-on">.00</span>
+                    </div>
                     <span class="help-inline"> </span>
                 </div>
             </div>
@@ -20,7 +41,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">{{close}}</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{{general_close}}</button>
             <button class="btn btn-primary editEntitySubmitButton">{{submit}}</button>
         </div>
     </div>
