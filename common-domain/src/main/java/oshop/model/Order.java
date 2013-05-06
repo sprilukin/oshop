@@ -1,19 +1,16 @@
 package oshop.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order extends BaseEntity<Integer> {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Item item;
+    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
@@ -27,12 +24,12 @@ public class Order extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     private Prepayment prepayment;
 
-    public Item getItem() {
-        return item;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Customer getCustomer() {
