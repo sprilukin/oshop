@@ -10,7 +10,7 @@ define([
     'common/context'
 ], function ($, _, Backbone, Mustache, messages, context) {
 
-    var ProductCategory = Backbone.Model.extend({
+    return Backbone.Model.extend({
 
         url: function() {
             return Mustache.render(context + "/api/products/{{id}}", {id: this.id});
@@ -22,6 +22,4 @@ define([
             }
         }
     });
-
-    return ProductCategory;
 });
