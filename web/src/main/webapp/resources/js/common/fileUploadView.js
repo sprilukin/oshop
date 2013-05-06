@@ -9,14 +9,15 @@ define([
     'text',
     'text!templates/fileUpload.html',
     'text!templates/fileUploadPreview.html',
+    'common/context',
     "fileupload",
     "iframeTransport",
     "jqueryUiWidget"
-], function ($, _, Backbone, Mustache, text, fileUploadTemplate, fileUploadPreviewTemplate) {
+], function ($, _, Backbone, Mustache, text, fileUploadTemplate, fileUploadPreviewTemplate, context) {
 
     var FileUploadModel = Backbone.Model.extend({
         url: function() {
-            return Mustache.render("api/images/{{id}}", {id: this.id});
+            return Mustache.render(context + "/api/images/{{id}}", {id: this.id});
         }
     });
 
@@ -28,7 +29,7 @@ define([
                 ? _.map(models, function(model) {return model.id})
                 : this.map(function(model) {return model.id})).join(",");
 
-            return Mustache.render("api/images/batch;ids={{ids}}/delete?_method=DELETE", {ids: joinedIds});
+            return Mustache.render(context + "/api/images/batch;ids={{ids}}/delete?_method=DELETE", {ids: joinedIds});
         },
 
         destroy: function(models) {
@@ -55,7 +56,7 @@ define([
         },
 
         render: function () {
-            this.$el.html(Mustache.render(fileUploadPreviewTemplate, {images: this.collection.models}));
+            this.$el.html(Mustache.render(fileUploadPreviewTemplate, {context: context, images: this.collection.models}));
         }
     });
 
@@ -71,7 +72,7 @@ define([
         render: function () {
             var that = this;
 
-            this.$el.html(Mustache.render(fileUploadTemplate, {width: this.width, multiple: this.multiple}));
+            this.$el.html(Mustache.render(fileUploadTemplate, {context: context, width: this.width, multiple: this.multiple}));
             this.$el.find(".fileUpload").fileupload({
                 dataType: 'json',
                 done: _.bind(that.done, that),

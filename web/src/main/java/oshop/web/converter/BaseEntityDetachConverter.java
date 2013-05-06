@@ -14,6 +14,10 @@ public abstract class BaseEntityDetachConverter<T extends BaseEntity<ID>, ID ext
 
     @Override
     public T detach(T entity)  throws Exception {
+        if (entity == null) {
+            return null;
+        }
+
         T detachedEntity = entityClass().newInstance();
         detachedEntity.setId(entity.getId());
         detachedEntity.setLastUpdate(entity.getLastUpdate());
