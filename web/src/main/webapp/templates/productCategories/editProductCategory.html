@@ -1,0 +1,23 @@
+<div class="editProductCategory">
+    <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editProductCategoryModalLabel" aria-hidden="true">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="editProductCategoryModalLabel">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group form-horizontal editProductCategoryGroup">
+                <label class="control-label" for="productCategoryName">{{nameTitle}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="productCategoryName" type="text" required="required" value="{{model.name}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{{close}}</button>
+            <button class="btn btn-primary editProductCategoryButton">{{submit}}</button>
+        </div>
+    </div>
+</div>
