@@ -3,15 +3,16 @@
  */
 define([
     'backbone',
-    'mustache'
-], function (Backbone, Mustache) {
+    'mustache',
+    'common/context'
+], function (Backbone, Mustache, context) {
 
     return Backbone.Collection.extend({
 
         total: null,
 
         url: function () {
-            return Mustache.render("api/productCategories/filter;{{filter}}/sort;{{sort}}", {
+            return Mustache.render(context + "/api/productCategories/filter;{{filter}}/sort;{{sort}}", {
                 filter: this.filter,
                 sort: this.sort
             })

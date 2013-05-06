@@ -6,13 +6,14 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages'
-], function ($, _, Backbone, Mustache, messages) {
+    'common/messages',
+    'common/context'
+], function ($, _, Backbone, Mustache, messages, context) {
 
-    var ProductCategory = Backbone.Model.extend({
+    return Backbone.Model.extend({
 
         url: function() {
-            return Mustache.render("api/productCategories/{{id}}", {id: this.id});
+            return Mustache.render(context + "/api/productCategories/{{id}}", {id: this.id});
         },
 
         validate: function(attributes) {
@@ -21,6 +22,4 @@ define([
             }
         }
     });
-
-    return ProductCategory;
 });

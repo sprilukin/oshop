@@ -14,7 +14,7 @@ define([
     'bootstrap'
 ], function ($, _, Backbone, Mustache, imageGallery, messages, SortView, text, listEntityTemplate) {
 
-    var ProductCategoriesView = Backbone.View.extend({
+    return Backbone.View.extend({
 
         el: '.listEntities',
 
@@ -51,6 +51,4 @@ define([
             event.preventDefault();
         }
     });
-
-    return ProductCategoriesView;
 });
