@@ -3,8 +3,9 @@
  */
 define([
     'backbone',
-    'mustache'
-], function (Backbone, Mustache) {
+    'mustache',
+    'common/context'
+], function (Backbone, Mustache, context) {
 
     return Backbone.Collection.extend({
 
@@ -13,10 +14,10 @@ define([
 
         initialize: function(options) {
             if (options.productCategoryId) {
-                this.template = Mustache.render("api/productCategories/{{id}}", {id: options.productCategoryId})
+                this.template = context + Mustache.render("/api/productCategories/{{id}}", {id: options.productCategoryId})
                     + "/products/filter;{{filter}}/sort;{{sort}}";
             } else {
-                this.template = "api/products/filter;{{filter}}/sort;{{sort}}";
+                this.template = context + "/api/products/filter;{{filter}}/sort;{{sort}}";
             }
         },
 
