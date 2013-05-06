@@ -1,6 +1,5 @@
 package oshop.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
@@ -11,7 +10,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "customer")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Customer extends BaseEntity<Integer> {
 
     @NotNull

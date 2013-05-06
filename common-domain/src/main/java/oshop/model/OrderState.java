@@ -1,16 +1,11 @@
 package oshop.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "orderState")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderState extends BaseEntity<Integer> {
 
     @Column(name = "name")

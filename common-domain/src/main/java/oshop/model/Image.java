@@ -1,17 +1,13 @@
 package oshop.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "image")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Image extends BaseEntity<Integer> {
 
     @NotNull

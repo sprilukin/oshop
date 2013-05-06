@@ -1,6 +1,5 @@
 package oshop.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "itemCategory")
 @XmlRootElement
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemCategory extends BaseEntity<Integer> {
 
     @NotNull

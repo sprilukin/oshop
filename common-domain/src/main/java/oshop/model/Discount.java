@@ -1,20 +1,12 @@
 package oshop.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
 @Table(name = "discount")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Discount extends BaseEntity<Integer> {
 
     @Column(name = "description")

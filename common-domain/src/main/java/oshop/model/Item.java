@@ -1,7 +1,5 @@
 package oshop.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +10,6 @@ import java.math.RoundingMode;
 
 @Entity
 @Table(name = "item")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Item extends BaseEntity<Integer> {
 
     @Column(name = "price", precision = 10, scale = 2)
