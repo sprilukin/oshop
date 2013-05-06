@@ -11,7 +11,7 @@
 
 <h1>Update files</h1>
 
-<form class="" action="/api/images/batch;ids=6,7/update?width=150" method="post" enctype="multipart/form-data">
+<form class="" action="api/images/batch;ids=6,7/update?width=150" method="post" enctype="multipart/form-data">
     <label for="file" title="File:"></label>
 
     <div class="control-group">
@@ -25,8 +25,8 @@
 </form>
 
 <div>
-    <img src="/api/images/6">
-    <img src="/api/images/7">
+    <img src="api/images/6">
+    <img src="api/images/7">
 </div>
 
 <h1>jquery upload</h1>
@@ -35,7 +35,7 @@
 <button id="disableUpload" class="btn btn-danger">Disable</button>
 
 <div>
-    <form id="fileUpload" action="/api/images/?width=150" method="post">
+    <form id="fileUpload" action="api/images/?width=150" method="post">
         <input name="files[0]" type="file" multiple="multiple" />
     </form>
 
@@ -68,7 +68,7 @@ require([
             done: function (e, data) {
                 $('.fileupload-progress').removeClass("in");
                 _.each(data.result, function (id) {
-                    $('<img>').attr("src", "/api/images/" + id)/*.attr("width", "50px")*/.appendTo($("#images"));
+                    $('<img>').attr("src", "api/images/" + id)/*.attr("width", "50px")*/.appendTo($("#images"));
                 });
             },
             add: function(e, data) {

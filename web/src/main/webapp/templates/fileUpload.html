@@ -1,5 +1,5 @@
 <div class="fileUploadWidget">
-    <form class="fileUpload" action="/api/images/{{#width}}?width={{width}}{{/width}}" method="post">
+    <form class="fileUpload" action="api/images/{{#width}}?width={{width}}{{/width}}" method="post">
         <input class="block" name="files[0]" type="file" {{#multiple}}multiple="multiple"{{/multiple}} />
         <span class="help-inline error"></span>
     </form>
