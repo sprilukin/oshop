@@ -49,7 +49,7 @@
 
     <!-- Themes -->
     <beans:bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
-        <beans:property name="basenamePrefix" value="theme-" />
+        <beans:property name="basenamePrefix" value="themes/theme-" />
     </beans:bean>
     <beans:bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
         <beans:property name="defaultThemeName" value="default" />
