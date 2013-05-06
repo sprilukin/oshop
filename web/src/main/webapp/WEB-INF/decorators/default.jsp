@@ -15,16 +15,16 @@
 
     <title><decorator:title/> | <spring:message code="webapp.name"/></title>
 
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap.css'/>" />
-    <link rel="stylesheet" type="text/css" media="all" href="<spring:theme code='css'/>"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-responsive.css'/>" />
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/bootstrap-image-gallery.css'/>" />
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/jquery-ui-1.10.1.custom.css'/>" />
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/css/main.css'/>" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/<spring:theme code='css'/>"/>
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-image-gallery.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.1.custom.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
     <script language="JavaScript">
         var require = {
-            baseUrl: "resources/js",
+            baseUrl: "${pageContext.request.contextPath}/resources/js",
 
             paths: {
                 // Major libraries

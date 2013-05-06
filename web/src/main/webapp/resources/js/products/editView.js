@@ -8,7 +8,7 @@ define([
     'mustache',
     'common/messages',
     'text',
-    'text!templates/productCategories/edit.html',
+    'text!templates/products/edit.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, text, editEntityTemplate) {
 
@@ -31,10 +31,10 @@ define([
             this.model.on("error", this.onError, this);
 
             this.$el.html(Mustache.render(editEntityTemplate, {
-                title: this.mode === "add" ? messages["product_category_add_category"] : messages["product_category_edit_category"],
-                nameTitle: messages["product_category_column_name"],
+                title: this.mode === "add" ? messages["products_add_category"] : messages["products_edit_category"],
+                nameTitle: messages["products_column_name"],
                 close: messages["general_close"],
-                submit: this.mode === "add" ? messages["product_category_add"] : messages["product_category_edit"],
+                submit: this.mode === "add" ? messages["products_add"] : messages["products_edit"],
                 model: this.model.attributes
             }));
 
