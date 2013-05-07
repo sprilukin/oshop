@@ -25,7 +25,7 @@ define([
                 validationFailed = true;
             }
 
-            if ("" + parseInt(attributes.price, 10) !== attributes.price) {
+            if ("" + parseInt(attributes.price, 10) !== "" + attributes.price) {
                 validationMessages["price"] = [messages["ui_validation_not_number"]];
                 validationFailed = true;
             }
