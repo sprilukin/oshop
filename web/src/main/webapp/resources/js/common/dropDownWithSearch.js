@@ -30,7 +30,10 @@ define([
                 }
             },
             initSelection: function(element, callback) {
-                return options.initialValue ? callback(options.initialValue) : undefined;
+                if (options.initialValue) {
+                    $(element).val(options.initialValue.id);
+                    callback(options.initialValue)
+                }
             }
         });
     };

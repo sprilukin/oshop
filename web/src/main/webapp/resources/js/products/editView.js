@@ -70,20 +70,22 @@ define([
         },
 
         hideValidation: function() {
-            this.$(".editEntityGroup").removeClass("error").find(".help-inline").html();
+            this.$(".control-group").removeClass("error").find(".help-inline").html();
         },
 
         renderValidation: function(errors) {
-            this.$(".editEntityGroup").addClass("error").find(".help-inline").html(errors.name);
+            _.each(errors, function(message, field) {
+                this.$(".control-group.field-" + field).addClass("error").find(".help-inline").html(message[0]);
+            }, this);
         },
 
         onIvalid: function(model, error, attrs) {
-            this.renderValidation({name: error});
+            this.renderValidation(error);
         },
 
         onError: function(model, xhr) {
             var validation = JSON.parse(xhr.responseText);
-            this.renderValidation({name: validation.fields.name[0]});
+            this.renderValidation({name: validation.fields});
         },
 
         onHidden: function() {

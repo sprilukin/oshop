@@ -17,9 +17,25 @@ define([
         },
 
         validate: function(attributes) {
+            var validationFailed = false;
+            var validationMessages = {};
+
             if (!attributes.name) {
-                return messages["ui_validation_not_blank"];
+                validationMessages["name"] = [messages["ui_validation_not_blank"]];
+                validationFailed = true;
             }
+
+            if ("" + parseInt(attributes.price, 10) !== attributes.price) {
+                validationMessages["price"] = [messages["ui_validation_not_number"]];
+                validationFailed = true;
+            }
+
+            if (!attributes.category || !attributes.category.id) {
+                validationMessages["category"] = [messages["ui_validation_not_blank"]];
+                validationFailed = true;
+            }
+
+            return validationFailed ? validationMessages : undefined;
         }
     });
 });
