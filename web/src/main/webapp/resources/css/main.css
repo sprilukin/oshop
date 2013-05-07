@@ -26,3 +26,7 @@ span.sort {
     padding-top: 5px;
     text-align: left;
 }
+
+.select2-container {
+    display: block;
+}

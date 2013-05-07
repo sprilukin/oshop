@@ -8,10 +8,14 @@ define([
     'mustache',
     'common/messages',
     'common/fileUploadView',
+    'common/context',
+    'common/dropDownWithSearch',
+    'productCategories/collection',
     'text',
     'text!templates/products/edit.html',
-    'bootstrap'
-], function ($, _, Backbone, Mustache, messages, FileUploadView, text, editEntityTemplate) {
+    'bootstrap',
+    'select2'
+], function ($, _, Backbone, Mustache, messages, FileUploadView, context, DropDownWithSearch, ProductCategoriesCollection, text, editEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -48,6 +52,21 @@ define([
                 images: this.model.get("imageId") ? [this.model.get("imageId")] : []
             });
             this.fileUpload.render();
+
+            this.productCategorySelect = new DropDownWithSearch({
+                element: $("#field_product_category"),
+                placeholder: "Select product category",
+                allowClear: false,
+                urlTemplate: context + "/api/productCategories/filter;name={{term}};/sort;",
+                initialValue: (function(model) {
+                    return model && {id: model.id, text: model.name}
+                })(model && model.attributes.category ? model.attributes.category : null),
+                resultParser: function(data) {
+                    return data ? _.map(data.values, function (item) {
+                        return {id: item.id, text: item.name}
+                    }) : [];
+                }
+            });
         },
 
         hideValidation: function() {
@@ -69,6 +88,7 @@ define([
 
         onHidden: function() {
             this.model = null;
+            this.productCategorySelect.destroy();
 
             this.submitted ? this.fileUpload.submit() : this.fileUpload.cancel();
 
@@ -95,7 +115,8 @@ define([
                 {
                     "name": this.$("#field_name").val(),
                     imageId: imageId,
-                    price: this.$("#field_price").val()
+                    price: this.$("#field_price").val(),
+                    category: {id: $("#field_product_category").val()}
                 },
 
                 {wait: true,

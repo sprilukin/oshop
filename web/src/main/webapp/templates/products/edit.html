@@ -15,6 +15,7 @@
                 </div>
             </div>
             {{/model.id}}
+
             <div class="control-group form-horizontal field-name">
                 <label class="control-label" for="field_name">{{products_column_name}}</label>
 
@@ -23,6 +24,7 @@
                     <span class="help-inline"> </span>
                 </div>
             </div>
+
             <div class="control-group form-horizontal field-price">
                 <label class="control-label" for="field_price">{{products_column_price}}</label>
 
@@ -35,9 +37,21 @@
                     <span class="help-inline"> </span>
                 </div>
             </div>
+
             <div class="control-group form-horizontal fileUploadGroup">
                 <label class="control-label">{{general_image}}</label>
                 <div class="controls"></div>
+            </div>
+
+            <div class="control-group form-horizontal field-productCategory">
+                <label class="control-label" for="field_product_category">{{products_column_product_category}}</label>
+
+                <div class="controls">
+                    <div>
+                        <input type="hidden" id="field_product_category" value="{{model.category.id}}">
+                    </div>
+                    <span class="help-inline"> </span>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
