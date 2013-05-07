@@ -10,7 +10,7 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
         implements EntityConverter<T, ID> {
 
     protected abstract Class<T> entityClass();
-    protected abstract void detach(T entity, T detachedEntity) throws Exception;
+    protected abstract void convert(T entity, T convertedEntity) throws Exception;
 
     @Override
     public T convert(T entity)  throws Exception {
@@ -18,14 +18,14 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
             return null;
         }
 
-        T detachedEntity = entityClass().newInstance();
-        detachedEntity.setId(entity.getId());
-        detachedEntity.setLastUpdate(entity.getLastUpdate());
-        detachedEntity.setVersion(entity.getVersion());
+        T convertedEntity = entityClass().newInstance();
+        convertedEntity.setId(entity.getId());
+        convertedEntity.setLastUpdate(entity.getLastUpdate());
+        convertedEntity.setVersion(entity.getVersion());
 
-        detach(entity, detachedEntity);
+        convert(entity, convertedEntity);
 
-        return detachedEntity;
+        return convertedEntity;
     }
 
     @Override
@@ -34,12 +34,12 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
             return null;
         }
 
-        List<T> detachedList = new ArrayList<T>(entities.size());
+        List<T> convertedList = new ArrayList<T>(entities.size());
 
         for (T entity: entities) {
-            detachedList.add(convert(entity));
+            convertedList.add(convert(entity));
         }
 
-        return detachedList;
+        return convertedList;
     }
 }

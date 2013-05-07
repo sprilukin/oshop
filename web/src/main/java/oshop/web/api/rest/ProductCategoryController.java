@@ -20,7 +20,7 @@ import oshop.model.ProductCategory;
 import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.converter.DefaultNoConverter;
 import oshop.web.converter.EntityConverter;
-import oshop.web.converter.ProductConverter;
+import oshop.web.converter.ProductToDTOConverter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -45,7 +45,12 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
     }
 
     @Override
-    protected EntityConverter<ProductCategory, Integer> getDefaultConverter() {
+    protected EntityConverter<ProductCategory, Integer> getToDTOConverter() {
+        return new DefaultNoConverter<ProductCategory, Integer>();
+    }
+
+    @Override
+    protected EntityConverter<ProductCategory, Integer> getFromDTOConverter() {
         return new DefaultNoConverter<ProductCategory, Integer>();
     }
 
@@ -59,7 +64,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter(), getSearchDao()) {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductToDTOConverter(), getSearchDao()) {
 
             @Override
             protected Criteria getCriteria() {
@@ -88,7 +93,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductConverter(), getSearchDao()) {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductToDTOConverter(), getSearchDao()) {
 
             @Override
             protected Criteria getCriteria() {

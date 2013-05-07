@@ -42,7 +42,12 @@ public class ItemCategoryController extends BaseController<ItemCategory, Integer
     }
 
     @Override
-    protected EntityConverter<ItemCategory, Integer> getDefaultConverter() {
+    protected EntityConverter<ItemCategory, Integer> getToDTOConverter() {
+        return new DefaultNoConverter<ItemCategory, Integer>();
+    }
+
+    @Override
+    protected EntityConverter<ItemCategory, Integer> getFromDTOConverter() {
         return new DefaultNoConverter<ItemCategory, Integer>();
     }
 

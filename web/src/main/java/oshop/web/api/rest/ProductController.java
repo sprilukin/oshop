@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import oshop.dao.GenericDao;
 import oshop.model.Product;
+import oshop.model.ProductCategory;
+import oshop.web.converter.DefaultNoConverter;
 import oshop.web.converter.EntityConverter;
-import oshop.web.converter.ProductConverter;
+import oshop.web.converter.ProductFromDTOConverter;
+import oshop.web.converter.ProductToDTOConverter;
 
 import javax.annotation.Resource;
 
@@ -28,7 +31,12 @@ public class ProductController extends BaseController<Product, Integer> {
     }
 
     @Override
-    protected EntityConverter<Product, Integer> getDefaultConverter() {
-        return new ProductConverter();
+    protected EntityConverter<Product, Integer> getToDTOConverter() {
+        return new ProductToDTOConverter();
+    }
+
+    @Override
+    protected EntityConverter<Product, Integer> getFromDTOConverter() {
+        return new DefaultNoConverter<Product, Integer>();
     }
 }
