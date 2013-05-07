@@ -100,6 +100,7 @@ define([
             this.collection.page = this.page;
             this.collection.filter = this.filter.format();
             this.collection.sorter = this.sorter.format();
+            this.collection.reset({silent: true});
             this.collection.fetch({data: {limit: this.itemsPerPage, offset: this.page - 1}});
         },
 
