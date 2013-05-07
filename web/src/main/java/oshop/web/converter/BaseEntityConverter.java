@@ -6,14 +6,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseEntityDetachConverter<T extends BaseEntity<ID>, ID extends Serializable>
-        implements EntityDetachConverter<T, ID> {
+public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends Serializable>
+        implements EntityConverter<T, ID> {
 
     protected abstract Class<T> entityClass();
     protected abstract void detach(T entity, T detachedEntity) throws Exception;
 
     @Override
-    public T detach(T entity)  throws Exception {
+    public T convert(T entity)  throws Exception {
         if (entity == null) {
             return null;
         }
@@ -29,7 +29,7 @@ public abstract class BaseEntityDetachConverter<T extends BaseEntity<ID>, ID ext
     }
 
     @Override
-    public List<T> detach(List<T> entities)  throws Exception {
+    public List<T> convert(List<T> entities)  throws Exception {
         if (entities == null) {
             return null;
         }
@@ -37,7 +37,7 @@ public abstract class BaseEntityDetachConverter<T extends BaseEntity<ID>, ID ext
         List<T> detachedList = new ArrayList<T>(entities.size());
 
         for (T entity: entities) {
-            detachedList.add(detach(entity));
+            detachedList.add(convert(entity));
         }
 
         return detachedList;

@@ -3,7 +3,6 @@ package oshop.web.api.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +21,7 @@ import oshop.web.api.rest.adapter.EntityDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
-import oshop.web.converter.EntityDetachConverter;
+import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -37,7 +36,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
 
     protected abstract GenericDao<T, ID> getDao();
 
-    protected abstract EntityDetachConverter<T, ID> getDefaultConverter();
+    protected abstract EntityConverter<T, ID> getDefaultConverter();
 
     @Resource
     private GenericSearchDao searchDao;

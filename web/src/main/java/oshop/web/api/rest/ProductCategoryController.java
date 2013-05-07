@@ -18,8 +18,8 @@ import oshop.dao.GenericDao;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
-import oshop.web.converter.DefaultNoDetachConverter;
-import oshop.web.converter.EntityDetachConverter;
+import oshop.web.converter.DefaultNoConverter;
+import oshop.web.converter.EntityConverter;
 import oshop.web.converter.ProductConverter;
 
 import javax.annotation.Resource;
@@ -45,8 +45,8 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
     }
 
     @Override
-    protected EntityDetachConverter<ProductCategory, Integer> getDefaultConverter() {
-        return new DefaultNoDetachConverter<ProductCategory, Integer>();
+    protected EntityConverter<ProductCategory, Integer> getDefaultConverter() {
+        return new DefaultNoConverter<ProductCategory, Integer>();
     }
 
     @RequestMapping(

@@ -3,9 +3,9 @@ package oshop.web.converter;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 
-public class ProductConverter extends BaseEntityDetachConverter<Product, Integer> {
+public class ProductConverter extends BaseEntityConverter<Product, Integer> {
 
-    private EntityDetachConverter<ProductCategory, Integer> productCategoryConverter = new BaseEntityDetachConverter<ProductCategory, Integer>() {
+    private EntityConverter<ProductCategory, Integer> productCategoryConverter = new BaseEntityConverter<ProductCategory, Integer>() {
         @Override
         protected Class<ProductCategory> entityClass() {
             return ProductCategory.class;
@@ -29,6 +29,6 @@ public class ProductConverter extends BaseEntityDetachConverter<Product, Integer
         detachedEntity.setName(entity.getName());
         detachedEntity.setImageId(entity.getImageId());
         detachedEntity.setPrice(entity.getPrice());
-        detachedEntity.setCategory(productCategoryConverter.detach(entity.getCategory()));
+        detachedEntity.setCategory(productCategoryConverter.convert(entity.getCategory()));
     }
 }

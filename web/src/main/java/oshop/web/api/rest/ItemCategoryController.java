@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
 import oshop.model.Item;
 import oshop.model.ItemCategory;
-import oshop.web.converter.DefaultNoDetachConverter;
-import oshop.web.converter.EntityDetachConverter;
+import oshop.web.converter.DefaultNoConverter;
+import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -42,8 +42,8 @@ public class ItemCategoryController extends BaseController<ItemCategory, Integer
     }
 
     @Override
-    protected EntityDetachConverter<ItemCategory, Integer> getDefaultConverter() {
-        return new DefaultNoDetachConverter<ItemCategory, Integer>();
+    protected EntityConverter<ItemCategory, Integer> getDefaultConverter() {
+        return new DefaultNoConverter<ItemCategory, Integer>();
     }
 
     @RequestMapping(
