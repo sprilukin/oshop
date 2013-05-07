@@ -24,6 +24,7 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="row-fluid span12 forPagination"></div>
 <div class="editEntity"></div>
+<div id="imageGallery"></div>
 
 <div id="productCategoryId" data-id="${productCategoryId}" class="hide"></div>
 

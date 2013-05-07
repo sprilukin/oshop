@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-image-gallery.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.1.custom.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/select2.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
     <script language="JavaScript">
@@ -34,6 +35,7 @@
                 backbone: 'lib/backbone',
                 mustache: 'lib/mustache',
                 bootstrap: 'lib/bootstrap',
+                select2: 'lib/select2',
                 //fileupload
                 fileupload: 'lib/fileup/jquery.fileupload',
                 iframeTransport: 'lib/fileup/jquery.iframe-transport',
@@ -49,6 +51,9 @@
 
             shim: {
                 bootstrap: {
+                    deps: ["jquery"]
+                },
+                select2: {
                     deps: ["jquery"]
                 },
                 underscore: {
@@ -71,9 +76,6 @@
     <div class="warning"></div>
 
     <decorator:body/>
-
-    <%-- image gallery --%>
-    <div id="imageGallery"></div>
 </div>
 </body>
 </html>
