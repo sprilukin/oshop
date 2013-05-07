@@ -42,7 +42,7 @@ define([
         },
 
         hideValidation: function() {
-            this.$(".editEntityGroup").removeClass("error").find(".help-inline").html();
+            this.$(".editEntityGroup").removeClass("error").find(".help-inline").html("");
         },
 
         renderValidation: function(errors) {

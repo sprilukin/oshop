@@ -70,7 +70,7 @@ define([
         },
 
         hideValidation: function() {
-            this.$(".control-group").removeClass("error").find(".help-inline").html();
+            this.$(".control-group").removeClass("error").find(".help-inline").html("");
         },
 
         renderValidation: function(errors) {
@@ -85,7 +85,7 @@ define([
 
         onError: function(model, xhr) {
             var validation = JSON.parse(xhr.responseText);
-            this.renderValidation({name: validation.fields});
+            this.renderValidation(validation.fields);
         },
 
         onHidden: function() {
