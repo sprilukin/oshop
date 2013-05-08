@@ -83,7 +83,7 @@
         </resources>
     </build>
 
-    <profiles>
+    <!--<profiles>
         <profile>
             <id>oshop-dev</id>
             <properties>
@@ -109,5 +109,5 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-    </profiles>
+    </profiles>-->
 </project>
