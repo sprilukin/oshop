@@ -16,6 +16,7 @@
     <name>Oshop Web Application</name>
 
     <build>
+        <finalName>${final.name}</finalName>
         <plugins>
 
         </plugins>
