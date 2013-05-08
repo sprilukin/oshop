@@ -58,9 +58,6 @@ define([
                 placeholder: "Select product category",
                 allowClear: false,
                 urlTemplate: context + "/api/productCategories/filter;name={{term}};/sort;",
-                initialValue: (function(model) {
-                    return model && {id: model.id, text: model.name}
-                })(model && model.attributes.category ? model.attributes.category : null),
                 resultParser: function(data) {
                     return data ? _.map(data.values, function (item) {
                         return {id: item.id, text: item.name}

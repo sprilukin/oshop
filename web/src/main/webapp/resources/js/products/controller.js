@@ -6,6 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
+    'productCategories/model',
     'products/model',
     'products/collection',
     'products/listView',
@@ -15,7 +16,7 @@ define([
     'common/searchView',
     'common/filter',
     'common/sorter'
-], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView, PaginationView, SearchView, Filter, Sorter) {
+], function ($, _, Backbone, Mustache, ProductCategoryModel, Model, Collection, ListView, EditView, WarningView, PaginationView, SearchView, Filter, Sorter) {
 
     var Router = Backbone.Router.extend({
 
@@ -87,6 +88,22 @@ define([
             }, this);
         },
 
+        loadProductCategory: function(callback) {
+            if (this.productCategoryId) {
+                if (!this.productCategory) {
+                    this.productCategory = new ProductCategoryModel({id: this.productCategoryId});
+                    this.productCategory.fetch({
+                        wait: true,
+                        success: function (model) {
+                            callback && callback(model.attributes);
+                        }
+                    });
+                }
+            } else {
+                callback && callback(null);
+            }
+        },
+
         getListUrl: function() {
             return Mustache.render("list/filter;{{filter}}/sort;{{sort}}/{{page}}",
                 {filter: this.filter.format(), sort: this.sorter.format(), page: this.page});
@@ -125,11 +142,10 @@ define([
         },
 
         edit: function (id) {
+            var that = this;
             var model = new Model();
 
             if (id) {
-                var that = this;
-
                 model.set("id", id);
                 model.fetch({
                     wait: true,
@@ -138,7 +154,14 @@ define([
                     }
                 });
             } else {
-                this.editView.render(model);
+                if (this.productCategoryId) {
+                    this.loadProductCategory(function(productCategory) {
+                        model.set("category", productCategory);
+                        that.editView.render(model);
+                    })
+                } else {
+                    this.editView.render(model);
+                }
             }
         }
     });

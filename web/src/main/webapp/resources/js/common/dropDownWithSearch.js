@@ -30,10 +30,15 @@ define([
                 }
             },
             initSelection: function(element, callback) {
+                var el = $(element);
+
                 if (options.initialValue) {
-                    $(element).val(options.initialValue.id);
-                    callback(options.initialValue)
+                    el.val(options.initialValue.id);
+                } else {
+                    options.initialValue = {id: el.val(), text: el.attr("data-text")};
                 }
+
+                callback(options.initialValue)
             }
         });
     };
