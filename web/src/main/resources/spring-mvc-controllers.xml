@@ -12,7 +12,5 @@
     </context:component-scan>
 
     <view-controller path="/fileUploadTest"/>
-    <view-controller path="/main3"/>
-    <view-controller path="/main3"/>
 
 </beans:beans>

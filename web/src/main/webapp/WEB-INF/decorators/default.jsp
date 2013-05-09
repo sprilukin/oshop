@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/<spring:theme code='css'/>"/>
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-image-gallery.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.1.custom.css" />
+    <%--<link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.1.custom.css" />--%>
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/select2.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
@@ -30,7 +30,7 @@
             paths: {
                 // Major libraries
                 jquery: 'lib/jquery-1.9.1',
-                jqueryui: 'lib/jquery-ui-1.10.1.custom',
+                /*jqueryui: 'lib/jquery-ui-1.10.1.custom',*/
                 underscore: 'lib/underscore',
                 backbone: 'lib/backbone',
                 mustache: 'lib/mustache',
