@@ -12,7 +12,7 @@ public class CommonUIController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() throws Exception {
-        return "redirect:itemCategories";
+        return "redirect:productCategories";
     }
 
     @RequestMapping(value = "/itemCategories", method = RequestMethod.GET)

@@ -20,6 +20,7 @@ public class ProductFromDTOConverter extends BaseEntityConverter<Product, Intege
     @Override
     protected void convert(Product entity, Product convertedEntity) throws Exception {
         convertedEntity.setName(entity.getName());
+        convertedEntity.setDescription(entity.getDescription());
         convertedEntity.setImageId(entity.getImageId());
         convertedEntity.setPrice(entity.getPrice());
         convertedEntity.setCategory(productCategoryDao.get(entity.getCategory().getId()));

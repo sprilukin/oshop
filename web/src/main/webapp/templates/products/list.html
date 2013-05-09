@@ -10,6 +10,10 @@
             <span class="sorter" data-column="name"></span>
         </th>
         <th class="span1">
+            {{products_column_description}}
+            <span class="sorter" data-column="description"></span>
+        </th>
+        <th class="span1">
             {{products_column_price}}
             <span class="sorter" data-column="price"></span>
         </th>
@@ -23,6 +27,7 @@
     <tr>
         <td>{{id}}</td>
         <td>{{attributes.name}}</td>
+        <td>{{attributes.description}}</td>
         <td>{{attributes.price}}</td>
         <td>
             {{#attributes.imageId}}

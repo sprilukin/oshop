@@ -27,6 +27,10 @@ public class Product extends BaseEntity<Integer> {
     @Column(name = "name")
     private String name;
 
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductCategory category;
 
@@ -46,6 +50,14 @@ public class Product extends BaseEntity<Integer> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ProductCategory getCategory() {

@@ -112,7 +112,8 @@ define([
 
             this.model.save(
                 {
-                    "name": this.$("#field_name").val(),
+                    name: this.$("#field_name").val(),
+                    description: this.$("#field_description").val(),
                     imageId: imageId,
                     price: this.$("#field_price").val(),
                     category: {id: $("#field_product_category").val()}
