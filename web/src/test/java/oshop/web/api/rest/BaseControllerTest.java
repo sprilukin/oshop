@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import oshop.dao.GenericDao;
-import oshop.model.Item;
-import oshop.model.ItemCategory;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 
@@ -43,13 +41,7 @@ public abstract class BaseControllerTest {
     private WebApplicationContext wac;
 
     @Resource
-    private GenericDao<ItemCategory, Integer> itemCategoryDao;
-
-    @Resource
     private GenericDao<ProductCategory, Integer> productCategoryDao;
-
-    @Resource
-    private GenericDao<Item, Integer> itemDao;
 
     @Resource
     private GenericDao<Product, Integer> productDao;
@@ -69,20 +61,6 @@ public abstract class BaseControllerTest {
         log.debug(new String(result.getResponse().getContentAsByteArray()));
     }
 
-    protected ItemCategory addItemCategory(String name) throws Exception {
-        ItemCategory category = new ItemCategory();
-        category.setName(name);
-
-        category.setId(itemCategoryDao.add(category));
-        return category;
-    }
-
-    protected void addItemCategories(String... names) throws Exception {
-        for (String name: names) {
-            addItemCategory(name);
-        }
-    }
-
     protected ProductCategory addProductCategory(String name) throws Exception {
         ProductCategory category = new ProductCategory();
         category.setName(name);
@@ -95,29 +73,6 @@ public abstract class BaseControllerTest {
         for (String name: names) {
             addProductCategory(name);
         }
-    }
-
-    protected Item addItem(Item item) throws Exception {
-        item.setId(itemDao.add(item));
-        return item;
-    }
-
-    protected void addItems(Item... items) throws Exception {
-        for (Item item: items) {
-            addItem(item);
-        }
-    }
-
-    protected Item createItem(ItemCategory category, String name, BigDecimal price) {
-        Item item = new Item();
-
-        ItemCategory cat = new ItemCategory();
-        cat.setId(category.getId());
-        item.setCategory(cat);
-        item.setName(name);
-        item.setPrice(price);
-
-        return item;
     }
 
     protected Product addProduct(Product product) throws Exception {
