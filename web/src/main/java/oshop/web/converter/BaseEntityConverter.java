@@ -12,13 +12,17 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
     protected abstract Class<T> entityClass();
     protected abstract void convert(T entity, T convertedEntity) throws Exception;
 
+    protected T newInstance()  throws Exception {
+        return entityClass().newInstance();
+    }
+
     @Override
     public T convert(T entity)  throws Exception {
         if (entity == null) {
             return null;
         }
 
-        T convertedEntity = entityClass().newInstance();
+        T convertedEntity = newInstance();
         convertedEntity.setId(entity.getId());
         convertedEntity.setLastUpdate(entity.getLastUpdate());
         convertedEntity.setVersion(entity.getVersion());
@@ -26,6 +30,10 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
         convert(entity, convertedEntity);
 
         return convertedEntity;
+    }
+
+    protected T convertForList(T entity) throws Exception {
+        return convert(entity);
     }
 
     @Override
@@ -37,7 +45,7 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
         List<T> convertedList = new ArrayList<T>(entities.size());
 
         for (T entity: entities) {
-            convertedList.add(convert(entity));
+            convertedList.add(convertForList(entity));
         }
 
         return convertedList;

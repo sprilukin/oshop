@@ -41,7 +41,7 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     }
 
     protected Order convertForList(Order entity) throws Exception {
-        Order convertedEntity = new Order();
+        Order convertedEntity = newInstance();
         convertInternal(entity, convertedEntity);
 
         List<OrderHasStates> states = entity.getStates();
@@ -52,20 +52,5 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
         }
 
         return convertedEntity;
-    }
-
-    @Override
-    public List<Order> convert(List<Order> entities) throws Exception {
-        if (entities == null) {
-            return null;
-        }
-
-        List<Order> convertedList = new ArrayList<Order>(entities.size());
-
-        for (Order entity: entities) {
-            convertedList.add(convertForList(entity));
-        }
-
-        return convertedList;
     }
 }
