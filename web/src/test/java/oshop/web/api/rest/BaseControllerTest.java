@@ -28,7 +28,10 @@ import java.math.BigDecimal;
 @ContextConfiguration({
         "classpath*:spring-mvc-config.xml",
         "classpath*:applicationContext.xml",
-        "classpath*:META-INF/applicationContext*.xml"})
+        "classpath:META-INF/applicationContext-sessionFactory.xml",
+        "classpath:META-INF/applicationContext-testDataSource.xml",
+        "classpath:META-INF/applicationContext-dao.xml"
+})
 @Transactional
 @TransactionConfiguration(
         defaultRollback = true,

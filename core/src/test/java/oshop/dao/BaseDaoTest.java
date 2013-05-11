@@ -22,7 +22,8 @@ import static org.junit.Assert.assertNotNull;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
-        "classpath:META-INF/applicationContext-persistence.xml",
+        "classpath:META-INF/applicationContext-sessionFactory.xml",
+        "classpath:META-INF/applicationContext-testDataSource.xml",
         "classpath:META-INF/applicationContext-dao.xml"})
 @TransactionConfiguration(
         defaultRollback = true,
