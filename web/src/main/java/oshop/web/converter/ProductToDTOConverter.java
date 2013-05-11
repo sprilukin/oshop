@@ -1,28 +1,21 @@
 package oshop.web.converter;
 
+import org.springframework.stereotype.Component;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 
+import javax.annotation.Resource;
+
+@Component
 public class ProductToDTOConverter extends BaseEntityConverter<Product, Integer> {
-
-    private EntityConverter<ProductCategory, Integer> productCategoryConverter = new BaseEntityConverter<ProductCategory, Integer>() {
-        @Override
-        protected Class<ProductCategory> entityClass() {
-            return ProductCategory.class;
-        }
-
-        @Override
-        protected void convert(ProductCategory entity, ProductCategory convertedEntity) {
-            convertedEntity.setLastUpdate(null);
-            convertedEntity.setVersion(null);
-            convertedEntity.setName(entity.getName());
-        }
-    };
 
     @Override
     protected Class<Product> entityClass() {
         return Product.class;
     }
+
+    @Resource(name = "productCategoryToDTOConverter")
+    private EntityConverter<ProductCategory, Integer> productCategoryConvetrer;
 
     @Override
     protected void convert(Product entity, Product convertedEntity) throws Exception {
@@ -30,6 +23,6 @@ public class ProductToDTOConverter extends BaseEntityConverter<Product, Integer>
         convertedEntity.setDescription(entity.getDescription());
         convertedEntity.setImageId(entity.getImageId());
         convertedEntity.setPrice(entity.getPrice());
-        convertedEntity.setCategory(productCategoryConverter.convert(entity.getCategory()));
+        convertedEntity.setCategory(productCategoryConvetrer.convert(entity.getCategory()));
     }
 }

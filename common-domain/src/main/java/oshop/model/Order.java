@@ -3,14 +3,13 @@ package oshop.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity<Integer> {
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
@@ -24,13 +23,11 @@ public class Order extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     private Prepayment prepayment;
 
-    public Product getProduct() {
-        return product;
-    }
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<OrderHasStates> states;
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<OrderHasProducts> products;
 
     public Customer getCustomer() {
         return customer;
@@ -62,5 +59,21 @@ public class Order extends BaseEntity<Integer> {
 
     public void setPrepayment(Prepayment prepayment) {
         this.prepayment = prepayment;
+    }
+
+    public List<OrderHasStates> getStates() {
+        return states;
+    }
+
+    public void setStates(List<OrderHasStates> states) {
+        this.states = states;
+    }
+
+    public List<OrderHasProducts> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<OrderHasProducts> products) {
+        this.products = products;
     }
 }

@@ -38,6 +38,9 @@
     <bean id="orderHasStatesDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.OrderHasStates" />
     </bean>
+    <bean id="orderHasProductsDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+        <property name="entityClass" value="oshop.model.OrderHasProducts" />
+    </bean>
     <bean id="saleHasStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.OrderHasStates" />
     </bean>

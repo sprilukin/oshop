@@ -18,9 +18,7 @@ import oshop.dao.GenericDao;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
-import oshop.web.converter.DefaultNoConverter;
 import oshop.web.converter.EntityConverter;
-import oshop.web.converter.ProductToDTOConverter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,6 +37,12 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
     @Resource
     private GenericDao<Product, Integer> productDao;
 
+    @Resource(name = "productCategoryToDTOConverter")
+    private EntityConverter<ProductCategory, Integer> converter;
+
+    @Resource(name = "productToDTOConverter")
+    private EntityConverter<Product, Integer> productConverter;
+
     @Override
     protected GenericDao<ProductCategory, Integer> getDao() {
         return productCategoryDao;
@@ -46,12 +50,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
 
     @Override
     protected EntityConverter<ProductCategory, Integer> getToDTOConverter() {
-        return new DefaultNoConverter<ProductCategory, Integer>();
-    }
-
-    @Override
-    protected EntityConverter<ProductCategory, Integer> getFromDTOConverter() {
-        return new DefaultNoConverter<ProductCategory, Integer>();
+        return converter;
     }
 
     @RequestMapping(
@@ -64,7 +63,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductToDTOConverter(), getSearchDao()) {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(productConverter, getSearchDao()) {
 
             @Override
             protected Criteria getCriteria() {
@@ -93,7 +92,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(new ProductToDTOConverter(), getSearchDao()) {
+        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(productConverter, getSearchDao()) {
 
             @Override
             protected Criteria getCriteria() {

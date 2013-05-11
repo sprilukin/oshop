@@ -34,16 +34,22 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
 
     private static final Log log = LogFactory.getLog(BaseController.class);
 
-    protected abstract GenericDao<T, ID> getDao();
-
-    protected abstract EntityConverter<T, ID> getToDTOConverter();
-    protected abstract EntityConverter<T, ID> getFromDTOConverter();
-
     @Resource
     private GenericSearchDao searchDao;
 
+    @Resource(name = "defaultConverter")
+    private EntityConverter<T, ID> fromDTOConverter;
+
     protected GenericSearchDao getSearchDao() {
         return searchDao;
+    }
+
+    protected abstract GenericDao<T, ID> getDao();
+
+    protected abstract EntityConverter<T, ID> getToDTOConverter();
+
+    protected EntityConverter<T, ID> getFromDTOConverter() {
+        return fromDTOConverter;
     }
 
     @RequestMapping(

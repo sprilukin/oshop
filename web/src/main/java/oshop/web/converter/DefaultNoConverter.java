@@ -1,10 +1,12 @@
 package oshop.web.converter;
 
+import org.springframework.stereotype.Component;
 import oshop.model.BaseEntity;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Component("defaultConverter")
 public class DefaultNoConverter<T extends BaseEntity<ID>, ID extends Serializable>
         implements EntityConverter<T, ID> {
 
