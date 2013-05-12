@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import oshop.model.Customer;
+import oshop.model.EntityUtils;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.OrderState;
@@ -159,6 +160,12 @@ public class OrderControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.values[1].name").value("Product2"))
                 .andExpect(jsonPath("$.values[2].name").value("Product3"))
                 .andReturn();
+
+        orderDao.getSession().flush();
+        orderDao.getSession().clear();
+
+        order = orderDao.get(order.getId());
+        assertEquals(EntityUtils.round(new BigDecimal(30.31)), order.getProductsPrice());
 
         logResponse(result);
     }

@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,9 @@ public class Order extends BaseEntity<Integer> {
 
     @Formula("( SELECT count(p.product_id) FROM order_products p WHERE p.order_id = id )")
     private Integer productsCount;
+
+    @Formula("( SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id )")
+    private BigDecimal productsPrice;
 
     public Customer getCustomer() {
         return customer;
@@ -114,5 +118,13 @@ public class Order extends BaseEntity<Integer> {
 
     public void setCurrentOrderStateName(String currentOrderStateName) {
         this.currentOrderStateName = currentOrderStateName;
+    }
+
+    public BigDecimal getProductsPrice() {
+        return productsPrice;
+    }
+
+    public void setProductsPrice(BigDecimal productsPrice) {
+        this.productsPrice = productsPrice;
     }
 }

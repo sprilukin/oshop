@@ -23,6 +23,7 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     protected void convertInternal(Order entity, Order convertedEntity) throws Exception {
         convertedEntity.setCurrentOrderStateName(entity.getCurrentOrderStateName());
         convertedEntity.setProductsCount(entity.getProductsCount());
+        convertedEntity.setProductsPrice(entity.getProductsPrice());
         convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
         convertedEntity.setDiscount(null); //TODO
         convertedEntity.setPrepayment(null); //TODO
