@@ -60,7 +60,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
         Integer id = addProductCategory("category1").getId();
 
         this.mockMvc.perform(
-                get("/api/productCategories/" + id)
+                get("/api/productCategories/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -74,7 +74,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
         Integer id = addProductCategory("category1").getId();
 
        this.mockMvc.perform(
-                get("/api/productCategories/" + (id + 1))
+                get("/api/productCategories/{id}", id + 1)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8"))
                 .andExpect(status().isNotFound())
@@ -88,7 +88,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
         Integer id = addProductCategory("category1").getId();
 
         this.mockMvc.perform(
-                delete("/api/productCategories/" + id)
+                delete("/api/productCategories/{id}", id)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -100,7 +100,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
         productCategory.setName("category2");
 
         this.mockMvc.perform(
-                put("/api/productCategories/" + productCategory.getId())
+                put("/api/productCategories/{id}", productCategory.getId())
                         .content(mapper.writeValueAsString(productCategory))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -111,7 +111,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
     @Test
     public void testRemoveNotExisting() throws Exception {
         this.mockMvc.perform(
-                delete("/api/productCategories/" + 1)
+                delete("/api/productCategories/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -203,7 +203,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
         addProductCategories("category2", "category3");
 
         this.mockMvc.perform(
-                get("/api/productCategories/" + id)
+                get("/api/productCategories/{id}", id)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -221,7 +221,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                 createProduct(productCategory, "Product3", new BigDecimal(10.001)));
 
         MvcResult result = this.mockMvc.perform(
-                get("/api/productCategories/" + productCategory.getId() + "/products").accept(MediaType.APPLICATION_JSON))
+                get("/api/productCategories/{id}/products", productCategory.getId()).accept(MediaType.APPLICATION_JSON))
 
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -245,7 +245,7 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                 createProduct(productCategory, "Product3", new BigDecimal(10.2)));
 
         this.mockMvc.perform(
-                get("/api/productCategories/" + productCategory.getId() + "/products/filter;name=Product/sort;name=asc")
+                get("/api/productCategories/{id}/products/filter;name=Product/sort;name=asc", productCategory.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

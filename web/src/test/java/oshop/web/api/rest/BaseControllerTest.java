@@ -48,16 +48,16 @@ public abstract class BaseControllerTest {
     private WebApplicationContext wac;
 
     @Resource
-    private GenericDao<ProductCategory, Integer> productCategoryDao;
+    protected GenericDao<ProductCategory, Integer> productCategoryDao;
 
     @Resource
-    private GenericDao<Product, Integer> productDao;
+    protected GenericDao<Product, Integer> productDao;
 
     @Resource
-    private GenericDao<Customer, Integer> customerDao;
+    protected GenericDao<Customer, Integer> customerDao;
 
     @Resource
-    private GenericDao<Order, Integer> orderDao;
+    protected GenericDao<Order, Integer> orderDao;
 
     @Resource
     protected MessageSource messageSource;
@@ -124,10 +124,21 @@ public abstract class BaseControllerTest {
         return customer;
     }
 
-    protected Order addOrder(String name) {
+    protected Order addOrder(String name, List<Product> products) {
         Order order = new Order();
         order.setCustomer(addCustomer(name));
-        order.setId(orderDao.add(order));
-        return order;
+
+        if (products != null) {
+            order.getProducts().addAll(products);
+        }
+
+        orderDao.add(order);
+
+        if (products != null) {
+            orderDao.getSession().flush();
+            orderDao.getSession().evict(order);
+        }
+
+        return orderDao.get(order.getId());
     }
 }
