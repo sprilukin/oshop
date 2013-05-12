@@ -79,7 +79,7 @@ public class OrderControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testRmoveProductsFromOrder() throws Exception {
+    public void testRemoveProductsFromOrder() throws Exception {
         ProductCategory productCategory = addProductCategory("category1");
 
         List<Product> products = addProducts(createProduct(productCategory, "Product1", new BigDecimal(10.01)),
@@ -108,5 +108,28 @@ public class OrderControllerTest extends BaseControllerTest {
         order = orderDao.get(order.getId());
         assertEquals(0, order.getProducts().size());
         assertEquals(0, order.getProductsCount().intValue());
+    }
+
+    @Test
+    public void testRemoveOrder() throws Exception {
+        ProductCategory productCategory = addProductCategory("category1");
+
+        List<Product> products = addProducts(createProduct(productCategory, "Product1", new BigDecimal(10.01)),
+                createProduct(productCategory, "Product2", new BigDecimal(10.1)),
+                createProduct(productCategory, "Product3", new BigDecimal(10.2)));
+
+        Order order = addOrder("customer", products);
+
+        this.mockMvc.perform(
+                delete("/api/orders/{id}", order.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        orderDao.getSession().flush();
+        orderDao.getSession().clear();
+
+        assertEquals(3, productDao.list(null, null).size());
+        assertEquals(0, orderDao.list(null, null).size());
     }
 }

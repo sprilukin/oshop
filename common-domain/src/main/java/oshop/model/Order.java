@@ -37,7 +37,7 @@ public class Order extends BaseEntity<Integer> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy="order", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<OrderHasOrderStates> states = new ArrayList<OrderHasOrderStates>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
         name = "order_products",
         joinColumns = {@JoinColumn(name = "order_id", nullable = false, updatable = false)},
