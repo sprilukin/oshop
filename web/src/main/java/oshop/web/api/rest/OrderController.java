@@ -87,9 +87,9 @@ public class OrderController extends BaseController<Order, Integer> {
             @PathVariable final Integer id,
             @MatrixVariable(value = "ids", pathVar="batch", required = true) final List<Integer> ids) {
 
-        return new EntityDetachingRestCallbackAdapter<Order, Integer>(converter) {
+        return new VoidRestCallbackAdapter() {
             @Override
-            protected Order getResult() throws Exception {
+            protected void perform() throws Exception {
                 Order order = getDao().get(id);
 
                 Criteria productsCriteria = productDao.createCriteria();
@@ -99,10 +99,6 @@ public class OrderController extends BaseController<Order, Integer> {
 
                 order.getProducts().addAll(products);
                 getDao().update(order);
-                getDao().getSession().flush();
-                getDao().getSession().evict(order);
-
-                return getDao().get(id);
             }
         }.invoke();
     }

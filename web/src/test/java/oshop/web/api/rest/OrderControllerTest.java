@@ -63,19 +63,18 @@ public class OrderControllerTest extends BaseControllerTest {
             ids.append(product.getId());
         }
 
-        MvcResult result = this.mockMvc.perform(
+        this.mockMvc.perform(
                 post("/api/orders/{id}/products/batch;ids={ids}/add", order.getId(), ids)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.states").isArray())
-                .andExpect(jsonPath("$.products[(@.length - 1)].name").value("Product3"))
-                .andExpect(jsonPath("$.productsCount").value(3))
-                .andExpect(jsonPath("$.customer.name").value("customer"))
+                .andExpect(status().isNoContent())
                 .andReturn();
 
-        logResponse(result);
+        orderDao.getSession().evict(order);
+        order = orderDao.get(order.getId());
+
+        assertEquals(3, order.getProducts().size());
+        assertEquals(3, order.getProductsCount().intValue());
     }
 
     @Test
