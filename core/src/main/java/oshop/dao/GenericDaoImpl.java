@@ -3,6 +3,7 @@ package oshop.dao;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.MessageSource;
@@ -37,7 +38,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         this.listLimit = listLimit;
     }
 
-    Session getSession() {
+    public Session getSession() {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.setFlushMode(FlushMode.AUTO);
         return currentSession;
@@ -55,6 +56,16 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         if (queryManipulator != null) {
             queryManipulator.manipulateWithQuery(query);
         }
+        query.executeUpdate();
+    }
+
+    @Override
+    public void executeQuery(String queryString, SQLQueryManipulator queryManipulator) {
+        SQLQuery query = getSession().createSQLQuery(queryString);
+        if (queryManipulator != null) {
+            queryManipulator.manipulateWithQuery(query);
+        }
+
         query.executeUpdate();
     }
 
@@ -137,10 +148,5 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     public void remove(T entity) {
         getSession().delete(entity);
-    }
-
-    @Override
-    public void flush() {
-        getSession().flush();
     }
 }

@@ -2,6 +2,8 @@ package oshop.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 import oshop.model.BaseEntity;
 
@@ -14,6 +16,9 @@ public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
     @Transactional(readOnly = false)
     public void executeQuery(String query, QueryManipulator queryManipulator);
+
+    @Transactional(readOnly = false)
+    public void executeQuery(String query, SQLQueryManipulator queryManipulator);
 
     public Criteria createCriteria();
 
@@ -40,9 +45,13 @@ public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
     public void remove(@Valid T entity);
 
     @Transactional(readOnly = false)
-    public void flush();
+    public Session getSession();
 
     interface QueryManipulator {
         public void manipulateWithQuery(Query query);
+    }
+
+    interface SQLQueryManipulator {
+        public void manipulateWithQuery(SQLQuery query);
     }
 }

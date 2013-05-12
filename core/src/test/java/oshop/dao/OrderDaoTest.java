@@ -41,7 +41,7 @@ public class OrderDaoTest extends BaseDaoTest {
         order.getProducts().addAll(products);
 
         orderDao.add(order);
-        orderDao.flush();
+        orderDao.getSession().flush();
         orderDao.getSession().evict(order);
 
         List<Order> orders = orderDao.list(null, null);

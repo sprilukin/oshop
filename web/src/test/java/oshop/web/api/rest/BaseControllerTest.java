@@ -17,11 +17,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import oshop.dao.GenericDao;
+import oshop.model.Customer;
+import oshop.model.Order;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -48,6 +52,12 @@ public abstract class BaseControllerTest {
 
     @Resource
     private GenericDao<Product, Integer> productDao;
+
+    @Resource
+    private GenericDao<Customer, Integer> customerDao;
+
+    @Resource
+    private GenericDao<Order, Integer> orderDao;
 
     @Resource
     protected MessageSource messageSource;
@@ -83,10 +93,15 @@ public abstract class BaseControllerTest {
         return product;
     }
 
-    protected void addProducts(Product... poducts) throws Exception {
+    protected List<Product> addProducts(Product... poducts) throws Exception {
+
+        List<Product> products = new ArrayList<Product>();
+
         for (Product poduct: poducts) {
-            addProduct(poduct);
+            products.add(addProduct(poduct));
         }
+
+        return products;
     }
 
     protected Product createProduct(ProductCategory category, String name, BigDecimal price) {
@@ -99,5 +114,20 @@ public abstract class BaseControllerTest {
         product.setPrice(price);
 
         return product;
+    }
+
+    protected Customer addCustomer(String name) {
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setId(customerDao.add(customer));
+
+        return customer;
+    }
+
+    protected Order addOrder(String name) {
+        Order order = new Order();
+        order.setCustomer(addCustomer(name));
+        order.setId(orderDao.add(order));
+        return order;
     }
 }
