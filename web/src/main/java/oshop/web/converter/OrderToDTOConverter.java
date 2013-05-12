@@ -37,19 +37,19 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     protected void convert(Order entity, Order convertedEntity) throws Exception {
         convertInternal(entity, convertedEntity);
 
-        convertedEntity.setProducts(productsConverter.convertSet(entity.getProducts()));
-        convertedEntity.setStates(orderStatesConverter.convertSet(entity.getStates()));
+        convertedEntity.setProducts(productsConverter.convert(entity.getProducts()));
+        convertedEntity.setStates(orderStatesConverter.convert(entity.getStates()));
     }
 
     protected Order convertForCollection(Order entity) throws Exception {
         Order convertedEntity = newInstance();
         convertInternal(entity, convertedEntity);
 
-        Set<OrderHasOrderStates> states = entity.getStates();
+        List<OrderHasOrderStates> states = entity.getStates();
         if (states.size() > 0) {
-            convertedEntity.setStates(new HashSet<OrderHasOrderStates>(Arrays.asList(states.iterator().next())));
+            convertedEntity.setStates(Arrays.asList(states.get(0)));
         } else {
-            convertedEntity.setStates(Collections.<OrderHasOrderStates>emptySet());
+            convertedEntity.setStates(Collections.<OrderHasOrderStates>emptyList());
         }
 
         return convertedEntity;

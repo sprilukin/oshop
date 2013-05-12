@@ -4,10 +4,7 @@ import oshop.model.BaseEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends Serializable>
         implements EntityConverter<T, ID> {
@@ -40,7 +37,7 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    public List<T> convertList(Collection<T> entities)  throws Exception {
+    public List<T> convert(List<T> entities)  throws Exception {
         if (entities == null) {
             return null;
         }
@@ -52,10 +49,5 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
         }
 
         return convertedList;
-    }
-
-    @Override
-    public Set<T> convertSet(Collection<T> entities) throws Exception {
-        return new LinkedHashSet<T>(convertList(entities));
     }
 }

@@ -2,6 +2,7 @@ package oshop.model;
 
 import org.hibernate.annotations.Formula;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -10,7 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -32,22 +34,22 @@ public class Order extends BaseEntity<Integer> {
     @JoinColumn(name = "prepayment_id")
     private Prepayment prepayment;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="order", orphanRemoval = true)
-    private Set<OrderHasOrderStates> states;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="order", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<OrderHasOrderStates> states = new ArrayList<OrderHasOrderStates>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
         name = "order_products",
         joinColumns = {@JoinColumn(name = "order_id", nullable = false, updatable = false)},
         inverseJoinColumns = { @JoinColumn(name = "product_id", nullable = false, updatable = false) }
     )
-    private Set<Product> products;
+    private List<Product> products = new ArrayList<Product>();
 
-    @Formula("(select count(p.id) from orders_order_has_products p where p.orders_id = id)")
+    @Formula("( SELECT s.name FROM order_has_order_states h INNER JOIN order_state s ON h.order_state_id = s.id WHERE h.order_id = id ORDER BY h.date DESC LIMIT 1 )")
+    private String currentOrderStateName;
+
+    @Formula("( SELECT count(p.product_id) FROM order_products p WHERE p.order_id = id )")
     private Integer productsCount;
-
-    //@Formula("(select st.name from (select s.name, order_has_states h inner join order_state s on h.states_id = s.id where h.orders_id = id) st)")
-    //private String currentOrderState;
 
     public Customer getCustomer() {
         return customer;
@@ -81,23 +83,27 @@ public class Order extends BaseEntity<Integer> {
         this.prepayment = prepayment;
     }
 
-    public Set<OrderHasOrderStates> getStates() {
+    public List<OrderHasOrderStates> getStates() {
         return states;
     }
 
-    public void setStates(Set<OrderHasOrderStates> states) {
+    public void setStates(List<OrderHasOrderStates> states) {
         this.states = states;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
     public Integer getProductsCount() {
         return productsCount;
+    }
+
+    public String getCurrentOrderStateName() {
+        return currentOrderStateName;
     }
 }

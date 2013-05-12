@@ -24,7 +24,7 @@ public abstract class EntityListDetachingRestCallbackAdapter<T extends BaseEntit
 
     @Override
     protected List<T> convertList(List<T> list) throws Exception {
-        return converter.convertList(list);
+        return converter.convert(list);
     }
 
     @Override

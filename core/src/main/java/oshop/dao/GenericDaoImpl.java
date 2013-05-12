@@ -37,7 +37,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         this.listLimit = listLimit;
     }
 
-    private Session getSession() {
+    Session getSession() {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.setFlushMode(FlushMode.AUTO);
         return currentSession;
@@ -137,5 +137,10 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
 
     public void remove(T entity) {
         getSession().delete(entity);
+    }
+
+    @Override
+    public void flush() {
+        getSession().flush();
     }
 }

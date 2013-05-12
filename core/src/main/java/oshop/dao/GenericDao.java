@@ -39,6 +39,9 @@ public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
     @Transactional(readOnly = false)
     public void remove(@Valid T entity);
 
+    @Transactional(readOnly = false)
+    public void flush();
+
     interface QueryManipulator {
         public void manipulateWithQuery(Query query);
     }

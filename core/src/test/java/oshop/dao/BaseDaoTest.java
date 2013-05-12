@@ -34,7 +34,7 @@ public abstract class BaseDaoTest {
     private SessionFactory sessionFactory;
 
     protected void setUpDb(String pathToDataSet) throws Exception {
-        setUpDb(pathToDataSet, DatabaseOperation.INSERT);
+        setUpDb(pathToDataSet, DatabaseOperation.CLEAN_INSERT);
     }
 
     protected void setUpDb(String pathToDataSet, DatabaseOperation operation) throws Exception {

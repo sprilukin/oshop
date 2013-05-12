@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <product_category id="1" version="0" name="productCategory"/>
+    <product id="1" version="0" name="product1" description="testdescription1" price="10.0" category_id="1"/>
+    <product id="2" version="0" name="product2" description="testdescription2" price="20.0" category_id="1"/>
+
+    <order_state id="1" version="0" name="NEW"/>
+    <order_state id="2" version="0" name="SHIPPED"/>
+
+    <customer id="1" name="Name" version="0"/>
+</dataset>
