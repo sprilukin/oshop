@@ -1,0 +1,60 @@
+<table class="table table-striped table-hover sorted">
+    <thead>
+    <tr>
+        <th class="span1">
+            {{general_id}}
+            <span class="sorter" data-column="id"></span>
+        </th>
+        <!--<th class="span1">
+            {{products_column_name}}
+            <span class="sorter" data-column="name"></span>
+        </th>
+        <th class="span1">
+            {{products_column_description}}
+            <span class="sorter" data-column="description"></span>
+        </th>
+        <th class="span1">
+            {{products_column_price}}
+            <span class="sorter" data-column="price"></span>
+        </th>
+        <th class="span1"></th>
+        <th class="span1">{{products_column_product_category}}</th>-->
+        <th class="span1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#models}}
+    <tr>
+        <td>{{id}}</td>
+        <!--<td>{{attributes.name}}</td>
+        <td>{{attributes.description}}</td>
+        <td>{{attributes.price}}</td>
+        <td>
+            {{#attributes.imageId}}
+            <div data-toggle="modal-gallery" data-target="#modal-gallery">
+                <a href="{{context}}/api/images/{{attributes.imageId}}" data-gallery="gallery">
+                    <img src="{{context}}/api/images/{{attributes.imageId}}" style="height: 30px">
+                </a>
+            </div>
+            {{/attributes.imageId}}
+        </td>
+        <td><a href="{{context}}/productCategories#edit/{{attributes.category.id}}">{{attributes.category.name}}</a></td>-->
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#edit/{{id}}"><i class="icon-pencil"></i> {{general_modify}}</a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> {{general_remove}}</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {{/models}}
+    </tbody>
+</table>

@@ -35,4 +35,9 @@ public class CommonUIController {
     public String products() throws Exception {
         return "products";
     }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public String orders() throws Exception {
+        return "ordersList";
+    }
 }
