@@ -45,7 +45,8 @@ public class Order extends BaseEntity<Integer> {
     )
     private List<Product> products = new ArrayList<Product>();
 
-    @Formula("( SELECT s.name FROM order_has_order_states h INNER JOIN order_state s ON h.order_state_id = s.id WHERE h.order_id = id ORDER BY h.date DESC LIMIT 1 )")
+    @Formula("( SELECT s.name FROM order_has_order_states h INNER JOIN order_state s ON h.order_state_id = s.id " +
+            "WHERE h.order_id = id ORDER BY h.date DESC, h.id DESC LIMIT 1 )")
     private String currentOrderStateName;
 
     @Formula("( SELECT count(p.product_id) FROM order_products p WHERE p.order_id = id )")
@@ -103,7 +104,15 @@ public class Order extends BaseEntity<Integer> {
         return productsCount;
     }
 
+    public void setProductsCount(Integer productsCount) {
+        this.productsCount = productsCount;
+    }
+
     public String getCurrentOrderStateName() {
         return currentOrderStateName;
+    }
+
+    public void setCurrentOrderStateName(String currentOrderStateName) {
+        this.currentOrderStateName = currentOrderStateName;
     }
 }

@@ -83,6 +83,6 @@ public class OrderDaoTest extends BaseDaoTest {
 
         List<Order> orders = orderDao.list(null, null);
         assertEquals(2, orders.get(0).getStates().size());
-        assertEquals("NEW", orders.get(0).getCurrentOrderStateName());
+        assertEquals("SHIPPED", orders.get(0).getCurrentOrderStateName());
     }
 }

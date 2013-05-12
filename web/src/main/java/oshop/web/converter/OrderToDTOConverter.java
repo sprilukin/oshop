@@ -1,16 +1,12 @@
 package oshop.web.converter;
 
 import org.springframework.stereotype.Component;
+import oshop.model.Customer;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Component
 public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
@@ -21,8 +17,13 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     @Resource(name = "orderHasStateToDTOConverter")
     private EntityConverter<OrderHasOrderStates, Integer> orderStatesConverter;
 
+    @Resource(name = "customerToDTOConverter")
+    private EntityConverter<Customer, Integer> customerConverter;
+
     protected void convertInternal(Order entity, Order convertedEntity) throws Exception {
-        convertedEntity.setCustomer(null); //TODO
+        convertedEntity.setCurrentOrderStateName(entity.getCurrentOrderStateName());
+        convertedEntity.setProductsCount(entity.getProductsCount());
+        convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
         convertedEntity.setDiscount(null); //TODO
         convertedEntity.setPrepayment(null); //TODO
         convertedEntity.setShippingAddress(null); //TODO
@@ -44,14 +45,6 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     protected Order convertForCollection(Order entity) throws Exception {
         Order convertedEntity = newInstance();
         convertInternal(entity, convertedEntity);
-
-        List<OrderHasOrderStates> states = entity.getStates();
-        if (states.size() > 0) {
-            convertedEntity.setStates(Arrays.asList(states.get(0)));
-        } else {
-            convertedEntity.setStates(Collections.<OrderHasOrderStates>emptyList());
-        }
-
         return convertedEntity;
     }
 }
