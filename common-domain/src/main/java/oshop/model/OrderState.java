@@ -9,20 +9,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "orderState")
+@Table(name = "order_state")
 public class OrderState extends BaseEntity<Integer> {
 
     @NotNull
     @NotBlank
     @Size(max = 50)
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
-    @NotNull
-    @NotBlank
     @Size(max = 255)
-    @Column(name = "label")
-    private String label;
+    @Column(name = "description")
+    private String description;
 
     public String getName() {
         return name;
@@ -32,11 +30,11 @@ public class OrderState extends BaseEntity<Integer> {
         this.name = name;
     }
 
-    public String getLabel() {
-        return label;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

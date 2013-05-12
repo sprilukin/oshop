@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import oshop.dao.GenericDao;
-import oshop.model.OrderHasStates;
+import oshop.model.OrderHasOrderStates;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
@@ -14,23 +14,23 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/api/orderHasStates")
 @Transactional(readOnly = true)
-public class OrderHasStatesController extends BaseController<OrderHasStates, Integer> {
+public class OrderHasStatesController extends BaseController<OrderHasOrderStates, Integer> {
 
     private static final Log log = LogFactory.getLog(OrderHasStatesController.class);
 
     @Resource
-    private GenericDao<OrderHasStates, Integer> orderHasStatesDao;
+    private GenericDao<OrderHasOrderStates, Integer> orderHasStatesDao;
 
     @Resource(name = "orderHasStateToDTOConverter")
-    private EntityConverter<OrderHasStates, Integer> converter;
+    private EntityConverter<OrderHasOrderStates, Integer> converter;
 
     @Override
-    protected GenericDao<OrderHasStates, Integer> getDao() {
+    protected GenericDao<OrderHasOrderStates, Integer> getDao() {
         return orderHasStatesDao;
     }
 
     @Override
-    protected EntityConverter<OrderHasStates, Integer> getToDTOConverter() {
+    protected EntityConverter<OrderHasOrderStates, Integer> getToDTOConverter() {
         return converter;
     }
 }

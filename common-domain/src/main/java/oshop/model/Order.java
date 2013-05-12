@@ -1,33 +1,53 @@
 package oshop.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity<Integer> {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shipping_address_id")
     private ShippingAddress shippingAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "discount_id")
     private Discount discount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prepayment_id")
     private Prepayment prepayment;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<OrderHasStates> states;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="order", orphanRemoval = true)
+    private Set<OrderHasOrderStates> states;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<OrderHasProducts> products;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "order_products",
+        joinColumns = {@JoinColumn(name = "order_id", nullable = false, updatable = false)},
+        inverseJoinColumns = { @JoinColumn(name = "product_id", nullable = false, updatable = false) }
+    )
+    private Set<Product> products;
+
+    @Formula("(select count(p.id) from orders_order_has_products p where p.orders_id = id)")
+    private Integer productsCount;
+
+    //@Formula("(select st.name from (select s.name, order_has_states h inner join order_state s on h.states_id = s.id where h.orders_id = id) st)")
+    //private String currentOrderState;
 
     public Customer getCustomer() {
         return customer;
@@ -61,19 +81,23 @@ public class Order extends BaseEntity<Integer> {
         this.prepayment = prepayment;
     }
 
-    public List<OrderHasStates> getStates() {
+    public Set<OrderHasOrderStates> getStates() {
         return states;
     }
 
-    public void setStates(List<OrderHasStates> states) {
+    public void setStates(Set<OrderHasOrderStates> states) {
         this.states = states;
     }
 
-    public List<OrderHasProducts> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<OrderHasProducts> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Integer getProductsCount() {
+        return productsCount;
     }
 }

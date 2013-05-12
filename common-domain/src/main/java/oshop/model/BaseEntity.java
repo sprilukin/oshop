@@ -26,7 +26,7 @@ public class BaseEntity<ID extends Serializable> {
     private Long version = 0L;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "lastUpdate")
+    @Column(name = "last_update")
     private Date lastUpdate;
 
     public ID getId() {

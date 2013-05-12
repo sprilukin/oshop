@@ -3,12 +3,13 @@ package oshop.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "shippingAddress")
+@Table(name = "shipping_address")
 public class ShippingAddress extends BaseEntity<Integer> {
 
     @Column(name = "city")
@@ -22,6 +23,7 @@ public class ShippingAddress extends BaseEntity<Integer> {
     private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shipping_type_id")
     private ShippingType shippingType;
 
     @ManyToOne(fetch = FetchType.LAZY)

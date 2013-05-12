@@ -17,6 +17,7 @@ public class Image extends BaseEntity<Integer> {
 
     @NotNull
     //@Pattern(regexp = "^image/[\\w]+$")
+    @Column(name = "content_type")
     private String contentType;
 
     public byte[] getData() {
