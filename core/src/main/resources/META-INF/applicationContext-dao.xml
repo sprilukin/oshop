@@ -20,9 +20,6 @@
     <bean id="discountDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Discount" />
     </bean>
-    <bean id="discountTypeDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
-        <property name="entityClass" value="oshop.model.DiscountType" />
-    </bean>
     <bean id="productDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Product" />
     </bean>
@@ -35,7 +32,7 @@
     <bean id="orderStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.OrderState" />
     </bean>
-    <bean id="orderHasStatesDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+    <bean id="orderHasOrderStatesDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.OrderHasOrderStates" />
     </bean>
     <bean id="saleHasStateDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">

@@ -5,14 +5,18 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import oshop.model.Customer;
 import oshop.model.Order;
+import oshop.model.OrderHasOrderStates;
+import oshop.model.OrderState;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -130,5 +134,89 @@ public class OrderControllerTest extends BaseControllerTest {
 
         assertEquals(3, productDao.list(null, null).size());
         assertEquals(0, orderDao.list(null, null).size());
+    }
+
+    @Test
+    public void testListOrderProducts() throws Exception {
+        ProductCategory productCategory = addProductCategory("category1");
+
+        addProduct(createProduct(productCategory, "Product0", new BigDecimal(10.01)));
+        List<Product> products = addProducts(
+                createProduct(productCategory, "Product1", new BigDecimal(10.01)),
+                createProduct(productCategory, "Product2", new BigDecimal(10.1)),
+                createProduct(productCategory, "Product3", new BigDecimal(10.2)));
+
+        Order order = addOrder("customer", products);
+
+        MvcResult result = this.mockMvc.perform(
+                get("/api/orders/{id}/products", order.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.size").value(3))
+                .andExpect(jsonPath("$.values[0].name").value("Product1"))
+                .andExpect(jsonPath("$.values[1].name").value("Product2"))
+                .andExpect(jsonPath("$.values[2].name").value("Product3"))
+                .andReturn();
+
+        logResponse(result);
+    }
+
+    @Test
+    public void testAddOrderHasState() throws Exception {
+
+        Order order = addOrder("customer", null);
+        OrderState newState = addOrderState("NEW");
+        OrderState shippedState = addOrderState("SHIPPED");
+
+        OrderHasOrderStates state1 = createOrderHasStates("", new Date(0), newState);
+        OrderHasOrderStates state2 = createOrderHasStates("", new Date(1), shippedState);
+
+        String stateAsString = mapper.writeValueAsString(state1);
+
+        this.mockMvc.perform(
+                post("/api/orders/{id}/orderHasStates", order.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(stateAsString))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.date").value(0))
+                .andExpect(jsonPath("$.description").value(""))
+                .andExpect(jsonPath("$.orderState.name").value("NEW"));
+
+        stateAsString = mapper.writeValueAsString(state2);
+
+        this.mockMvc.perform(
+                post("/api/orders/{id}/orderHasStates", order.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(stateAsString))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.date").value(1))
+                .andExpect(jsonPath("$.description").value(""))
+                .andExpect(jsonPath("$.orderState.name").value("SHIPPED"));
+
+        orderDao.getSession().flush();
+        orderDao.getSession().clear();
+
+        order = orderDao.get(order.getId());
+        assertEquals("SHIPPED", order.getCurrentOrderStateName());
+        assertEquals(2, order.getStates().size());
+
+        MvcResult result = this.mockMvc.perform(
+                get("/api/orders/{id}/orderHasStates", order.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.values[0].orderState.name").value("NEW"))
+                .andExpect(jsonPath("$.values[1].orderState.name").value("SHIPPED"))
+                .andReturn();
+
+        logResponse(result);
     }
 }

@@ -27,6 +27,7 @@ public class ShippingAddress extends BaseEntity<Integer> {
     private ShippingType shippingType;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public String getCity() {

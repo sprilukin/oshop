@@ -12,21 +12,21 @@ import oshop.web.converter.EntityConverter;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/api/orderHasStates")
+@RequestMapping("/api/orderHasOrderStates")
 @Transactional(readOnly = true)
-public class OrderHasStatesController extends BaseController<OrderHasOrderStates, Integer> {
+public class OrderHasOrderStatesController extends BaseController<OrderHasOrderStates, Integer> {
 
-    private static final Log log = LogFactory.getLog(OrderHasStatesController.class);
+    private static final Log log = LogFactory.getLog(OrderHasOrderStatesController.class);
 
     @Resource
-    private GenericDao<OrderHasOrderStates, Integer> orderHasStatesDao;
+    private GenericDao<OrderHasOrderStates, Integer> orderHasOrderStatesDao;
 
     @Resource(name = "orderHasStateToDTOConverter")
     private EntityConverter<OrderHasOrderStates, Integer> converter;
 
     @Override
     protected GenericDao<OrderHasOrderStates, Integer> getDao() {
-        return orderHasStatesDao;
+        return orderHasOrderStatesDao;
     }
 
     @Override

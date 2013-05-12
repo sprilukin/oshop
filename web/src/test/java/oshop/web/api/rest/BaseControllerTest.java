@@ -19,12 +19,15 @@ import org.springframework.web.context.WebApplicationContext;
 import oshop.dao.GenericDao;
 import oshop.model.Customer;
 import oshop.model.Order;
+import oshop.model.OrderHasOrderStates;
+import oshop.model.OrderState;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,6 +61,12 @@ public abstract class BaseControllerTest {
 
     @Resource
     protected GenericDao<Order, Integer> orderDao;
+
+    @Resource
+    protected GenericDao<OrderState, Integer> orderStateDao;
+
+    @Resource
+    protected GenericDao<OrderHasOrderStates, Integer> orderHasOrderStatesDao;
 
     @Resource
     protected MessageSource messageSource;
@@ -141,4 +150,22 @@ public abstract class BaseControllerTest {
 
         return orderDao.get(order.getId());
     }
+
+    protected OrderState addOrderState(String name) {
+        OrderState state = new OrderState();
+        state.setName(name);
+        state.setId(orderStateDao.add(state));
+
+        return state;
+    }
+
+    protected OrderHasOrderStates createOrderHasStates(String descr, Date date, OrderState state) {
+        OrderHasOrderStates orderStates = new OrderHasOrderStates();
+        orderStates.setDescription(descr);
+        orderStates.setDate(date);
+        orderStates.setOrderState(state);
+
+        return orderStates;
+    }
+
 }
