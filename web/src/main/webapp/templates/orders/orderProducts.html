@@ -1,0 +1,61 @@
+<table class="table table-condensed table-bordered">
+    <thead>
+    <tr>
+        <th class="span1">
+            {{general_id}}
+            <span class="sorter" data-column="id"></span>
+        </th>
+        <th class="espan1">
+            {{products_column_name}}
+            <span class="sorter" data-column="name"></span>
+        </th>
+        <th class="espan1">
+            {{products_column_price}}
+            <span class="sorter" data-column="price"></span>
+        </th>
+        <th class="espan1">Images</th>
+        <th class="espan1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#products}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{price}}</td>
+        <td>
+            {{#imageId}}
+            <div data-toggle="modal-gallery" data-target="#modal-gallery">
+                <a href="{{context}}/api/images/{{imageId}}" data-gallery="gallery">
+                    <img src="{{context}}/api/images/{{imageId}}" style="height: 30px">
+                </a>
+            </div>
+            {{/imageId}}
+        </td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> Remove from
+                            order</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {{/products}}
+    <tr>
+        <td colspan="5">
+            <div class="row-fluid">
+                <span class="span10"><input type="hidden" id="field_products" value=""></span>
+                <span class="span1">
+                    <button type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i></button>
+                </span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

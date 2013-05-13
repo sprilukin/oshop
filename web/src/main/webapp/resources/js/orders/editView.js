@@ -10,12 +10,13 @@ define([
     'common/context',
     'common/dropDownWithSearch',
     'common/dateFormatter',
+    'orders/orderProductsView',
     'text',
     'text!templates/orders/edit.html',
     'text!templates/orders/dropDownWithSearchFormat.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, text, editTemplate, dropDownWithSearchFormat) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, text, editTemplate, dropDownWithSearchFormat) {
 
     var formatSelectionWithId = function(data) {
         return Mustache.render(dropDownWithSearchFormat, {id: data.id, text: data.text});
@@ -33,6 +34,8 @@ define([
 
         initialize: function() {
             _.bindAll(this, ["render"]);
+
+            this.orderProductsView = new OrderProductsView({model: this.model});
         },
 
         render: function () {
@@ -47,6 +50,7 @@ define([
                 model: _.extend({}, this.model.attributes, {date: formattedDate})
             }, messages)));
 
+            this.customerSelect && this.customerSelect.destroy();
             this.customerSelect = new DropDownWithSearch({
                 element: $("#field_customer"),
                 placeholder: "Select customer",
@@ -59,6 +63,9 @@ define([
                     }) : [];
                 }
             });
+
+            this.orderProductsView.setElement(this.$(".orderProducts"));
+            this.orderProductsView.render();
         },
 
         hideValidation: function() {
