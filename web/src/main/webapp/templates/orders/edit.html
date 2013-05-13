@@ -1,11 +1,143 @@
 <div class="row-fluid span12">
-    <div class="row-fluid span6">Top Left</div>
-    <div class="row-fluid span6">Top right</div>
+    <div class="row-fluid span6">
+        <form class="form-horizontal">
+            {{#id}}
+            <div class="control-group">
+                <label class="control-label">Id</label>
+
+                <div class="controls">
+                    <label style="padding-top: 5px">{{id}}</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="orderDate">Date</label>
+
+                <div class="controls">
+                    <input type="password" id="orderDate" placeholder="Password">
+                </div>
+            </div>
+            {{/id}}
+            <div class="control-group">
+                <label class="control-label" for="inputPassword1">Customer</label>
+
+                <div class="controls">
+                    <input type="password" id="inputPassword1" placeholder="Password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword2">Shipping Address</label>
+
+                <div class="controls">
+                    <input type="password" id="inputPassword2" placeholder="Password">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row-fluid span6">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">Total price</label>
+
+                <div class="controls">
+                    <label style="padding-top: 5px">$100</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword3">Discount</label>
+
+                <div class="controls">
+                    <input type="password" id="inputPassword3" placeholder="Password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword4">Additional payment</label>
+
+                <div class="controls">
+                    <input type="password" id="inputPassword4" placeholder="Password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Grand total</label>
+
+                <div class="controls">
+                    <label style="padding-top: 5px">$100</label>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <div class="row-fluid span12">
-    <div class="row-fluid span6">Middle Left</div>
-    <div class="row-fluid span6">Middle right</div>
+    <div class="row-fluid span6">
+        <table class="table table-condensed table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row-fluid span1 offset10">
+            <button type="button" class="btn">Save</button>
+        </div>
+    </div>
+    <div class="row-fluid span6">
+        <table class="table table-condensed table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row-fluid span1 offset10">
+            <button type="button" class="btn">Save</button>
+        </div>
+    </div>
 </div>
-<div class="row-fluid span12">
-    <div class="row-fluid span2 offset10">Save</div>
+<div class="row-fluid span12" style="margin-top: 50px">
+    <div class="row-fluid span1 offset11">
+        <button type="button" class="btn btn-primary">Save</button>
+    </div>
 </div>
