@@ -45,12 +45,21 @@ define([
         }
     });
 
+    var getProductCategoryId = function() {
+        var matches = window.location.pathname.match(/productCategories\/([\d]+)([\/#\?].*)?$/);
+        if (matches && matches.length > 0) {
+            return matches[1];
+        } else {
+            return null;
+        }
+    };
+
     var ProductCategoriesController = function() {
         this.page = 1;
         this.itemsPerPage = 10;
         this.filter = new Filter();
         this.sorter = new Sorter();
-        this.productCategoryId = $("#productCategoryId").attr("data-id");
+        this.productCategoryId = getProductCategoryId();
 
         this.collection = new Collection({productCategoryId: this.productCategoryId});
         this.listView = new ListView({collection: this.collection, sorter: this.sorter});

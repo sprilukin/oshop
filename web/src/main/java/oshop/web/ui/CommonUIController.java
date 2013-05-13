@@ -26,8 +26,7 @@ public class CommonUIController {
     }
 
     @RequestMapping(value = "/productCategories/{id}/products", method = RequestMethod.GET)
-    public String productsByCategory(@PathVariable Integer id, Model model) throws Exception {
-        model.addAttribute("productCategoryId", id);
+    public String productsByCategory(@PathVariable Integer id) throws Exception {
         return "products";
     }
 

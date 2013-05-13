@@ -26,8 +26,6 @@
 <div class="editEntity"></div>
 <div id="imageGallery"></div>
 
-<div id="productCategoryId" data-id="${productCategoryId}" class="hide"></div>
-
 <script data-main="products/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
 </html>
