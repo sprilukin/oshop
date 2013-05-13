@@ -1,71 +1,11 @@
-<div class="editEntityModal">
-    <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editEntityModalLabel" aria-hidden="true">
-
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="editEntityModalLabel">{{title}}</h3>
-        </div>
-        <div class="modal-body">
-            {{#model.id}}
-            <div class="control-group form-horizontal field-id">
-                <label class="control-label">{{general_id}}</label>
-
-                <div class="controls">
-                    <div class="value-div">{{model.id}}</div>
-                </div>
-            </div>
-            {{/model.id}}
-
-            <div class="control-group form-horizontal field-name">
-                <label class="control-label" for="field_name">{{products_column_name}}</label>
-
-                <div class="controls">
-                    <input class="input-large" id="field_name" type="text" required="required" value="{{model.name}}">
-                    <span class="help-inline"> </span>
-                </div>
-            </div>
-
-            <div class="control-group form-horizontal field-description">
-                <label class="control-label" for="field_description">{{products_column_description}}</label>
-
-                <div class="controls">
-                    <textarea id="field_description" rows="3">{{model.description}}</textarea>
-                    <span class="help-inline"> </span>
-                </div>
-            </div>
-
-            <div class="control-group form-horizontal field-price">
-                <label class="control-label" for="field_price">{{products_column_price}}</label>
-
-                <div class="controls">
-                    <div class="input-prepend input-append">
-                        <span class="add-on">₴</span>
-                        <input class="input-large span1" id="field_price" type="text" required="required" value="{{model.price}}">
-                        <span class="add-on">.00</span>
-                    </div>
-                    <span class="help-inline"> </span>
-                </div>
-            </div>
-
-            <div class="control-group form-horizontal fileUploadGroup">
-                <label class="control-label">{{general_image}}</label>
-                <div class="controls"></div>
-            </div>
-
-            <div class="control-group form-horizontal field-category">
-                <label class="control-label" for="field_product_category">{{products_column_product_category}}</label>
-
-                <div class="controls">
-                    <div>
-                        <input type="hidden" id="field_product_category" value="{{model.category.id}}" data-text="{{model.category.name}}">
-                    </div>
-                    <span class="help-inline"> </span>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">{{general_close}}</button>
-            <button class="btn btn-primary editEntitySubmitButton">{{submit}}</button>
-        </div>
-    </div>
+<div class="row-fluid span12">
+    <div class="row-fluid span6">Top Left</div>
+    <div class="row-fluid span6">Top right</div>
+</div>
+<div class="row-fluid span12">
+    <div class="row-fluid span6">Middle Left</div>
+    <div class="row-fluid span6">Middle right</div>
+</div>
+<div class="row-fluid span12">
+    <div class="row-fluid span2 offset10">Save</div>
 </div>

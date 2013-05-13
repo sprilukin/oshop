@@ -14,7 +14,7 @@
     <div class="search inline span3"></div>
 
     <div class="inline span3 offset6">
-        <a href="#add" role="button" class="btn btn-primary">
+        <a href="${pageContext.request.contextPath}/orders/add" role="button" class="btn btn-primary">
             <i class="icon-plus icon-white"> </i>
             <spring:message code="orders.add.order"/>
         </a>
@@ -23,8 +23,7 @@
 
 <div class="row-fluid span12 listEntities"></div>
 <div class="row-fluid span12 forPagination"></div>
-<div class="editEntity"></div>
 
-<script data-main="orders/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
+<script data-main="orders/list" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
 </html>

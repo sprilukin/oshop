@@ -9,21 +9,18 @@ define([
     'orders/model',
     'orders/collection',
     'orders/listView',
-    'orders/editView',
     'common/warningView',
     'common/paginationView',
     'common/searchView',
     'common/filter',
     'common/sorter'
-], function ($, _, Backbone, Mustache, Model, Collection, ListView, EditView, WarningView, PaginationView, SearchView, Filter, Sorter) {
+], function ($, _, Backbone, Mustache, Model, Collection, ListView, WarningView, PaginationView, SearchView, Filter, Sorter) {
 
     var Router = Backbone.Router.extend({
 
         routes: {
             '': 'list',
             'list/filter;:filter/sort;:sort/:page': 'list',
-            'add': 'edit',
-            'edit/:id': 'edit',
             'delete/:id': 'remove'
         },
 
@@ -37,10 +34,6 @@ define([
 
         remove: function (id) {
             this.controller.remove(id);
-        },
-
-        edit: function (id) {
-            this.controller.edit(id);
         }
     });
 
@@ -52,7 +45,6 @@ define([
 
         this.collection = new Collection();
         this.listView = new ListView({collection: this.collection, sorter: this.sorter});
-        this.editView = new EditView();
         this.paginationView = new PaginationView({collection: this.collection});
         this.searchView = new SearchView({collection: this.collection, filter: this.filter, fieldName: "name"});
         this.router = new Router({controller: this});
@@ -64,10 +56,6 @@ define([
         initialize: function() {
             this.listView.on("delete",function (data) {
                 this.router.navigate(Mustache.render("delete/{{id}}", {id: data.id}), {trigger: true, replace: true});
-            }, this);
-
-            this.editView.on("close",function () {
-                this.router.navigate(this.getListUrl(), {trigger: true});
             }, this);
 
             this.paginationView.on("page:change",function (page) {
@@ -121,23 +109,6 @@ define([
                     that.router.navigate(that.getListUrl(), {trigger: true});
                 }
             });
-        },
-
-        edit: function (id) {
-            var that = this;
-            var model = new Model();
-
-            if (id) {
-                model.set("id", id);
-                model.fetch({
-                    wait: true,
-                    success: function (model) {
-                        that.editView.render(model);
-                    }
-                });
-            } else {
-                this.editView.render(model);
-            }
         }
     });
 

@@ -7,19 +7,17 @@ define([
     'backbone',
     'mustache',
     'common/messages',
-    'common/fileUploadView',
     'common/context',
     'common/dropDownWithSearch',
-    'productCategories/collection',
     'text',
-    'text!templates/products/edit.html',
+    'text!templates/orders/edit.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, FileUploadView, context, DropDownWithSearch, ProductCategoriesCollection, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, text, editTemplate) {
 
     return Backbone.View.extend({
 
-        el: '.editEntity',
+        el: '.content',
 
         events: {
             "click .editEntitySubmitButton": "onSubmit",
@@ -27,43 +25,16 @@ define([
             "keypress .editEntityModal input": "onKeyPress"
         },
 
-        render: function (model) {
+        render: function () {
             this.submitted = false;
-            this.model = model;
-            this.mode = typeof model.id !== "undefined" ? "edit" : "add";
+            this.mode = typeof this.model.id !== "undefined" ? "edit" : "add";
 
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
 
-            this.$el.html(Mustache.render(editEntityTemplate, _.extend({
-                title: this.mode === "add" ? messages["products_add_product"] : messages["products_edit_product"],
-                submit: this.mode === "add" ? messages["products_add"] : messages["products_edit"],
+            this.$el.html(Mustache.render(editTemplate, _.extend({
                 model: this.model.attributes
             }, messages)));
-
-            this.dialog = this.$(".editEntityModal");
-            this.dialog.modal({show: true});
-            this.$("#field_name").focus();
-
-            this.fileUpload = new FileUploadView({
-                element: this.$el.find(".fileUploadGroup .controls"),
-                width: "150",
-                multiple: false,
-                images: this.model.get("imageId") ? [this.model.get("imageId")] : []
-            });
-            this.fileUpload.render();
-
-            this.productCategorySelect = new DropDownWithSearch({
-                element: $("#field_product_category"),
-                placeholder: "Select product category",
-                allowClear: false,
-                urlTemplate: context + "/api/productCategories/filter;name={{term}};/sort;",
-                resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
-                        return {id: item.id, text: item.name}
-                    }) : [];
-                }
-            });
         },
 
         hideValidation: function() {
@@ -83,22 +54,6 @@ define([
         onError: function(model, xhr) {
             var validation = JSON.parse(xhr.responseText);
             this.renderValidation(validation.fields);
-        },
-
-        onHidden: function() {
-            this.model = null;
-            this.productCategorySelect.destroy();
-
-            this.submitted ? this.fileUpload.submit() : this.fileUpload.cancel();
-
-            this.trigger("close");
-        },
-
-        onKeyPress: function(event) {
-            var code = (event.keyCode ? event.keyCode : event.which);
-            if(code == 13) {
-                this.onSubmit();
-            }
         },
 
         onSubmit: function() {
