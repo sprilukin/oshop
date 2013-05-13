@@ -3,6 +3,7 @@ package oshop.model;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -11,13 +12,20 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity<Integer> {
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "order_date")
+    private Date date = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id")
@@ -55,6 +63,14 @@ public class Order extends BaseEntity<Integer> {
 
     @Formula("( SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id )")
     private BigDecimal productsPrice;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Customer getCustomer() {
         return customer;

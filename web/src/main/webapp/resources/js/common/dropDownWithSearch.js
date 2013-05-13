@@ -14,12 +14,16 @@ define([
             allowClear: false,
             urlTemplate: undefined,
             initialValue: undefined,
-            resultParser: undefined
+            resultParser: undefined,
+            formatResult: undefined,
+            formatSelection: undefined
         }, options);
 
         this.el = options.element.select2({
             placeholder: options.placeholder,
             allowClear: options.allowClear,
+            formatResult: options.formatResult,
+            formatSelection: options.formatSelection,
             ajax: {
                 url: function (term) {
                     return Mustache.render(options.urlTemplate, {term: term});

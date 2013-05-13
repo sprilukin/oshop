@@ -25,6 +25,7 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
         convertedEntity.setProductsCount(entity.getProductsCount());
         convertedEntity.setProductsPrice(entity.getProductsPrice());
         convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
+        convertedEntity.setDate(entity.getDate());
         convertedEntity.setDiscount(null); //TODO
         convertedEntity.setPrepayment(null); //TODO
         convertedEntity.setShippingAddress(null); //TODO
@@ -45,6 +46,10 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
 
     protected Order convertForCollection(Order entity) throws Exception {
         Order convertedEntity = newInstance();
+        convertedEntity.setId(entity.getId());
+        //convertedEntity.setLastUpdate(entity.getLastUpdate());
+        convertedEntity.setVersion(entity.getVersion());
+
         convertInternal(entity, convertedEntity);
         return convertedEntity;
     }

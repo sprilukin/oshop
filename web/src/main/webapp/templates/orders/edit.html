@@ -1,27 +1,30 @@
 <div class="row-fluid span12">
     <div class="row-fluid span6">
         <form class="form-horizontal">
-            {{#id}}
+            {{#model.id}}
             <div class="control-group">
                 <label class="control-label">Id</label>
 
                 <div class="controls">
-                    <label style="padding-top: 5px">{{id}}</label>
+                    <label class="value-div">{{model.id}}</label>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="orderDate">Date</label>
+                <label class="control-label">Date</label>
 
                 <div class="controls">
-                    <input type="password" id="orderDate" placeholder="Password">
+                    <label class="value-div">{{model.date}}</label>
                 </div>
             </div>
-            {{/id}}
+            {{/model.id}}
             <div class="control-group">
-                <label class="control-label" for="inputPassword1">Customer</label>
+                <label class="control-label">Customer</label>
 
                 <div class="controls">
-                    <input type="password" id="inputPassword1" placeholder="Password">
+                    <div>
+                        <input type="hidden" id="field_customer" value="{{model.customer.id}}" data-text="{{model.customer.name}}">
+                    </div>
+                    <span class="help-inline"> </span>
                 </div>
             </div>
             <div class="control-group">

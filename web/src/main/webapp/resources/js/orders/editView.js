@@ -9,11 +9,17 @@ define([
     'common/messages',
     'common/context',
     'common/dropDownWithSearch',
+    'common/dateFormatter',
     'text',
     'text!templates/orders/edit.html',
+    'text!templates/orders/dropDownWithSearchFormat.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, text, editTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, text, editTemplate, dropDownWithSearchFormat) {
+
+    var formatSelectionWithId = function(data) {
+        return Mustache.render(dropDownWithSearchFormat, {id: data.id, text: data.text});
+    };
 
     return Backbone.View.extend({
 
@@ -25,6 +31,10 @@ define([
             "keypress .editEntityModal input": "onKeyPress"
         },
 
+        initialize: function() {
+            _.bindAll(this, ["render"]);
+        },
+
         render: function () {
             this.submitted = false;
             this.mode = typeof this.model.id !== "undefined" ? "edit" : "add";
@@ -32,9 +42,23 @@ define([
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
 
+            var formattedDate = dateFormatter.format(this.model.get("date"));
             this.$el.html(Mustache.render(editTemplate, _.extend({
-                model: this.model.attributes
+                model: _.extend({}, this.model.attributes, {date: formattedDate})
             }, messages)));
+
+            this.customerSelect = new DropDownWithSearch({
+                element: $("#field_customer"),
+                placeholder: "Select customer",
+                allowClear: false,
+                urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
+                formatResult: formatSelectionWithId,
+                resultParser: function(data) {
+                    return data ? _.map(data.values, function (item) {
+                        return {id: item.id, text: item.name}
+                    }) : [];
+                }
+            });
         },
 
         hideValidation: function() {

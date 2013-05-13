@@ -24,7 +24,7 @@ public abstract class BaseEntityConverter<T extends BaseEntity<ID>, ID extends S
 
         T convertedEntity = newInstance();
         convertedEntity.setId(entity.getId());
-        convertedEntity.setLastUpdate(entity.getLastUpdate());
+        //convertedEntity.setLastUpdate(entity.getLastUpdate());
         convertedEntity.setVersion(entity.getVersion());
 
         convert(entity, convertedEntity);
