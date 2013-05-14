@@ -14,7 +14,7 @@ public class OrderState extends BaseEntity<Integer> {
 
     @NotNull
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 255)
     @Column(name = "name", unique = true)
     private String name;
 

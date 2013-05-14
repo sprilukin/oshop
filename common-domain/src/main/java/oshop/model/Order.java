@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,10 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity<Integer> {
+
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "order_date")
@@ -65,6 +70,14 @@ public class Order extends BaseEntity<Integer> {
 
     @Formula("( SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id )")
     private BigDecimal productsPrice;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Date getDate() {
         return date;

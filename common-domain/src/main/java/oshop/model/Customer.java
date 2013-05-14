@@ -15,7 +15,7 @@ public class Customer extends BaseEntity<Integer> {
     @NotNull
     @NotBlank
     @Size(max = 255)
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     public String getName() {

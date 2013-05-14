@@ -26,6 +26,7 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
         convertedEntity.setProductsPrice(entity.getProductsPrice());
         convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
         convertedEntity.setDate(entity.getDate());
+        convertedEntity.setDescription(entity.getDescription());
         convertedEntity.setDiscount(null); //TODO
         convertedEntity.setPrepayment(null); //TODO
         convertedEntity.setShippingAddress(null); //TODO

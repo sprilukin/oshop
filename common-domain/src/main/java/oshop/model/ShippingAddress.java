@@ -1,20 +1,29 @@
 package oshop.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "shipping_address")
 public class ShippingAddress extends BaseEntity<Integer> {
 
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
     @Column(name = "city")
     private String city;
 
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
     @Column(name = "address")
     private String address;
 
@@ -22,11 +31,11 @@ public class ShippingAddress extends BaseEntity<Integer> {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "shipping_type_id")
     private ShippingType shippingType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

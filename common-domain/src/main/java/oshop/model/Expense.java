@@ -1,10 +1,15 @@
 package oshop.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,9 +21,13 @@ public class Expense extends BaseEntity<Integer> {
     @Column(name = "date")
     private Date date;
 
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
 
+    @Min(0)
     @Column(name = "amount", precision = 10, scale = 2)
     private BigDecimal amount;
 

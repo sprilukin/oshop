@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -16,8 +17,9 @@ public class OrderHasOrderStates extends BaseEntity<Integer> {
 
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date date = new Date();
 
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
 
