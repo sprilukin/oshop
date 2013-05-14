@@ -1,0 +1,52 @@
+<table class="table table-condensed table-bordered">
+    <thead>
+    <tr>
+        <th class="span1">
+            Date
+        </th>
+        <th class="span1">
+            State
+        </th>
+        <th>
+            Description
+        </th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="5">
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Status</label>
+                    <div class="controls">
+                        <span class="span10"><input type="hidden" id="field_orderStatus" value=""></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Description</label>
+
+                    <div class="controls">
+                        <textarea id="orderStatusDescription" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button id="addStatus" type="button" class="btn btn-primary">
+                            <i class="icon-plus icon-white"></i> Add status
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    {{#states}}
+    <tr>
+        <td>{{date}}</td>
+        <td>{{state}}</td>
+        <td>{{description}}</td>
+    </tr>
+    {{/states}}
+    </tbody>
+</table>

@@ -14,6 +14,5 @@ public class OrderStateToDTOConverter extends BaseEntityConverter<OrderState, In
     @Override
     protected void convert(OrderState entity, OrderState convertedEntity) throws Exception {
         convertedEntity.setName(entity.getName());
-        convertedEntity.setDescription(entity.getDescription());
     }
 }

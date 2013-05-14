@@ -11,12 +11,13 @@ define([
     'common/dropDownWithSearch',
     'common/dateFormatter',
     'orders/orderProductsView',
+    'orders/orderStatesView',
     'text',
     'text!templates/orders/edit.html',
     'text!templates/orders/dropDownWithSearchFormat.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, text, editTemplate, dropDownWithSearchFormat) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, text, editTemplate, dropDownWithSearchFormat) {
 
     var formatSelectionWithId = function(data) {
         return Mustache.render(dropDownWithSearchFormat, {id: data.id, text: data.text});
@@ -40,6 +41,7 @@ define([
             this.model.on("error", this.onError, this);
 
             this.orderProductsView = new OrderProductsView({model: this.model});
+            this.orderStatesView = new OrderStatesView({model: this.model});
         },
 
         render: function () {
@@ -64,6 +66,9 @@ define([
 
             this.orderProductsView.setElement(this.$(".orderProducts"));
             this.orderProductsView.render();
+
+            this.orderStatesView.setElement(this.$(".orderStates"));
+            this.orderStatesView.render();
         },
 
         hideValidation: function() {

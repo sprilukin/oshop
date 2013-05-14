@@ -3,33 +3,36 @@
     <tr>
         <th class="span1">
             {{general_id}}
-            <span class="sorter" data-column="id"></span>
         </th>
-        <th class="espan1">
+        <th>
             {{products_column_name}}
-            <span class="sorter" data-column="name"></span>
         </th>
-        <th class="espan1">
-            {{products_column_price}}
-            <span class="sorter" data-column="price"></span>
+        <th>
+            {{products_column_price}}, ₴
         </th>
-        <th class="espan1">Images</th>
-        <th class="espan1"></th>
+        <th>Images</th>
+        <th></th>
     </tr>
     </thead>
     <tfoot>
     <tr>
         <td colspan="5">
-            <div id="addProductContainer">
-                <div class="row-fluid">
-                    <span class="span10"><input type="hidden" id="field_products" value=""></span>
-                <span class="span1">
-                    <button id="addProduct" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i>
-                    </button>
-                </span>
+            <form class="form-horizontal" id="addProductContainer">
+                <div class="control-group">
+                    <label class="control-label">Product</label>
+                    <div class="controls">
+                        <span class="span10"><input type="hidden" id="field_products" value=""></span>
+                        <span class="help-inline error"></span>
+                    </div>
                 </div>
-                <span class="help-inline error"></span>
-            </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button id="addProduct" type="button" class="btn btn-primary">
+                            <i class="icon-plus icon-white"></i> Add product
+                        </button>
+                    </div>
+                </div>
+            </form>
         </td>
     </tr>
     </tfoot>
@@ -38,7 +41,7 @@
     <tr>
         <td>{{id}}</td>
         <td>{{name}}</td>
-        <td>{{price}}</td>
+        <td>{{price}}.00</td>
         <td>
             {{#imageId}}
             <div data-toggle="modal-gallery" data-target="#modal-gallery">
@@ -62,7 +65,8 @@
         </td>
     </tr>
     {{/products}}
-    <tr>
+    <!-- total -->
+    <!--<tr>
         <td colspan="2">
             <span class="text-right" style="float: right; padding-top: 5px">
             Total
@@ -75,6 +79,6 @@
                 <span class="add-on">.00</span>
             </div>
         </td>
-    </tr>
+    </tr>-->
     </tbody>
 </table>
