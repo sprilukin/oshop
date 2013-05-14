@@ -30,3 +30,8 @@ span.sort {
 .select2-container {
     display: block;
 }
+
+/* Orders */
+input.price {
+    width: 30%
+}
