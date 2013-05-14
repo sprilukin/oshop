@@ -35,16 +35,14 @@ define([
         initialize: function() {
             _.bindAll(this, ["render"]);
 
+            this.model.on("change", this.render, this);
+            this.model.on("invalid", this.onIvalid, this);
+            this.model.on("error", this.onError, this);
+
             this.orderProductsView = new OrderProductsView({model: this.model});
         },
 
         render: function () {
-            this.submitted = false;
-            this.mode = typeof this.model.id !== "undefined" ? "edit" : "add";
-
-            this.model.on("invalid", this.onIvalid, this);
-            this.model.on("error", this.onError, this);
-
             var formattedDate = dateFormatter.format(this.model.get("date"));
             this.$el.html(Mustache.render(editTemplate, _.extend({
                 model: _.extend({}, this.model.attributes, {date: formattedDate})

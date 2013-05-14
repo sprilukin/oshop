@@ -20,13 +20,16 @@
     <tfoot>
     <tr>
         <td colspan="5">
-            <div class="row-fluid">
-                <span class="span10"><input type="hidden" id="field_products" value=""></span>
+            <div id="addProductContainer">
+                <div class="row-fluid">
+                    <span class="span10"><input type="hidden" id="field_products" value=""></span>
                 <span class="span1">
-                    <button id="addProduct" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i></button>
+                    <button id="addProduct" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i>
+                    </button>
                 </span>
+                </div>
+                <span class="help-inline error"></span>
             </div>
-            <span class="help-inline error"></span>
         </td>
     </tr>
     </tfoot>
@@ -52,8 +55,7 @@
                 </button>
                 <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
                     <li>
-                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> Remove from
-                            order</a>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> Remove from order</a>
                     </li>
                 </ul>
             </div>

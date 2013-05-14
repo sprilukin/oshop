@@ -22,15 +22,14 @@ define([
             "click #addProduct": "add"
         },
 
-        initialize: function(options) {
-            this.model.on("sync", function() {
-                this.render();
-            }, this);
+        initialize: function() {
+            this.model.on("error:addProduct", this.errorAddingProduct, this);
         },
 
         render: function () {
             var model = _.extend({context: context}, this.model.attributes, messages);
             this.$el.html(Mustache.render(listEntityTemplate, model));
+            this.errorPlaceHolder = $("#addProductContainer").find(".help-inline");
 
             this.productsSelect && this.productsSelect.destroy();
             this.productsSelect = new DropDownWithSearch({
@@ -50,13 +49,24 @@ define([
         },
 
         delete: function(event) {
-            console.log("delete/" + $(event.currentTarget).attr("data-id"));
-            this.trigger("delete", {id: $(event.currentTarget).attr("data-id")});
+            this.model.deleteProducts($(event.currentTarget).attr("data-id"));
             event.preventDefault();
         },
 
         add: function(event) {
+            this.errorPlaceHolder.text("");
 
+            var productId = $("#field_products").val();
+            if (!productId) {
+                this.errorPlaceHolder.text("Please select product");
+                return;
+            }
+
+            this.model.addProducts(productId);
+        },
+
+        errorAddingProduct: function(model, xhr) {
+            this.errorPlaceHolder.text("Could not add product");
         }
     });
 });

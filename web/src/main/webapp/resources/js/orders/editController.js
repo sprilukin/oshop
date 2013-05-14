@@ -35,10 +35,8 @@ define([
 
             this.id = getOrderId();
             if (this.id) {
-                this.model.set("id", this.id);
-                this.model.fetch({
-                    success: this.editView.render
-                });
+                this.model.set("id", this.id, {silent: true});
+                this.model.fetch();
             } else {
                 this.editView.render();
             }

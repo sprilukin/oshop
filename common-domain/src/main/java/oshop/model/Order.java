@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,8 @@ public class Order extends BaseEntity<Integer> {
     @JoinTable(
         name = "order_products",
         joinColumns = {@JoinColumn(name = "order_id", nullable = false, updatable = false)},
-        inverseJoinColumns = { @JoinColumn(name = "product_id", nullable = false, updatable = false) }
+        inverseJoinColumns = { @JoinColumn(name = "product_id", nullable = false, updatable = false) },
+        uniqueConstraints = {@UniqueConstraint(name = "UK_order_product", columnNames = {"order_id", "product_id"})}
     )
     private List<Product> products = new ArrayList<Product>();
 

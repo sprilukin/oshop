@@ -76,7 +76,7 @@ public class OrderController extends BaseController<Order, Integer> {
             @Override
             protected void perform() throws Exception {
                 getDao().executeQuery(
-                        "delete from order_products p where p.order_id = :id and p.product_id in :ids",
+                        "delete from order_products where order_id = :id and product_id in :ids",
                         new GenericDao.SQLQueryManipulator() {
                             @Override
                             public void manipulateWithQuery(SQLQuery query) {
@@ -92,8 +92,8 @@ public class OrderController extends BaseController<Order, Integer> {
     // /api/orders/1/products/batch;ids=1,2/add
     @RequestMapping(
             value = "/{id}/products/{batch}/add",
-            method = RequestMethod.POST,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+            method = RequestMethod.POST
+            )
     @ResponseBody
     @Transactional(readOnly = false)
     public ResponseEntity<?> addOrderProduct(
