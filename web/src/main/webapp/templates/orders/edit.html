@@ -38,11 +38,11 @@
     <div class="row-fluid span6">
         <form class="form-horizontal">
             <div class="control-group">
-                <label class="control-label" for="productsPrice">Products price</label>
+                <label class="control-label">Products price</label>
                 <div class="controls">
                     <div class="input-prepend input-append inline">
                         <span class="add-on">₴</span>
-                        <input id="productsPrice" class="input-large uneditable-input text-right price" type="text" value="{{model.productsPrice}}">
+                        <span class="add-on">{{model.productsPrice}}</span>
                         <span class="add-on">.00</span>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                 <div class="controls">
                     <div class="input-prepend input-append inline">
                         <span class="add-on">₴</span>
-                        <input id="grandTotal" class="input-large uneditable-input text-right price" type="text" value="100">
+                        <span class="add-on">100</span>
                         <span class="add-on">.00</span>
                     </div>
                 </div>

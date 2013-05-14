@@ -18,7 +18,8 @@ define([
     return Backbone.View.extend({
 
         events: {
-            "click a.delete": "delete"
+            "click a.delete": "delete",
+            "click #addProduct": "add"
         },
 
         initialize: function(options) {
@@ -28,7 +29,7 @@ define([
         },
 
         render: function () {
-            var model = _.extend({context: context}, {products: this.model.attributes.products}, messages);
+            var model = _.extend({context: context}, this.model.attributes, messages);
             this.$el.html(Mustache.render(listEntityTemplate, model));
 
             this.productsSelect && this.productsSelect.destroy();
@@ -52,6 +53,10 @@ define([
             console.log("delete/" + $(event.currentTarget).attr("data-id"));
             this.trigger("delete", {id: $(event.currentTarget).attr("data-id")});
             event.preventDefault();
+        },
+
+        add: function(event) {
+
         }
     });
 });

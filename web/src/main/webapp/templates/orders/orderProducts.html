@@ -17,6 +17,19 @@
         <th class="espan1"></th>
     </tr>
     </thead>
+    <tfoot>
+    <tr>
+        <td colspan="5">
+            <div class="row-fluid">
+                <span class="span10"><input type="hidden" id="field_products" value=""></span>
+                <span class="span1">
+                    <button id="addProduct" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i></button>
+                </span>
+            </div>
+            <span class="help-inline error"></span>
+        </td>
+    </tr>
+    </tfoot>
     <tbody>
     {{#products}}
     <tr>
@@ -48,12 +61,16 @@
     </tr>
     {{/products}}
     <tr>
-        <td colspan="5">
-            <div class="row-fluid">
-                <span class="span10"><input type="hidden" id="field_products" value=""></span>
-                <span class="span1">
-                    <button type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i></button>
-                </span>
+        <td colspan="2">
+            <span class="text-right" style="float: right; padding-top: 5px">
+            Total
+            </span>
+        </td>
+        <td colspan="3" class="text-left">
+            <div class="input-prepend input-append inline">
+                <span class="add-on">₴</span>
+                <span class="add-on">{{productsPrice}}</span>
+                <span class="add-on">.00</span>
             </div>
         </td>
     </tr>
