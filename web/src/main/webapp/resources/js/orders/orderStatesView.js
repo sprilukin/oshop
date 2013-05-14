@@ -9,10 +9,11 @@ define([
     'common/messages',
     'common/context',
     'common/dropDownWithSearch',
+    'common/dateFormatter',
     'text',
     'text!templates/orders/orderStates.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, text, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, text, listEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -26,8 +27,14 @@ define([
         },
 
         render: function () {
-            //var model = _.extend({context: context}, this.model.attributes, messages);
-            var model = _.extend({context: context}, {states: {date: "date", state: "state", description: "description"}}, messages);
+            var states = _.map(this.model.get("states"), function(state) {
+                return {
+                    date: dateFormatter.format(state.date),
+                    state: state.orderState.name,
+                    description: state.description}
+            });
+
+            var model = _.extend({states: states}, messages);
 
             this.$el.html(Mustache.render(listEntityTemplate, model));
             this.errorPlaceHolder = $("#addStateContainer").find(".help-inline");
