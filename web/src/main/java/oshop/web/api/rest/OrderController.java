@@ -44,6 +44,9 @@ public class OrderController extends BaseController<Order, Integer> {
     @Resource
     private GenericDao<Product, Integer> productDao;
 
+    @Resource
+    private GenericDao<OrderHasOrderStates, Integer> orderHasOrderStatesDao;
+
     @Resource(name = "orderToDTOConverter")
     private EntityConverter<Order, Integer> converter;
 
@@ -157,11 +160,10 @@ public class OrderController extends BaseController<Order, Integer> {
                     @Override
                     protected OrderHasOrderStates getResult() throws Exception {
                         Order order = getDao().get(id);
-                        order.getStates().add(entity);
                         entity.setOrder(order);
-                        getDao().update(order);
+                        Integer id = orderHasOrderStatesDao.add(entity);
 
-                        return order.getStates().get(order.getStates().size() - 1);
+                        return orderHasOrderStatesDao.get(id);
                     }
                 }).invoke();
     }
