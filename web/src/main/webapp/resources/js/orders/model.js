@@ -16,6 +16,22 @@ define([
             return Mustache.render(context + "/api/orders/{{id}}", {id: this.id});
         },
 
+        addOrderStatus: function(stateId, description) {
+            $.ajax({
+                url: this.url() + "/orderHasStates/",
+                context: this,
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({"description": description, "orderState": {"id": stateId}})
+            }).done(function(data) {
+                    this.fetch();
+                }).fail(function(xhr) {
+                    this.trigger("error:addStatus", this, xhr);
+                    this.trigger("error", this, xhr);
+                })
+        },
+
         addProducts: function() {
             var url = Mustache.render(
                 this.url() + "/products/batch;ids={{ids}}/add",

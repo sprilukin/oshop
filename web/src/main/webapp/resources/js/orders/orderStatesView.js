@@ -56,13 +56,14 @@ define([
         add: function(event) {
             this.errorPlaceHolder.text("");
 
-            var productId = $("#field_orderStatus").val();
-            if (!productId) {
+            var description = $("#orderStatusDescription").val();
+            var orderStatusId = parseInt($("#field_orderStatus").val(), 10);
+            if (!orderStatusId) {
                 this.errorPlaceHolder.text("Please select order status");
                 return;
             }
 
-            this.model.addOrderStatus(productId);
+            this.model.addOrderStatus(orderStatusId, description);
         },
 
         errorAddingStatus: function(model, xhr) {
