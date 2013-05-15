@@ -50,6 +50,12 @@ define([
                 model: _.extend({}, this.model.attributes, {date: formattedDate})
             }, messages)));
 
+            this.renderCustomerSelect();
+            this.renderOrderProducts();
+            this.renderOrderSates();
+        },
+
+        renderCustomerSelect: function() {
             this.customerSelect && this.customerSelect.destroy();
             this.customerSelect = new DropDownWithSearch({
                 element: $("#field_customer"),
@@ -63,10 +69,14 @@ define([
                     }) : [];
                 }
             });
+        },
 
+        renderOrderProducts: function() {
             this.orderProductsView.setElement(this.$(".orderProducts"));
             this.orderProductsView.render();
+        },
 
+        renderOrderSates: function() {
             this.orderStatesView.setElement(this.$(".orderStates"));
             this.orderStatesView.render();
         },
