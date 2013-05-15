@@ -1,8 +1,10 @@
-package oshop.web.converter;
+package oshop.web.converter.order;
 
 import org.springframework.stereotype.Component;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.OrderState;
+import oshop.web.converter.BaseEntityConverter;
+import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
 

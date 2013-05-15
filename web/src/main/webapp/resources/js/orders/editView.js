@@ -20,8 +20,17 @@ define([
     'select2'
 ], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, CustomersModel, text, editTemplate, dropDownWithSearchFormat) {
 
-    var formatSelectionWithId = function(data) {
-        return Mustache.render(dropDownWithSearchFormat, {id: data.id, text: data.text});
+    var formatCustomerSelection = function(data) {
+        return Mustache.render("{{id}}&nbsp;&nbsp;{{text}}", data);
+    };
+
+    var formatShippingAddressSelection = function(data) {
+        if (data.text) {
+            //initial value
+            return data.text;
+        } else {
+            return Mustache.render("{{type}} | {{address}}", data);
+        }
     };
 
     return Backbone.View.extend({
@@ -52,6 +61,7 @@ define([
             }, messages)));
 
             this.renderCustomerSelect();
+            this.renderShippingAddressSelect();
             this.renderOrderProducts();
             this.renderOrderSates();
         },
@@ -64,14 +74,40 @@ define([
                 placeholder: "Select customer",
                 allowClear: false,
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
-                formatResult: formatSelectionWithId,
+                formatResult: formatCustomerSelection,
                 resultParser: function(data) {
                     return data ? _.map(data.values, function (item) {
                         return {id: item.id, text: item.name}
                     }) : [];
                 },
                 change: function(event) {
-                    that.model.set("customer", {id: event.currentTarget.value}, {silent: true});
+                    that.model.set(
+                        {"customer": {id: event.currentTarget.value}, "shippingAddress": null},
+                        {silent: true});
+                    that.model.save();
+                }
+            });
+        },
+
+        renderShippingAddressSelect: function() {
+            var that = this;
+            this.shippingAddressSelect && this.shippingAddressSelect.destroy();
+            this.shippingAddressSelect = new DropDownWithSearch({
+                element: $("#field_shippingAddress"),
+                placeholder: "Select address",
+                allowClear: false,
+                urlTemplate: Mustache.render(
+                    "{{&context}}/api/customers/{{id}}/shippingAddresses/filter;address={{term}};/sort;",
+                    {context: context, id: this.model.get("customer").id, term: "{{term}}"}),
+                formatResult: formatShippingAddressSelection,
+                formatSelection: formatShippingAddressSelection,
+                resultParser: function(data) {
+                    return data ? _.map(data.values, function (item) {
+                        return {id: item.id, address: item.address, type: item.shippingType.name}
+                    }) : [];
+                },
+                change: function(event) {
+                    that.model.set("shippingAddress", {id: event.currentTarget.value}, {silent: true});
                     that.model.save();
                 }
             });

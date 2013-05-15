@@ -1,17 +1,20 @@
-package oshop.web.converter;
+package oshop.web.converter.order;
 
 import org.springframework.stereotype.Component;
 import oshop.model.Customer;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
+import oshop.model.ShippingAddress;
+import oshop.web.converter.BaseEntityConverter;
+import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
 
 @Component
 public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
 
-    @Resource(name = "productToDTOConverter")
+    @Resource(name = "productForOrderToDTOConverter")
     private EntityConverter<Product, Integer> productsConverter;
 
     @Resource(name = "orderHasStateToDTOConverter")
@@ -19,6 +22,9 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
 
     @Resource(name = "customerToDTOConverter")
     private EntityConverter<Customer, Integer> customerConverter;
+
+    @Resource(name = "shippingAddressForOrderToDTOConverter")
+    private EntityConverter<ShippingAddress, Integer> shippingAddressConverter;
 
     protected void convertInternal(Order entity, Order convertedEntity) throws Exception {
         convertedEntity.setCurrentOrderStateName(entity.getCurrentOrderStateName());
@@ -29,7 +35,7 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
         convertedEntity.setDescription(entity.getDescription());
         convertedEntity.setDiscount(null); //TODO
         convertedEntity.setPrepayment(null); //TODO
-        convertedEntity.setShippingAddress(null); //TODO
+        convertedEntity.setShippingAddress(shippingAddressConverter.convert(entity.getShippingAddress()));
     }
 
     @Override

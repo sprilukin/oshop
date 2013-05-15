@@ -1,8 +1,9 @@
-package oshop.web.converter;
+package oshop.web.converter.order;
 
 import org.springframework.stereotype.Component;
 import oshop.dao.GenericDao;
 import oshop.model.Order;
+import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
 import java.util.List;

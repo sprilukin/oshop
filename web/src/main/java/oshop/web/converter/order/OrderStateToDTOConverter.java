@@ -1,7 +1,8 @@
-package oshop.web.converter;
+package oshop.web.converter.order;
 
 import org.springframework.stereotype.Component;
 import oshop.model.OrderState;
+import oshop.web.converter.BaseEntityConverter;
 
 @Component
 public class OrderStateToDTOConverter extends BaseEntityConverter<OrderState, Integer> {

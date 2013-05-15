@@ -27,10 +27,13 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="inputPassword2">Shipping Address</label>
+                <label class="control-label">Shipping Address</label>
 
                 <div class="controls">
-                    <input type="password" id="inputPassword2" placeholder="Password">
+                    <div>
+                        <input type="hidden" id="field_shippingAddress" value="{{model.shippingAddress.id}}" data-text="{{model.shippingAddress.shippingType.name}} | {{model.shippingAddress.address}}">
+                    </div>
+                    <span class="help-inline"> </span>
                 </div>
             </div>
         </form>
