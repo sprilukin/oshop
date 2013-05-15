@@ -16,20 +16,28 @@ define([
             return Mustache.render(context + "/api/orders/{{id}}", {id: this.id});
         },
 
-        addOrderStatus: function(stateId, description) {
+        ajax: function(options) {
             $.ajax({
-                url: this.url() + "/orderHasStates/",
+                url: options.url,
                 context: this,
                 dataType: "json",
-                type: "POST",
+                type: options.type || "POST",
                 contentType: "application/json",
-                data: JSON.stringify({"description": description, "orderState": {"id": stateId}})
+                data: options.data
             }).done(function(data) {
                     this.fetch();
                 }).fail(function(xhr) {
-                    this.trigger("error:addStatus", this, xhr);
+                    options.errorEvent && this.trigger("error:" + options.errorEvent, this, xhr);
                     this.trigger("error", this, xhr);
                 })
+        },
+
+        addOrderStatus: function(stateId, description) {
+            this.ajax({
+                url: this.url() + "/orderHasStates/",
+                data: JSON.stringify({"description": description, "orderState": {"id": stateId}}),
+                errorEvent: "addStatus"
+            })
         },
 
         addProducts: function() {
@@ -37,17 +45,7 @@ define([
                 this.url() + "/products/batch;ids={{ids}}/add",
                 {ids: Array.prototype.join.call(arguments, ",")});
 
-            $.ajax({
-                url: url,
-                context: this,
-                dataType: "json",
-                type: "POST"
-            }).done(function(data) {
-                    this.fetch();
-                }).fail(function(xhr) {
-                    this.trigger("error:addProduct", this, xhr);
-                    this.trigger("error", this, xhr);
-                })
+            this.ajax({url: url, errorEvent: "addProduct"});
         },
 
         deleteProducts: function() {
@@ -55,17 +53,7 @@ define([
                 this.url() + "/products/batch;ids={{ids}}/delete?_method=DELETE",
                 {ids: Array.prototype.join.call(arguments, ",")});
 
-            $.ajax({
-                url: url,
-                context: this,
-                dataType: "json",
-                type: "POST"
-            }).done(function(data) {
-                    this.fetch();
-                }).fail(function(xhr) {
-                    this.trigger("error:deleteProduct", this, xhr);
-                    this.trigger("error", this, xhr);
-                })
+            this.ajax({url: url, errorEvent: "deleteProduct"});
         }
     });
 });
