@@ -164,15 +164,27 @@ public class Order extends BaseEntity<Integer> {
     }
 
     public BigDecimal getTotalPrice() {
+        BigDecimal additionalPaymentPrice = this.getAdditionalPayment() != null ? this.getAdditionalPayment().getAmount() : new BigDecimal(0);
+
+        return this.calcDiscount().add(additionalPaymentPrice);
+    }
+
+    public BigDecimal calcDiscount() {
         BigDecimal discountPrice = this.getDiscount() != null ? this.getDiscount().getAmount() : new BigDecimal(0);
         byte discountType = this.getDiscount() != null ? this.getDiscount().getType() : 1;
 
         BigDecimal productsPrice = this.getProductsPrice() != null ? this.getProductsPrice() : new BigDecimal(0);
-        BigDecimal productsWithDiscountPrice = discountPrice.doubleValue() > 0 ? (discountType == 1 ? productsPrice.subtract(discountPrice) : productsPrice.subtract(productsPrice.multiply(discountPrice.divide(new BigDecimal(100))))) : productsPrice;
 
-
-        BigDecimal additionalPaymentPrice = this.getAdditionalPayment() != null ? this.getAdditionalPayment().getAmount() : new BigDecimal(0);
-
-        return productsWithDiscountPrice.add(additionalPaymentPrice);
+        if (discountPrice.compareTo(new BigDecimal(0)) == 1) {
+            if (discountType == Discount.Type.FIXED_DISCOUNT.getType()) {
+                return EntityUtils.round(productsPrice.subtract(discountPrice));
+            } else if (discountType == Discount.Type.PERCENT_DISCOUNT.getType()) {
+                return EntityUtils.round(productsPrice.subtract(productsPrice.multiply(discountPrice.divide(new BigDecimal(100)))));
+            } else {
+                throw new IllegalArgumentException("Discount type not supported: " + discountType);
+            }
+        } else {
+            return EntityUtils.round(productsPrice);
+        }
     }
 }
