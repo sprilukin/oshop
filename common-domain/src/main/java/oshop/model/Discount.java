@@ -1,5 +1,6 @@
 package oshop.model;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
@@ -18,24 +19,18 @@ import java.math.BigDecimal;
 public class Discount extends BaseEntity<Integer> {
 
     public static enum Type {
-        PERCENT_DISCOUNT((byte)0, "%"),
-        FIXED_DISCOUNT((byte)1, "₴");
+        PERCENT_DISCOUNT((byte)0),
+        FIXED_DISCOUNT((byte)1);
         //FIXED_PRICE((byte)2);
 
         private byte type;
-        private String label;
 
-        Type(byte type, String label) {
+        Type(byte type) {
             this.type = type;
-            this.label = label;
         }
 
         public byte getType() {
             return type;
-        }
-
-        public String getLabel() {
-            return label;
         }
 
         public static Type fromByte(byte value) {
@@ -55,11 +50,14 @@ public class Discount extends BaseEntity<Integer> {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
-    private Byte type;
+    @Column(name = "type", nullable = false)
+    private Byte type = Type.FIXED_DISCOUNT.getType();
 
-    @Column(name = "amount", precision = 10, scale = 2)
+    @Column(name = "amount", precision = 10, scale = 2, nullable = false)
     private BigDecimal amount;
+
+    @Formula("( SELECT CASE WHEN d.type = 0 THEN '%' WHEN d.type = 1 THEN '₴' END FROM discount d where d.id = id )")
+    private String typeAsString;
 
     public String getDescription() {
         return description;
@@ -86,6 +84,10 @@ public class Discount extends BaseEntity<Integer> {
     }
 
     public String getTypeAsString() {
-        return Type.fromByte(getType()).getLabel();
+        return typeAsString;
+    }
+
+    public void setTypeAsString(String typeAsString) {
+        this.typeAsString = typeAsString;
     }
 }

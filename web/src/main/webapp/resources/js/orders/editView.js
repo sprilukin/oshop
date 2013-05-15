@@ -40,6 +40,15 @@ define([
         }
     };
 
+    var formatDiscountSelection = function(data) {
+        if (data.text) {
+            //initial value
+            return data.text;
+        } else {
+            return Mustache.render("{{amount}} {{typeAsString}} | {{description}}", data);
+        }
+    };
+
     return Backbone.View.extend({
 
         el: '.content',
@@ -70,6 +79,7 @@ define([
             this.renderCustomerSelect();
             this.renderShippingAddressSelect();
             this.renderAdditionalPaymentSelect();
+            this.renderDiscountSelect();
             this.renderOrderProducts();
             this.renderOrderSates();
         },
@@ -133,13 +143,32 @@ define([
                 formatResult: formatAdditionalPaymentSelection,
                 formatSelection: formatAdditionalPaymentSelection,
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
-                        return {id: item.id, description: item.description, amount: item.amount}
-                    }) : [];
+                    return data ? data.values : [];
                 },
                 change: function(event) {
                     var value = event.currentTarget.value;
                     that.model.set("additionalPayment", value ? {id: value} : null, {silent: true});
+                    that.model.save();
+                }
+            });
+        },
+
+        renderDiscountSelect: function() {
+            var that = this;
+            this.discountSelect && this.discountSelect.destroy();
+            this.discountSelect = new DropDownWithSearch({
+                element: $("#field_discount"),
+                placeholder: "Select discount",
+                allowClear: true,
+                urlTemplate: context + "/api/discounts/filter;description={{term}};/sort;",
+                formatResult: formatDiscountSelection,
+                formatSelection: formatDiscountSelection,
+                resultParser: function(data) {
+                    return data ? data.values : [];
+                },
+                change: function(event) {
+                    var value = event.currentTarget.value;
+                    that.model.set("discount", value ? {id: value} : null, {silent: true});
                     that.model.save();
                 }
             });

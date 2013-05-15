@@ -3,6 +3,7 @@ package oshop.web.converter.order;
 import org.springframework.stereotype.Component;
 import oshop.model.AdditionalPayment;
 import oshop.model.Customer;
+import oshop.model.Discount;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
@@ -30,6 +31,9 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     @Resource(name = "additionalPaymentToDTOConverter")
     private EntityConverter<AdditionalPayment, Integer> additionalPaymentConverter;
 
+    @Resource(name = "discountToDTOConverter")
+    private EntityConverter<Discount, Integer> discountConverter;
+
     protected void convertInternal(Order entity, Order convertedEntity) throws Exception {
         convertedEntity.setCurrentOrderStateName(entity.getCurrentOrderStateName());
         convertedEntity.setProductsCount(entity.getProductsCount());
@@ -37,7 +41,7 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
         convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
         convertedEntity.setDate(entity.getDate());
         convertedEntity.setDescription(entity.getDescription());
-        convertedEntity.setDiscount(null); //TODO
+        convertedEntity.setDiscount(discountConverter.convert(entity.getDiscount()));
         convertedEntity.setAdditionalPayment(additionalPaymentConverter.convert(entity.getAdditionalPayment()));
         convertedEntity.setShippingAddress(shippingAddressConverter.convert(entity.getShippingAddress()));
     }

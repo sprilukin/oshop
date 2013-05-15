@@ -1,8 +1,7 @@
-package oshop.web.converter.order;
+package oshop.web.converter;
 
 import org.springframework.stereotype.Component;
 import oshop.model.AdditionalPayment;
-import oshop.web.converter.BaseEntityConverter;
 
 @Component
 public class AdditionalPaymentToDTOConverter extends BaseEntityConverter<AdditionalPayment, Integer> {
