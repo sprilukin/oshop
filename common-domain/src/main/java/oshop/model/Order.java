@@ -158,4 +158,21 @@ public class Order extends BaseEntity<Integer> {
     public void setProductsPrice(BigDecimal productsPrice) {
         this.productsPrice = productsPrice;
     }
+
+    public void setTotalPrice(BigDecimal productsPrice) {
+        // empty
+    }
+
+    public BigDecimal getTotalPrice() {
+        BigDecimal discountPrice = this.getDiscount() != null ? this.getDiscount().getAmount() : new BigDecimal(0);
+        byte discountType = this.getDiscount() != null ? this.getDiscount().getType() : 1;
+
+        BigDecimal productsPrice = this.getProductsPrice() != null ? this.getProductsPrice() : new BigDecimal(0);
+        BigDecimal productsWithDiscountPrice = discountPrice.doubleValue() > 0 ? (discountType == 1 ? productsPrice.subtract(discountPrice) : productsPrice.subtract(productsPrice.multiply(discountPrice.divide(new BigDecimal(100))))) : productsPrice;
+
+
+        BigDecimal additionalPaymentPrice = this.getAdditionalPayment() != null ? this.getAdditionalPayment().getAmount() : new BigDecimal(0);
+
+        return productsWithDiscountPrice.add(additionalPaymentPrice);
+    }
 }
