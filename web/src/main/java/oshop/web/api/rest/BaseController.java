@@ -112,6 +112,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
                     protected T getResult() throws Exception {
                         entity.setId(id);
                         getDao().update(getFromDTOConverter().convert(entity));
+                        getDao().getSession().clear();
                         return getDao().get(id);
                     }
                 }).invoke();

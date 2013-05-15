@@ -71,13 +71,8 @@ define([
                     }) : [];
                 },
                 change: function(event) {
-                    var customer = new CustomersModel({id: event.currentTarget.value});
-                    customer.fetch({
-                        success: function() {
-                            that.model.set("customer", customer.attributes, {silent: true});
-                            that.model.save();
-                        }
-                    });
+                    that.model.set("customer", {id: event.currentTarget.value}, {silent: true});
+                    that.model.save();
                 }
             });
         },
