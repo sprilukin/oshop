@@ -25,7 +25,7 @@ public class OrderFromDTOConverter implements EntityConverter<Order, Integer> {
         persistentEntity.setDate(entity.getDate());
         persistentEntity.setCustomer(entity.getCustomer());
         persistentEntity.setDiscount(entity.getDiscount());
-        persistentEntity.setPrepayment(entity.getPrepayment());
+        persistentEntity.setAdditionalPayment(entity.getAdditionalPayment());
         persistentEntity.setShippingAddress(entity.getShippingAddress());
         persistentEntity.setVersion(entity.getVersion());
 

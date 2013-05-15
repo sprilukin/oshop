@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "prepayment")
-public class Prepayment extends BaseEntity<Integer> {
+@Table(name = "additional_payment")
+public class AdditionalPayment extends BaseEntity<Integer> {
 
     @NotNull
     @NotBlank

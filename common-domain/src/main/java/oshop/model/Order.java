@@ -46,8 +46,8 @@ public class Order extends BaseEntity<Integer> {
     private Discount discount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prepayment_id")
-    private Prepayment prepayment;
+    @JoinColumn(name = "additional_payment_id")
+    private AdditionalPayment additionalPayment;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy="order", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<OrderHasOrderStates> states = new ArrayList<OrderHasOrderStates>();
@@ -111,12 +111,12 @@ public class Order extends BaseEntity<Integer> {
         this.discount = discount;
     }
 
-    public Prepayment getPrepayment() {
-        return prepayment;
+    public AdditionalPayment getAdditionalPayment() {
+        return additionalPayment;
     }
 
-    public void setPrepayment(Prepayment prepayment) {
-        this.prepayment = prepayment;
+    public void setAdditionalPayment(AdditionalPayment additionalPayment) {
+        this.additionalPayment = additionalPayment;
     }
 
     public List<OrderHasOrderStates> getStates() {
