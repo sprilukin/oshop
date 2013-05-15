@@ -12,13 +12,11 @@ define([
     'common/dateFormatter',
     'orders/orderProductsView',
     'orders/orderStatesView',
-    'customers/model',
     'text',
     'text!templates/orders/edit.html',
-    'text!templates/orders/dropDownWithSearchFormat.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, CustomersModel, text, editTemplate, dropDownWithSearchFormat) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, text, editTemplate) {
 
     var formatCustomerSelection = function(data) {
         return Mustache.render("{{id}}&nbsp;&nbsp;{{text}}", data);
@@ -30,6 +28,15 @@ define([
             return data.text;
         } else {
             return Mustache.render("{{type}} | {{address}}", data);
+        }
+    };
+
+    var formatAdditionalPaymentSelection = function(data) {
+        if (data.text) {
+            //initial value
+            return data.text;
+        } else {
+            return Mustache.render("{{amount}} | {{description}}", data);
         }
     };
 
@@ -62,6 +69,7 @@ define([
 
             this.renderCustomerSelect();
             this.renderShippingAddressSelect();
+            this.renderAdditionalPaymentSelect();
             this.renderOrderProducts();
             this.renderOrderSates();
         },
@@ -95,7 +103,7 @@ define([
             this.shippingAddressSelect = new DropDownWithSearch({
                 element: $("#field_shippingAddress"),
                 placeholder: "Select address",
-                allowClear: false,
+                allowClear: true,
                 urlTemplate: Mustache.render(
                     "{{&context}}/api/customers/{{id}}/shippingAddresses/filter;address={{term}};/sort;",
                     {context: context, id: this.model.get("customer").id, term: "{{term}}"}),
@@ -107,7 +115,31 @@ define([
                     }) : [];
                 },
                 change: function(event) {
-                    that.model.set("shippingAddress", {id: event.currentTarget.value}, {silent: true});
+                    var value = event.currentTarget.value;
+                    that.model.set("shippingAddress", value ? {id: value} : null, {silent: true});
+                    that.model.save();
+                }
+            });
+        },
+
+        renderAdditionalPaymentSelect: function() {
+            var that = this;
+            this.additionalPaymentSelect && this.additionalPaymentSelect.destroy();
+            this.additionalPaymentSelect = new DropDownWithSearch({
+                element: $("#field_additionalPayment"),
+                placeholder: "Select additional payment",
+                allowClear: true,
+                urlTemplate: context + "/api/additionalPayments/filter;description={{term}};/sort;",
+                formatResult: formatAdditionalPaymentSelection,
+                formatSelection: formatAdditionalPaymentSelection,
+                resultParser: function(data) {
+                    return data ? _.map(data.values, function (item) {
+                        return {id: item.id, description: item.description, amount: item.amount}
+                    }) : [];
+                },
+                change: function(event) {
+                    var value = event.currentTarget.value;
+                    that.model.set("additionalPayment", value ? {id: value} : null, {silent: true});
                     that.model.save();
                 }
             });
