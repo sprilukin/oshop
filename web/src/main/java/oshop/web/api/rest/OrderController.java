@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
 import oshop.model.Order;
@@ -50,6 +49,9 @@ public class OrderController extends BaseController<Order, Integer> {
     @Resource(name = "orderToDTOConverter")
     private EntityConverter<Order, Integer> converter;
 
+    @Resource(name = "orderFromDTOConverter")
+    private EntityConverter<Order, Integer> fromDtoConverter;
+
     @Resource(name = "orderHasStateToDTOConverter")
     private EntityConverter<OrderHasOrderStates, Integer> orderHasStateConverter;
 
@@ -64,6 +66,11 @@ public class OrderController extends BaseController<Order, Integer> {
     @Override
     protected EntityConverter<Order, Integer> getToDTOConverter() {
         return converter;
+    }
+
+    @Override
+    protected EntityConverter<Order, Integer> getFromDTOConverter() {
+        return fromDtoConverter;
     }
 
     // /api/orders/1/products/batch;ids=1,2/delete
