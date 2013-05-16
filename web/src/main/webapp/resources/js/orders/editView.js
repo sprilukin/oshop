@@ -18,37 +18,6 @@ define([
     'select2'
 ], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, text, editTemplate) {
 
-    var formatCustomerSelection = function(data) {
-        return Mustache.render("{{id}}&nbsp;&nbsp;{{text}}", data);
-    };
-
-    var formatShippingAddressSelection = function(data) {
-        if (data.text) {
-            //initial value
-            return data.text;
-        } else {
-            return Mustache.render("{{type}} | {{address}}", data);
-        }
-    };
-
-    var formatAdditionalPaymentSelection = function(data) {
-        if (data.text) {
-            //initial value
-            return data.text;
-        } else {
-            return Mustache.render("{{amount}} | {{description}}", data);
-        }
-    };
-
-    var formatDiscountSelection = function(data) {
-        if (data.text) {
-            //initial value
-            return data.text;
-        } else {
-            return Mustache.render("{{amount}} {{typeAsString}} | {{description}}", data);
-        }
-    };
-
     return Backbone.View.extend({
 
         el: '.content',
@@ -86,17 +55,25 @@ define([
 
         renderCustomerSelect: function() {
             var that = this;
+
+            var formatCustomerResult = function(data) {
+                return Mustache.render("{{id}}&nbsp;&nbsp;{{name}}", data);
+            };
+
+            var formatCustomerSelection = function(data) {
+                return data.name;
+            };
+
             this.customerSelect && this.customerSelect.destroy();
             this.customerSelect = new DropDownWithSearch({
                 element: $("#field_customer"),
                 placeholder: "Select customer",
                 allowClear: false,
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
-                formatResult: formatCustomerSelection,
+                formatResult: formatCustomerResult,
+                formatSelection: formatCustomerSelection,
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
-                        return {id: item.id, text: item.name}
-                    }) : [];
+                    return data ? data.values : [];
                 },
                 change: function(event) {
                     that.model.set(
@@ -109,6 +86,11 @@ define([
 
         renderShippingAddressSelect: function() {
             var that = this;
+
+            var formatSelection = function(data) {
+                return Mustache.render("{{type}} | {{address}}", data);
+            };
+
             this.shippingAddressSelect && this.shippingAddressSelect.destroy();
             this.shippingAddressSelect = new DropDownWithSearch({
                 element: $("#field_shippingAddress"),
@@ -117,8 +99,8 @@ define([
                 urlTemplate: Mustache.render(
                     "{{&context}}/api/customers/{{id}}/shippingAddresses/filter;address={{term}};/sort;",
                     {context: context, id: this.model.get("customer").id, term: "{{term}}"}),
-                formatResult: formatShippingAddressSelection,
-                formatSelection: formatShippingAddressSelection,
+                formatResult: formatSelection,
+                formatSelection: formatSelection,
                 resultParser: function(data) {
                     return data ? _.map(data.values, function (item) {
                         return {id: item.id, address: item.address, type: item.shippingType.name}
@@ -134,14 +116,19 @@ define([
 
         renderAdditionalPaymentSelect: function() {
             var that = this;
+
+            var formatSelection = function(data) {
+                return Mustache.render("{{amount}} | {{description}}", data);
+            };
+
             this.additionalPaymentSelect && this.additionalPaymentSelect.destroy();
             this.additionalPaymentSelect = new DropDownWithSearch({
                 element: $("#field_additionalPayment"),
                 placeholder: "Select additional payment",
                 allowClear: true,
                 urlTemplate: context + "/api/additionalPayments/filter;description={{term}};/sort;",
-                formatResult: formatAdditionalPaymentSelection,
-                formatSelection: formatAdditionalPaymentSelection,
+                formatResult: formatSelection,
+                formatSelection: formatSelection,
                 resultParser: function(data) {
                     return data ? data.values : [];
                 },
@@ -155,14 +142,19 @@ define([
 
         renderDiscountSelect: function() {
             var that = this;
+
+            var formatSelection = function(data) {
+                return Mustache.render("{{amount}} {{typeAsString}} | {{description}}", data);
+            };
+
             this.discountSelect && this.discountSelect.destroy();
             this.discountSelect = new DropDownWithSearch({
                 element: $("#field_discount"),
                 placeholder: "Select discount",
                 allowClear: true,
                 urlTemplate: context + "/api/discounts/filter;description={{term}};/sort;",
-                formatResult: formatDiscountSelection,
-                formatSelection: formatDiscountSelection,
+                formatResult: formatSelection,
+                formatSelection: formatSelection,
                 resultParser: function(data) {
                     return data ? data.values : [];
                 },

@@ -1,5 +1,5 @@
 /**
- * Bootstrap alert wrapped in backbone view
+ * Select2 wrapped in component
  */
 define([
     'jquery',
@@ -25,8 +25,24 @@ define([
         this.el = this.options.element.select2({
             placeholder: this.options.placeholder,
             allowClear: this.options.allowClear,
-            formatResult: this.options.formatResult,
-            formatSelection: this.options.formatSelection,
+            formatResult: function(data) {
+                if (typeof data.text !== "undefined") {
+                    return data.text;
+                } else if (that.options.formatResult) {
+                    return that.options.formatResult(data)
+                } else {
+                    return "Format result is undefined";
+                }
+            },
+            formatSelection: function(data) {
+                if (typeof data.text !== "undefined") {
+                    return data.text;
+                } else if (that.options.formatResult) {
+                    return that.options.formatResult(data)
+                } else {
+                    return "Format selection is undefined";
+                }
+            },
             ajax: {
                 url: function (term) {
                     return Mustache.render(that.options.urlTemplate, {term: term});
