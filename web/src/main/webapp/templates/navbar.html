@@ -10,18 +10,18 @@
 
             <div class="nav-collapse navbar-responsive-collapse collapse" style="height: 0px;">
                 <ul class="nav">
-                    <li {{#orders}}class="active"{{/orders}}><a href="#">Заказы</a></li>
-                    <li {{#products}}class="active"{{/products}}><a href="#">Склад</a></li>
-                    <li {{#customers}}class="active"{{/customers}}><a href="#">Клиенты</a></li>
-                    <li {{#expenses}}class="active"{{/expenses}}><a href="#">Расходы</a></li>
+                    <li {{#orders}}class="active"{{/orders}}><a href="{{context}}/orders">Заказы</a></li>
+                    <li {{#products}}class="active"{{/products}}><a href="{{context}}/products">Склад</a></li>
+                    <li {{#customers}}class="active"{{/customers}}><a href="{{context}}/customers">Клиенты</a></li>
+                    <li {{#expenses}}class="active"{{/expenses}}><a href="{{context}}/expenses">Расходы</a></li>
                     <li class="dropdown {{#dictionaries}}active{{/dictionaries}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Справочники <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li {{#shippingType}}class="active"{{/shippingType}}><a href="#">Типы доставки</a></li>
-                            <li {{#productCategories}}class="active"{{/productCategories}}><a href="#">Категории товара</a></li>
-                            <li {{#orderStatus}}class="active"{{/orderStatus}}><a href="#">Статусы заказа</a></li>
-                            <li {{#discounts}}class="active"{{/discounts}}><a href="#">Скидки</a></li>
-                            <li {{#additionalPayments}}class="active"{{/additionalPayments}}><a href="#">Дополнительные платежи</a></li>
+                            <li {{#shippingType}}class="active"{{/shippingType}}><a href="{{context}}/shippingTypes">Типы доставки</a></li>
+                            <li {{#productCategories}}class="active"{{/productCategories}}><a href="{{context}}/productCategories">Категории товара</a></li>
+                            <li {{#orderStatus}}class="active"{{/orderStatus}}><a href="{{context}}/orderStates">Статусы заказа</a></li>
+                            <li {{#discounts}}class="active"{{/discounts}}><a href="{{context}}/discounts">Скидки</a></li>
+                            <li {{#additionalPayments}}class="active"{{/additionalPayments}}><a href="{{context}}/additionalPayments">Дополнительные платежи</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -29,16 +29,16 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Язык <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li {{#languageRussian}}class="active"{{/languageRussian}}><a href="#">Русский</a></li>
-                            <li {{#languageEnglish}}class="active"{{/languageEnglish}}><a href="#">Английский</a></li>
+                            <li {{#lang-ru}}class="active"{{/lang-ru}}><a class="lang" href="#" data-lang="ru">Русский</a></li>
+                            <li {{#lang-en}}class="active"{{/lang-en}}><a class="lang" href="#" data-lang="en">Английский</a></li>
                         </ul>
                     </li>
                     <li class="divider-vertical"></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Темы <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li {{#themeDefault}}class="active"{{/themeDefault}}><a href="#">Стандартная</a></li>
-                            <li {{#themeDarkstrap}}class="active"{{/themeDarkstrap}}><a href="#">Darkstrap</a></li>
+                            <li {{#theme-default}}class="active"{{/theme-default}}><a class="theme" href="#" data-theme="default">Стандартная</a></li>
+                            <li {{#theme-darkstrap}}class="active"{{/theme-darkstrap}}><a class="theme" href="#" data-theme="darkstrap">Darkstrap</a></li>
                         </ul>
                     </li>
                 </ul>

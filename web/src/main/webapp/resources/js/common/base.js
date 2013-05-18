@@ -10,10 +10,10 @@ define([
 
     _.extend(Main.prototype, {
         initialize: function(Controller) {
-            this.controller = new Controller();
-
             this.navbarView = new NavbarView();
             this.navbarView.render();
+
+            this.controller = new Controller();
 
             Backbone.history.start();
         }
