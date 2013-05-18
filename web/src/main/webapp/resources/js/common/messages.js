@@ -2,9 +2,18 @@
  * Message bundles
  */
 define([
+    'underscore',
     'text',
     'text!messages'
-], function (text, messages) {
+], function (_, text, messages) {
 
-    return JSON.parse(messages);
+    var DOT_REPLACEMENT = "_";
+
+    var msgs = {};
+
+    _.each(JSON.parse(messages), function(value, key) {
+        msgs[key.replace(/\./g, DOT_REPLACEMENT)] = value;
+    });
+
+    return msgs;
 });

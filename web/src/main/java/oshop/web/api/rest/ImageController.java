@@ -132,18 +132,21 @@ public class ImageController {
             final @RequestHeader(value = "If-Modified-Since", required = false) String ifModifiedSinceHeader) {
 
         return new HttpCacheRestCallbackAdapter<byte[]>() {
+            private Image image;
+
             @Override
-            protected byte[] getResult() throws Exception {
-                Image image = imageDao.get(id);
+            protected void setModifiedTimes() throws Exception {
+                this.image = imageDao.get(id);
 
                 this.getHeaders().setContentType(MediaType.parseMediaType(image.getContentType()));
-                this.setSize(image.getData().length);
+
                 this.setLastModified(image.getLastUpdate().getTime());
+                this.setIfModifiedSince(ifModifiedSinceHeader);
+            }
 
-                if (ifModifiedSinceHeader != null) {
-                    this.setIfModifiedSince(ifModifiedSinceHeader);
-                }
-
+            @Override
+            protected byte[] getResult() throws Exception {
+                this.setSize(image.getData().length);
                 return image.getData();
             }
         }.invoke();
