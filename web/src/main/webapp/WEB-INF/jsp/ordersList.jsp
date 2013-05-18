@@ -4,6 +4,7 @@
 
 <html>
 <head>
+    <meta name="activePage" content="orders">
     <title><spring:message code="orders.title"/></title>
 </head>
 <body>

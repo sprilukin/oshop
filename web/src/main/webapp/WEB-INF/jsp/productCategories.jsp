@@ -4,6 +4,7 @@
 
 <html>
 <head>
+    <meta name="activePage" content="productCategories">
     <title><spring:message code="product.categories.title"/></title>
 </head>
 <body>

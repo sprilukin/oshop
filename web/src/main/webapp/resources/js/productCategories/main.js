@@ -1,8 +1,6 @@
 require([
-    'backbone',
+    'common/base',
     'productCategories/controller'
-], function (Backbone, Controller) {
-
-    var controller = new Controller();
-    Backbone.history.start();
+], function (BaseMain, Controller) {
+    var baseMain = new BaseMain(Controller);
 });

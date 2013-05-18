@@ -1,8 +1,6 @@
 require([
-    'backbone',
+    'common/base',
     'orders/listOrders/listController'
-], function (Backbone, Controller) {
-
-    var controller = new Controller();
-    Backbone.history.start();
+], function (BaseMain, Controller) {
+    var baseMain = new BaseMain(Controller);
 });

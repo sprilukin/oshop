@@ -72,8 +72,10 @@
 <body>
 
 <div class="container">
+    <div class="navbarPlaceholder"></div>
+
     <%-- placeholder for warnings --%>
-    <div class="warning"></div>
+    <div class="warning" style="padding-top: 40px"></div>
 
     <decorator:body/>
 </div>
