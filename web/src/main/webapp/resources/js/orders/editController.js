@@ -6,14 +6,18 @@ define([
     'underscore',
     'backbone',
     'mustache',
+    'common/context',
+    'customers/model',
     'orders/model',
     'orders/collection',
     'orders/editView',
+    'orders/addView',
     'common/warningView'
-], function ($, _, Backbone, Mustache, Model, Collection, EditView, WarningView) {
+], function ($, _, Backbone, Mustache, context, CustomerModel, Model, Collection, EditView, AddView, WarningView) {
 
-    var getOrderId = function() {
-        var matches = window.location.pathname.match(/orders\/([\d]+)([\/#\?].*)?$/);
+    var parseId = function(template) {
+        var regexp = Mustache.render(template, {id: "([\\d]+)"}) + "([/#\\?].*)?$";
+        var matches = window.location.pathname.match(new RegExp(regexp));
         if (matches && matches.length > 0) {
             return matches[1];
         } else {
@@ -24,22 +28,51 @@ define([
     var OrderController = function() {
         this.model = new Model();
         this.editView = new EditView({model: this.model});
+        this.addView = new AddView({model: this.model});
         this.initialize();
     };
 
     _.extend(OrderController.prototype, {
         initialize: function() {
-            this.editView.on("close",function () {
-                this.router.navigate(this.getListUrl(), {trigger: true});
+            this.addView.on("close:submit", function() {
+                window.location = context + "/orders/" +  this.model.id;
+            }, this);
+            this.addView.on("close:cancel", function() {
+                window.location = context + "/orders";
             }, this);
 
-            this.id = getOrderId();
-            if (this.id) {
-                this.model.set("id", this.id, {silent: true});
-                this.model.fetch();
-            } else {
-                this.editView.render();
+            var orderId = parseId("orders/{{id}}");
+            if (orderId) {
+                this.edit(orderId);
+                return;
             }
+
+            var customerId = parseId("/customers/{{id}}/orders/add");
+            this.add(customerId);
+        },
+
+        add: function(id) {
+            var that = this;
+
+            if (id) {
+                var customerModel = new CustomerModel({id: id});
+                customerModel.fetch({
+                    success: function() {
+                        that.model.set("customer", customerModel.attributes, {silent: true});
+                        that.addView.render();
+                    },
+                    error: function(model, xhr) {
+                        new WarningView({model: JSON.parse(xhr.responseText)}).render();
+                    }
+                });
+            } else {
+                this.addView.render();
+            }
+        },
+
+        edit: function(id) {
+            this.model.set("id", id, {silent: true});
+            this.model.fetch();
         }
     });
 

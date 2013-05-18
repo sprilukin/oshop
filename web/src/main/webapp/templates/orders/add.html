@@ -1,0 +1,25 @@
+<div class="editEntityModal">
+    <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editEntityModalLabel" aria-hidden="true">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="editEntityModalLabel">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group form-horizontal editEntityGroup">
+                <label class="control-label" for="field_customer">AAA {{product_category_column_name}}</label>
+
+                <div class="controls">
+                    <div>
+                        <input type="hidden" id="field_customer" value="{{model.customer.id}}" data-text="{{model.customer.name}}">
+                    </div>
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{{general_close}}</button>
+            <button class="btn btn-primary editEntitySubmitButton">{{submit}}</button>
+        </div>
+    </div>
+</div>

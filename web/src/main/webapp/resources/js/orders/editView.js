@@ -22,12 +22,6 @@ define([
 
         el: '.content',
 
-        events: {
-            "click .editEntitySubmitButton": "onSubmit",
-            "hidden .editEntityModal": "onHidden",
-            "keypress .editEntityModal input": "onKeyPress"
-        },
-
         initialize: function() {
             _.bindAll(this, ["render"]);
 
@@ -174,50 +168,6 @@ define([
         renderOrderSates: function() {
             this.orderStatesView.setElement(this.$(".orderStates"));
             this.orderStatesView.render();
-        },
-
-        hideValidation: function() {
-            this.$(".control-group").removeClass("error").find(".help-inline").html("");
-        },
-
-        renderValidation: function(errors) {
-            _.each(errors, function(message, field) {
-                this.$(".control-group.field-" + field).addClass("error").find(".help-inline").html(message[0]);
-            }, this);
-        },
-
-        onIvalid: function(model, error, attrs) {
-            this.renderValidation(error);
-        },
-
-        onError: function(model, xhr) {
-            var validation = JSON.parse(xhr.responseText);
-            this.renderValidation(validation.fields);
-        },
-
-        onSubmit: function() {
-            var that = this;
-
-            this.hideValidation();
-
-            var imageId = _.find(this.fileUpload.getImageIds(), function(id) {
-                return true;
-            }) || null;
-
-            this.model.save(
-                {
-                    name: this.$("#field_name").val(),
-                    description: this.$("#field_description").val(),
-                    imageId: imageId,
-                    price: this.$("#field_price").val(),
-                    category: {id: $("#field_product_category").val()}
-                },
-
-                {wait: true,
-                success: function() {
-                    that.submitted = true;
-                    that.dialog.modal("hide");}
-            });
         }
     });
 });

@@ -54,6 +54,12 @@ define([
                 {ids: Array.prototype.join.call(arguments, ",")});
 
             this.ajax({url: url, errorEvent: "deleteProduct"});
+        },
+
+        validate: function(attributes) {
+            if (!attributes.customer.id) {
+                return "Please select customer";
+            }
         }
     });
 });

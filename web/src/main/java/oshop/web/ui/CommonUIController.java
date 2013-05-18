@@ -35,6 +35,11 @@ public class CommonUIController {
         return "products";
     }
 
+    @RequestMapping(value = "/customers/{id}/orders/add", method = RequestMethod.GET)
+    public String addOrderByCustomer(@PathVariable Integer id) throws Exception {
+        return "orderEdit";
+    }
+
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public String orders() throws Exception {
         return "ordersList";
