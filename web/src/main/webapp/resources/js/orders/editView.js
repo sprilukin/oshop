@@ -61,7 +61,7 @@ define([
             this.customerSelect && this.customerSelect.destroy();
             this.customerSelect = new DropDownWithSearch({
                 element: $("#field_customer"),
-                placeholder: "Select customer",
+                placeholder: messages["order_select_customer_placeholder"],
                 allowClear: false,
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
                 formatResult: formatCustomerResult,
@@ -88,7 +88,7 @@ define([
             this.shippingAddressSelect && this.shippingAddressSelect.destroy();
             this.shippingAddressSelect = new DropDownWithSearch({
                 element: $("#field_shippingAddress"),
-                placeholder: "Select address",
+                placeholder: messages["order_select_shippingAddress_placeholder"],
                 allowClear: true,
                 urlTemplate: Mustache.render(
                     "{{&context}}/api/customers/{{id}}/shippingAddresses/filter;address={{term}};/sort;",
@@ -112,13 +112,13 @@ define([
             var that = this;
 
             var formatSelection = function(data) {
-                return Mustache.render("{{amount}} | {{description}}", data);
+                return Mustache.render("{{amount}} ₴ | {{description}}", data);
             };
 
             this.additionalPaymentSelect && this.additionalPaymentSelect.destroy();
             this.additionalPaymentSelect = new DropDownWithSearch({
                 element: $("#field_additionalPayment"),
-                placeholder: "Select additional payment",
+                placeholder: messages["order_select_additional_payment_placeholder"],
                 allowClear: true,
                 urlTemplate: context + "/api/additionalPayments/filter;description={{term}};/sort;",
                 formatResult: formatSelection,
@@ -144,7 +144,7 @@ define([
             this.discountSelect && this.discountSelect.destroy();
             this.discountSelect = new DropDownWithSearch({
                 element: $("#field_discount"),
-                placeholder: "Select discount",
+                placeholder: messages["order_select_discount_placeholder"],
                 allowClear: true,
                 urlTemplate: context + "/api/discounts/filter;description={{term}};/sort;",
                 formatResult: formatSelection,

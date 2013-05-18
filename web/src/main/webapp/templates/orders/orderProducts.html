@@ -5,10 +5,10 @@
             {{general_id}}
         </th>
         <th>
-            {{products_column_name}}
+            {{order_products_column_name}}
         </th>
         <th>
-            {{products_column_price}}, ₴
+            {{order_products_column_price}}
         </th>
         <th>Images</th>
         <th></th>
@@ -19,7 +19,7 @@
         <td colspan="5">
             <form class="form-horizontal" id="addProductContainer">
                 <div class="control-group">
-                    <label class="control-label">Product</label>
+                    <label class="control-label">{{order_products_column_name}}</label>
                     <div class="controls">
                         <span class="span10"><input type="hidden" id="field_products" value=""></span>
                         <span class="help-inline error"></span>
@@ -28,7 +28,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <button id="addProduct" type="button" class="btn btn-primary">
-                            <i class="icon-plus icon-white"></i> Add product
+                            <i class="icon-plus icon-white"></i> {{order_add_product}}
                         </button>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 </button>
                 <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
                     <li>
-                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> Remove from order</a>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> {{order_remove_product_from_order}}</a>
                     </li>
                 </ul>
             </div>

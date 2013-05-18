@@ -37,8 +37,8 @@ define([
             formatSelection: function(data) {
                 if (typeof data.text !== "undefined") {
                     return data.text;
-                } else if (that.options.formatResult) {
-                    return that.options.formatResult(data)
+                } else if (that.options.formatSelection) {
+                    return that.options.formatSelection(data)
                 } else {
                     return "Format selection is undefined";
                 }

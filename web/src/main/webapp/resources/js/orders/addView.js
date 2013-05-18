@@ -29,8 +29,6 @@ define([
             this.model.on("error", this.onError, this);
 
             this.$el.html(Mustache.render(addEntityTemplate, _.extend({
-                title: messages["product_category_add_category"],
-                submit: messages["product_category_add"],
                 model: this.model.attributes
             }, messages)));
 
@@ -55,7 +53,7 @@ define([
             this.customerSelect && this.customerSelect.destroy();
             this.customerSelect = new DropDownWithSearch({
                 element: $("#field_customer"),
-                placeholder: "Select customer",
+                placeholder: messages["order_select_customer_placeholder"],
                 allowClear: false,
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
                 formatResult: formatCustomerResult,
@@ -70,17 +68,17 @@ define([
             this.$(".editEntityGroup").removeClass("error").find(".help-inline").html("");
         },
 
-        renderValidation: function(errors) {
-            this.$(".editEntityGroup").addClass("error").find(".help-inline").html(errors.name);
+        renderValidation: function(error) {
+            this.$(".editEntityGroup").addClass("error").find(".help-inline").html(error);
         },
 
         onIvalid: function(model, error, attrs) {
-            this.renderValidation({name: error});
+            this.renderValidation(error);
         },
 
         onError: function(model, xhr) {
             var validation = JSON.parse(xhr.responseText);
-            this.renderValidation({name: validation.fields.name[0]});
+            this.renderValidation(validation.fields.name[0]);
         },
 
         onHidden: function() {

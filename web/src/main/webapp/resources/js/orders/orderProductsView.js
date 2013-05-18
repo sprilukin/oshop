@@ -34,7 +34,7 @@ define([
             this.productsSelect && this.productsSelect.destroy();
             this.productsSelect = new DropDownWithSearch({
                 element: $("#field_products"),
-                placeholder: "Select product",
+                placeholder: messages["order_select_product_placeholder"],
                 allowClear: true,
                 urlTemplate: context + "/api/products/filter;name={{term}};/sort;",
                 formatResult: function(data) {
@@ -58,7 +58,7 @@ define([
 
             var productId = $("#field_products").val();
             if (!productId) {
-                this.errorPlaceHolder.text("Please select product");
+                this.errorPlaceHolder.text(messages["ui_validation_select_product"]);
                 return;
             }
 
@@ -66,7 +66,7 @@ define([
         },
 
         errorAddingProduct: function(model, xhr) {
-            this.errorPlaceHolder.text("Could not add product");
+            this.errorPlaceHolder.text(messages["ui_validation_select_product"]);
         }
     });
 });

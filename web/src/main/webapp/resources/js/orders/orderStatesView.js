@@ -42,7 +42,7 @@ define([
             this.orderStatusSelect && this.orderStatusSelect.destroy();
             this.orderStatusSelect = new DropDownWithSearch({
                 element: $("#field_orderStatus"),
-                placeholder: "Select order status",
+                placeholder: messages["order_select_order_status_placeholder"],
                 allowClear: true,
                 urlTemplate: context + "/api/orderStates/filter;name={{term}};/sort;",
                 resultParser: function(data) {
@@ -59,7 +59,7 @@ define([
             var description = $("#orderStatusDescription").val();
             var orderStatusId = parseInt($("#field_orderStatus").val(), 10);
             if (!orderStatusId) {
-                this.errorPlaceHolder.text("Please select order status");
+                this.errorPlaceHolder.text(messages["ui_validation_select_order_status"]);
                 return;
             }
 
@@ -67,7 +67,7 @@ define([
         },
 
         errorAddingStatus: function(model, xhr) {
-            this.errorPlaceHolder.text("Could not add status");
+            this.errorPlaceHolder.text(messages["error_could_not_add_order_status"]);
         }
     });
 });

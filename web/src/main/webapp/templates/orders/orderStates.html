@@ -2,28 +2,29 @@
     <thead>
     <tr>
         <th class="span2">
-            Date
+            {{order_order_state_date}}
         </th>
         <th class="span1">
-            State
+            {{order_state_name}}
         </th>
         <th>
-            Description
+            {{order_order_state_description}}
         </th>
     </tr>
     </thead>
     <tfoot>
     <tr>
         <td colspan="5">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="addStateContainer">
                 <div class="control-group">
-                    <label class="control-label">Status</label>
+                    <label class="control-label">{{order_state_name}}</label>
                     <div class="controls">
                         <span class="span10"><input type="hidden" id="field_orderStatus" value=""></span>
+                        <span class="help-inline error"></span>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">Description</label>
+                    <label class="control-label">{{order_order_state_description}}</label>
 
                     <div class="controls">
                         <textarea id="orderStatusDescription" rows="2"></textarea>
@@ -32,7 +33,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <button id="addStatus" type="button" class="btn btn-primary">
-                            <i class="icon-plus icon-white"></i> Add status
+                            <i class="icon-plus icon-white"></i> {{order_order_status_add}}
                         </button>
                     </div>
                 </div>

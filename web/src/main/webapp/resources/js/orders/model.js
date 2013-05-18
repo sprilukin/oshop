@@ -58,7 +58,7 @@ define([
 
         validate: function(attributes) {
             if (!attributes.customer.id) {
-                return "Please select customer";
+                return messages["ui_validation_select_customer"];
             }
         }
     });

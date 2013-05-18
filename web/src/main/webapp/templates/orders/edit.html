@@ -4,12 +4,12 @@
             {{#model.id}}
             <div class="control-group">
                 <div class="controls">
-                    <span class="">Id: </span>
+                    <span class="">{{general_id}}</span>
                     <span class="">{{model.id}}</span>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Date</label>
+                <label class="control-label">{{order_date}}</label>
 
                 <div class="controls">
                     <label class="value-div">{{model.date}}</label>
@@ -17,7 +17,7 @@
             </div>
             {{/model.id}}
             <div class="control-group">
-                <label class="control-label">Customer</label>
+                <label class="control-label">{{order_customer}}</label>
 
                 <div class="controls">
                     <div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Shipping Address</label>
+                <label class="control-label">{{order_shipping_address}}</label>
 
                 <div class="controls">
                     <div>
@@ -41,7 +41,7 @@
     <div class="row-fluid span6">
         <form class="form-horizontal">
             <div class="control-group">
-                <label class="control-label">Products price</label>
+                <label class="control-label">{{order_products_price}}</label>
                 <div class="controls">
                     <div class="input-prepend input-append inline">
                         <span class="add-on">₴</span>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Discount</label>
+                <label class="control-label">{{order_discount}}</label>
 
                 <div class="controls">
                     <div>
@@ -61,17 +61,17 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Additional payment</label>
+                <label class="control-label">{{order_additional_payment}}</label>
 
                 <div class="controls">
                     <div>
-                        <input type="hidden" id="field_additionalPayment" value="{{model.additionalPayment.id}}" data-text="{{model.additionalPayment.amount}} | {{model.additionalPayment.description}}">
+                        <input type="hidden" id="field_additionalPayment" value="{{model.additionalPayment.id}}" data-text="{{model.additionalPayment.amount}} ₴ | {{model.additionalPayment.description}}">
                     </div>
                     <span class="help-inline"> </span>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Grand total</label>
+                <label class="control-label">{{order.grand.total.price}}</label>
 
                 <div class="controls">
                     <div class="input-prepend input-append inline">
@@ -87,9 +87,4 @@
 <div class="row-fluid span12">
     <div class="row-fluid span6 orderProducts"></div>
     <div class="row-fluid span6 orderStates"></div>
-</div>
-<div class="row-fluid span12" style="margin-top: 50px">
-    <div class="row-fluid span1 offset11">
-        <button type="button" class="btn btn-primary">Save</button>
-    </div>
 </div>
