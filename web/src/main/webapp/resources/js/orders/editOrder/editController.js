@@ -10,8 +10,8 @@ define([
     'customers/model',
     'orders/model',
     'orders/collection',
-    'orders/editView',
-    'orders/addView',
+    'orders/editOrder/editView',
+    'orders/editOrder/addView',
     'common/warningView'
 ], function ($, _, Backbone, Mustache, context, CustomerModel, Model, Collection, EditView, AddView, WarningView) {
 

@@ -8,7 +8,7 @@ define([
     'mustache',
     'orders/model',
     'orders/collection',
-    'orders/listView',
+    'orders/listOrders/listView',
     'common/warningView',
     'common/paginationView',
     'common/searchView',

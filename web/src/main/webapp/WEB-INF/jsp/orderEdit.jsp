@@ -13,6 +13,6 @@
 <div class="content"></div>
 <div id="imageGallery"></div>
 
-<script data-main="orders/edit" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
+<script data-main="orders/editOrder/edit" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
 </html>

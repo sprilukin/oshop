@@ -1,6 +1,6 @@
 require([
     'backbone',
-    'orders/editController'
+    'orders/listOrders/listController'
 ], function (Backbone, Controller) {
 
     var controller = new Controller();
