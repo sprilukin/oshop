@@ -8,27 +8,35 @@ define([
     'text',
     'text!templates/navbar.html',
     'common/messages',
+    'common/context',
+    'jqueryCookie',
     'bootstrap'
-], function ($, Backbone, Mustache, text, navbarTemplate, messages) {
+], function ($, Backbone, Mustache, text, navbarTemplate, messages, context) {
 
     var NavbarView = Backbone.View.extend({
         el: '.navbarPlaceholder',
 
         events: {
-            "click a": "onClick"
+            "click a.lang": "changeLanguage",
+            "click a.theme": "changeTheme"
         },
 
         dictionaries: ["productCategories"],
 
-        onClick: function(event) {
-            /*var page = $(event.currentTarget).attr("data-page");
+        changeLanguage: function(event) {
             event.preventDefault();
+            var link = $(event.currentTarget);
+            var lang = link.attr("data-lang");
 
-            this.trigger("page:change", page);*/
+            window.location = window.location + "?lang=" + lang;
+        },
 
-            console.log(arguments);
-
+        changeTheme: function(event) {
             event.preventDefault();
+            var link = $(event.currentTarget);
+            var theme = link.attr("data-theme");
+
+            window.location = window.location + "?theme=" + theme;
         },
 
         getActivePage: function() {
@@ -40,8 +48,10 @@ define([
             var activePage = this.getActivePage();
             model[ activePage] = true;
             model["dictionaries"] = _.indexOf(this.dictionaries, activePage, false) >= 0;
+            model["lang-" + $.cookie('lang')] = true;
+            model["theme-" + $.cookie('theme')] = true;
 
-            this.$el.html(Mustache.render(navbarTemplate, _.extend(model, messages)));
+            this.$el.html(Mustache.render(navbarTemplate, _.extend(model, {context: context}, messages)));
         }
     });
 
