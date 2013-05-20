@@ -1,41 +1,23 @@
 /**
- * Item Categories module
+ * Products collection
  */
 define([
     'backbone',
     'mustache',
-    'common/context'
-], function (Backbone, Mustache, context) {
+    'common/baseCollection'
+], function (Backbone, Mustache, BaseCollection) {
 
-    return Backbone.Collection.extend({
-
-        total: null,
-        template: null,
+    return BaseCollection.extend({
 
         initialize: function(options) {
             if (options.productCategoryId) {
-                this.template = context + Mustache.render("/api/productCategories/{{id}}", {id: options.productCategoryId})
+                this.URL_TEMPLATE = Mustache.render("/api/productCategories/{{id}}", {id: options.productCategoryId})
                     + "/products/filter;{{filter}}/sort;{{sort}}";
             } else {
-                this.template = context + "/api/products/filter;{{filter}}/sort;{{sort}}";
+                this.URL_TEMPLATE = "/api/products/filter;{{filter}}/sort;{{sort}}";
             }
-        },
 
-        url: function () {
-            return Mustache.render(this.template, {
-                filter: this.filter,
-                sort: this.sorter
-            })
-        },
-
-        parse: function(json) {
-            if (json) {
-                this.total = json.size;
-                return json.values;
-            } else {
-                this.total = 0;
-                return [];
-            }
+            BaseCollection.prototype.initialize.call(this);
         }
     });
 });

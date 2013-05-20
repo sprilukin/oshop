@@ -29,7 +29,7 @@ define([
                 Filter: Filter,
                 Sorter: Sorter,
                 Model: undefined,
-                Collection: undefined,
+                collection: undefined,
                 View: undefined,
                 PaginationView: PaginationView,
                 SearchView: SearchView,
@@ -43,7 +43,7 @@ define([
             this.filter = options.Filter && new options.Filter();
             this.sorter = options.Sorter && new options.Sorter();
 
-            this.collection = new options.Collection();
+            this.collection = options.collection;
             this.listView = new options.View({collection: this.collection, sorter: this.sorter});
             this.paginationView = options.PaginationView && new options.PaginationView({collection: this.collection});
             this.searchView = options.SearchView && new options.SearchView({collection: this.collection, filter: this.filter, fieldName: options.search});

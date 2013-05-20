@@ -33,7 +33,7 @@ define([
 
         this.initialize({
             Model: Model,
-            Collection: Collection,
+            collection: new Collection(),
             View: ListView,
             search: "name",
             Router: Router

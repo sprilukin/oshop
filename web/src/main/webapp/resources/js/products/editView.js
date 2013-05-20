@@ -27,10 +27,13 @@ define([
             "keypress .editEntityModal input": "onKeyPress"
         },
 
-        render: function (model) {
+        initialize: function() {
+            this.model.on("change", this.render, this);
+        },
+
+        render: function () {
             this.submitted = false;
-            this.model = model;
-            this.mode = typeof model.id !== "undefined" ? "edit" : "add";
+            this.mode = typeof this.model.id !== "undefined" ? "edit" : "add";
 
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
@@ -86,7 +89,6 @@ define([
         },
 
         onHidden: function() {
-            this.model = null;
             this.productCategorySelect.destroy();
 
             this.submitted ? this.fileUpload.submit() : this.fileUpload.cancel();
@@ -120,9 +122,11 @@ define([
                 },
 
                 {wait: true,
-                success: function() {
+                 silent: true,
+                 success: function() {
                     that.submitted = true;
-                    that.dialog.modal("hide");}
+                    that.dialog.modal("hide");
+                }
             });
         }
     });

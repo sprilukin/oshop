@@ -16,7 +16,7 @@ define([
     var OrdersController = function() {
         this.initialize({
             Model: Model,
-            Collection: Collection,
+            collection: new Collection(),
             View: ListView,
             search: "name"
         });
