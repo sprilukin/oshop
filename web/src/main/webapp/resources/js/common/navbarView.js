@@ -9,9 +9,9 @@ define([
     'text!templates/navbar.html',
     'common/messages',
     'common/context',
-    'jqueryCookie',
+    'cookies',
     'bootstrap'
-], function ($, Backbone, Mustache, text, navbarTemplate, messages, context) {
+], function ($, Backbone, Mustache, text, navbarTemplate, messages, context, cookies) {
 
     var NavbarView = Backbone.View.extend({
         el: '.navbarPlaceholder',
@@ -48,8 +48,8 @@ define([
             var activePage = this.getActivePage();
             model[ activePage] = true;
             model["dictionaries"] = _.indexOf(this.dictionaries, activePage, false) >= 0;
-            model["lang-" + $.cookie('lang')] = true;
-            model["theme-" + $.cookie('theme')] = true;
+            model["lang-" + cookies('lang')] = true;
+            model["theme-" + cookies('theme')] = true;
 
             this.$el.html(Mustache.render(navbarTemplate, _.extend(model, {context: context}, messages)));
         }

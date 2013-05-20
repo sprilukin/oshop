@@ -36,7 +36,7 @@
                 mustache: 'lib/mustache',
                 bootstrap: 'lib/bootstrap',
                 select2: 'lib/select2',
-                jqueryCookie: 'lib/jquery.cookie',
+                cookies: 'lib/cookies',
                 //fileupload
                 fileupload: 'lib/fileup/jquery.fileupload',
                 iframeTransport: 'lib/fileup/jquery.iframe-transport',
