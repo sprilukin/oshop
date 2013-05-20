@@ -22,10 +22,12 @@ define([
             "keypress .editEntityModal input": "onKeyPress"
         },
 
-        render: function (model) {
-            this.submitted = false;
-            this.model = model;
-            this.mode = typeof model.id !== "undefined" ? "edit" : "add";
+        initialize: function() {
+            this.model.on("change", this.render, this);
+        },
+
+        render: function () {
+            this.mode = typeof this.model.id !== "undefined" ? "edit" : "add";
 
             this.model.on("invalid", this.onIvalid, this);
             this.model.on("error", this.onError, this);
@@ -59,14 +61,12 @@ define([
         },
 
         onHidden: function() {
-            this.model = null;
-
             this.trigger("close");
         },
 
         onKeyPress: function(event) {
             var code = (event.keyCode ? event.keyCode : event.which);
-            if(code == 13) {
+            if (code == 13) {
                 this.onSubmit();
             }
         },
@@ -78,8 +78,8 @@ define([
 
             this.model.save({"name": this.$("#field_name").val()}, {
                 wait: true,
+                silent: true,
                 success: function() {
-                    that.submitted = true;
                     that.dialog.modal("hide");
                 }
             });

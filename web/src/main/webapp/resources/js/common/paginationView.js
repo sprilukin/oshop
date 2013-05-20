@@ -35,18 +35,18 @@ define([
 
         render: function () {
             this.$el.html(Mustache.render(paginationTemplate, _.extend({
-                total: this.collection.total,
-                pages: this.collection.total > 0 ? this.getPaginationDataForRendering(this.collection) : []
+                total: this.collection.getTotal(),
+                pages: this.collection.getTotal() > 0 ? this.getPaginationDataForRendering(this.collection) : []
             }, messages)));
         },
 
         getPaginationDataForRendering: function(collection) {
 
-            var pagesCount = Math.ceil(collection.total / collection.limit);
+            var pagesCount = Math.ceil(collection.getTotal() / collection.getLimit());
 
             //pagination of paginator
             var pagitationPagesCount = Math.ceil(pagesCount / paginationItemsPerPage);
-            var currentPaginationPage = Math.floor((collection.page - 1) / paginationItemsPerPage) + 1;
+            var currentPaginationPage = Math.floor((collection.getOffset()) / paginationItemsPerPage) + 1;
             var isFirst = currentPaginationPage == 1;
             var isLast = (currentPaginationPage == pagitationPagesCount);
 
@@ -61,7 +61,7 @@ define([
                 ],
 
                 _.map(_.range(paginationPageStart, paginationPageEnd + 1), function(index) {
-                    return {disabled: false, active: index == collection.page, page: index, label: index}
+                    return {disabled: false, active: index == collection.getOffset() + 1, page: index, label: index}
                 }, this),
 
                 //Next buttons
