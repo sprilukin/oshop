@@ -5,40 +5,42 @@
             {{general_id}}
             <span class="sorter" data-column="id"></span>
         </th>
-        <!--<th class="span1">
-            {{products_column_name}}
-            <span class="sorter" data-column="name"></span>
+        <th class="span1">
+            {{order_date}}
+            <span class="sorter" data-column="date"></span>
+        </th>
+        <th class="span3">
+            {{order_customer}}
+            <span class="sorter" data-column="customer"></span>
         </th>
         <th class="span1">
-            {{products_column_description}}
-            <span class="sorter" data-column="description"></span>
+            {{order_products_count}}
+            <span class="sorter" data-column="productsCount"></span>
         </th>
         <th class="span1">
-            {{products_column_price}}
-            <span class="sorter" data-column="price"></span>
+            {{order_products_price}}
+            <span class="sorter" data-column="productsPrice"></span>
         </th>
-        <th class="span1"></th>
-        <th class="span1">{{products_column_product_category}}</th>-->
-        <th class="span1"></th>
+        <th class="span1">
+            {{order_grand_total_price_light}}
+            <span class="sorter" data-column="totalPrice"></span>
+        </th>
+        <th class="span1">
+            {{order_current_order_state_name}}
+            <span class="sorter" data-column="currentOrderStateName"></span>
+        </th>
     </tr>
     </thead>
     <tbody>
     {{#models}}
     <tr>
-        <td>{{id}}</td>
-        <!--<td>{{attributes.name}}</td>
-        <td>{{attributes.description}}</td>
-        <td>{{attributes.price}}</td>
-        <td>
-            {{#attributes.imageId}}
-            <div data-toggle="modal-gallery" data-target="#modal-gallery">
-                <a href="{{context}}/api/images/{{attributes.imageId}}" data-gallery="gallery">
-                    <img src="{{context}}/api/images/{{attributes.imageId}}" style="height: 30px">
-                </a>
-            </div>
-            {{/attributes.imageId}}
-        </td>
-        <td><a href="{{context}}/productCategories#edit/{{attributes.category.id}}">{{attributes.category.name}}</a></td>-->
+        <td><a href="{{context}}/orders/{{id}}">{{id}}</a></td>
+        <td>{{attributes.date}}</td>
+        <td>{{attributes.customer.name}}</td>
+        <td>{{attributes.productsCount}}</td>
+        <td>{{attributes.productsPrice}}</td>
+        <td>{{attributes.totalPrice}}</td>
+        <td>{{attributes.currentOrderStateName}}</td>
         <td>
             <div class="btn-group">
                 <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
