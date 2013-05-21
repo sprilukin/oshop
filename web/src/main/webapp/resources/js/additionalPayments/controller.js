@@ -35,7 +35,7 @@ define([
             Model: Model,
             collection: new Collection(),
             View: ListView,
-            search: "name",
+            search: "description",
             Router: Router
         });
     };

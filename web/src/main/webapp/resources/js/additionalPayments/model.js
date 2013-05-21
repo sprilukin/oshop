@@ -17,9 +17,20 @@ define([
         },
 
         validate: function(attributes) {
-            if (!attributes.name) {
-                return messages["ui_validation_not_blank"];
+            var validationFailed = false;
+            var validationMessages = {};
+
+            if (!attributes.description) {
+                validationMessages["description"] = [messages["ui_validation_not_blank"]];
+                validationFailed = true;
             }
+
+            if ("" + parseInt(attributes.amount, 10) !== "" + attributes.amount) {
+                validationMessages["amount"] = [messages["ui_validation_not_number"]];
+                validationFailed = true;
+            }
+
+            return validationFailed ? validationMessages : undefined;
         }
     });
 });
