@@ -1,5 +1,5 @@
 /**
- * Product Categories View
+ * ShippingTypes View
  */
 define([
     'jquery',
@@ -10,7 +10,7 @@ define([
     'common/sortView',
     'common/context',
     'text',
-    'text!templates/productCategories/list.html',
+    'text!templates/shippingTypes/list.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, SortView, context, text, listEntityTemplate) {
 

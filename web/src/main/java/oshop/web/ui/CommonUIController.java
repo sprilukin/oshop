@@ -54,4 +54,9 @@ public class CommonUIController {
     public String addOrder() throws Exception {
         return "orderEdit";
     }
+
+    @RequestMapping(value = "/shippingTypes", method = RequestMethod.GET)
+    public String shippingTypes() throws Exception {
+        return "shippingTypes";
+    }
 }

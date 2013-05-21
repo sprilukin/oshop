@@ -4,12 +4,12 @@
 
 <html>
 <head>
-    <meta name="activePage" content="productCategories">
-    <title><spring:message code="product.categories.title"/></title>
+    <meta name="activePage" content="shippingTypes">
+    <title><spring:message code="shipping.type.title"/></title>
 </head>
 <body>
 
-<h1><spring:message code="product.categories.title"/></h1>
+<h1><spring:message code="shipping.type.title"/></h1>
 
 <div class="row-fluid span12 entity-controls">
     <div class="search inline span3"></div>
@@ -17,7 +17,7 @@
     <div class="inline span3 offset6">
         <a href="#add" role="button" class="btn btn-primary">
             <i class="icon-plus icon-white"> </i>
-            <spring:message code="product.category.add.category"/>
+            <spring:message code="shipping.type.add.type"/>
         </a>
     </div>
 </div>
@@ -26,6 +26,6 @@
 <div class="row-fluid span12 forPagination"></div>
 <div class="editEntity"></div>
 
-<script data-main="productCategories/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>
+<script data-main="shippingTypes/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>
 </body>
 </html>
