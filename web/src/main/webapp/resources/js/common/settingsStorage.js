@@ -12,7 +12,7 @@ define([
         },
 
         get: function(key) {
-            cookies.get(key)
+            return cookies.get(key)
         }
     };
 

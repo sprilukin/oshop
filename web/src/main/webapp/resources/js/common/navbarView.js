@@ -29,7 +29,7 @@ define([
             var lang = link.attr("data-lang");
 
             settingsStorage.set("lang", lang);
-            window.location = window.location;
+            window.location.reload(true);
         },
 
         changeTheme: function(event) {
@@ -38,7 +38,7 @@ define([
             var theme = link.attr("data-theme");
 
             settingsStorage.set("theme", theme);
-            window.location = window.location;
+            window.location.reload(true);
         },
 
         getActivePage: function() {

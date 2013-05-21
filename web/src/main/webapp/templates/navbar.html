@@ -10,34 +10,34 @@
 
             <div class="nav-collapse navbar-responsive-collapse collapse" style="height: 0px;">
                 <ul class="nav">
-                    <li {{#orders}}class="active"{{/orders}}><a href="{{context}}/orders">Заказы</a></li>
-                    <li {{#products}}class="active"{{/products}}><a href="{{context}}/products">Склад</a></li>
-                    <li {{#customers}}class="active"{{/customers}}><a href="{{context}}/customers">Клиенты</a></li>
-                    <li {{#expenses}}class="active"{{/expenses}}><a href="{{context}}/expenses">Расходы</a></li>
+                    <li {{#orders}}class="active"{{/orders}}><a href="{{context}}/orders">{{navbar_orders}}</a></li>
+                    <li {{#products}}class="active"{{/products}}><a href="{{context}}/products">{{navbar_products}}</a></li>
+                    <li {{#customers}}class="active"{{/customers}}><a href="{{context}}/customers">{{navbar_customers}}</a></li>
+                    <li {{#expenses}}class="active"{{/expenses}}><a href="{{context}}/expenses">{{navbar_expenses}}</a></li>
                     <li class="dropdown {{#dictionaries}}active{{/dictionaries}}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Справочники <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{navbar_dictionaries}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li {{#shippingTypes}}class="active"{{/shippingTypes}}><a href="{{context}}/shippingTypes">Типы доставки</a></li>
-                            <li {{#productCategories}}class="active"{{/productCategories}}><a href="{{context}}/productCategories">Категории товара</a></li>
-                            <li {{#orderStates}}class="active"{{/orderStates}}><a href="{{context}}/orderStates">Статусы заказа</a></li>
-                            <li {{#discounts}}class="active"{{/discounts}}><a href="{{context}}/discounts">Скидки</a></li>
-                            <li {{#additionalPayments}}class="active"{{/additionalPayments}}><a href="{{context}}/additionalPayments">Дополнительные платежи</a></li>
+                            <li {{#shippingTypes}}class="active"{{/shippingTypes}}><a href="{{context}}/shippingTypes">{{navbar_shipping_types}}</a></li>
+                            <li {{#productCategories}}class="active"{{/productCategories}}><a href="{{context}}/productCategories">{{navbar_product_categories}}</a></li>
+                            <li {{#orderStates}}class="active"{{/orderStates}}><a href="{{context}}/orderStates">{{navbar_order_states}}</a></li>
+                            <li {{#discounts}}class="active"{{/discounts}}><a href="{{context}}/discounts">{{navbar_discounts}}</a></li>
+                            <li {{#additionalPayments}}class="active"{{/additionalPayments}}><a href="{{context}}/additionalPayments">{{navbar_additional_payments}}</a></li>
                         </ul>
                     </li>
                 </ul>
                 <ul class="nav pull-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Язык <b class="caret"></b></a>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{navbar_language}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li {{#lang-ru}}class="active"{{/lang-ru}}><a class="lang" href="#" data-lang="ru">Русский</a></li>
-                            <li {{#lang-en}}class="active"{{/lang-en}}><a class="lang" href="#" data-lang="en">Английский</a></li>
+                            <li {{#lang-en}}class="active"{{/lang-en}}><a class="lang" href="#" data-lang="en">English</a></li>
                         </ul>
                     </li>
                     <li class="divider-vertical"></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Темы <b class="caret"></b></a>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{navbar_themes}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li {{#theme-default}}class="active"{{/theme-default}}><a class="theme" href="#" data-theme="default">Стандартная</a></li>
+                            <li {{#theme-default}}class="active"{{/theme-default}}><a class="theme" href="#" data-theme="default">{{navbar_themes_default}}</a></li>
                             <li {{#theme-darkstrap}}class="active"{{/theme-darkstrap}}><a class="theme" href="#" data-theme="darkstrap">Darkstrap</a></li>
                         </ul>
                     </li>
