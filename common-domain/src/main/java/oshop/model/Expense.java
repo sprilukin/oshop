@@ -46,4 +46,12 @@ public class Expense extends BaseEntity<Integer> {
     public void setAmount(BigDecimal amount) {
         this.amount = EntityUtils.round(amount, 2);
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

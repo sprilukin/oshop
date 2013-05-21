@@ -21,14 +21,15 @@ define([
             "click a.theme": "changeTheme"
         },
 
-        dictionaries: ["productCategories"],
+        dictionaries: ["productCategories", "shippingTypes", "orderStates", "discounts", "additionalPayments"],
 
         changeLanguage: function(event) {
             event.preventDefault();
             var link = $(event.currentTarget);
             var lang = link.attr("data-lang");
 
-            window.location = window.location + "?lang=" + lang;
+            settingsStorage.set("lang", lang);
+            window.location = window.location;
         },
 
         changeTheme: function(event) {
@@ -36,7 +37,8 @@ define([
             var link = $(event.currentTarget);
             var theme = link.attr("data-theme");
 
-            window.location = window.location + "?theme=" + theme;
+            settingsStorage.set("theme", theme);
+            window.location = window.location;
         },
 
         getActivePage: function() {

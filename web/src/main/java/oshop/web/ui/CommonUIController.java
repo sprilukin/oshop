@@ -59,4 +59,29 @@ public class CommonUIController {
     public String shippingTypes() throws Exception {
         return "shippingTypes";
     }
+
+    @RequestMapping(value = "/orderStates", method = RequestMethod.GET)
+    public String orderStatuses() throws Exception {
+        return "orderStates";
+    }
+
+    @RequestMapping(value = "/discounts", method = RequestMethod.GET)
+    public String discounts() throws Exception {
+        return "discounts";
+    }
+
+    @RequestMapping(value = "/additionalPayments", method = RequestMethod.GET)
+    public String additionalPayments() throws Exception {
+        return "additionalPayments";
+    }
+
+    @RequestMapping(value = "/expenses", method = RequestMethod.GET)
+    public String expenses() throws Exception {
+        return "expenses";
+    }
+
+    @RequestMapping(value = "/customers", method = RequestMethod.GET)
+    public String customers() throws Exception {
+        return "customers";
+    }
 }
