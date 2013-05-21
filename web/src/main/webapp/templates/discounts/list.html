@@ -6,8 +6,16 @@
             <span class="sorter" data-column="id"></span>
         </th>
         <th class="span1">
-            {{shipping_type_column_name}}
-            <span class="sorter" data-column="name"></span>
+            {{discounts_column_description}}
+            <span class="sorter" data-column="description"></span>
+        </th>
+        <th class="span1">
+            {{discounts_column_amount}}
+            <span class="sorter" data-column="amount"></span>
+        </th>
+        <th class="span1">
+            {{discounts_column_type}}
+            <span class="sorter" data-column="type"></span>
         </th>
         <th class="span1"></th>
     </tr>
@@ -16,7 +24,9 @@
     {{#models}}
     <tr>
         <td>{{id}}</td>
-        <td>{{attributes.name}}</td>
+        <td>{{attributes.description}}</td>
+        <td>{{attributes.amount}}</td>
+        <td>{{attributes.typeAsString}}</td>
         <td>
             <div class="btn-group">
                 <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">

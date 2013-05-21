@@ -33,31 +33,33 @@ define([
             this.model.on("error", this.onError, this);
 
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
-                title: this.mode === "add" ? messages["shipping_type_add_type"] : messages["shipping_type_edit_type"],
-                submit: this.mode === "add" ? messages["shipping_type_add"] : messages["shipping_type_edit"],
+                title: this.mode === "add" ? messages["discounts_add_discount"] : messages["discounts_edit_discount"],
+                submit: this.mode === "add" ? messages["discounts_add"] : messages["discounts_edit"],
                 model: this.model.attributes
             }, messages)));
 
             this.dialog = this.$(".editEntityModal");
             this.dialog.modal({show: true});
-            this.$("#field_name").focus();
+            this.$("#field_description").focus();
         },
 
         hideValidation: function() {
-            this.$(".editEntityGroup").removeClass("error").find(".help-inline").html("");
+            this.$(".control-group").removeClass("error").find(".help-inline").html("");
         },
 
         renderValidation: function(errors) {
-            this.$(".editEntityGroup").addClass("error").find(".help-inline").html(errors.name);
+            _.each(errors, function(message, field) {
+                this.$(".control-group.field-" + field).addClass("error").find(".help-inline").html(message[0]);
+            }, this);
         },
 
         onIvalid: function(model, error, attrs) {
-            this.renderValidation({name: error});
+            this.renderValidation(error);
         },
 
         onError: function(model, xhr) {
             var validation = JSON.parse(xhr.responseText);
-            this.renderValidation({name: validation.fields.name[0]});
+            this.renderValidation(validation.fields);
         },
 
         onHidden: function() {
@@ -76,8 +78,12 @@ define([
 
             this.hideValidation();
 
-            this.model.save({"name": this.$("#field_name").val()}, {
-                wait: true,
+            this.model.save(
+                {"description": this.$("#field_description").val(),
+                    "amount": this.$("#field_amount").val(),
+                    "type": this.$("#field_type").val()
+                },
+                {wait: true,
                 silent: true,
                 success: function() {
                     that.dialog.modal("hide");

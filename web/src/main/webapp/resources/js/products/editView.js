@@ -58,7 +58,7 @@ define([
 
             this.productCategorySelect = new DropDownWithSearch({
                 element: $("#field_product_category"),
-                placeholder: "Select product category",
+                placeholder: messages["product_category_select_category"],
                 allowClear: false,
                 urlTemplate: context + "/api/productCategories/filter;name={{term}};/sort;",
                 resultParser: function(data) {

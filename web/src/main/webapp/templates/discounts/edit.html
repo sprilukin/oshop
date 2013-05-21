@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             {{#model.id}}
-            <div class="control-group form-horizontal field-name">
+            <div class="control-group form-horizontal">
                 <label class="control-label">{{general_id}}</label>
 
                 <div class="controls">
@@ -16,11 +16,26 @@
             </div>
             {{/model.id}}
 
-            <div class="control-group form-horizontal editEntityGroup">
-                <label class="control-label" for="field_name">{{shipping_type_column_name}}</label>
+            <div class="control-group form-horizontal field-description">
+                <label class="control-label" for="field_description">{{discounts_column_description}}</label>
 
                 <div class="controls">
-                    <input class="input-large" id="field_name" type="text" required="required" value="{{model.name}}">
+                    <textarea id="field_description" required="required" rows="3">{{model.description}}</textarea>
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-amount">
+                <label class="control-label" for="field_amount">{{discounts_column_amount}}</label>
+
+                <div class="controls">
+                    <div class="">
+                        <input class="input-large span2" id="field_amount" type="text" required="required" value="{{model.amount}}">
+                        <select class="input-large span2" id="field_type">
+                            <option value="1" {{#model.type}}selected{{/model.type}}>₴</option>
+                            <option value="0" {{#model.id}}{{^model.type}}selected{{/model.type}}{{/model.id}}>%</option>
+                        </select>
+                    </div>
+
                     <span class="help-inline"> </span>
                 </div>
             </div>
