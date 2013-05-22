@@ -7,10 +7,12 @@ define([
     'backbone',
     'mustache',
     'common/messages',
+    'common/settingsStorage',
     'text',
     'text!templates/expenses/edit.html',
-    'bootstrap'
-], function ($, _, Backbone, Mustache, messages, text, editEntityTemplate) {
+    'bootstrap',
+    'datePickerRu'
+], function ($, _, Backbone, Mustache, messages, settingsStorage, text, editEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -33,10 +35,17 @@ define([
             this.model.on("error", this.onError, this);
 
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
-                title: this.mode === "add" ? messages["shipping_type_add_type"] : messages["shipping_type_edit_type"],
-                submit: this.mode === "add" ? messages["shipping_type_add"] : messages["shipping_type_edit"],
+                title: this.mode === "add" ? messages["expenses_add_expense"] : messages["expenses_edit_expense"],
+                submit: this.mode === "add" ? messages["expenses_add"] : messages["expenses_edit"],
                 model: this.model.attributes
             }, messages)));
+
+            $('#field_date_container').datepicker({
+                format: "yyyy-mm-dd",
+                weekStart: 1,
+                autoclose: true,
+                language: settingsStorage.get("lang")
+            });
 
             this.dialog = this.$(".editEntityModal");
             this.dialog.modal({show: true});
@@ -44,20 +53,22 @@ define([
         },
 
         hideValidation: function() {
-            this.$(".editEntityGroup").removeClass("error").find(".help-inline").html("");
+            this.$(".control-group").removeClass("error").find(".help-inline").html("");
         },
 
         renderValidation: function(errors) {
-            this.$(".editEntityGroup").addClass("error").find(".help-inline").html(errors.name);
+            _.each(errors, function(message, field) {
+                this.$(".control-group.field-" + field).addClass("error").find(".help-inline").html(message[0]);
+            }, this);
         },
 
         onIvalid: function(model, error, attrs) {
-            this.renderValidation({name: error});
+            this.renderValidation(error);
         },
 
         onError: function(model, xhr) {
             var validation = JSON.parse(xhr.responseText);
-            this.renderValidation({name: validation.fields.name[0]});
+            this.renderValidation(validation.fields);
         },
 
         onHidden: function() {
@@ -71,12 +82,27 @@ define([
             }
         },
 
+        getDate: function(dateAsString) {
+            var match = dateAsString.match(/([\d]{4})-([\d]{2})-([\d]{2})/);
+            if (match && match.length > 3) {
+                return new Date(match[1], match[2] - 1, match[3], 0, 0, 0, 0).getTime();
+            }
+
+            return "";
+        },
+
         onSubmit: function() {
             var that = this;
 
             this.hideValidation();
 
-            this.model.save({"name": this.$("#field_name").val()}, {
+            this.model.save(
+                {
+                    "date": this.getDate(this.$("#field_date").val()),
+                    "description": this.$("#field_description").val(),
+                    "amount": this.$("#field_amount").val()
+                },
+                {
                 wait: true,
                 silent: true,
                 success: function() {

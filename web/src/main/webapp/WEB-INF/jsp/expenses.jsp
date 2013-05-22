@@ -5,11 +5,11 @@
 <html>
 <head>
     <meta name="activePage" content="expenses">
-    <title><spring:message code="shipping.type.title"/></title>
+    <title><spring:message code="expenses.title"/></title>
 </head>
 <body>
 
-<h1><spring:message code="shipping.type.title"/></h1>
+<h1><spring:message code="expenses.title"/></h1>
 
 <div class="row-fluid span12 entity-controls">
     <div class="search inline span3"></div>
@@ -17,7 +17,7 @@
     <div class="inline span3 offset6">
         <a href="#add" role="button" class="btn btn-primary">
             <i class="icon-plus icon-white"> </i>
-            <spring:message code="shipping.type.add.type"/>
+            <spring:message code="expenses.add.expense"/>
         </a>
     </div>
 </div>

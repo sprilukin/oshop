@@ -16,11 +16,11 @@
     <title><decorator:title/> | <spring:message code="webapp.name"/></title>
 
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/select2.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/datepicker.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/<spring:theme code='css'/>"/>
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-image-gallery.css" />
-    <%--<link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.1.custom.css" />--%>
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
     <script language="JavaScript">
@@ -30,13 +30,14 @@
             paths: {
                 // Major libraries
                 jquery: 'lib/jquery-1.9.1',
-                /*jqueryui: 'lib/jquery-ui-1.10.1.custom',*/
                 underscore: 'lib/underscore',
                 backbone: 'lib/backbone',
                 mustache: 'lib/mustache',
                 bootstrap: 'lib/bootstrap',
                 select2: 'lib/select2',
                 cookies: 'lib/cookies',
+                datePicker: 'lib/bootstrap-datepicker',
+                datePickerRu: 'lib/bootstrap-datepicker.ru',
                 //fileupload
                 fileupload: 'lib/fileup/jquery.fileupload',
                 iframeTransport: 'lib/fileup/jquery.iframe-transport',

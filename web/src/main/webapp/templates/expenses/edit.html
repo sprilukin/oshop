@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             {{#model.id}}
-            <div class="control-group form-horizontal field-name">
+            <div class="control-group form-horizontal">
                 <label class="control-label">{{general_id}}</label>
 
                 <div class="controls">
@@ -16,11 +16,36 @@
             </div>
             {{/model.id}}
 
-            <div class="control-group form-horizontal editEntityGroup">
-                <label class="control-label" for="field_name">{{shipping_type_column_name}}</label>
+            <div class="control-group form-horizontal field-date">
+                <label class="control-label" for="field_date">{{expenses_column_date}}</label>
 
                 <div class="controls">
-                    <input class="input-large" id="field_name" type="text" required="required" value="{{model.name}}">
+                    <div class="input-append date" id="field_date_container">
+                        <input id="field_date" class="span2" size="16" type="text" value="{{model.date}}" required="required">
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-description">
+                <label class="control-label" for="field_description">{{expenses_column_description}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_description" type="text" required="required" value="{{model.description}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-amount">
+                <label class="control-label" for="field_amount">{{expenses_column_amount}}</label>
+
+                <div class="controls">
+                    <div class="input-prepend input-append">
+                        <span class="add-on">₴</span>
+                        <input class="input-large span1" id="field_amount" type="text" required="required" value="{{model.amount}}">
+                        <span class="add-on">.00</span>
+                    </div>
+
                     <span class="help-inline"> </span>
                 </div>
             </div>
