@@ -33,8 +33,8 @@ define([
             this.model.on("error", this.onError, this);
 
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
-                title: this.mode === "add" ? messages["shipping_type_add_type"] : messages["shipping_type_edit_type"],
-                submit: this.mode === "add" ? messages["shipping_type_add"] : messages["shipping_type_edit"],
+                title: this.mode === "add" ? messages["order_status_add_status"] : messages["order_status_edit_status"],
+                submit: this.mode === "add" ? messages["order_status_add"] : messages["order_status_edit"],
                 model: this.model.attributes
             }, messages)));
 

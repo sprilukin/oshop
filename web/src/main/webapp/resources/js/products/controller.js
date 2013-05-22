@@ -78,6 +78,8 @@ define([
         },
 
         edit: function (id) {
+            var that = this;
+
             if (id) {
                 this.editView.model.clear({silent: true});
                 this.editView.model.set("id", id, {silent: true});
@@ -85,8 +87,8 @@ define([
             } else {
                 if (this.productCategoryId) {
                     this.loadProductCategory(function(productCategory) {
-                        this.editView.model.clear({silent: true});
-                        this.editView.model.set("category", productCategory);
+                        that.editView.model.clear({silent: true});
+                        that.editView.model.set("category", productCategory);
                     });
                 } else {
                     this.editView.model.clear({silent: true});
