@@ -52,6 +52,14 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         return fromDTOConverter;
     }
 
+    protected void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
+        ControllerUtils.applyFilters(filters, criteria);
+    }
+
+    protected void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
+        ControllerUtils.applySorters(sorters, criteria);
+    }
+
     @RequestMapping(
             value = "/",
             method = RequestMethod.POST,
@@ -158,8 +166,8 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @Override
             protected Criteria getCriteria() {
                 Criteria criteria = getDao().createCriteria();
-                ControllerUtils.applyFilters(filters, criteria);
-                ControllerUtils.applySorters(sorters, criteria);
+                applyFilters(filters, criteria);
+                applySorters(sorters, criteria);
 
                 return criteria;
             }
