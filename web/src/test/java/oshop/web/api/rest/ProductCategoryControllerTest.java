@@ -156,15 +156,23 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
     public void testListProductCategoriesWithFiltersAndSorters() throws Exception {
         addProductCategories("category1", "category2", "category3");
 
+        //Since filters use AND this should return 204
         this.mockMvc.perform(
                 get("/api/productCategories/filter;name=category1,category3/sort;name=desc")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        this.mockMvc.perform(
+                get("/api/productCategories/filter;name=ca,te/sort;name=desc")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.size").value(3))
                 .andExpect(jsonPath("$.values.[0].name").value("category3"))
-                .andExpect(jsonPath("$.values.[1].name").value("category1"));
+                .andExpect(jsonPath("$.values.[1].name").value("category2"))
+                .andExpect(jsonPath("$.values.[2].name").value("category1"));
 
         //Test filter only
         this.mockMvc.perform(

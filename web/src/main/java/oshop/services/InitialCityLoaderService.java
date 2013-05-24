@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -73,6 +74,10 @@ public class InitialCityLoaderService implements ApplicationListener<ContextRefr
 
     private List<City> getCities() throws IOException {
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(CITIES_FILE_NAME);
+        if (is == null) {
+            return Collections.emptyList();
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         IOUtils.copy(is, baos);
 
