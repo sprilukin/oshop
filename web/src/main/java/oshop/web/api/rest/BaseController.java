@@ -32,6 +32,7 @@ import oshop.web.converter.EntityConverter;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -172,18 +173,9 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<T, ID>(getToDTOConverter(), searchDao) {
-
-            @Override
-            protected Criteria getCriteria() {
-                return getDao().createCriteria();
-            }
-
-            @Override
-            protected List<T> getList(Criteria criteria) {
-                return getDao().list(criteria, offset, limit);
-            }
-        }.invoke();
+        return listWithFiltersAndSorters(
+                Collections.<String, List<String>>emptyMap(),
+                Collections.<String, List<String>>emptyMap(), limit, offset);
     }
 
     @RequestMapping(

@@ -21,6 +21,7 @@ import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -63,21 +64,9 @@ public class CustomerController extends BaseController<Customer, Integer> {
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<ShippingAddress, Integer>(shippingAddressConverter, getSearchDao()) {
-
-            @Override
-            protected Criteria getCriteria() {
-                Criteria criteria = shippingAddressDao.createCriteria();
-                criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", id));
-
-                return criteria;
-            }
-
-            @Override
-            protected List<ShippingAddress> getList(Criteria criteria) {
-                return shippingAddressDao.list(criteria, offset, limit);
-            }
-        }.invoke();
+        return itemsWithFiltersAndSorters(id,
+                Collections.<String, List<String>>emptyMap(),
+                Collections.<String, List<String>>emptyMap(), limit, offset);
     }
 
     @RequestMapping(

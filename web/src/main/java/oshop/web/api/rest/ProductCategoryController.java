@@ -21,6 +21,7 @@ import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -63,21 +64,9 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(productConverter, getSearchDao()) {
-
-            @Override
-            protected Criteria getCriteria() {
-                Criteria criteria = productDao.createCriteria();
-                criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-
-                return criteria;
-            }
-
-            @Override
-            protected List<Product> getList(Criteria criteria) {
-                return productDao.list(criteria, offset, limit);
-            }
-        }.invoke();
+        return itemsWithFiltersAndSorters(id,
+                Collections.<String, List<String>>emptyMap(),
+                Collections.<String, List<String>>emptyMap(), limit, offset);
     }
 
     @RequestMapping(
