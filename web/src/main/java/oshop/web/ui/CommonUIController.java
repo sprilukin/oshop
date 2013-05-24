@@ -94,4 +94,9 @@ public class CommonUIController {
     public String shippingAddressesByCustomer(@PathVariable Integer id) throws Exception {
         return "shippingAddresses";
     }
+
+    @RequestMapping(value = "/cities", method = RequestMethod.GET)
+    public String cities() throws Exception {
+        return "cities";
+    }
 }

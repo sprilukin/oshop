@@ -1,0 +1,57 @@
+<div class="editEntityModal">
+    <div class="modal" tabindex="-1" role="dialog" aria-labelledby="editEntityModalLabel" aria-hidden="true">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="editEntityModalLabel">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            {{#model.id}}
+            <div class="control-group form-horizontal">
+                <label class="control-label">{{general_id}}</label>
+
+                <div class="controls">
+                    <div class="value-div">{{model.id}}</div>
+                </div>
+            </div>
+            {{/model.id}}
+
+            <div class="control-group form-horizontal field-name">
+                <label class="control-label" for="field_name">{{cities_column_name}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_name" type="text" required="required" value="{{model.name}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-region">
+                <label class="control-label" for="field_region">{{cities_column_region}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_region" type="text" required="required" value="{{model.region}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-latitude">
+                <label class="control-label" for="field_latitude">{{cities_column_latitude}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_latitude" type="text" value="{{model.latitude}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+            <div class="control-group form-horizontal field-longitude">
+                <label class="control-label" for="field_longitude">{{cities_column_longitude}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_longitude" type="text" value="{{model.longitude}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{{general_close}}</button>
+            <button class="btn btn-primary editEntitySubmitButton">{{submit}}</button>
+        </div>
+    </div>
+</div>

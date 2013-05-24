@@ -21,7 +21,7 @@ define([
             "click a.theme": "changeTheme"
         },
 
-        dictionaries: ["productCategories", "shippingTypes", "orderStates", "discounts", "additionalPayments"],
+        dictionaries: ["productCategories", "shippingTypes", "orderStates", "discounts", "additionalPayments", "cities"],
 
         changeLanguage: function(event) {
             event.preventDefault();
