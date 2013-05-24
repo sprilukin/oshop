@@ -28,7 +28,7 @@
                 <label class="control-label" for="field_region">{{cities_column_region}}</label>
 
                 <div class="controls">
-                    <input class="input-large" id="field_region" type="text" required="required" value="{{model.region}}">
+                    <input type="hidden" id="field_region" value="{{model.region}}" data-text="{{model.region}}">
                     <span class="help-inline"> </span>
                 </div>
             </div>

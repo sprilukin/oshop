@@ -7,10 +7,12 @@ define([
     'backbone',
     'mustache',
     'common/messages',
+    'common/regions',
     'text',
     'text!templates/cities/edit.html',
+    'select2',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, regions, text, editEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -41,6 +43,19 @@ define([
             this.dialog = this.$(".editEntityModal");
             this.dialog.modal({show: true});
             this.$("#field_name").focus();
+
+            this.regionSelect = this.$("#field_region").select2({
+                placeholder: messages["cities_select_region"],
+                allowClear: false,
+                data: _.map(regions, function(value) {
+                    return {id: value, text: value};
+                }),
+                initSelection: function(element, callback) {
+                    var el = $(element);
+                    var initialValue = {id: el.val(), text: el.attr("data-text")};
+                    callback(initialValue)
+                }
+            });
         },
 
         hideValidation: function() {
@@ -63,6 +78,7 @@ define([
         },
 
         onHidden: function() {
+            this.regionSelect.select2("destroy");
             this.trigger("close");
         },
 
