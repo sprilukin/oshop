@@ -3,6 +3,12 @@ package oshop.web.api.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +40,9 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
 
     private static final Log log = LogFactory.getLog(BaseController.class);
 
+    public static final String ASC_SORT = "asc";
+    public static final String DESC_SORT = "desc";
+
     @Resource
     private GenericSearchDao searchDao;
 
@@ -53,11 +62,38 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
     }
 
     protected void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
-        ControllerUtils.applyFilters(filters, criteria);
+        Disjunction disjunction = Restrictions.disjunction();
+        for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
+            disjunction.add(getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria));
+        }
+
+        criteria.add(disjunction);
+    }
+
+    protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
+        Conjunction conjunction = Restrictions.conjunction();
+        for (String likeExpression: values) {
+            conjunction.add(Restrictions.like(column, likeExpression, MatchMode.ANYWHERE));
+        }
+
+        return conjunction;
     }
 
     protected void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
-        ControllerUtils.applySorters(sorters, criteria);
+        for (Map.Entry<String, List<String>> entry: sorters.entrySet()) {
+            String fieldName = entry.getKey();
+            String sortType = entry.getValue().get(0);
+
+            addOrder(fieldName, sortType, criteria);
+        }
+    }
+
+    protected void addOrder(String column, String order, Criteria criteria) {
+        if (ASC_SORT.equalsIgnoreCase(order)) {
+            criteria.addOrder(Order.asc(column));
+        } else if (DESC_SORT.equals(order)) {
+            criteria.addOrder(Order.desc(column));
+        }
     }
 
     @RequestMapping(
