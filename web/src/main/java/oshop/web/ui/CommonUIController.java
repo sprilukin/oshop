@@ -12,7 +12,7 @@ public class CommonUIController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() throws Exception {
-        return "redirect:productCategories";
+        return "redirect:ordersList";
     }
 
     @RequestMapping(value = "/itemCategories", method = RequestMethod.GET)
@@ -83,5 +83,15 @@ public class CommonUIController {
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public String customers() throws Exception {
         return "customers";
+    }
+
+    @RequestMapping(value = "/shippingAddresses", method = RequestMethod.GET)
+    public String shippingAddresses() throws Exception {
+        return "shippingAddresses";
+    }
+
+    @RequestMapping(value = "/customers/{id}/shippingAddresses", method = RequestMethod.GET)
+    public String shippingAddressesByCustomer(@PathVariable Integer id) throws Exception {
+        return "shippingAddresses";
     }
 }

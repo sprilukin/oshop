@@ -59,12 +59,12 @@ public class CustomerController extends BaseController<Customer, Integer> {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> products(
+    public ResponseEntity<?> shippingAddresses(
             @PathVariable final Integer id,
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return itemsWithFiltersAndSorters(id,
+        return shippingAddressesWithFiltersAndSorters(id,
                 Collections.<String, List<String>>emptyMap(),
                 Collections.<String, List<String>>emptyMap(), limit, offset);
     }
@@ -74,7 +74,7 @@ public class CustomerController extends BaseController<Customer, Integer> {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> itemsWithFiltersAndSorters(
+    public ResponseEntity<?> shippingAddressesWithFiltersAndSorters(
             @PathVariable final Integer id,
             @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
             @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,

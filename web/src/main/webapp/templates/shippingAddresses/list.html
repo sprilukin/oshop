@@ -1,0 +1,58 @@
+<table class="table table-striped table-hover sorted">
+    <thead>
+    <tr>
+        <th class="span1">
+            {{general_id}}
+            <span class="sorter" data-column="id"></span>
+        </th>
+        <th class="span1">
+            {{shipping.addresses.column.city}}
+            <span class="sorter" data-column="city"></span>
+        </th>
+        <th class="span1">
+            {{shipping.addresses.column.address}}
+            <span class="sorter" data-column="address"></span>
+        </th>
+        <th class="span1">
+            {{shipping.addresses.column.phone}}
+            <span class="sorter" data-column="phone"></span>
+        </th>
+        <th class="span1">
+            {{shipping.addresses.column.customer}}
+            <span class="sorter" data-column="customer"></span>
+        </th>
+        <th class="span1">
+            {{shipping.addresses.column.shipping.type}}
+            <span class="sorter" data-column="shipping-type"></span>
+        </th>
+        <th class="span1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#models}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{attributes.city}}</td>
+        <td>{{attributes.address}}</td>
+        <td>{{attributes.phone}}</td>
+        <td><a href="{{context}}/customers#edit/{{attributes.customer.id}}">{{attributes.customer.name}}</a></td>
+        <td>{{attributes.shippingType.name}}</td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#edit/{{id}}"><i class="icon-pencil"></i> {{general_modify}}</a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i> {{general_remove}}</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {{/models}}
+    </tbody>
+</table>
