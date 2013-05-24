@@ -31,7 +31,7 @@
                 <label class="control-label" for="field_city">{{shipping_addresses_column_city}}</label>
 
                 <div class="controls">
-                    <input type="hidden" id="field_city" value="{{model.city.id}}" data-text="{{model.city.name}}">
+                    <input type="hidden" id="field_city" value="{{model.city.id}}" data-text="{{model.city.name}} | {{model.city.region}}">
                     <span class="help-inline"> </span>
                 </div>
             </div>

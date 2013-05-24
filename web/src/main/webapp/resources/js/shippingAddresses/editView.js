@@ -79,15 +79,19 @@ define([
         },
 
         renderCitySelect: function() {
+            var formatSelection = function(data) {
+                return Mustache.render("{{name}} | {{region}}", data);
+            };
+
             this.citySelect = new DropDownWithSearch({
                 element: $("#field_city"),
                 placeholder: messages["shipping_addresses_select_city"],
                 allowClear: false,
                 urlTemplate: context + "/api/cities/filter;name={{term}};/sort;",
+                formatResult: formatSelection,
+                formatSelection: formatSelection,
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
-                        return {id: item.id, text: item.name}
-                    }) : [];
+                    return data ? data.values: [];
                 }
             });
         },
