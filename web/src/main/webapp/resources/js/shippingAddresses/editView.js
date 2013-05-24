@@ -30,7 +30,6 @@ define([
         },
 
         render: function () {
-            this.submitted = false;
             this.mode = typeof this.model.id !== "undefined" ? "edit" : "add";
 
             this.model.on("invalid", this.onIvalid, this);
@@ -46,6 +45,12 @@ define([
             this.dialog.modal({show: true});
             this.$("#field_city").focus();
 
+            this.renderCustomerSelect();
+            this.renderShippingType();
+            this.renderCitySelect();
+        },
+
+        renderCustomerSelect: function() {
             this.customerSelect = new DropDownWithSearch({
                 element: $("#field_customer"),
                 placeholder: messages["shipping_addresses_select_customer"],
@@ -57,12 +62,28 @@ define([
                     }) : [];
                 }
             });
+        },
 
+        renderShippingType: function() {
             this.shippingTypeSelect = new DropDownWithSearch({
                 element: $("#field_shipping_type"),
                 placeholder: messages["shipping_addresses_select_shipping_type"],
                 allowClear: false,
                 urlTemplate: context + "/api/shippingTypes/filter;name={{term}};/sort;",
+                resultParser: function(data) {
+                    return data ? _.map(data.values, function (item) {
+                        return {id: item.id, text: item.name}
+                    }) : [];
+                }
+            });
+        },
+
+        renderCitySelect: function() {
+            this.citySelect = new DropDownWithSearch({
+                element: $("#field_city"),
+                placeholder: messages["shipping_addresses_select_city"],
+                allowClear: false,
+                urlTemplate: context + "/api/cities/filter;name={{term}};/sort;",
                 resultParser: function(data) {
                     return data ? _.map(data.values, function (item) {
                         return {id: item.id, text: item.name}
@@ -93,8 +114,7 @@ define([
         onHidden: function() {
             this.customerSelect.destroy();
             this.shippingTypeSelect.destroy();
-
-            this.submitted ? this.fileUpload.submit() : this.fileUpload.cancel();
+            this.citySelect.destroy();
 
             this.trigger("close");
         },
@@ -113,7 +133,7 @@ define([
 
             this.model.save(
                 {
-                    city: this.$("#field_city").val(),
+                    city: {id: this.$("#field_city").val()},
                     address: this.$("#field_address").val(),
                     phone: this.$("#field_phone").val(),
                     shippingType: {id: this.$("#field_shipping_type").val()},
@@ -123,7 +143,6 @@ define([
                 {wait: true,
                  silent: true,
                  success: function() {
-                    that.submitted = true;
                     that.dialog.modal("hide");
                 }
             });

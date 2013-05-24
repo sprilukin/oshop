@@ -31,7 +31,7 @@
                 <label class="control-label" for="field_city">{{shipping_addresses_column_city}}</label>
 
                 <div class="controls">
-                    <input class="input-large" id="field_city" type="text" required="required" value="{{model.city}}">
+                    <input type="hidden" id="field_city" value="{{model.city.id}}" data-text="{{model.city.name}}">
                     <span class="help-inline"> </span>
                 </div>
             </div>
@@ -59,7 +59,7 @@
 
                 <div class="controls">
                     <div>
-                        <input type="hidden" id="field_shipping_type" value="{{model.customer.id}}" data-text="{{model.customer.name}}">
+                        <input type="hidden" id="field_shipping_type" value="{{model.shippingType.id}}" data-text="{{model.shippingType.name}}">
                     </div>
                     <span class="help-inline"> </span>
                 </div>

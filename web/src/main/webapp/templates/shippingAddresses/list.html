@@ -6,23 +6,23 @@
             <span class="sorter" data-column="id"></span>
         </th>
         <th class="span1">
-            {{shipping.addresses.column.city}}
+            {{shipping_addresses_column_city}}
             <span class="sorter" data-column="city"></span>
         </th>
         <th class="span1">
-            {{shipping.addresses.column.address}}
+            {{shipping_addresses_column_address}}
             <span class="sorter" data-column="address"></span>
         </th>
         <th class="span1">
-            {{shipping.addresses.column.phone}}
+            {{shipping_addresses_column_phone}}
             <span class="sorter" data-column="phone"></span>
         </th>
         <th class="span1">
-            {{shipping.addresses.column.customer}}
+            {{shipping_addresses_column_customer}}
             <span class="sorter" data-column="customer"></span>
         </th>
         <th class="span1">
-            {{shipping.addresses.column.shipping.type}}
+            {{shipping_addresses_column_shipping_type}}
             <span class="sorter" data-column="shipping-type"></span>
         </th>
         <th class="span1"></th>
@@ -32,7 +32,7 @@
     {{#models}}
     <tr>
         <td>{{id}}</td>
-        <td>{{attributes.city}}</td>
+        <td>{{attributes.city.name}}</td>
         <td>{{attributes.address}}</td>
         <td>{{attributes.phone}}</td>
         <td><a href="{{context}}/customers#edit/{{attributes.customer.id}}">{{attributes.customer.name}}</a></td>

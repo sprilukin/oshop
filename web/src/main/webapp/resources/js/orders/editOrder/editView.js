@@ -82,7 +82,7 @@ define([
             var that = this;
 
             var formatSelection = function(data) {
-                return Mustache.render("{{type}} | {{address}}", data);
+                return Mustache.render("{{type}} | {{city}} | {{address}}", data);
             };
 
             this.shippingAddressSelect && this.shippingAddressSelect.destroy();
@@ -97,7 +97,7 @@ define([
                 formatSelection: formatSelection,
                 resultParser: function(data) {
                     return data ? _.map(data.values, function (item) {
-                        return {id: item.id, address: item.address, type: item.shippingType.name}
+                        return {id: item.id, city: item.city.name, address: item.address, type: item.shippingType.name}
                     }) : [];
                 },
                 change: function(event) {

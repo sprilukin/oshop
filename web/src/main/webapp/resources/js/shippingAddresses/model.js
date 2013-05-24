@@ -22,7 +22,7 @@ define([
             var validationFailed = false;
             var validationMessages = {};
 
-            if (!attributes.city) {
+            if (!attributes.city || !attributes.city.id) {
                 validationMessages["city"] = [messages["ui_validation_not_blank"]];
                 validationFailed = true;
             }
@@ -32,7 +32,7 @@ define([
                 validationFailed = true;
             }
 
-            if (attributes.phone && !attributes.phone.matches(PHONE_REGEXP)) {
+            if (attributes.phone && !attributes.phone.match(PHONE_REGEXP)) {
                 validationMessages["phone"] = [messages["ui_validation_invalid_phone"]];
                 validationFailed = true;
             }
