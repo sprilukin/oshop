@@ -1,6 +1,7 @@
 package oshop.web.converter;
 
 import org.springframework.stereotype.Component;
+import oshop.model.City;
 import oshop.model.Customer;
 import oshop.model.ShippingAddress;
 import oshop.model.ShippingType;
@@ -16,6 +17,9 @@ public class ShippingAddressToDTOConverter extends BaseEntityConverter<ShippingA
     @Resource(name = "shippingTypeToDTOConverter")
     private EntityConverter<ShippingType, Integer> shippingTypeConverter;
 
+    @Resource(name = "cityToDTOConverter")
+    private EntityConverter<City, Integer> cityConverter;
+
     @Override
     protected Class<ShippingAddress> entityClass() {
         return ShippingAddress.class;
@@ -26,7 +30,7 @@ public class ShippingAddressToDTOConverter extends BaseEntityConverter<ShippingA
         convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
         convertedEntity.setShippingType(shippingTypeConverter.convert(entity.getShippingType()));
         convertedEntity.setAddress(entity.getAddress());
-        convertedEntity.setCity(entity.getCity());
+        convertedEntity.setCity(cityConverter.convert(entity.getCity()));
         convertedEntity.setPhone(entity.getPhone());
     }
 }

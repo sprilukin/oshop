@@ -15,11 +15,9 @@ import javax.validation.constraints.Size;
 @Table(name = "shipping_address")
 public class ShippingAddress extends BaseEntity<Integer> {
 
-    @NotNull
-    @NotBlank
-    @Size(max = 255)
-    @Column(name = "city")
-    private String city;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id")
+    private City city;
 
     @NotNull
     @NotBlank
@@ -39,11 +37,11 @@ public class ShippingAddress extends BaseEntity<Integer> {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
