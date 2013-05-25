@@ -12,6 +12,7 @@
             <list>
                 <value>classpath*:jdbc.properties</value>
                 <value>classpath*:dao.properties</value>
+                <value>classpath*:message-bundle.properties</value>
             </list>
         </property>
     </bean>

@@ -90,9 +90,12 @@
                 <jdbc.profile.driverClassName>com.mysql.jdbc.Driver</jdbc.profile.driverClassName>
                 <jdbc.profile.dialect>org.hibernate.dialect.MySQLInnoDBDialect</jdbc.profile.dialect>
                 <jdbc.profile.databaseurl>jdbc:mysql://localhost:3306/oshop?useUnicode=true&amp;characterEncoding=UTF-8</jdbc.profile.databaseurl>
+                <jdbc.profile.validationQuery>SELECT 1</jdbc.profile.validationQuery>
                 <jdbc.profile.hbm2ddl>update</jdbc.profile.hbm2ddl>
                 <jdbc.profile.username>root</jdbc.profile.username>
                 <jdbc.profile.password>password</jdbc.profile.password>
+                <oshop.log.folder>d:\\work\\tools\\apache-tomcat-7.0.25\\logs</oshop.log.folder>
+                <message.bundle.cache>15</message.bundle.cache>
             </properties>
         </profile>
         <profile>
@@ -104,6 +107,7 @@
                 <jdbc.profile.hbm2ddl>create</jdbc.profile.hbm2ddl>
                 <jdbc.profile.username>sa</jdbc.profile.username>
                 <jdbc.profile.password></jdbc.profile.password>
+                <message.bundle.cache>15</message.bundle.cache>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
