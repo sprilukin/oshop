@@ -8,11 +8,12 @@ define([
     'mustache',
     'common/messages',
     'common/settingsStorage',
+    'common/dateFormatter',
     'text',
     'text!templates/expenses/edit.html',
     'bootstrap',
     'datePickerRu'
-], function ($, _, Backbone, Mustache, messages, settingsStorage, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, settingsStorage, dateFormatter, text, editEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -37,7 +38,7 @@ define([
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
                 title: this.mode === "add" ? messages["expenses_add_expense"] : messages["expenses_edit_expense"],
                 submit: this.mode === "add" ? messages["expenses_add"] : messages["expenses_edit"],
-                model: this.model.attributes
+                model: _.extend({}, this.model.attributes, {date: dateFormatter(this.model.attributes.date).format("YYYY-MM-DD")})
             }, messages)));
 
             $('#field_date_container').datepicker({
@@ -98,7 +99,7 @@ define([
 
             this.model.save(
                 {
-                    "date": this.getDate(this.$("#field_date").val()),
+                    "date": dateFormatter(this.$("#field_date").val(), "YYYY-MM-DD").toDate().getTime(),
                     "description": this.$("#field_description").val(),
                     "amount": this.$("#field_amount").val()
                 },

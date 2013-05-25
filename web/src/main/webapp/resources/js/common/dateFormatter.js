@@ -8,7 +8,7 @@ define([
 
     var DEFAULT_DATE_FORMAT = "YYYY MMM DD";
     var DEFAULT_TIME_FORMAT = "HH:mm:ss";
-    var DEFAULT_FORMAT = DEFAULT_DATE_FORMAT + " " + DEFAULT_TIME_FORMAT;
+    var DEFAULT_FORMAT = DEFAULT_DATE_FORMAT;
 
     var old_format = moment.fn.format;
 

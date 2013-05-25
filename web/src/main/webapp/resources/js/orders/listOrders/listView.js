@@ -9,10 +9,11 @@ define([
     'common/messages',
     'common/sortView',
     'common/context',
+    'common/dateFormatter',
     'text',
     'text!templates/orders/list.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, SortView, context, text, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, SortView, context, dateFormatter, text, listEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -38,7 +39,13 @@ define([
         },
 
         render: function () {
-            var model = _.extend({context: context}, this.collection, messages);
+            var model = _.extend({context: context}, {models: _.map(this.collection.models, function(model) {
+                var modelClone = _.extend({}, model.attributes);
+                modelClone.date = dateFormatter(modelClone.date).format();
+
+                return {id: modelClone.id, attributes: modelClone};
+            })}, messages);
+
             this.$el.html(Mustache.render(listEntityTemplate, model));
 
             _.each(this.sorterViews, function(view) {
