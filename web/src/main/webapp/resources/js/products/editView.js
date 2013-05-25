@@ -50,7 +50,7 @@ define([
 
             this.fileUpload = new FileUploadView({
                 element: this.$el.find(".fileUploadGroup .controls"),
-                width: "150",
+                width: "500",
                 multiple: false,
                 images: this.model.get("imageId") ? [this.model.get("imageId")] : []
             });

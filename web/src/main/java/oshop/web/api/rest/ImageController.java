@@ -232,8 +232,8 @@ public class ImageController {
         String contentType = file.getContentType();
         byte[] imageData = file.getBytes();
         if (maxWidth != null) {
-            contentType = MediaType.IMAGE_PNG_VALUE;
-            imageData = imageConverterService.deflate(imageData, maxWidth, MediaType.IMAGE_PNG.getSubtype());
+            contentType = MediaType.IMAGE_JPEG_VALUE;
+            imageData = imageConverterService.deflate(imageData, maxWidth, MediaType.IMAGE_JPEG.getSubtype());
             if (imageData == file.getBytes()) {
                 contentType = file.getContentType();
             }
