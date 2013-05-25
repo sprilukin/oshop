@@ -6,13 +6,24 @@ define([
     'cookies'
 ], function (_, cookies) {
 
+    var DEFAULT_LANG = "ru";
+    var DEFAULT_THEME = "default";
+
     var settingsStorage = {
         set: function(key, value) {
             cookies.set(key, value);
         },
 
         get: function(key) {
-            return cookies.get(key)
+            if (key === "lang" && !cookies.get("lang")) {
+                return DEFAULT_LANG;
+            }
+
+            if (key === "theme" && !cookies.get("theme")) {
+                return DEFAULT_THEME;
+            }
+
+            return cookies.get(key);
         }
     };
 

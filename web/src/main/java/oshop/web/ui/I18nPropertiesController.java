@@ -15,6 +15,7 @@ import oshop.i18n.ExposedResourceBundleMessageSource;
 import oshop.web.api.rest.adapter.HttpCacheRestCallbackAdapter;
 
 import javax.annotation.Resource;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -25,11 +26,12 @@ public class I18nPropertiesController {
     private MessageSource messageSource;
 
     @RequestMapping(
-            value = "/messages",
+            value = "/messages/{lang}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<?> getAllMessages(
+            final @PathVariable String lang,
             final @RequestHeader(value = "If-Modified-Since", required = false) String ifModifiedSinceHeader) throws Exception {
 
         return new HttpCacheRestCallbackAdapter<Map<String, String>>() {
@@ -51,17 +53,29 @@ public class I18nPropertiesController {
 
             @Override
             protected Map<String, String> getResult() throws Exception {
-                return exposedMessageSource.getAllMessages(LocaleContextHolder.getLocale());
+                return exposedMessageSource.getAllMessages(new Locale(lang));
             }
         }.invoke();
     }
 
     @RequestMapping(
-            value = "/messages/{basename}",
+            value = "/messages",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> getAllMessagesWithDefaultLocale(
+            final @RequestHeader(value = "If-Modified-Since", required = false) String ifModifiedSinceHeader) throws Exception {
+
+        return getAllMessages(LocaleContextHolder.getLocale().getCountry(), ifModifiedSinceHeader);
+    }
+
+    @RequestMapping(
+            value = "/messages/{basename}/{lang}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<?> getMessagesForBaseName(
+            final @PathVariable String lang,
             final @PathVariable String basename,
             final @RequestHeader(value = "If-Modified-Since", required = false) String ifModifiedSinceHeader) throws Exception {
 
@@ -84,7 +98,7 @@ public class I18nPropertiesController {
 
             @Override
             protected Map<String, String> getResult() throws Exception {
-                return exposedMessageSource.getAllMessagesForBaseName(basename, LocaleContextHolder.getLocale());
+                return exposedMessageSource.getAllMessagesForBaseName(basename, new Locale(lang));
             }
         }.invoke();
     }

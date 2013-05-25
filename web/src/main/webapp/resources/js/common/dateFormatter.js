@@ -12,7 +12,7 @@ define([
 
     var old_format = moment.fn.format;
 
-    moment.lang(settingsStorage.get("lang") || "ru");
+    moment.lang(settingsStorage.get("lang"));
     moment.fn.format = function (format) {
         return old_format.call(this, format ? format : DEFAULT_FORMAT);
     };
