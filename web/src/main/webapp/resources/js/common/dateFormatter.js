@@ -2,72 +2,21 @@
  * Date formatter
  */
 define([
-    'mustache'
-], function (Mustache) {
+    'momentRu',
+    'common/settingsStorage'
+], function (moment, settingsStorage) {
 
-    var DEFAULT_DATE_FORMAT = "{{day}}/{{month}}/{{year}}";
-    var DEFAULT_TIME_FORMAT = "{{hour}}:{{minute}}:{{second}}";
+    var DEFAULT_DATE_FORMAT = "YYYY MMM DD";
+    var DEFAULT_TIME_FORMAT = "HH:mm:ss";
+    var DEFAULT_FORMAT = DEFAULT_DATE_FORMAT + " " + DEFAULT_TIME_FORMAT;
 
-    var toDate = function(date) {
-        if (typeof date === "number") {
-            return new Date(date);
-        }
+    var old_format = moment.fn.format;
 
-        return date;
-    };
-
-    var format = function (date, template) {
-        if (!date) {
-            return;
-        }
-
-        date = toDate(date);
-
-        template = template ? template : DEFAULT_DATE_FORMAT + " " + DEFAULT_TIME_FORMAT;
-
-        return Mustache.render(template,
-            {year: date.getFullYear(),
-                month: date.getMonth(),
-                day: date.getDay(),
-                hour: date.getHours(),
-                minute: date.getMinutes(),
-                second: date.getSeconds()});
-    };
-
-    var formatDate = function (date, template) {
-        if (!date) {
-            return;
-        }
-
-        date = toDate(date);
-
-        template = template ? template : DEFAULT_DATE_FORMAT;
-
-        return Mustache.render(template,
-            {year: date.getFullYear(),
-                month: date.getMonth(),
-                day: date.getDay()});
-    };
-
-    var formatTime = function (date, template) {
-        if (!date) {
-            return;
-        }
-
-        date = toDate(date);
-
-        template = template ? template : DEFAULT_TIME_FORMAT;
-
-        return Mustache.render(template,
-            {hour: date.getHours(),
-                minute: date.getMinutes(),
-                second: date.getSeconds()});
+    moment.lang(settingsStorage.get("lang") || "en");
+    moment.fn.format = function (format) {
+        return old_format.call(this, format ? format : DEFAULT_FORMAT);
     };
 
 
-    return {
-        format: format,
-        formatDate: formatDate,
-        formatTime: formatTime
-    }
+    return moment;
 });

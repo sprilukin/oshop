@@ -34,7 +34,7 @@ define([
         },
 
         render: function () {
-            var formattedDate = dateFormatter.format(this.model.get("date"));
+            var formattedDate = dateFormatter(this.model.get("date")).format();
             this.$el.html(Mustache.render(editTemplate, _.extend({
                 model: _.extend({}, this.model.attributes, {date: formattedDate})
             }, messages)));

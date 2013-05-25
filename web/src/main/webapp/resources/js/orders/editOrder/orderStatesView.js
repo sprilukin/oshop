@@ -29,7 +29,7 @@ define([
         render: function () {
             var states = _.map(this.model.get("states"), function(state) {
                 return {
-                    date: dateFormatter.format(state.date),
+                    date: dateFormatter(state.date).format(),
                     state: state.orderState.name,
                     description: state.description}
             });

@@ -38,6 +38,8 @@
                 cookies: 'lib/cookies',
                 datePicker: 'lib/bootstrap-datepicker',
                 datePickerRu: 'lib/bootstrap-datepicker.ru',
+                moment: 'lib/moment',
+                momentRu: 'lib/moment_ru',
                 //fileupload
                 fileupload: 'lib/fileup/jquery.fileupload',
                 iframeTransport: 'lib/fileup/jquery.iframe-transport',
