@@ -9,8 +9,9 @@ define([
     'common/searchView',
     'common/filter',
     'common/sorter',
-    'common/baseListRouter'
-], function (_, Mustache, WarningView, PaginationView, SearchView, Filter, Sorter, BaseListRouter) {
+    'common/baseListRouter',
+    'common/settingsStorage'
+], function (_, Mustache, WarningView, PaginationView, SearchView, Filter, Sorter, BaseListRouter, settingsStorage) {
 
     var Controller = function(options) {
         this.initialize(options);
@@ -25,7 +26,7 @@ define([
         initialize: function(options) {
             options = _.extend({
                 page: 1,
-                itemsPerPage: 10,
+                itemsPerPage: settingsStorage.get("itemsPerPage"),
                 Filter: Filter,
                 Sorter: Sorter,
                 Model: undefined,

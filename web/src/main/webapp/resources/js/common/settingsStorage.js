@@ -8,6 +8,7 @@ define([
 
     var DEFAULT_LANG = "ru";
     var DEFAULT_THEME = "default";
+    var DEFAULT_ITEMS_PER_PAGE = 50;
 
     var settingsStorage = {
         set: function(key, value) {
@@ -21,6 +22,10 @@ define([
 
             if (key === "theme" && !cookies.get("theme")) {
                 return DEFAULT_THEME;
+            }
+
+            if (key === "itemsPerPage" && !cookies.get("itemsPerPage")) {
+                return DEFAULT_ITEMS_PER_PAGE;
             }
 
             return cookies.get(key);
