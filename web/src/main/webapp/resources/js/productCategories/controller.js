@@ -2,64 +2,25 @@
  * Product Categories controller
  */
 define([
-    'jquery',
     'underscore',
-    'backbone',
     'productCategories/model',
     'productCategories/collection',
     'productCategories/listView',
     'productCategories/editView',
-    'common/baseListRouter',
-    'common/baseListController'
-], function ($, _, Backbone, Model, Collection, ListView, EditView, BaseListRouter, BaseListController) {
-
-    var Router = BaseListRouter.extend({
-
-        routes: {
-            '': 'list',
-            'list/filter;:filter/sort;:sort/:page': 'list',
-            'add': 'edit',
-            'edit/:id': 'edit',
-            'delete/:id': 'remove'
-        },
-
-        edit: function (id) {
-            this.controller.edit(id);
-        }
-    });
+    'common/baseControllerWithListAndEdit'
+], function (_, Model, Collection, ListView, EditView, BaseControllerWithListAndEdit) {
 
     var ProductCategoriesController = function() {
-        this.editView = new EditView({model: new Model()});
-
         this.initialize({
+            EditView: EditView,
             Model: Model,
             collection: new Collection(),
             View: ListView,
-            search: "name",
-            Router: Router
+            search: "name"
         });
     };
 
-    _.extend(ProductCategoriesController.prototype, BaseListController.prototype, {
-        initEventListeners: function() {
-            BaseListController.prototype.initEventListeners.call(this);
-
-            this.editView.on("close",function () {
-                this.router.navigate(this.getListUrl(), {trigger: true});
-            }, this);
-        },
-
-        edit: function (id) {
-            if (id) {
-                this.editView.model.clear({silent: true});
-                this.editView.model.set("id", id, {silent: true});
-                this.editView.model.fetch({wait: true});
-            } else {
-                this.editView.model.clear({silent: true});
-                this.editView.model.trigger("change");
-            }
-        }
-    });
+    _.extend(ProductCategoriesController.prototype, BaseControllerWithListAndEdit.prototype, {});
 
     return ProductCategoriesController;
 });

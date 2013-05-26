@@ -2,16 +2,13 @@
  * Item Categories module
  */
 define([
-    'jquery',
     'underscore',
-    'backbone',
-    'mustache',
     'orders/model',
     'orders/collection',
     'orders/listOrders/listView',
     'common/baseListController',
     'common/baseListRouter'
-], function ($, _, Backbone, Mustache, Model, Collection, ListView, BaseListController) {
+], function (_, Model, Collection, ListView, BaseListController) {
 
     var OrdersController = function() {
         this.initialize({

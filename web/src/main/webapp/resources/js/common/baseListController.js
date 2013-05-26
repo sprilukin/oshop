@@ -24,31 +24,31 @@ define([
         LIST_URL_TEMPLATE: "list/filter;{{filter}}/sort;{{sort}}/{{page}}",
 
         initialize: function(options) {
-            options = _.extend({
-                page: 1,
-                itemsPerPage: settingsStorage.get("itemsPerPage"),
-                Filter: Filter,
-                Sorter: Sorter,
-                Model: undefined,
-                collection: undefined,
-                View: undefined,
-                PaginationView: PaginationView,
-                SearchView: SearchView,
-                search: undefined,
-                Router: BaseListRouter
-            }, options);
+            //options = {
+                //page: 1,
+                //itemsPerPage: settingsStorage.get("itemsPerPage"),
+                //filter: new Filter(),
+                //sorter: new Sorter(),
+                //Model: undefined,
+                //collection: undefined,
+                //View: undefined, or view: undefined,
+                //paginationView: new PaginationView(),
+                //searchView: new SearchView(),
+                //search: undefined,
+                //router: new BaseListRouter()
+            //};
 
             this.Model = options.Model;
-            this.page = options.page;
-            this.itemsPerPage = options.itemsPerPage;
-            this.filter = options.Filter && new options.Filter();
-            this.sorter = options.Sorter && new options.Sorter();
+            this.page = options.page || 1;
+            this.itemsPerPage = options.itemsPerPage || settingsStorage.get("itemsPerPage");
+            this.filter = options.filter || new Filter();
+            this.sorter = options.sorter || new Sorter();
 
             this.collection = options.collection;
-            this.listView = new options.View({collection: this.collection, sorter: this.sorter});
-            this.paginationView = options.PaginationView && new options.PaginationView({collection: this.collection});
-            this.searchView = options.SearchView && new options.SearchView({collection: this.collection, filter: this.filter, fieldName: options.search});
-            this.router = options.Router && new options.Router({controller: this});
+            this.listView = options.view || new options.View({collection: this.collection, sorter: this.sorter});
+            this.paginationView = options.paginationView || new PaginationView({collection: this.collection});
+            this.searchView = options.searchView || new SearchView({collection: this.collection, filter: this.filter, fieldName: options.search});
+            this.router = options.router || new BaseListRouter({controller: this});
 
             this.initEventListeners();
         },
