@@ -10,10 +10,9 @@ define([
     'common/messages',
     'common/sortView',
     'common/context',
-    'text',
     'text!templates/products/list.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, imageGallery, messages, SortView, context, text, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, imageGallery, messages, SortView, context, listEntityTemplate) {
 
     return Backbone.View.extend({
 

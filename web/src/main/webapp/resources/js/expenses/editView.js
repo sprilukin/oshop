@@ -9,11 +9,10 @@ define([
     'common/messages',
     'common/settingsStorage',
     'common/dateFormatter',
-    'text',
     'text!templates/expenses/edit.html',
     'bootstrap',
     'datePickerRu'
-], function ($, _, Backbone, Mustache, messages, settingsStorage, dateFormatter, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, settingsStorage, dateFormatter, editEntityTemplate) {
 
     return Backbone.View.extend({
 

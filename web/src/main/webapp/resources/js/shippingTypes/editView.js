@@ -7,10 +7,9 @@ define([
     'backbone',
     'mustache',
     'common/messages',
-    'text',
     'text!templates/shippingTypes/edit.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, editEntityTemplate) {
 
     return Backbone.View.extend({
 

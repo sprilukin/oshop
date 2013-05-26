@@ -9,10 +9,9 @@ define([
     'common/messages',
     'common/context',
     'common/dropDownWithSearch',
-    'text',
     'text!templates/orders/add.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, text, addEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, addEntityTemplate) {
 
     return Backbone.View.extend({
 

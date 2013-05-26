@@ -10,10 +10,9 @@ define([
     'common/context',
     'common/dropDownWithSearch',
     'common/dateFormatter',
-    'text',
     'text!templates/orders/orderStates.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, text, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, listEntityTemplate) {
 
     return Backbone.View.extend({
 

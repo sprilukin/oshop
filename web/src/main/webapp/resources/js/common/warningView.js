@@ -5,10 +5,9 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text',
     'text!templates/warning.html',
     'bootstrap'
-], function ($, Backbone, Mustache, text, warningTemplate) {
+], function ($, Backbone, Mustache, warningTemplate) {
 
     var WarningView = Backbone.View.extend({
         el: '.warning',

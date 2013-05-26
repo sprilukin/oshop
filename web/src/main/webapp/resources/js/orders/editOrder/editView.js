@@ -12,11 +12,10 @@ define([
     'common/dateFormatter',
     'orders/editOrder/orderProductsView',
     'orders/editOrder/orderStatesView',
-    'text',
     'text!templates/orders/edit.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, text, editTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, editTemplate) {
 
     return Backbone.View.extend({
 

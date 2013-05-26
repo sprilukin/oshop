@@ -11,11 +11,10 @@ define([
     'common/context',
     'common/dropDownWithSearch',
     'productCategories/collection',
-    'text',
     'text!templates/products/edit.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, FileUploadView, context, DropDownWithSearch, ProductCategoriesCollection, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, FileUploadView, context, DropDownWithSearch, ProductCategoriesCollection, editEntityTemplate) {
 
     return Backbone.View.extend({
 

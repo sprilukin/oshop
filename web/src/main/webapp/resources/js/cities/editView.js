@@ -8,11 +8,10 @@ define([
     'mustache',
     'common/messages',
     'common/regions',
-    'text',
     'text!templates/cities/edit.html',
     'select2',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, regions, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, regions, editEntityTemplate) {
 
     return Backbone.View.extend({
 

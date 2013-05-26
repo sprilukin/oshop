@@ -10,10 +10,9 @@ define([
     'common/sortView',
     'common/context',
     'common/dateFormatter',
-    'text',
     'text!templates/orders/list.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, SortView, context, dateFormatter, text, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, SortView, context, dateFormatter, listEntityTemplate) {
 
     return Backbone.View.extend({
 

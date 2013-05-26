@@ -3,11 +3,10 @@
  */
 define([
     'underscore',
-    'text',
     'text!messages_ru',
     'text!messages_en',
     'common/settingsStorage'
-], function (_, text, messages_ru, messages_en, settingsStorage) {
+], function (_, messages_ru, messages_en, settingsStorage) {
 
     var DOT_REPLACEMENT = "_";
 

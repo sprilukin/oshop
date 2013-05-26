@@ -5,10 +5,9 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text',
     'text!templates/search.html',
     'bootstrap'
-], function ($, Backbone, Mustache, text, searchTemplate) {
+], function ($, Backbone, Mustache, searchTemplate) {
 
     var SearchView = Backbone.View.extend({
         el: '.search',

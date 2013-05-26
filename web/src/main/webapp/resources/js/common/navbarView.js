@@ -5,13 +5,12 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text',
     'text!templates/navbar.html',
     'common/messages',
     'common/context',
     'common/settingsStorage',
     'bootstrap'
-], function ($, Backbone, Mustache, text, navbarTemplate, messages, context, settingsStorage) {
+], function ($, Backbone, Mustache, navbarTemplate, messages, context, settingsStorage) {
 
     var NavbarView = Backbone.View.extend({
         el: '.navbarPlaceholder',

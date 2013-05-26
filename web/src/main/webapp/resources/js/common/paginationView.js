@@ -5,11 +5,10 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text',
     'text!templates/pagination.html',
     'common/messages',
     'bootstrap'
-], function ($, Backbone, Mustache, text, paginationTemplate, messages) {
+], function ($, Backbone, Mustache, paginationTemplate, messages) {
 
     var paginationItemsPerPage = 5;
 

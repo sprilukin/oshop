@@ -9,11 +9,10 @@ define([
     'common/messages',
     'common/context',
     'common/dropDownWithSearch',
-    'text',
     'text!templates/shippingAddresses/edit.html',
     'bootstrap',
     'select2'
-], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, text, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, editEntityTemplate) {
 
     return Backbone.View.extend({
 

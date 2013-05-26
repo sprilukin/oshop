@@ -6,14 +6,13 @@ define([
     "underscore",
     'backbone',
     'mustache',
-    'text',
     'text!templates/fileUpload.html',
     'text!templates/fileUploadPreview.html',
     'common/context',
     "fileupload",
     "iframeTransport",
     "jqueryUiWidget"
-], function ($, _, Backbone, Mustache, text, fileUploadTemplate, fileUploadPreviewTemplate, context) {
+], function ($, _, Backbone, Mustache, fileUploadTemplate, fileUploadPreviewTemplate, context) {
 
     var FileUploadModel = Backbone.Model.extend({
         url: function() {
