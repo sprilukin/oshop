@@ -19,21 +19,7 @@ define([
 
         initialize: function(options) {
             SearchView.prototype.initialize.call(this, options);
-
             this.searchOptions = options.search;
-
-            this.field = this.searchOptions;
-
-            if (typeof this.searchOptions !== "string") {
-                var filters = this.filter.getAll();
-                if (filters && filters.length) {
-                    this.field = filters[0].name;
-                } else {
-                    this.field = this.searchOptions[0].field;
-                }
-
-                this.setActiveFilter(this.field);
-            }
         },
 
         setActiveFilter: function(field) {
@@ -46,14 +32,34 @@ define([
             });
         },
 
+        getActiveFilter: function() {
+            var filters = this.filter.getAll();
+            if (filters && filters.length) {
+                return filters[0].name;
+            } else {
+                return this.searchOptions[0].field;
+            }
+        },
+
         render: function () {
             if (typeof this.searchOptions === "string") {
                 SearchView.prototype.render.call(this);
             } else {
+                var activeFilter = this.getActiveFilter();
+                this.setActiveFilter(activeFilter);
+
                 this.$el.html(Mustache.render(advancedSearchTemplate, {
                     fields: this.searchOptions,
-                    query: this.filter.get(this.field)
+                    query: this.filter.get(activeFilter)
                 }));
+            }
+        },
+
+        search: function(event) {
+            if (typeof this.searchOptions === "string") {
+                SearchView.prototype.search.call(this);
+            } else {
+                this.changeFilter();
             }
         },
 
@@ -65,10 +71,7 @@ define([
         },
 
         changeFilter: function(event) {
-            var field = $(event.currentTarget).attr("data-field");
-
-            this.field = field;
-            this.setActiveFilter(this.field);
+            var field = event ? $(event.currentTarget).attr("data-field") : this.getActiveFilter();
 
             this.filter.reset();
             this.filter.set(field, this.$el.find("input.search-query").val());
