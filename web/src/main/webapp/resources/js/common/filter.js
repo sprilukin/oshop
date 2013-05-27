@@ -44,6 +44,10 @@ define([
             return existingFilter && existingFilter.value;
         },
 
+        getAll: function() {
+            return this.filters;
+        },
+
         reset: function() {
             this.filters = [];
         },

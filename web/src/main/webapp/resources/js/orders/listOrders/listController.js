@@ -15,7 +15,20 @@ define([
             Model: Model,
             collection: new Collection(),
             View: ListView,
-            search: "name"
+            search: [
+                {field: "date", label: "Date equals"},
+                {field: "customer", label: "Customer like"},
+                {field: "productsCount", label: "Products count ="},
+                {field: "productsCountGE", label: "Products count >="},
+                {field: "productsCountLE", label: "Products count <="},
+                {field: "productsPrice", label: "Products price ="},
+                {field: "productsPriceGE", label: "Products price >="},
+                {field: "productsPriceLE", label: "Products price <="},
+                {field: "totalPrice", label: "Total price ="},
+                {field: "totalPriceGE", label: "Total price >="},
+                {field: "totalPriceLE", label: "Total price <="},
+                {field: "currentOrderStateName", label: "Status like"}
+            ]
         });
     };
 

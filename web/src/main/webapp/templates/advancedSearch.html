@@ -1,0 +1,14 @@
+<div class="input-append input-prepend">
+    <div class="btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {{#fields}}
+            <li {{#active}}class="active"{{/active}}><a href="#" data-field="{{field}}">{{label}}</a></li>
+            {{/fields}}
+        </ul>
+    </div>
+    <input type="text" class="search-query" value="{{query}}">
+    <button class="search-button btn"><i class="icon-search"></i></button>
+</div>

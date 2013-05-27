@@ -21,17 +21,17 @@ define([
                 this.render();
             }, this);
 
-            this.fieldName = options.fieldName;
+            this.field = options.search;
             this.filter = options.filter;
         },
 
         render: function () {
-            this.$el.html(Mustache.render(searchTemplate, {query: this.filter.get(this.fieldName)}));
+            this.$el.html(Mustache.render(searchTemplate, {query: this.filter.get(this.field)}));
         },
 
         search: function(event) {
-            var query = $(event.currentTarget).find("input.search-query").val();
-            this.filter.set(this.fieldName, query);
+            var query = this.$el.find("input.search-query").val();
+            this.filter.set(this.field, query);
             event.preventDefault();
         }
     });
