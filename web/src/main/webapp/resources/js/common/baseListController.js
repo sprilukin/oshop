@@ -6,12 +6,12 @@ define([
     'mustache',
     'common/warningView',
     'common/paginationView',
-    'common/advancedSearchView',
+    'common/searchView',
     'common/filter',
     'common/sorter',
     'common/baseListRouter',
     'common/settingsStorage'
-], function (_, Mustache, WarningView, PaginationView, AdvancedSearchView, Filter, Sorter, BaseListRouter, settingsStorage) {
+], function (_, Mustache, WarningView, PaginationView, SearchView, Filter, Sorter, BaseListRouter, settingsStorage) {
 
     var Controller = function(options) {
         this.initialize(options);
@@ -47,7 +47,7 @@ define([
             this.collection = options.collection;
             this.listView = options.view || new options.View({collection: this.collection, sorter: this.sorter});
             this.paginationView = options.paginationView || new PaginationView({collection: this.collection});
-            this.searchView = options.searchView || new AdvancedSearchView({collection: this.collection, filter: this.filter, search: options.search});
+            this.searchView = options.searchView || new SearchView({collection: this.collection, filter: this.filter, search: options.search});
             this.router = options.router || new BaseListRouter({controller: this});
 
             this.initEventListeners();

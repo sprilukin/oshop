@@ -7,15 +7,20 @@ define([
     'orders/collection',
     'orders/listOrders/listView',
     'common/baseListController',
-    'common/baseListRouter'
-], function (_, Model, Collection, ListView, BaseListController) {
+    'common/advancedSearchView',
+    'common/filter'
+], function (_, Model, Collection, ListView, BaseListController, AdvancedSearchView, Filter) {
 
     var OrdersController = function() {
+        var collection = new Collection();
+        var filter = new Filter();
+
         this.initialize({
             Model: Model,
-            collection: new Collection(),
+            collection: collection,
             View: ListView,
-            search: [
+            filter: filter,
+            searchView: new AdvancedSearchView({collection: collection, filter: filter, search: [
                 {field: "date", label: "Date equals"},
                 {field: "customer", label: "Customer like"},
                 {field: "productsCount", label: "Products count ="},
@@ -28,7 +33,7 @@ define([
                 {field: "totalPriceGE", label: "Total price >="},
                 {field: "totalPriceLE", label: "Total price <="},
                 {field: "currentOrderStateName", label: "Status like"}
-            ]
+            ]})
         });
     };
 

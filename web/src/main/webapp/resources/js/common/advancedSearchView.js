@@ -42,25 +42,17 @@ define([
         },
 
         render: function () {
-            if (typeof this.searchOptions === "string") {
-                SearchView.prototype.render.call(this);
-            } else {
-                var activeFilter = this.getActiveFilter();
-                this.setActiveFilter(activeFilter);
+            var activeFilter = this.getActiveFilter();
+            this.setActiveFilter(activeFilter);
 
-                this.$el.html(Mustache.render(advancedSearchTemplate, {
-                    fields: this.searchOptions,
-                    query: this.filter.get(activeFilter)
-                }));
-            }
+            this.$el.html(Mustache.render(advancedSearchTemplate, {
+                fields: this.searchOptions,
+                query: this.filter.get(activeFilter)
+            }));
         },
 
         search: function(event) {
-            if (typeof this.searchOptions === "string") {
-                SearchView.prototype.search.call(this);
-            } else {
-                this.changeFilter();
-            }
+            this.changeFilter();
         },
 
         onKeyPress: function(event) {
@@ -76,7 +68,7 @@ define([
             this.filter.reset();
             this.filter.set(field, this.$el.find("input.search-query").val());
 
-            event.preventDefault();
+            event && event.preventDefault();
         }
     });
 
