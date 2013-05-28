@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import oshop.dao.GenericDao;
 import oshop.model.BaseEntity;
@@ -21,14 +20,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Service
-public class InitialCityLoaderService implements ApplicationListener<ContextRefreshedEvent> {
+//@Service
+public class InitialDictionariesLoaderService implements ApplicationListener<ContextRefreshedEvent> {
 
     public static final String CITIES_FILE_NAME = "/disctionaries/cities.json";
     public static final String ORDER_STATES_FILE_NAME = "/disctionaries/orderStates.json";
     public static final String SHIPPING_TYPES_FILE_NAME = "/disctionaries/shippingTypes.json";
 
-    private static final Log log = LogFactory.getLog(InitialCityLoaderService.class);
+    private static final Log log = LogFactory.getLog(InitialDictionariesLoaderService.class);
 
     @Resource
     private GenericDao<City, Integer> cityDao;

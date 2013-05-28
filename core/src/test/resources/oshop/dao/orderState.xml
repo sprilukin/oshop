@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <order_state id="1" version="0" name="NEW" description="New"/>
-    <order_state id="2" version="0" name="RESERVED" description="Reserved"/>
-    <order_state id="3" version="0" name="MONEY_RECEIVED" description="Money Recieved"/>
-    <order_state id="4" version="0" name="SENT" description="Sent"/>
-    <order_state id="5" version="0" name="DELIVERED" description="Delivered"/>
-    <order_state id="6" version="0" name="CANCELED" description="Canceled"/>
+    <order_state id="1" version="0" name="NEW"/>
+    <order_state id="2" version="0" name="RESERVED"/>
+    <order_state id="3" version="0" name="MONEY_RECEIVED"/>
+    <order_state id="4" version="0" name="SENT"/>
+    <order_state id="5" version="0" name="DELIVERED"/>
+    <order_state id="6" version="0" name="CANCELED"/>
 </dataset>
