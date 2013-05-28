@@ -71,6 +71,16 @@ public class Order extends BaseEntity<Integer> {
     @Formula("( SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id )")
     private BigDecimal productsPrice;
 
+    @Formula("( SELECT " +
+                "(SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id) + " +
+                "(CASE WHEN (SELECT a.amount FROM additional_payment a INNER JOIN orders o on o.additional_payment_id = a.id WHERE o.id = id) IS NULL THEN 0 " +
+                "ELSE (SELECT a.amount FROM additional_payment a INNER JOIN orders o on o.additional_payment_id = a.id WHERE o.id = id) END) - " +
+                "(CASE WHEN (SELECT d.amount FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) IS NULL THEN 0 " +
+                "ELSE ((CASE WHEN (SELECT d.type FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) = 0 THEN " +
+                    "((SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id) * (SELECT d.amount FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) / 100)\n" +
+                "ELSE (SELECT d.amount FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) END)) END) )")
+    private BigDecimal totalPrice;
+
     public String getDescription() {
         return description;
     }
@@ -159,32 +169,11 @@ public class Order extends BaseEntity<Integer> {
         this.productsPrice = productsPrice;
     }
 
-    public void setTotalPrice(BigDecimal productsPrice) {
-        // empty
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public BigDecimal getTotalPrice() {
-        BigDecimal additionalPaymentPrice = this.getAdditionalPayment() != null ? this.getAdditionalPayment().getAmount() : new BigDecimal(0);
-
-        return this.calcDiscount().add(additionalPaymentPrice);
-    }
-
-    public BigDecimal calcDiscount() {
-        BigDecimal discountPrice = this.getDiscount() != null ? this.getDiscount().getAmount() : new BigDecimal(0);
-        byte discountType = this.getDiscount() != null ? this.getDiscount().getType() : 1;
-
-        BigDecimal productsPrice = this.getProductsPrice() != null ? this.getProductsPrice() : new BigDecimal(0);
-
-        if (discountPrice.compareTo(new BigDecimal(0)) == 1) {
-            if (discountType == Discount.Type.FIXED_DISCOUNT.getType()) {
-                return EntityUtils.round(productsPrice.subtract(discountPrice));
-            } else if (discountType == Discount.Type.PERCENT_DISCOUNT.getType()) {
-                return EntityUtils.round(productsPrice.subtract(productsPrice.multiply(discountPrice.divide(new BigDecimal(100)))));
-            } else {
-                throw new IllegalArgumentException("Discount type not supported: " + discountType);
-            }
-        } else {
-            return EntityUtils.round(productsPrice);
-        }
+        return this.totalPrice;
     }
 }
