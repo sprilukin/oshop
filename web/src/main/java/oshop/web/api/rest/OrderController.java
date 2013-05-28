@@ -307,15 +307,15 @@ public class OrderController extends BaseController<Order, Integer> {
     }
 
     private Criterion totalPrice(String value, Criteria criteria) {
-        return null;
+        return Restrictions.eq("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
     }
 
     private Criterion totalPriceGE(String value, Criteria criteria) {
-        return null;
+        return Restrictions.ge("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
     }
 
     private Criterion totalPriceLE(String value, Criteria criteria) {
-        return null;
+        return Restrictions.le("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
     }
 
     private Criterion currentOrderStateName(String value, Criteria criteria) {

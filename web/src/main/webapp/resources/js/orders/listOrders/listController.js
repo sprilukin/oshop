@@ -30,9 +30,9 @@ define([
                 {field: "productsPrice", label: messages["order_filter_productsPrice_eq"]},
                 {field: "productsPriceGE", label: messages["order_filter_productsPrice_ge"]},
                 {field: "productsPriceLE", label: messages["order_filter_productsPrice_le"]},
-                //{field: "totalPrice", label: messages["order_filter_totalPrice_eq"]},
-                //{field: "totalPriceGE", label: messages["order_filter_totalPrice_ge"]},
-                //{field: "totalPriceLE", label: messages["order_filter_totalPrice_le"]},
+                {field: "totalPrice", label: messages["order_filter_totalPrice_eq"]},
+                {field: "totalPriceGE", label: messages["order_filter_totalPrice_ge"]},
+                {field: "totalPriceLE", label: messages["order_filter_totalPrice_le"]},
                 {field: "currentOrderStateName", label: messages["order_filter_currentOrderStateName_like"]}
             ]})
         });

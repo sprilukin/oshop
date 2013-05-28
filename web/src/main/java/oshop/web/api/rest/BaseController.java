@@ -63,12 +63,12 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
     }
 
     protected void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
-        Disjunction disjunction = Restrictions.disjunction();
+        Conjunction conjunction = Restrictions.conjunction();
         for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
-            disjunction.add(getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria));
+            conjunction.add(getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria));
         }
 
-        criteria.add(disjunction);
+        criteria.add(conjunction);
     }
 
     protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
