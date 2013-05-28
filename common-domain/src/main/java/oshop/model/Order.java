@@ -61,24 +61,16 @@ public class Order extends BaseEntity<Integer> {
     )
     private List<Product> products = new ArrayList<Product>();
 
-    @Formula("( SELECT s.name FROM order_has_order_states h INNER JOIN order_state s ON h.order_state_id = s.id " +
-            "WHERE h.order_id = id ORDER BY h.date DESC, h.id DESC LIMIT 1 )")
+    @Formula(OrderCalcFieldQueries.CURRENT_ORDER_STATE_SQL)
     private String currentOrderStateName;
 
-    @Formula("( SELECT count(p.product_id) FROM order_products p WHERE p.order_id = id )")
+    @Formula(OrderCalcFieldQueries.PRODUCTS_COUNT_SQL)
     private Integer productsCount;
 
-    @Formula("( SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id )")
+    @Formula(OrderCalcFieldQueries.PRODUCTS_PRICE_SQL)
     private BigDecimal productsPrice;
 
-    @Formula("( SELECT " +
-                "(SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id) + " +
-                "(CASE WHEN (SELECT a.amount FROM additional_payment a INNER JOIN orders o on o.additional_payment_id = a.id WHERE o.id = id) IS NULL THEN 0 " +
-                "ELSE (SELECT a.amount FROM additional_payment a INNER JOIN orders o on o.additional_payment_id = a.id WHERE o.id = id) END) - " +
-                "(CASE WHEN (SELECT d.amount FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) IS NULL THEN 0 " +
-                "ELSE ((CASE WHEN (SELECT d.type FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) = 0 THEN " +
-                    "((SELECT sum(p.price) FROM order_products o INNER JOIN product p on o.product_id = p.id WHERE o.order_id = id) * (SELECT d.amount FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) / 100)\n" +
-                "ELSE (SELECT d.amount FROM discount d INNER JOIN orders o on o.discount_id = d.id WHERE o.id = id) END)) END) )")
+    @Formula(OrderCalcFieldQueries.TOTAL_PRICE_SQL)
     private BigDecimal totalPrice;
 
     public String getDescription() {
