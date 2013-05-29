@@ -87,7 +87,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             protected Criteria getCriteria() {
                 Criteria criteria = productDao.createCriteria();
                 criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-                applyFilters(filters, criteria);
+                getFilter().applyFilters(filters, criteria);
                 applySorters(sorters, criteria);
 
                 return criteria;

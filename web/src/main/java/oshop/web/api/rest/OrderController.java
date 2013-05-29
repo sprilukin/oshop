@@ -4,8 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
-import oshop.model.EntityUtils;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
@@ -27,6 +24,7 @@ import oshop.web.api.rest.adapter.EntityDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
+import oshop.web.api.rest.filter.Filter;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
@@ -50,6 +48,9 @@ public class OrderController extends BaseController<Order, Integer> {
 
     @Resource
     private GenericDao<OrderHasOrderStates, Integer> orderHasOrderStatesDao;
+
+    @Resource
+    private Filter ordersFilter;
 
     @Resource(name = "orderToDTOConverter")
     private EntityConverter<Order, Integer> converter;
@@ -76,6 +77,11 @@ public class OrderController extends BaseController<Order, Integer> {
     @Override
     protected EntityConverter<Order, Integer> getFromDTOConverter() {
         return fromDtoConverter;
+    }
+
+    @Override
+    protected Filter getFilter() {
+        return ordersFilter;
     }
 
     // /api/orders/1/products/batch;ids=1,2/delete
@@ -203,122 +209,5 @@ public class OrderController extends BaseController<Order, Integer> {
                 return orderHasStateConverter.convert(order.getStates());
             }
         }.invoke();
-    }
-
-    static enum OrderNamedFilters {
-        dateEquals("date"),
-        customerLike("customer"),
-        productsCountEquals("productsCount"),
-        productsCountGreaterOrEquals("productsCountGE"),
-        productsCountLessOrEquals("productsCountLE"),
-        productsPriceEquals("productsPrice"),
-        productsPriceGreaterOrEquals("productsPriceGE"),
-        productsPriceLessOrEquals("productsPriceLE"),
-        totalPriceEquals("totalPrice"),
-        totalPriceGreaterOrEquals("totalPriceGE"),
-        totalPriceLessOrEquals("totalPriceLE"),
-        currentOrderStateLike("currentOrderStateName");
-
-        private String name;
-
-        OrderNamedFilters(String name) {
-            this.name = name;
-        }
-
-        String getName() {
-            return name;
-        }
-
-        static OrderNamedFilters fromName(String name) {
-            for (OrderNamedFilters filter: OrderNamedFilters.values()) {
-                if (filter.getName().equals(name)) {
-                    return filter;
-                }
-            }
-
-            throw new IllegalArgumentException();
-        }
-    }
-
-    @Override
-    protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
-
-        switch (OrderNamedFilters.fromName(column)) {
-            case dateEquals:
-                return dateEquals(values.get(0), criteria);
-            case customerLike:
-                return customerLike(values.get(0), criteria);
-            case productsCountEquals:
-                return productsCount(values.get(0), criteria);
-            case productsCountGreaterOrEquals:
-                return productsCountGE(values.get(0), criteria);
-            case productsCountLessOrEquals:
-                return productsCountLE(values.get(0), criteria);
-            case productsPriceEquals:
-                return productsPrice(values.get(0), criteria);
-            case productsPriceGreaterOrEquals:
-                return productsPriceGE(values.get(0), criteria);
-            case productsPriceLessOrEquals:
-                return productsPriceLE(values.get(0), criteria);
-            case totalPriceEquals:
-                return totalPrice(values.get(0), criteria);
-            case totalPriceGreaterOrEquals:
-                return totalPriceGE(values.get(0), criteria);
-            case totalPriceLessOrEquals:
-                return totalPriceLE(values.get(0), criteria);
-            case currentOrderStateLike:
-                return currentOrderStateName(values.get(0), criteria);
-            default:
-                throw new IllegalArgumentException("Invalid filter");
-        }
-    }
-
-    private Criterion dateEquals(String value, Criteria criteria) {
-        return Restrictions.eq("date", value);
-    }
-
-    private Criterion customerLike(String value, Criteria criteria) {
-        criteria.createAlias("customer", "c");
-        return Restrictions.like("c.name", value, MatchMode.ANYWHERE);
-    }
-
-    private Criterion productsCount(String value, Criteria criteria) {
-        return Restrictions.eq("productsCount", Integer.parseInt(value));
-    }
-
-    private Criterion productsCountGE(String value, Criteria criteria) {
-        return Restrictions.ge("productsCount", Integer.parseInt(value));
-    }
-
-    private Criterion productsCountLE(String value, Criteria criteria) {
-        return Restrictions.le("productsCount", Integer.parseInt(value));
-    }
-
-    private Criterion productsPrice(String value, Criteria criteria) {
-        return Restrictions.eq("productsPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
-    }
-
-    private Criterion productsPriceGE(String value, Criteria criteria) {
-        return Restrictions.ge("productsPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
-    }
-
-    private Criterion productsPriceLE(String value, Criteria criteria) {
-        return Restrictions.le("productsPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
-    }
-
-    private Criterion totalPrice(String value, Criteria criteria) {
-        return Restrictions.eq("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
-    }
-
-    private Criterion totalPriceGE(String value, Criteria criteria) {
-        return Restrictions.ge("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
-    }
-
-    private Criterion totalPriceLE(String value, Criteria criteria) {
-        return Restrictions.le("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
-    }
-
-    private Criterion currentOrderStateName(String value, Criteria criteria) {
-        return Restrictions.like("currentOrderStateName", value, MatchMode.ANYWHERE);
     }
 }

@@ -3,12 +3,7 @@ package oshop.web.api.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +22,7 @@ import oshop.web.api.rest.adapter.EntityDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
+import oshop.web.api.rest.filter.Filter;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
@@ -47,6 +43,9 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
     @Resource
     private GenericSearchDao searchDao;
 
+    @Resource
+    private Filter defaultStringLikeFilter;
+
     @Resource(name = "defaultConverter")
     private EntityConverter<T, ID> fromDTOConverter;
 
@@ -62,22 +61,8 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         return fromDTOConverter;
     }
 
-    protected void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
-        Conjunction conjunction = Restrictions.conjunction();
-        for (Map.Entry<String, List<String>> entry: filters.entrySet()) {
-            conjunction.add(getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria));
-        }
-
-        criteria.add(conjunction);
-    }
-
-    protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
-        Conjunction conjunction = Restrictions.conjunction();
-        for (String likeExpression: values) {
-            conjunction.add(Restrictions.like(column, likeExpression, MatchMode.ANYWHERE));
-        }
-
-        return conjunction;
+    protected Filter getFilter() {
+        return defaultStringLikeFilter;
     }
 
     protected void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
@@ -194,7 +179,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @Override
             protected Criteria getCriteria() {
                 Criteria criteria = getDao().createCriteria();
-                applyFilters(filters, criteria);
+                getFilter().applyFilters(filters, criteria);
                 applySorters(sorters, criteria);
 
                 return criteria;
