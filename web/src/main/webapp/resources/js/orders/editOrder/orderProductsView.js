@@ -11,8 +11,9 @@ define([
     'common/context',
     'common/dropDownWithSearch',
     'text!templates/orders/orderProducts.html',
+    'text!templates/orders/orderProductsSelectProduct.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, imageGallery, messages, context, DropDownWithSearch, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, imageGallery, messages, context, DropDownWithSearch, listEntityTemplate, selectProductTemplate) {
 
     return Backbone.View.extend({
 
@@ -30,6 +31,10 @@ define([
             this.$el.html(Mustache.render(listEntityTemplate, model));
             this.errorPlaceHolder = $("#addProductContainer").find(".help-inline");
 
+            this.renderProductsSelect();
+        },
+
+        renderProductsSelect: function() {
             this.productsSelect && this.productsSelect.destroy();
             this.productsSelect = new DropDownWithSearch({
                 element: $("#field_products"),
@@ -37,12 +42,13 @@ define([
                 allowClear: true,
                 urlTemplate: context + "/api/products/filter;name={{term}};/sort;",
                 formatResult: function(data) {
-                    return data.id + "&nbsp;&nbsp;" + data.text;
+                    return Mustache.render(selectProductTemplate, _.extend({context: context}, data));
+                },
+                formatSelection: function(data) {
+                    return Mustache.render("{{id}} | {{name}}", data);
                 },
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
-                        return {id: item.id, text: item.name}
-                    }) : [];
+                    return data ? data.values : [];
                 }
             });
         },
