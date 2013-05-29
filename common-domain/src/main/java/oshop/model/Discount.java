@@ -14,7 +14,10 @@ import java.math.BigDecimal;
 @Entity
 @Table(
     name = "discount",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"description", "type", "amount"})
+    uniqueConstraints = @UniqueConstraint(
+            name = "UK_description_type_amount",
+            columnNames = {"description", "type", "amount"}
+    )
 )
 public class Discount extends BaseEntity<Integer> {
 

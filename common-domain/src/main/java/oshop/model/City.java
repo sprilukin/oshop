@@ -10,7 +10,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "city", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "region"}))
+@Table(
+        name = "city",
+        uniqueConstraints = @UniqueConstraint(
+                name = "UK_name_region",
+                columnNames = {"name", "region"}
+        )
+)
 public class City extends BaseEntity<Integer> {
 
     @NotNull
