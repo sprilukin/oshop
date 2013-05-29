@@ -66,19 +66,15 @@
     </tr>
     {{/products}}
     <!-- total -->
-    <!--<tr>
+    <tr>
         <td colspan="2">
-            <span class="text-right" style="float: right; padding-top: 5px">
-            Total
+            <span class="text-right" style="float: right;">
+            {{order_products_count}}
             </span>
         </td>
         <td colspan="3" class="text-left">
-            <div class="input-prepend input-append inline">
-                <span class="add-on">₴</span>
-                <span class="add-on">{{productsPrice}}</span>
-                <span class="add-on">.00</span>
-            </div>
+            <span class="add-on">{{productsCount}}</span>
         </td>
-    </tr>-->
+    </tr>
     </tbody>
 </table>
