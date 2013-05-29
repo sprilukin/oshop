@@ -78,9 +78,6 @@
 
 <div class="container">
     <div class="navbarPlaceholder"></div>
-    <div class="ajaxLoading" style="display: none">
-        <img src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif">
-    </div>
 
     <%-- placeholder for warnings --%>
     <div class="warning" style="padding-top: 40px"></div>

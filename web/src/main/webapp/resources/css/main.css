@@ -27,9 +27,13 @@ span.sort {
     text-align: left;
 }
 
+.oshopAppName {
+    width: 115px;
+}
 
 .ajaxLoading {
     display: inline;
+    padding-left: 7px;
 }
 
 .select2-container {

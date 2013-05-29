@@ -6,15 +6,11 @@ define([
     'common/warningView'
 ], function ($, WarningView) {
 
-    var ajaxLoaderMovedToTitle = false;
-    var loader = $(".ajaxLoading");
+    var loader;
 
     $(document).ajaxStart(function() {
-        if (!ajaxLoaderMovedToTitle) {
-            $("h1").append(loader.get(0).outerHTML);
-            loader.remove();
+        if (!loader) {
             loader = $(".ajaxLoading");
-            ajaxLoaderMovedToTitle = true;
         }
 
         loader.show();
