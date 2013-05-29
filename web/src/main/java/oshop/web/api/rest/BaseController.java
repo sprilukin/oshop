@@ -23,6 +23,7 @@ import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 import oshop.web.api.rest.filter.Filter;
+import oshop.web.api.rest.sorter.Sorter;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
@@ -37,14 +38,14 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
 
     private static final Log log = LogFactory.getLog(BaseController.class);
 
-    public static final String ASC_SORT = "asc";
-    public static final String DESC_SORT = "desc";
-
     @Resource
     private GenericSearchDao searchDao;
 
     @Resource
     private Filter defaultStringLikeFilter;
+
+    @Resource
+    private Sorter defaultSorter;
 
     @Resource(name = "defaultConverter")
     private EntityConverter<T, ID> fromDTOConverter;
@@ -65,21 +66,8 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         return defaultStringLikeFilter;
     }
 
-    protected void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
-        for (Map.Entry<String, List<String>> entry: sorters.entrySet()) {
-            String fieldName = entry.getKey();
-            String sortType = entry.getValue().get(0);
-
-            addOrder(fieldName, sortType, criteria);
-        }
-    }
-
-    protected void addOrder(String column, String order, Criteria criteria) {
-        if (ASC_SORT.equalsIgnoreCase(order)) {
-            criteria.addOrder(Order.asc(column));
-        } else if (DESC_SORT.equals(order)) {
-            criteria.addOrder(Order.desc(column));
-        }
+    protected Sorter getSorter() {
+        return defaultSorter;
     }
 
     @RequestMapping(
@@ -180,7 +168,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             protected Criteria getCriteria() {
                 Criteria criteria = getDao().createCriteria();
                 getFilter().applyFilters(filters, criteria);
-                applySorters(sorters, criteria);
+                getSorter().applySorters(sorters, criteria);
 
                 return criteria;
             }

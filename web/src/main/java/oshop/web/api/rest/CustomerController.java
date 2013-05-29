@@ -88,7 +88,7 @@ public class CustomerController extends BaseController<Customer, Integer> {
                 Criteria criteria = shippingAddressDao.createCriteria();
                 criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", id));
                 getFilter().applyFilters(filters, criteria);
-                applySorters(sorters, criteria);
+                getSorter().applySorters(sorters, criteria);
 
                 return criteria;
             }
