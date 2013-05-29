@@ -1,7 +1,8 @@
 define([
     'underscore',
     'backbone',
-    'common/navbarView'
+    'common/navbarView',
+    'common/ajaxGlobalHandler'
 ], function (_, Backbone, NavbarView) {
 
     var Main = function(Controller) {

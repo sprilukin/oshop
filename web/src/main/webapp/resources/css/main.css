@@ -27,6 +27,11 @@ span.sort {
     text-align: left;
 }
 
+
+.ajaxLoading {
+    display: inline;
+}
+
 .select2-container {
     display: block;
 }
