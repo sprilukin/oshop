@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.dao.GenericDao;
 import oshop.model.Customer;
+import oshop.model.Order;
 import oshop.model.ShippingAddress;
 import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
+import oshop.web.api.rest.filter.Filter;
 import oshop.web.converter.EntityConverter;
 
 import javax.annotation.Resource;
@@ -38,11 +40,20 @@ public class CustomerController extends BaseController<Customer, Integer> {
     @Resource
     private GenericDao<ShippingAddress, Integer> shippingAddressDao;
 
+    @Resource
+    private GenericDao<Order, Integer> orderDao;
+
+    @Resource
+    private Filter ordersFilter;
+
     @Resource(name = "customerToDTOConverter")
     private EntityConverter<Customer, Integer> converter;
 
     @Resource(name = "shippingAddressToDTOConverter")
     private EntityConverter<ShippingAddress, Integer> shippingAddressConverter;
+
+    @Resource(name = "orderToDTOConverter")
+    private EntityConverter<Order, Integer> orderConverter;
 
     @Override
     protected GenericDao<Customer, Integer> getDao() {
@@ -99,4 +110,51 @@ public class CustomerController extends BaseController<Customer, Integer> {
             }
         }.invoke();
     }
+
+    @RequestMapping(
+            value = "/{id}/orders",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> orders(
+            @PathVariable final Integer id,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
+
+        return ordersWithFiltersAndSorters(id,
+                Collections.<String, List<String>>emptyMap(),
+                Collections.<String, List<String>>emptyMap(), limit, offset);
+    }
+
+    @RequestMapping(
+            value = "/{id}/orders/{filter}/{sort}",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> ordersWithFiltersAndSorters(
+            @PathVariable final Integer id,
+            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
+
+        return new EntityListDetachingRestCallbackAdapter<Order, Integer>(orderConverter, getSearchDao()) {
+
+            @Override
+            protected Criteria getCriteria() {
+                Criteria criteria = orderDao.createCriteria();
+                criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", id));
+                ordersFilter.applyFilters(filters, criteria);
+                getSorter().applySorters(sorters, criteria);
+
+                return criteria;
+            }
+
+            @Override
+            protected List<Order> getList(Criteria criteria) {
+                return orderDao.list(criteria, offset, limit);
+            }
+        }.invoke();
+    }
+
 }

@@ -249,4 +249,55 @@ public class OrderControllerTest extends BaseControllerTest {
 
         logResponse(result);
     }
+
+    @Test
+    public void testGetOrderByCustomer() throws Exception {
+        Order order1 = addOrder("customer1", null);
+        Order order2 = addOrder("customer2", null);
+
+        MvcResult result = this.mockMvc.perform(
+                get("/api/customers/" + order1.getCustomer().getId() + "/orders")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.size").value(1))
+                .andExpect(jsonPath("$.values[0].customer.name").value("customer1"))
+                .andReturn();
+
+        logResponse(result);
+    }
+
+    @Test
+    public void testGetOrderByCustomerWithFilter() throws Exception {
+        Order order1 = addOrder("customer1", null);
+        Order order2 = addOrder("customer2", null);
+
+        MvcResult result = this.mockMvc.perform(
+                get("/api/customers/" + order1.getCustomer().getId() + "/orders/filter;customer=customer;/sorter;")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.size").value(1))
+                .andExpect(jsonPath("$.values[0].customer.name").value("customer1"))
+                .andReturn();
+
+        logResponse(result);
+    }
+
+    @Test
+    public void testGetOrderByCustomerWithFilterForOtherCustomer() throws Exception {
+        Order order1 = addOrder("customer1", null);
+        Order order2 = addOrder("customer2", null);
+
+        MvcResult result = this.mockMvc.perform(
+                get("/api/customers/" + order1.getCustomer().getId() + "/orders/filter;customer=customer2;/sorter;")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        logResponse(result);
+    }
 }

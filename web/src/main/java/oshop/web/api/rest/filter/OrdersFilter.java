@@ -86,7 +86,7 @@ public class OrdersFilter extends BaseFilter {
     }
 
     private Criterion customerLike(String value, Criteria criteria) {
-        criteria.createAlias("customer", "c");
+        addAlias(criteria, "customer", "c");
         return Restrictions.like("c.name", value, MatchMode.ANYWHERE);
     }
 
