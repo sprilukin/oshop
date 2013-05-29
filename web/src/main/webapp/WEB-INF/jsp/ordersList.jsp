@@ -15,7 +15,13 @@
     <div class="search inline span3"></div>
 
     <div class="inline span3 offset6">
-        <a href="${pageContext.request.contextPath}/orders/add" role="button" class="btn btn-primary">
+        <c:if test="${customerId eq null}">
+            <c:set var="addPath" value="${pageContext.request.contextPath}/orders/add"/>
+        </c:if>
+        <c:if test="${customerId ne null}">
+            <c:set var="addPath" value="${pageContext.request.contextPath}/customers/${customerId}/orders/add"/>
+        </c:if>
+        <a href="${addPath}" role="button" class="btn btn-primary">
             <i class="icon-plus icon-white"> </i>
             <spring:message code="orders.add.order"/>
         </a>

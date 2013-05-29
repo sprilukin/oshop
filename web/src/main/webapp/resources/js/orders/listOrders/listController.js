@@ -12,8 +12,17 @@ define([
     'common/messages'
 ], function (_, Model, Collection, ListView, BaseListController, AdvancedSearchView, Filter, messages) {
 
+    var getCustomerId = function() {
+        var matches = window.location.pathname.match(/customers\/([\d]+)([\/#\?].*)?$/);
+        if (matches && matches.length > 0) {
+            return matches[1];
+        } else {
+            return null;
+        }
+    };
+
     var OrdersController = function() {
-        var collection = new Collection();
+        var collection = new Collection({customerId: getCustomerId()});
         var filter = new Filter();
 
         this.initialize({
