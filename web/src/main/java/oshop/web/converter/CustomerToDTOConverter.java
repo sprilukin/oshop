@@ -14,5 +14,6 @@ public class CustomerToDTOConverter extends BaseEntityConverter<Customer, Intege
     @Override
     protected void convert(Customer entity, Customer convertedEntity) throws Exception {
         convertedEntity.setName(entity.getName());
+        convertedEntity.setImageId(entity.getImageId());
     }
 }

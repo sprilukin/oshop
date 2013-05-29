@@ -5,10 +5,11 @@
             {{general_id}}
             <span class="sorter" data-column="id"></span>
         </th>
-        <th class="span1">
+        <th class="span2">
             {{customers_column_name}}
             <span class="sorter" data-column="name"></span>
         </th>
+        <th class="span1"></th>
         <th class="span1"></th>
         <th class="span1"></th>
     </tr>
@@ -18,6 +19,15 @@
     <tr>
         <td>{{id}}</td>
         <td>{{attributes.name}}</td>
+        <td>
+            {{#attributes.imageId}}
+            <div data-toggle="modal-gallery" data-target="#modal-gallery">
+                <a href="{{context}}/api/images/{{attributes.imageId}}" data-gallery="gallery">
+                    <img src="{{context}}/api/images/{{attributes.imageId}}" style="height: 15px">
+                </a>
+            </div>
+            {{/attributes.imageId}}
+        </td>
         <td>
             <a href="{{context}}/customers/{{id}}/shippingAddresses">{{customers_column_shipping_addresses}}</a>
         </td>
