@@ -62,7 +62,7 @@ define([
                         that.addView.render();
                     },
                     error: function(model, xhr) {
-                        new WarningView({model: JSON.parse(xhr.responseText)}).render();
+                        //new WarningView({model: JSON.parse(xhr.responseText)}).render();
                     }
                 });
             } else {

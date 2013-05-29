@@ -114,7 +114,7 @@ define([
                 },
 
                 error: function (model, xhr) {
-                    new WarningView({model: JSON.parse(xhr.responseText)}).render();
+                    //new WarningView({model: JSON.parse(xhr.responseText)}).render();
                     that.router && that.router.navigate(that.getListUrl(), {trigger: true});
                 }
             });
