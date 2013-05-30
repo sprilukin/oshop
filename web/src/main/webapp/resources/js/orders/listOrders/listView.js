@@ -30,7 +30,9 @@ define([
 
             this.sorterViews = [];
 
-            _.each(["id", "date", "customer", "productsCount", "productsPrice", "totalPrice", "currentOrderStateName"], function(column) {
+            _.each(["id", "date", "customer", "productsCount", "productsPrice",
+                "totalPrice", "currentOrderStateDate", "currentOrderStateName"], function(column) {
+
                 this.sorterViews.push(new SortView({
                     column: column,
                     sorter: options.sorter
@@ -42,6 +44,7 @@ define([
             var model = _.extend({context: context}, {models: _.map(this.collection.models, function(model) {
                 var modelClone = _.extend({}, model.attributes);
                 modelClone.date = dateFormatter(modelClone.date).format();
+                modelClone.currentOrderStateDate = dateFormatter(modelClone.currentOrderStateDate).format();
 
                 return {id: modelClone.id, attributes: modelClone};
             })}, messages);

@@ -61,8 +61,11 @@ public class Order extends BaseEntity<Integer> {
     )
     private List<Product> products = new ArrayList<Product>();
 
-    @Formula(OrderCalcFieldQueries.CURRENT_ORDER_STATE_SQL)
+    @Formula(OrderCalcFieldQueries.CURRENT_ORDER_STATE_NAME_SQL)
     private String currentOrderStateName;
+
+    @Formula(OrderCalcFieldQueries.CURRENT_ORDER_STATE_DATE_SQL)
+    private Date currentOrderStateDate;
 
     @Formula(OrderCalcFieldQueries.PRODUCTS_COUNT_SQL)
     private Integer productsCount;
@@ -151,6 +154,14 @@ public class Order extends BaseEntity<Integer> {
 
     public void setCurrentOrderStateName(String currentOrderStateName) {
         this.currentOrderStateName = currentOrderStateName;
+    }
+
+    public Date getCurrentOrderStateDate() {
+        return currentOrderStateDate;
+    }
+
+    public void setCurrentOrderStateDate(Date currentOrderStateDate) {
+        this.currentOrderStateDate = currentOrderStateDate;
     }
 
     public BigDecimal getProductsPrice() {

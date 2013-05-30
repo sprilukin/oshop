@@ -43,6 +43,7 @@ define([
                 {field: "totalPriceGE", label: messages["order_filter_totalPrice_ge"]},
                 {field: "totalPriceLE", label: messages["order_filter_totalPrice_le"]},
                 {field: "currentOrderStateName", label: messages["order_filter_currentOrderStateName_like"]}
+                //{field: "currentOrderStateDate", label: messages["order_filter_currentOrderStateDate_eq"]}
             ]})
         });
     };

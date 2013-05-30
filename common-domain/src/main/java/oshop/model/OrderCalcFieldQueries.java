@@ -2,8 +2,12 @@ package oshop.model;
 
 public class OrderCalcFieldQueries {
 
-    public static final String CURRENT_ORDER_STATE_SQL =
+    public static final String CURRENT_ORDER_STATE_NAME_SQL =
             "( SELECT s.name FROM order_has_order_states h INNER JOIN order_state s ON h.order_state_id = s.id " +
+            "WHERE h.order_id = id ORDER BY h.date DESC, h.id DESC LIMIT 1 )";
+
+    public static final String CURRENT_ORDER_STATE_DATE_SQL =
+            "( SELECT h.date FROM order_has_order_states h INNER JOIN order_state s ON h.order_state_id = s.id " +
             "WHERE h.order_id = id ORDER BY h.date DESC, h.id DESC LIMIT 1 )";
 
     public static final String PRODUCTS_COUNT_SQL =

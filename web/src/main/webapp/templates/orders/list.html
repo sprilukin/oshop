@@ -30,6 +30,10 @@
             {{order_current_order_state_name}}
             <span class="sorter" data-column="currentOrderStateName"></span>
         </th>
+        <th class="span1">
+            {{order_current_order_state_date}}
+            <span class="sorter" data-column="currentOrderStateDate"></span>
+        </th>
         <th class="span1"></th>
     </tr>
     </thead>
@@ -52,6 +56,7 @@
         <td>{{attributes.productsPrice}}</td>
         <td>{{attributes.totalPrice}}</td>
         <td>{{attributes.currentOrderStateName}}</td>
+        <td>{{attributes.currentOrderStateDate}}</td>
         <td>
             <div class="btn-group">
                 <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
