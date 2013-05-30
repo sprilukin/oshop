@@ -135,6 +135,8 @@ define([
                 {
                     city: {id: this.$("#field_city").val()},
                     address: this.$("#field_address").val(),
+                    recipient: this.$("#field_recipient").val(),
+                    postalCode: this.$("#field_postal_code").val(),
                     phone: this.$("#field_phone").val(),
                     shippingType: {id: this.$("#field_shipping_type").val()},
                     customer: {id: $("#field_customer").val()}

@@ -29,5 +29,7 @@ public class ShippingAddressForOrderToDTOConverter extends BaseEntityConverter<S
         convertedEntity.setAddress(entity.getAddress());
         convertedEntity.setCity(cityConverter.convert(entity.getCity()));
         convertedEntity.setPhone(entity.getPhone());
+        convertedEntity.setRecipient(entity.getRecipient());
+        convertedEntity.setPostalCode(entity.getPostalCode());
     }
 }

@@ -32,6 +32,11 @@ define([
                 validationFailed = true;
             }
 
+            if (!attributes.recipient) {
+                validationMessages["recipient"] = [messages["ui_validation_not_blank"]];
+                validationFailed = true;
+            }
+
             if (attributes.phone && !attributes.phone.match(PHONE_REGEXP)) {
                 validationMessages["phone"] = [messages["ui_validation_invalid_phone"]];
                 validationFailed = true;

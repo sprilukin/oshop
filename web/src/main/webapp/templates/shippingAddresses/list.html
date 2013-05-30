@@ -10,6 +10,13 @@
             <span class="sorter" data-column="city"></span>
         </th>
         <th class="span1">
+            {{shipping_addresses_column_region}}
+        </th>
+        <th class="span1">
+            {{shipping_addresses_column_recipient}}
+            <span class="sorter" data-column="recipient"></span>
+        </th>
+        <th class="span1">
             {{shipping_addresses_column_address}}
             <span class="sorter" data-column="address"></span>
         </th>
@@ -18,12 +25,16 @@
             <span class="sorter" data-column="phone"></span>
         </th>
         <th class="span1">
+            {{shipping_addresses_column_postal_code}}
+            <span class="sorter" data-column="postalCode"></span>
+        </th>
+        <th class="span1">
             {{shipping_addresses_column_customer}}
             <span class="sorter" data-column="customer"></span>
         </th>
         <th class="span1">
             {{shipping_addresses_column_shipping_type}}
-            <span class="sorter" data-column="shipping-type"></span>
+            <span class="sorter" data-column="shippingType"></span>
         </th>
         <th class="span1"></th>
     </tr>
@@ -33,8 +44,11 @@
     <tr>
         <td>{{id}}</td>
         <td>{{attributes.city.name}}</td>
+        <td>{{attributes.city.region}}</td>
+        <td>{{attributes.recipient}}</td>
         <td>{{attributes.address}}</td>
         <td>{{attributes.phone}}</td>
+        <td>{{attributes.postalCode}}</td>
         <td><a href="{{context}}/customers#edit/{{attributes.customer.id}}">{{attributes.customer.name}}</a></td>
         <td>{{attributes.shippingType.name}}</td>
         <td>

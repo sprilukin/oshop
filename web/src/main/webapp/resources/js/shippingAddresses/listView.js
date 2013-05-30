@@ -26,7 +26,7 @@ define([
 
             this.sorterViews = [];
 
-            _.each(["id", "city", "address", "phone"], function(column) {
+            _.each(["id", "city", "recipient", "address", "phone", "postalCode", "shippingType"], function(column) {
                 this.sorterViews.push(new SortView({
                     column: column,
                     sorter: options.sorter

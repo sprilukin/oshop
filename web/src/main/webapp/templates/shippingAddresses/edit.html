@@ -36,11 +36,20 @@
                 </div>
             </div>
 
+            <div class="control-group form-horizontal field-recipient">
+                <label class="control-label" for="field_recipient">{{shipping_addresses_column_recipient}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_recipient" required="required" type="text" value="{{model.recipient}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+
             <div class="control-group form-horizontal field-address">
                 <label class="control-label" for="field_address">{{shipping_addresses_column_address}}</label>
 
                 <div class="controls">
-                    <textarea id="field_address" rows="3">{{model.address}}</textarea>
+                    <textarea id="field_address" required="required" rows="3">{{model.address}}</textarea>
                     <span class="help-inline"> </span>
                 </div>
             </div>
@@ -50,6 +59,15 @@
 
                 <div class="controls">
                     <input class="input-large" id="field_phone" type="text" value="{{model.phone}}">
+                    <span class="help-inline"> </span>
+                </div>
+            </div>
+
+            <div class="control-group form-horizontal field-postal-code">
+                <label class="control-label" for="field_postal_code">{{shipping_addresses_column_postal_code}}</label>
+
+                <div class="controls">
+                    <input class="input-large" id="field_postal_code" type="text" value="{{model.postalCode}}">
                     <span class="help-inline"> </span>
                 </div>
             </div>

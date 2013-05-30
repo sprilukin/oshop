@@ -15,15 +15,25 @@ import javax.validation.constraints.Size;
 @Table(name = "shipping_address")
 public class ShippingAddress extends BaseEntity<Integer> {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "city_id")
-    private City city;
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "recipient")
+    private String recipient;
 
     @NotNull
     @NotBlank
     @Size(max = 255)
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @Size(max = 50)
+    @Column(name = "postal_code")
+    private String postalCode;
 
     @Size(max = 20)
     @Column(name = "phone")
@@ -75,5 +85,21 @@ public class ShippingAddress extends BaseEntity<Integer> {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 }
