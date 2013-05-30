@@ -13,6 +13,7 @@
             {{order_customer}}
             <span class="sorter" data-column="customer"></span>
         </th>
+        <th class="span1"></th>
         <th class="span1">
             {{order_products_count}}
             <span class="sorter" data-column="productsCount"></span>
@@ -38,6 +39,15 @@
         <td><a href="{{context}}/orders/{{id}}">{{id}}</a></td>
         <td>{{attributes.date}}</td>
         <td>{{attributes.customer.name}}</td>
+        <td>
+            {{#attributes.customer.imageId}}
+            <div data-toggle="modal-gallery" data-target="#modal-gallery">
+                <a href="{{context}}/api/images/{{attributes.customer.imageId}}" data-gallery="gallery">
+                    <img src="{{context}}/api/images/{{attributes.customer.imageId}}" style="height: 20px">
+                </a>
+            </div>
+            {{/attributes.customer.imageId}}
+        </td>
         <td>{{attributes.productsCount}}</td>
         <td>{{attributes.productsPrice}}</td>
         <td>{{attributes.totalPrice}}</td>

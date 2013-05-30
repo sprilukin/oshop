@@ -82,6 +82,8 @@
     <%-- placeholder for warnings --%>
     <div class="warning" style="padding-top: 40px"></div>
 
+    <div id="imageGallery" style="position: absolute"></div>
+
     <decorator:body/>
 </div>
 </body>

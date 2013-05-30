@@ -25,7 +25,6 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="row-fluid span12 forPagination"></div>
 <div class="editEntity"></div>
-<div id="imageGallery"></div>
 
 <script data-main="customers/main" src="<c:url value='/resources/js/lib/require.js'/>"></script>
 </body>

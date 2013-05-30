@@ -12,7 +12,6 @@
 <h1><spring:message code="orders.edit.order"/></h1>
 
 <div class="content"></div>
-<div id="imageGallery"></div>
 
 <script data-main="orders/editOrder/edit" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>

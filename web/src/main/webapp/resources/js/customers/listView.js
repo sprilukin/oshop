@@ -6,13 +6,13 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/imageGallery',
     'common/messages',
     'common/sortView',
     'common/context',
     'text!templates/customers/list.html',
+    'common/imageGallery',
     'bootstrap'
-], function ($, _, Backbone, Mustache, imageGallery, messages, SortView, context, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, SortView, context, listEntityTemplate) {
 
     return Backbone.View.extend({
 
