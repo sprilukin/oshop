@@ -78,7 +78,7 @@ define([
             var that = this;
 
             var formatSelection = function(data) {
-                return Mustache.render("{{shippingType.name}} | {{recipient}} | {{city.name}} | {{city.region}} | {{address}} {{postalIndex}} {{#phone}}| {{shipping_addresses_column_phone_short}} {{phone}}{{/phone}}", data);
+                return Mustache.render("{{shippingType.name}} | {{recipient}} | {{city.name}} | {{city.region}} | {{address}} {{postalCode}} {{#phone}}| {{shipping_addresses_column_phone_short}} {{phone}}{{/phone}}", data);
             };
 
             this.shippingAddressSelect && this.shippingAddressSelect.destroy();
