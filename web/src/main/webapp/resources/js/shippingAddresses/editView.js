@@ -56,7 +56,7 @@ define([
                 allowClear: false,
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
+                    return data ? _.map(data, function (item) {
                         return {id: item.id, text: item.name}
                     }) : [];
                 }
@@ -70,7 +70,7 @@ define([
                 allowClear: false,
                 urlTemplate: context + "/api/shippingTypes/filter;name={{term}};/sort;",
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
+                    return data ? _.map(data, function (item) {
                         return {id: item.id, text: item.name}
                     }) : [];
                 }
@@ -89,9 +89,6 @@ define([
                 urlTemplate: context + "/api/cities/filter;name={{term}};/sort;",
                 formatResult: formatSelection,
                 formatSelection: formatSelection,
-                resultParser: function(data) {
-                    return data ? data.values: [];
-                }
             });
         },
 

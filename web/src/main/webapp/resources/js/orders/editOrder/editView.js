@@ -65,9 +65,6 @@ define([
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
                 formatResult: formatCustomerResult,
                 formatSelection: formatCustomerSelection,
-                resultParser: function(data) {
-                    return data ? data.values : [];
-                },
                 change: function(event) {
                     that.model.set(
                         {"customer": {id: event.currentTarget.value}, "shippingAddress": null},
@@ -95,7 +92,7 @@ define([
                 formatResult: formatSelection,
                 formatSelection: formatSelection,
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
+                    return data ? _.map(data, function (item) {
                         return {id: item.id, city: item.city.name, address: item.address, type: item.shippingType.name}
                     }) : [];
                 },
@@ -122,9 +119,6 @@ define([
                 urlTemplate: context + "/api/additionalPayments/filter;description={{term}};/sort;",
                 formatResult: formatSelection,
                 formatSelection: formatSelection,
-                resultParser: function(data) {
-                    return data ? data.values : [];
-                },
                 change: function(event) {
                     var value = event.currentTarget.value;
                     that.model.set("additionalPayment", value ? {id: value} : null, {silent: true});
@@ -148,9 +142,6 @@ define([
                 urlTemplate: context + "/api/discounts/filter;description={{term}};/sort;",
                 formatResult: formatSelection,
                 formatSelection: formatSelection,
-                resultParser: function(data) {
-                    return data ? data.values : [];
-                },
                 change: function(event) {
                     var value = event.currentTarget.value;
                     that.model.set("discount", value ? {id: value} : null, {silent: true});

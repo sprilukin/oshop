@@ -46,9 +46,6 @@ define([
                 },
                 formatSelection: function(data) {
                     return Mustache.render("{{id}} | {{name}}", data);
-                },
-                resultParser: function(data) {
-                    return data ? data.values : [];
                 }
             });
         },

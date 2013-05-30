@@ -45,7 +45,7 @@ define([
                 allowClear: true,
                 urlTemplate: context + "/api/orderStates/filter;name={{term}};/sort;",
                 resultParser: function(data) {
-                    return data ? _.map(data.values, function (item) {
+                    return data ? _.map(data, function (item) {
                         return {id: item.id, text: item.name}
                     }) : [];
                 }

@@ -49,7 +49,7 @@ define([
                 },
                 dataType: 'json',
                 results: function (data, page) {
-                    return that.options.resultParser ? {results: that.options.resultParser(data, page)} : data;
+                    return that.options.resultParser ? {results: that.options.resultParser(data, page)} : {results: data};
                 }
             },
             initSelection: function(element, callback) {

@@ -25,8 +25,14 @@ define([
         },
 
         fetch: function(options) {
-            Backbone.Collection.prototype.fetch.call(this,
-                _.extend({data: {limit: this.limit, offset: this.offset}}, options));
+            var success = function(collection, models, params) {
+                this.total = parseInt(params.xhr.getResponseHeader('totalListSize'), 10);
+                options && options.success && options.success.apply(this, arguments);
+            };
+
+            Backbone.Collection.prototype.fetch.call(
+                this, _.extend({data: {limit: this.limit, offset: this.offset}}, options, {success: success})
+            );
         },
 
         setFilterString: function(filter) {
@@ -55,16 +61,6 @@ define([
 
         getTotal: function() {
             return this.total;
-        },
-
-        parse: function(json) {
-            if (json) {
-                this.total = json.size;
-                return json.values;
-            } else {
-                this.total = 0;
-                return [];
-            }
         }
     });
 });

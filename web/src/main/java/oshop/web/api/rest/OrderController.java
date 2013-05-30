@@ -146,7 +146,7 @@ public class OrderController extends BaseController<Order, Integer> {
     public ResponseEntity<?> listOrderProduct(
             @PathVariable final Integer id) {
 
-        return new ListReturningRestCallbackAdapter<List<Product>>() {
+        return new ListReturningRestCallbackAdapter<Product>() {
 
             private Order order = getDao().get(id);
 
@@ -195,7 +195,7 @@ public class OrderController extends BaseController<Order, Integer> {
     public ResponseEntity<?> listOrderHasStates(
             @PathVariable final Integer id) {
 
-        return new ListReturningRestCallbackAdapter<List<OrderHasOrderStates>>() {
+        return new ListReturningRestCallbackAdapter<OrderHasOrderStates>() {
 
             private Order order = getDao().get(id);
 

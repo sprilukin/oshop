@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public abstract class EntityListDetachingRestCallbackAdapter<T extends BaseEntity<ID>, ID extends Serializable>
-        extends ListReturningRestCallbackAdapter<List<T>> {
+        extends ListReturningRestCallbackAdapter<T> {
 
     private EntityConverter<T, ID> converter;
     private GenericSearchDao searchDao;

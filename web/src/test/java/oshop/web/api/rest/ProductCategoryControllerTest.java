@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -127,10 +128,10 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(3))
-                .andExpect(jsonPath("$.values[0].name").value("category1"))
-                .andExpect(jsonPath("$.values[1].name").value("category2"))
-                .andExpect(jsonPath("$.values[2].name").value("category3"));
+                .andExpect(header().longValue("totalListSize", 3))
+                .andExpect(jsonPath("$[0].name").value("category1"))
+                .andExpect(jsonPath("$[1].name").value("category2"))
+                .andExpect(jsonPath("$[2].name").value("category3"));
 
         this.mockMvc.perform(
                 get("/api/productCategories/?offset=1&limit=1")
@@ -138,8 +139,8 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(3))
-                .andExpect(jsonPath("$.values[0].name").value("category2"));
+                .andExpect(header().longValue("totalListSize", 3))
+                .andExpect(jsonPath("$[0].name").value("category2"));
     }
 
     @Test
@@ -169,10 +170,10 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(3))
-                .andExpect(jsonPath("$.values.[0].name").value("category3"))
-                .andExpect(jsonPath("$.values.[1].name").value("category2"))
-                .andExpect(jsonPath("$.values.[2].name").value("category1"));
+                .andExpect(header().longValue("totalListSize", 3))
+                .andExpect(jsonPath("$[0].name").value("category3"))
+                .andExpect(jsonPath("$[1].name").value("category2"))
+                .andExpect(jsonPath("$[2].name").value("category1"));
 
         //Test filter only
         this.mockMvc.perform(
@@ -181,8 +182,8 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(1))
-                .andExpect(jsonPath("$.values.[0].name").value("category2"));
+                .andExpect(header().longValue("totalListSize", 1))
+                .andExpect(jsonPath("$[0].name").value("category2"));
 
         //Test sort only
         this.mockMvc.perform(
@@ -191,8 +192,8 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(3))
-                .andExpect(jsonPath("$.values.[0].name").value("category1"));
+                .andExpect(header().longValue("totalListSize", 3))
+                .andExpect(jsonPath("$[0].name").value("category1"));
     }
 
     @Test
@@ -233,13 +234,13 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
 
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(3))
-                .andExpect(jsonPath("$.values[0].name").value("Product1"))
-                .andExpect(jsonPath("$.values[1].name").value("Product2"))
-                .andExpect(jsonPath("$.values[2].name").value("Product3"))
-                .andExpect(jsonPath("$.values[0].price").value(10.1))
-                .andExpect(jsonPath("$.values[1].price").value(10.01))
-                .andExpect(jsonPath("$.values[2].price").value(10.0)).andReturn();
+                .andExpect(header().longValue("totalListSize", 3))
+                .andExpect(jsonPath("$[0].name").value("Product1"))
+                .andExpect(jsonPath("$[1].name").value("Product2"))
+                .andExpect(jsonPath("$[2].name").value("Product3"))
+                .andExpect(jsonPath("$[0].price").value(10.1))
+                .andExpect(jsonPath("$[1].price").value(10.01))
+                .andExpect(jsonPath("$[2].price").value(10.0)).andReturn();
 
         logResponse(result);
     }
@@ -257,12 +258,12 @@ public class ProductCategoryControllerTest extends BaseControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(3))
-                .andExpect(jsonPath("$.values[0].name").value("Product1"))
-                .andExpect(jsonPath("$.values[1].name").value("Product2"))
-                .andExpect(jsonPath("$.values[2].name").value("Product3"))
-                .andExpect(jsonPath("$.values[0].price").value(10.01))
-                .andExpect(jsonPath("$.values[1].price").value(10.1))
-                .andExpect(jsonPath("$.values[2].price").value(10.2));
+                .andExpect(header().longValue("totalListSize", 3))
+                .andExpect(jsonPath("$[0].name").value("Product1"))
+                .andExpect(jsonPath("$[1].name").value("Product2"))
+                .andExpect(jsonPath("$[2].name").value("Product3"))
+                .andExpect(jsonPath("$[0].price").value(10.01))
+                .andExpect(jsonPath("$[1].price").value(10.1))
+                .andExpect(jsonPath("$[2].price").value(10.2));
     }
 }

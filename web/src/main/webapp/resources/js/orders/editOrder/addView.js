@@ -56,10 +56,7 @@ define([
                 allowClear: false,
                 urlTemplate: context + "/api/customers/filter;name={{term}};/sort;",
                 formatResult: formatCustomerResult,
-                formatSelection: formatCustomerSelection,
-                resultParser: function(data) {
-                    return data ? data.values : [];
-                }
+                formatSelection: formatCustomerSelection
             });
         },
 
