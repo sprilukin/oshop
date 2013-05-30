@@ -18,6 +18,10 @@ public class Customer extends BaseEntity<Integer> {
     @Column(name = "name", unique = true)
     private String name;
 
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
+
     private Integer imageId;
 
     public String getName() {
@@ -26,6 +30,14 @@ public class Customer extends BaseEntity<Integer> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getImageId() {

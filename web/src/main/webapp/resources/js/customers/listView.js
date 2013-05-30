@@ -29,7 +29,7 @@ define([
 
             this.sorterViews = [];
 
-            _.each(["id", "name"], function(column) {
+            _.each(["id", "name", "description"], function(column) {
                 this.sorterViews.push(new SortView({
                     column: column,
                     sorter: options.sorter

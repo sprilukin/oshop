@@ -9,6 +9,10 @@
             {{customers_column_name}}
             <span class="sorter" data-column="name"></span>
         </th>
+        <th class="span2">
+            {{customers_column_description}}
+            <span class="sorter" data-column="description"></span>
+        </th>
         <th class="span1"></th>
         <th class="span1"></th>
         <th class="span1"></th>
@@ -20,6 +24,7 @@
     <tr>
         <td>{{id}}</td>
         <td>{{attributes.name}}</td>
+        <td>{{attributes.description}}</td>
         <td>
             {{#attributes.imageId}}
             <div data-toggle="modal-gallery" data-target="#modal-gallery">
