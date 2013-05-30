@@ -31,7 +31,8 @@
 
                 <div class="controls">
                     <div>
-                        <input type="hidden" id="field_shippingAddress" value="{{model.shippingAddress.id}}" data-text="{{model.shippingAddress.shippingType.name}} | {{model.shippingAddress.city.name}} | {{model.shippingAddress.address}}">
+                        <input type="hidden" id="field_shippingAddress" value="{{model.shippingAddress.id}}"
+                               data-text="{{model.shippingAddress.shippingType.name}} | {{model.shippingAddress.recipient}} | {{model.shippingAddress.city.region}} | {{model.shippingAddress.city.name}} | {{model.shippingAddress.address}} {{model.shippingAddress.postalIndex}} {{#model.shippingAddress.phone}}| {{shipping_addresses_column_phone_short}} {{model.shippingAddress.phone}}{{/model.shippingAddress.phone}}">
                     </div>
                     <span class="help-inline"> </span>
                 </div>

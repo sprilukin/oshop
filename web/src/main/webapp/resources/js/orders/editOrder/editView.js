@@ -78,7 +78,7 @@ define([
             var that = this;
 
             var formatSelection = function(data) {
-                return Mustache.render("{{type}} | {{city}} | {{address}}", data);
+                return Mustache.render("{{shippingType.name}} | {{recipient}} | {{city.name}} | {{city.region}} | {{address}} {{postalIndex}} {{#phone}}| {{shipping_addresses_column_phone_short}} {{phone}}{{/phone}}", data);
             };
 
             this.shippingAddressSelect && this.shippingAddressSelect.destroy();
@@ -93,7 +93,7 @@ define([
                 formatSelection: formatSelection,
                 resultParser: function(data) {
                     return data ? _.map(data, function (item) {
-                        return {id: item.id, city: item.city.name, address: item.address, type: item.shippingType.name}
+                        return _.extend(item, messages);
                     }) : [];
                 },
                 change: function(event) {
