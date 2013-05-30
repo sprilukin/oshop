@@ -10,6 +10,7 @@ define([
     return Backbone.Collection.extend({
 
         URL_TEMPLATE: undefined,
+        TOTAL_COLLECTION_SIZE_HEADER: "totalListSize",
 
         initialize: function(options) {
             this.total = 0;
@@ -25,9 +26,10 @@ define([
         },
 
         fetch: function(options) {
+            var that = this;
             var success = function(collection, models, params) {
-                this.total = parseInt(params.xhr.getResponseHeader('totalListSize'), 10);
-                options && options.success && options.success.apply(this, arguments);
+                that.total = parseInt(params.xhr.getResponseHeader(that.TOTAL_COLLECTION_SIZE_HEADER), 10);
+                options && options.success && options.success.apply(that, arguments);
             };
 
             Backbone.Collection.prototype.fetch.call(
