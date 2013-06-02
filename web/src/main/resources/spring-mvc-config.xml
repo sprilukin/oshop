@@ -28,8 +28,6 @@
         <beans:property name="pathMatcher" ref="optionalPathMatcher"/>
     </beans:bean>-->
 
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
-
     <resources mapping="/resources/**" location="/resources/"/>
     <resources mapping="/templates/**" location="/templates/"/>
     <resources mapping="/favicon.ico" location="/favicon.ico"/>

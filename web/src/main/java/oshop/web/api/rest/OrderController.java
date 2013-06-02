@@ -2,13 +2,9 @@ package oshop.web.api.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,79 +12,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import oshop.dao.GenericDao;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
-import oshop.web.api.rest.adapter.EntityDetachingRestCallbackAdapter;
+import oshop.services.GenericService;
+import oshop.services.OrderService;
 import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
+import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
-import oshop.web.api.rest.filter.Filter;
-import oshop.web.converter.EntityConverter;
+import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/api/orders")
-@Transactional(readOnly = true)
 public class OrderController extends BaseController<Order, Integer> {
 
     private static final Log log = LogFactory.getLog(OrderController.class);
 
     @Resource
-    private GenericDao<Order, Integer> orderDao;
-
-    @Resource
-    private GenericDao<Product, Integer> productDao;
-
-    @Resource
-    private GenericDao<OrderHasOrderStates, Integer> orderHasOrderStatesDao;
-
-    @Resource
-    private Filter ordersFilter;
-
-    @Resource(name = "orderToDTOConverter")
-    private EntityConverter<Order, Integer> converter;
-
-    @Resource(name = "orderFromDTOConverter")
-    private EntityConverter<Order, Integer> fromDtoConverter;
-
-    @Resource(name = "orderHasStateToDTOConverter")
-    private EntityConverter<OrderHasOrderStates, Integer> orderHasStateConverter;
-
-    @Resource(name = "productToDTOConverter")
-    private EntityConverter<Product, Integer> productConverter;
+    protected OrderService orderService;
 
     @Override
-    protected GenericDao<Order, Integer> getDao() {
-        return orderDao;
-    }
-
-    @Override
-    protected EntityConverter<Order, Integer> getToDTOConverter() {
-        return converter;
-    }
-
-    @Override
-    protected EntityConverter<Order, Integer> getFromDTOConverter() {
-        return fromDtoConverter;
-    }
-
-    @Override
-    protected Filter getFilter() {
-        return ordersFilter;
+    protected GenericService<Order, Integer> getService() {
+        return orderService;
     }
 
     // /api/orders/1/products/batch;ids=1,2/delete
     @RequestMapping(
             value = "/{id}/products/{batch}/delete",
             method = RequestMethod.DELETE)
-    @Transactional(readOnly = false)
     public ResponseEntity<?> deleteOrderProduct(
             @PathVariable final Integer id,
             @MatrixVariable(value = "ids", pathVar="batch", required = true) final List<Integer> ids) {
@@ -96,16 +52,7 @@ public class OrderController extends BaseController<Order, Integer> {
         return new VoidRestCallbackAdapter() {
             @Override
             protected void perform() throws Exception {
-                getDao().executeQuery(
-                        "delete from order_products where order_id = :id and product_id in :ids",
-                        new GenericDao.SQLQueryManipulator() {
-                            @Override
-                            public void manipulateWithQuery(SQLQuery query) {
-                                query.setParameterList("ids", ids).setParameter("id", id);
-                            }
-                        });
-
-                getDao().getSession().flush();
+                orderService.deleteProductsFromOrder(id, ids);
             }
         }.invoke();
     }
@@ -116,7 +63,6 @@ public class OrderController extends BaseController<Order, Integer> {
             method = RequestMethod.POST
             )
     @ResponseBody
-    @Transactional(readOnly = false)
     public ResponseEntity<?> addOrderProduct(
             @PathVariable final Integer id,
             @MatrixVariable(value = "ids", pathVar="batch", required = true) final List<Integer> ids) {
@@ -124,15 +70,7 @@ public class OrderController extends BaseController<Order, Integer> {
         return new VoidRestCallbackAdapter() {
             @Override
             protected void perform() throws Exception {
-                Order order = getDao().get(id);
-
-                Criteria productsCriteria = productDao.createCriteria();
-                productsCriteria.add(Restrictions.in("id", ids));
-                List<Product> products = productDao.list(productsCriteria);
-
-
-                order.getProducts().addAll(products);
-                getDao().update(order);
+                orderService.addProductsToOrder(id, ids);
             }
         }.invoke();
     }
@@ -142,22 +80,13 @@ public class OrderController extends BaseController<Order, Integer> {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    @Transactional(readOnly = false)
     public ResponseEntity<?> listOrderProduct(
             @PathVariable final Integer id) {
 
         return new ListReturningRestCallbackAdapter<Product>() {
-
-            private Order order = getDao().get(id);
-
             @Override
-            protected Long getSize() throws Exception {
-                return (long)order.getProducts().size();
-            }
-
-            @Override
-            protected List<Product> getList() throws Exception {
-                return productConverter.convert(order.getProducts());
+            protected GenericListDto<Product> getListDto() throws Exception {
+                return orderService.getProductsByOrder(id);
             }
         }.invoke();
     }
@@ -168,20 +97,15 @@ public class OrderController extends BaseController<Order, Integer> {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    @Transactional(readOnly = false)
     public ResponseEntity<?> addOrderHasState(
             @PathVariable final Integer id,
             @RequestBody @Valid final OrderHasOrderStates entity, final BindingResult result) {
 
         return new ValidationRestCallbackAdapter(result,
-                new EntityDetachingRestCallbackAdapter<OrderHasOrderStates, Integer>(orderHasStateConverter) {
+                new ReturningRestCallbackAdapter<OrderHasOrderStates>() {
                     @Override
                     protected OrderHasOrderStates getResult() throws Exception {
-                        Order order = getDao().get(id);
-                        entity.setOrder(order);
-                        Integer id = orderHasOrderStatesDao.add(entity);
-
-                        return orderHasOrderStatesDao.get(id);
+                        return orderService.addOrderHasStateToOrder(id, entity);
                     }
                 }).invoke();
     }
@@ -191,22 +115,13 @@ public class OrderController extends BaseController<Order, Integer> {
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    @Transactional(readOnly = false)
     public ResponseEntity<?> listOrderHasStates(
             @PathVariable final Integer id) {
 
         return new ListReturningRestCallbackAdapter<OrderHasOrderStates>() {
-
-            private Order order = getDao().get(id);
-
             @Override
-            protected Long getSize() throws Exception {
-                return (long)order.getStates().size();
-            }
-
-            @Override
-            protected List<OrderHasOrderStates> getList() throws Exception {
-                return orderHasStateConverter.convert(order.getStates());
+            protected GenericListDto<OrderHasOrderStates> getListDto() throws Exception {
+                return orderService.getOrderHasStatesByOrder(id);
             }
         }.invoke();
     }

@@ -2,25 +2,23 @@ package oshop.web.api.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import oshop.dao.GenericDao;
 import oshop.model.Customer;
 import oshop.model.Order;
 import oshop.model.ShippingAddress;
-import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
-import oshop.web.api.rest.filter.Filter;
-import oshop.web.converter.EntityConverter;
+import oshop.services.CustomerService;
+import oshop.services.impl.CustomerServiceImpl;
+import oshop.services.GenericService;
+import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
+import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -29,40 +27,16 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/api/customers")
-@Transactional(readOnly = true)
 public class CustomerController extends BaseController<Customer, Integer> {
 
     private static final Log log = LogFactory.getLog(CustomerController.class);
 
     @Resource
-    private GenericDao<Customer, Integer> customerDao;
-
-    @Resource
-    private GenericDao<ShippingAddress, Integer> shippingAddressDao;
-
-    @Resource
-    private GenericDao<Order, Integer> orderDao;
-
-    @Resource
-    private Filter ordersFilter;
-
-    @Resource(name = "customerToDTOConverter")
-    private EntityConverter<Customer, Integer> converter;
-
-    @Resource(name = "shippingAddressToDTOConverter")
-    private EntityConverter<ShippingAddress, Integer> shippingAddressConverter;
-
-    @Resource(name = "orderToDTOConverter")
-    private EntityConverter<Order, Integer> orderConverter;
+    protected CustomerService customerService;
 
     @Override
-    protected GenericDao<Customer, Integer> getDao() {
-        return customerDao;
-    }
-
-    @Override
-    protected EntityConverter<Customer, Integer> getToDTOConverter() {
-        return converter;
+    protected GenericService<Customer, Integer> getService() {
+        return customerService;
     }
 
     @RequestMapping(
@@ -92,21 +66,11 @@ public class CustomerController extends BaseController<Customer, Integer> {
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<ShippingAddress, Integer>(shippingAddressConverter, getSearchDao()) {
+        return new ListReturningRestCallbackAdapter<ShippingAddress>() {
 
             @Override
-            protected Criteria getCriteria() {
-                Criteria criteria = shippingAddressDao.createCriteria();
-                criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", id));
-                getFilter().applyFilters(filters, criteria);
-                getSorter().applySorters(sorters, criteria);
-
-                return criteria;
-            }
-
-            @Override
-            protected List<ShippingAddress> getList(Criteria criteria) {
-                return shippingAddressDao.list(criteria, offset, limit);
+            protected GenericListDto<ShippingAddress> getListDto() throws Exception {
+                return customerService.getShippingAddressesByCustomer(id, filters, sorters, limit, offset);
             }
         }.invoke();
     }
@@ -138,21 +102,11 @@ public class CustomerController extends BaseController<Customer, Integer> {
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Order, Integer>(orderConverter, getSearchDao()) {
+        return new ListReturningRestCallbackAdapter<Order>() {
 
             @Override
-            protected Criteria getCriteria() {
-                Criteria criteria = orderDao.createCriteria();
-                criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", id));
-                ordersFilter.applyFilters(filters, criteria);
-                getSorter().applySorters(sorters, criteria);
-
-                return criteria;
-            }
-
-            @Override
-            protected List<Order> getList(Criteria criteria) {
-                return orderDao.list(criteria, offset, limit);
+            protected GenericListDto<Order> getListDto() throws Exception {
+                return customerService.getOrdersByCustomer(id, filters, sorters, limit, offset);
             }
         }.invoke();
     }

@@ -10,7 +10,9 @@ public abstract class ReturningRestCallbackAdapter<T> extends GenericRestCallbac
 
     @Override
     protected ResponseEntity<T> getResponse() throws Exception {
-        return new ResponseBuilder<T>().headers(headers).body(convertResult(getResult())).status(HttpStatus.OK).build();
+        T result = getResult();
+        T convertedResult = convertResult(result);
+        return new ResponseBuilder<T>().headers(headers).body(convertedResult).status(HttpStatus.OK).build();
     }
 
     protected T convertResult(T result) throws Exception {

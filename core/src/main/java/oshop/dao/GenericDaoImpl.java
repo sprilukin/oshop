@@ -103,7 +103,7 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
     }
 
     public List<T> list(Integer page, Integer limit) {
-        return list(null, page, limit);
+        return list((Criteria)null, page, limit);
     }
 
     public List<T> list(Criteria criteria, Integer page, Integer limit) {
@@ -117,6 +117,18 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         criteria.setMaxResults(safeLimitNumber).setFirstResult(safePageNumber * safeLimitNumber);
 
         return list(criteria);
+    }
+
+    public List<T> list(Query query, Integer page, Integer limit) {
+        int safePageNumber = page != null ? page : 0;
+        int safeLimitNumber = (limit != null && limit > 0) ? limit : listLimit;
+
+        query.setMaxResults(safeLimitNumber).setFirstResult(safePageNumber * safeLimitNumber);
+
+        @SuppressWarnings("unchecked") //Developer is responsible to return correct type by HQL
+        List<T> list = (List<T>) query.list();
+
+        return list;
     }
 
     @SuppressWarnings("unchecked")

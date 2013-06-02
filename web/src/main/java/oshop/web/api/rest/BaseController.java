@@ -2,11 +2,8 @@ package oshop.web.api.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,60 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import oshop.dao.GenericDao;
-import oshop.dao.GenericSearchDao;
 import oshop.model.BaseEntity;
-import oshop.web.api.rest.adapter.EntityDetachingRestCallbackAdapter;
-import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
+import oshop.services.GenericService;
+import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
+import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
-import oshop.web.api.rest.filter.Filter;
-import oshop.web.api.rest.sorter.Sorter;
-import oshop.web.converter.EntityConverter;
+import oshop.dto.GenericListDto;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Transactional(readOnly = true)
 public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serializable> {
 
     private static final Log log = LogFactory.getLog(BaseController.class);
 
-    @Resource
-    private GenericSearchDao searchDao;
-
-    @Resource
-    private Filter defaultStringLikeFilter;
-
-    @Resource
-    private Sorter defaultSorter;
-
-    @Resource(name = "defaultConverter")
-    private EntityConverter<T, ID> fromDTOConverter;
-
-    protected GenericSearchDao getSearchDao() {
-        return searchDao;
-    }
-
-    protected abstract GenericDao<T, ID> getDao();
-
-    protected abstract EntityConverter<T, ID> getToDTOConverter();
-
-    protected EntityConverter<T, ID> getFromDTOConverter() {
-        return fromDTOConverter;
-    }
-
-    protected Filter getFilter() {
-        return defaultStringLikeFilter;
-    }
-
-    protected Sorter getSorter() {
-        return defaultSorter;
-    }
+    protected abstract GenericService<T, ID> getService();
 
     @RequestMapping(
             value = "/",
@@ -76,15 +38,12 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    @Transactional(readOnly = false)
     public ResponseEntity<?> add(@RequestBody @Valid final T entity, final BindingResult result) {
         return new ValidationRestCallbackAdapter(result,
-                new EntityDetachingRestCallbackAdapter<T, ID>(getToDTOConverter()) {
+                new ReturningRestCallbackAdapter<T>() {
                     @Override
                     protected T getResult() throws Exception {
-                        ID id = getDao().add(getFromDTOConverter().convert(entity));
-                        getDao().getSession().clear();
-                        return getDao().get(id);
+                        return getService().add(entity);
                     }
                 }).invoke();
     }
@@ -92,12 +51,12 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.DELETE)
-    @Transactional(readOnly = false)
     public ResponseEntity<?> delete(@PathVariable final ID id) {
         return new VoidRestCallbackAdapter() {
             @Override
             protected void perform() throws Exception {
-                getDao().remove(id);            }
+                getService().remove(id);
+            }
         }.invoke();
     }
 
@@ -107,10 +66,10 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<?> get(@PathVariable final ID id) {
-        return new EntityDetachingRestCallbackAdapter<T, ID>(getToDTOConverter()) {
+        return new ReturningRestCallbackAdapter<T>() {
             @Override
             protected T getResult() throws Exception {
-                return getDao().get(id);
+                return getService().get(id);
             }
         }.invoke();
     }
@@ -120,19 +79,15 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             method = RequestMethod.PUT,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    @Transactional(readOnly = false)
     public ResponseEntity<?> update(
             @PathVariable final ID id,
             @RequestBody @Valid final T entity, final BindingResult result) {
 
         return new ValidationRestCallbackAdapter(result,
-                new EntityDetachingRestCallbackAdapter<T, ID>(getToDTOConverter()) {
+                new ReturningRestCallbackAdapter<T>() {
                     @Override
                     protected T getResult() throws Exception {
-                        entity.setId(id);
-                        getDao().update(getFromDTOConverter().convert(entity));
-                        getDao().getSession().clear();
-                        return getDao().get(id);
+                        return getService().update(entity, id);
                     }
                 }).invoke();
     }
@@ -162,20 +117,11 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<T, ID>(getToDTOConverter(), searchDao) {
+        return new ListReturningRestCallbackAdapter<T>() {
 
             @Override
-            protected Criteria getCriteria() {
-                Criteria criteria = getDao().createCriteria();
-                getFilter().applyFilters(filters, criteria);
-                getSorter().applySorters(sorters, criteria);
-
-                return criteria;
-            }
-
-            @Override
-            protected List<T> getList(Criteria criteria) {
-                return getDao().list(criteria, offset, limit);
+            protected GenericListDto<T> getListDto() throws Exception {
+                return getService().list(filters, sorters, limit, offset);
             }
         }.invoke();
     }

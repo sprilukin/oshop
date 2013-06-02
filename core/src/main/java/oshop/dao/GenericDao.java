@@ -32,6 +32,8 @@ public interface GenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
     public List<T> list(Criteria criteria, Integer page, Integer limit);
 
+    public List<T> list(Query query, Integer page, Integer limit);
+
     @Transactional(readOnly = false)
     public ID add(@Valid T entity);
 

@@ -2,23 +2,21 @@ package oshop.web.api.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import oshop.dao.GenericDao;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
-import oshop.web.api.rest.adapter.EntityListDetachingRestCallbackAdapter;
-import oshop.web.converter.EntityConverter;
+import oshop.services.GenericService;
+import oshop.services.ProductCategoryService;
+import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
+import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -27,31 +25,16 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/api/productCategories")
-@Transactional(readOnly = true)
 public class ProductCategoryController extends BaseController<ProductCategory, Integer> {
 
     private static final Log log = LogFactory.getLog(ProductCategoryController.class);
 
     @Resource
-    private GenericDao<ProductCategory, Integer> productCategoryDao;
-
-    @Resource
-    private GenericDao<Product, Integer> productDao;
-
-    @Resource(name = "productCategoryToDTOConverter")
-    private EntityConverter<ProductCategory, Integer> converter;
-
-    @Resource(name = "productToDTOConverter")
-    private EntityConverter<Product, Integer> productConverter;
+    protected ProductCategoryService productsCategoryService;
 
     @Override
-    protected GenericDao<ProductCategory, Integer> getDao() {
-        return productCategoryDao;
-    }
-
-    @Override
-    protected EntityConverter<ProductCategory, Integer> getToDTOConverter() {
-        return converter;
+    protected GenericService<ProductCategory, Integer> getService() {
+        return productsCategoryService;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @RequestMapping(
@@ -81,21 +64,11 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new EntityListDetachingRestCallbackAdapter<Product, Integer>(productConverter, getSearchDao()) {
+        return new ListReturningRestCallbackAdapter<Product>() {
 
             @Override
-            protected Criteria getCriteria() {
-                Criteria criteria = productDao.createCriteria();
-                criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-                getFilter().applyFilters(filters, criteria);
-                getSorter().applySorters(sorters, criteria);
-
-                return criteria;
-            }
-
-            @Override
-            protected List<Product> getList(Criteria criteria) {
-                return productDao.list(criteria, offset, limit);
+            protected GenericListDto<Product> getListDto() throws Exception {
+                return productsCategoryService.getProductsByCategory(id, filters, sorters, limit, offset);
             }
         }.invoke();
     }
