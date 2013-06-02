@@ -11,7 +11,6 @@ import oshop.services.GenericService;
 import oshop.services.filter.Filter;
 import oshop.services.sorter.Sorter;
 import oshop.services.converter.EntityConverter;
-import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -25,7 +24,7 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
     private EntityConverter<T, ID> fromDTOConverter;
 
     @Resource
-    private Filter defaultStringLikeFilter;
+    private Filter orStringLikeFilter;
 
     @Resource
     private Sorter defaultSorter;
@@ -42,7 +41,7 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
     }
 
     protected Filter getFilter() {
-        return defaultStringLikeFilter;
+        return orStringLikeFilter;
     }
 
     protected Sorter getSorter() {

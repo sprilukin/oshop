@@ -2,6 +2,7 @@ package oshop.services.filter;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -55,7 +56,7 @@ public class OrdersFilter extends BaseFilter {
             case dateEquals:
                 return dateEquals(values.get(0), criteria);
             case customerLike:
-                return customerLike(values.get(0), criteria);
+                return customerLike(values, criteria);
             case productsCountEquals:
                 return productsCount(values.get(0), criteria);
             case productsCountGreaterOrEquals:
@@ -75,7 +76,7 @@ public class OrdersFilter extends BaseFilter {
             case totalPriceLessOrEquals:
                 return totalPriceLE(values.get(0), criteria);
             case currentOrderStateLike:
-                return currentOrderStateName(values.get(0), criteria);
+                return currentOrderStateName(values, criteria);
             default:
                 throw new IllegalArgumentException("Invalid filter");
         }
@@ -85,9 +86,15 @@ public class OrdersFilter extends BaseFilter {
         return Restrictions.eq("date", value);
     }
 
-    private Criterion customerLike(String value, Criteria criteria) {
+    private Criterion customerLike(List<String> values, Criteria criteria) {
         addAlias(criteria, "customer", "c");
-        return Restrictions.like("c.name", value, MatchMode.ANYWHERE);
+
+        Disjunction disjunction = Restrictions.disjunction();
+        for (String likeExpression : values) {
+            disjunction.add(Restrictions.like("c.name", likeExpression, MatchMode.ANYWHERE));
+        }
+
+        return disjunction;
     }
 
     private Criterion productsCount(String value, Criteria criteria) {
@@ -126,8 +133,13 @@ public class OrdersFilter extends BaseFilter {
         return Restrictions.le("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
     }
 
-    private Criterion currentOrderStateName(String value, Criteria criteria) {
-        return Restrictions.like("currentOrderStateName", value, MatchMode.ANYWHERE);
+    private Criterion currentOrderStateName(List<String> values, Criteria criteria) {
+        Disjunction disjunction = Restrictions.disjunction();
+        for (String likeExpression : values) {
+            disjunction.add(Restrictions.like("currentOrderStateName", likeExpression, MatchMode.ANYWHERE));
+        }
+
+        return disjunction;
     }
 
 }

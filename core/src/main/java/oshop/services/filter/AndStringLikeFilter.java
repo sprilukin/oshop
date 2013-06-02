@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class DefaultStringLikeFilter extends BaseFilter {
+public class AndStringLikeFilter extends BaseFilter {
 
 
     protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
