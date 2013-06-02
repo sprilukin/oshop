@@ -2,8 +2,6 @@ package oshop.services.filter;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import oshop.model.EntityUtils;
@@ -88,13 +86,7 @@ public class OrdersFilter extends BaseFilter {
 
     private Criterion customerLike(List<String> values, Criteria criteria) {
         addAlias(criteria, "customer", "c");
-
-        Disjunction disjunction = Restrictions.disjunction();
-        for (String likeExpression : values) {
-            disjunction.add(Restrictions.like("c.name", likeExpression, MatchMode.ANYWHERE));
-        }
-
-        return disjunction;
+        return FilterUtils.stringLikeDisjunction("c.name", values);
     }
 
     private Criterion productsCount(String value, Criteria criteria) {
@@ -134,12 +126,7 @@ public class OrdersFilter extends BaseFilter {
     }
 
     private Criterion currentOrderStateName(List<String> values, Criteria criteria) {
-        Disjunction disjunction = Restrictions.disjunction();
-        for (String likeExpression : values) {
-            disjunction.add(Restrictions.like("currentOrderStateName", likeExpression, MatchMode.ANYWHERE));
-        }
-
-        return disjunction;
+        return FilterUtils.stringLikeDisjunction("currentOrderStateName", values);
     }
 
 }

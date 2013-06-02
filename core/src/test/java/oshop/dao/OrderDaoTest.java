@@ -18,7 +18,7 @@ public class OrderDaoTest extends BaseDaoTest {
 
 
     @Resource
-    private GenericDaoImpl<Order, Integer> orderDao;
+    private GenericDao<Order, Integer> orderDao;
 
     @Resource
     private GenericDao<Customer, Integer> customerDao;

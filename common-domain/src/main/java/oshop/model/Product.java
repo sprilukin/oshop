@@ -5,12 +5,14 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -33,6 +35,9 @@ public class Product extends BaseEntity<Integer> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductCategory category;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    private List<Order> orders;
 
     private Integer imageId;
 
@@ -66,6 +71,14 @@ public class Product extends BaseEntity<Integer> {
 
     public void setCategory(ProductCategory category) {
         this.category = category;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public Integer getImageId() {
