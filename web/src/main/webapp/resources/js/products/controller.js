@@ -8,8 +8,9 @@ define([
     'products/collection',
     'products/listView',
     'products/editView',
+    'products/filterByOrderStatusesView',
     'common/baseControllerWithListAndEdit'
-], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, BaseControllerWithListAndEdit) {
+], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, BaseControllerWithListAndEdit) {
 
     var getProductCategoryId = function() {
         var matches = window.location.pathname.match(/productCategories\/([\d]+)([\/#\?].*)?$/);
@@ -47,6 +48,15 @@ define([
     };
 
     _.extend(ProductsController.prototype, BaseControllerWithListAndEdit.prototype, {
+        initialize: function(options) {
+            BaseControllerWithListAndEdit.prototype.initialize.call(this, options);
+
+            this.filterByOrderStatusesView = new FilterByOrderStatusesView({
+                collection: this.collection,
+                filter: this.filter
+            })
+        },
+
         edit: function (id) {
             this.editView.model.clear({silent: true});
 

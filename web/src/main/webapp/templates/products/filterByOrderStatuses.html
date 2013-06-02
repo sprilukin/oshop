@@ -1,0 +1,8 @@
+<label for="skipSent" >
+    <input id="skipSent" type="checkbox" data-status="Отправлено" {{#skipSent}}checked="checked"{{/skipSent}}>
+    {{& products_hide_sent}}
+</label>
+<label for="skipRecieved" >
+    <input id="skipRecieved" type="checkbox" data-status="Получен" {{#skipRecieved}}checked="checked"{{/skipRecieved}}>
+    {{& products_hide_recieved}}
+</label>

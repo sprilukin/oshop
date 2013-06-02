@@ -13,8 +13,8 @@
 
 <div class="row-fluid span12 entity-controls">
     <div class="search inline span3"></div>
-
-    <div class="inline span3 offset6">
+    <div class="orderStatus inline span2 offset2"></div>
+    <div class="inline span3 offset2">
         <a href="#add" role="button" class="btn btn-primary">
             <i class="icon-plus icon-white"> </i>
             <spring:message code="products.add.product"/>

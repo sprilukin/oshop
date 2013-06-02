@@ -91,7 +91,7 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
         criteria.setFirstResult(0);
         criteria.setMaxResults(1);
 
-        criteria = criteria.setProjection(Projections.rowCount());
+        criteria = criteria.setProjection(Projections.countDistinct("id"));
 
         return criteria;
     }
