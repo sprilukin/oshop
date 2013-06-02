@@ -1,5 +1,6 @@
 package oshop.web.api.rest.adapter;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import oshop.dao.exception.NotFoundException;
@@ -14,6 +15,13 @@ public abstract class GenericRestCallbackAdapter<T> implements RestCallback {
             return new ResponseBuilder<String>()
                     .status(HttpStatus.NOT_FOUND)
                     .body(e.getMessage()).build();
+        } catch (ConstraintViolationException e) {
+            StringBuilder sb = new StringBuilder(e.getMessage()).append(": ");
+            sb.append(e.getSQLException().getMessage());
+
+            return new ResponseBuilder<String>()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(sb.toString()).build();
         } catch (Exception e) {
             return new ResponseBuilder<String>()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
