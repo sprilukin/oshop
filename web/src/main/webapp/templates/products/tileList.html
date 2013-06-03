@@ -34,7 +34,7 @@
         <div class="image-wrapper">
             <div data-toggle="modal-gallery" data-target="#modal-gallery">
                 <a href="{{context}}/api/images/{{attributes.imageId}}" data-gallery="gallery">
-                    <img src="{{context}}/api/images/{{attributes.imageId}}">
+                    <img src="{{context}}/api/images/{{attributes.imageId}}" class="img-polaroid">
                 </a>
             </div>
         </div>
@@ -61,8 +61,8 @@
                 <h6>₴ {{attributes.price}}.00</h6>
             </div>
         </div>
-        <div><h5 title="{{attributes.name}}" class="text">{{attributes.name}}</h5></div>
-        <div><p title="{{attributes.description}}" class="text">{{attributes.description}}&nbsp;</p></div>
+        <div><h5 title="{{attributes.name}}" class="text-ellipsis text-title">{{attributes.name}}</h5></div>
+        <div><p title="{{attributes.description}}" class="text-ellipsis text-title">{{attributes.description}}&nbsp;</p></div>
         <div><a href="{{context}}/productCategories#edit/{{attributes.category.id}}">{{attributes.category.name}}</a>
         </div>
     </div>
