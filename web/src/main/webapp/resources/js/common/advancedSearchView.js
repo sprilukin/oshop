@@ -35,15 +35,25 @@ define([
         getActiveFilter: function() {
             var filters = this.filter.getAll();
             if (filters && filters.length) {
-                return filters[0].name;
-            } else {
-                return this.searchOptions[0].field;
+                var firstExistingFilter = this.findFirstFilter(filters);
+                if (firstExistingFilter) {
+                    return firstExistingFilter.name;
+                }
             }
+
+            var active = _.find(this.searchOptions, function (option) {
+                return option.active;
+            });
+
+            if (active) {
+                return active.field;
+            }
+
+            return this.searchOptions[0].field;
         },
 
         render: function () {
             var activeFilter = this.getActiveFilter();
-            this.setActiveFilter(activeFilter);
 
             this.$el.html(Mustache.render(advancedSearchTemplate, {
                 fields: this.searchOptions,
@@ -65,10 +75,27 @@ define([
         changeFilter: function(event) {
             var field = event ? $(event.currentTarget).attr("data-field") : this.getActiveFilter();
 
-            this.filter.reset();
+            this.setActiveFilter(field);
+            this.resetFilters();
             this.filter.set(field, this.$el.find("input.search-query").val());
 
             event && event.preventDefault();
+        },
+
+        findFirstFilter: function(filters) {
+            var searchFieldNames = _.map(this.searchOptions, function(item) {
+                return item.field;
+            });
+
+            return _.find(filters, function(filter) {
+                return _.indexOf(searchFieldNames, filter.name) >= 0 && filter.value;
+            }, this);
+        },
+
+        resetFilters: function() {
+            _.each(this.searchOptions, function(option) {
+                this.filter.remove(option.field);
+            }, this);
         }
     });
 

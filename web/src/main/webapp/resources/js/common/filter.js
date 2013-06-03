@@ -44,6 +44,14 @@ define([
             return existingFilter && existingFilter.value;
         },
 
+        remove: function(name) {
+            if (this.filters && this.filters.length > 0) {
+                this.filters = _.filter(this.filters, function(field) {
+                    return field.name !== name;
+                });
+            }
+        },
+
         getAll: function() {
             return this.filters;
         },

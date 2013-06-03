@@ -9,8 +9,11 @@ define([
     'products/listView',
     'products/editView',
     'products/filterByOrderStatusesView',
+    'common/messages',
+    'common/advancedSearchView',
+    'common/filter',
     'common/baseControllerWithListAndEdit'
-], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, BaseControllerWithListAndEdit) {
+], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, messages, AdvancedSearchView, Filter, BaseControllerWithListAndEdit) {
 
     var getProductCategoryId = function() {
         var matches = window.location.pathname.match(/productCategories\/([\d]+)([\/#\?].*)?$/);
@@ -37,13 +40,20 @@ define([
 
     var ProductsController = function() {
         this.productCategoryId = getProductCategoryId();
+        var collection = new Collection({productCategoryId: this.productCategoryId});
+        var filter = new Filter();
 
         this.initialize({
-            EditView: EditView,
             Model: Model,
-            collection: new Collection({productCategoryId: this.productCategoryId}),
+            collection: collection,
             View: ListView,
-            search: "name"
+            EditView: EditView,
+            filter: filter,
+            searchView: new AdvancedSearchView({collection: collection, filter: filter, search: [
+                {field: "id", label: messages["products_filter_id_in"]},
+                {field: "name", label: messages["products_filter_name_like"]},
+                {field: "description", label: messages["products_description_like"]}
+            ]})
         });
     };
 
