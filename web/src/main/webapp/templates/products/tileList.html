@@ -1,0 +1,70 @@
+<div>
+    <label for="listType">
+    <input id="listType" type="checkbox" checked="checked">
+        {{products_list_as_tiles}}
+    </label>
+</div>
+
+<div style="margin: 10px">
+    <h6 style="display: inline">{{products_list_tiles_order_by}}</h6>
+    <ul class="inline">
+        <li>
+            <h6>{{general_id}}
+            <span class="sorter" data-column="id"></span></h6>
+        </li>
+        <li>
+            <h6>{{products_column_name}}
+            <span class="sorter" data-column="name"></span></h6>
+        </li>
+        <li>
+            <h6>{{products_column_description}}
+            <span class="sorter" data-column="description"></span></h6>
+        </li>
+        <li>
+            <h6>{{products_column_price}}
+            <span class="sorter" data-column="price"></span></h6>
+        </li>
+    </ul>
+</div>
+
+<div class="tile-list-container">
+    {{#models}}
+    <div class="pull-left tile-list-item">
+
+        <div class="image-wrapper">
+            <div data-toggle="modal-gallery" data-target="#modal-gallery">
+                <a href="{{context}}/api/images/{{attributes.imageId}}" data-gallery="gallery">
+                    <img src="{{context}}/api/images/{{attributes.imageId}}">
+                </a>
+            </div>
+        </div>
+        <div>
+            <div class="btn-group pull-right">
+                <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="dropdownMenu">
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#edit/{{id}}"><i class="icon-pencil"></i>
+                            {{general_modify}}</a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" data-id="{{id}}" href="#" class="delete"><i class="icon-trash"></i>
+                            {{general_remove}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h6>№ {{id}}</h6>
+            </div>
+            <div>
+                <h6>₴ {{attributes.price}}.00</h6>
+            </div>
+        </div>
+        <div><h5>{{attributes.name}}</h5></div>
+        <div><p>{{attributes.description}}</p></div>
+        <div><a href="{{context}}/productCategories#edit/{{attributes.category.id}}">{{attributes.category.name}}</a>
+        </div>
+    </div>
+    {{/models}}
+</div>

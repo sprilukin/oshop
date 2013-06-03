@@ -44,3 +44,25 @@ span.sort {
 input.price {
     width: 30%
 }
+
+/* tile list */
+.tile-list-item {
+    width: 150px;
+    height: 270px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+.tile-list-item .image-wrapper {
+    text-align: center;
+    height: 120px
+}
+
+.tile-list-item img {
+    width: 140px;
+    max-height: 120px;
+}
