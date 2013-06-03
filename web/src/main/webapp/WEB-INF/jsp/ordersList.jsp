@@ -13,8 +13,8 @@
 
 <div class="row-fluid span12 entity-controls">
     <div class="search inline span3"></div>
-
-    <div class="inline span3 offset6">
+    <div class="orderStatus inline span2 offset2"></div>
+    <div class="inline span3 offset2">
         <c:if test="${customerId eq null}">
             <c:set var="addPath" value="${pageContext.request.contextPath}/orders/add"/>
         </c:if>

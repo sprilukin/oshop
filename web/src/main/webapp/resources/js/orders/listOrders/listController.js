@@ -6,11 +6,12 @@ define([
     'orders/model',
     'orders/collection',
     'orders/listOrders/listView',
+    'orders/listOrders/filterByOrderStatusesView',
     'common/baseListController',
     'common/advancedSearchView',
     'common/filter',
     'common/messages'
-], function (_, Model, Collection, ListView, BaseListController, AdvancedSearchView, Filter, messages) {
+], function (_, Model, Collection, ListView, FilterByOrderStatusesView, BaseListController, AdvancedSearchView, Filter, messages) {
 
     var getCustomerId = function() {
         var matches = window.location.pathname.match(/customers\/([\d]+)([\/#\?].*)?$/);
@@ -48,7 +49,16 @@ define([
         });
     };
 
-    _.extend(OrdersController.prototype, BaseListController.prototype);
+    _.extend(OrdersController.prototype, BaseListController.prototype, {
+        initialize: function(options) {
+            BaseListController.prototype.initialize.call(this, options);
+
+            this.filterByOrderStatusesView = new FilterByOrderStatusesView({
+                collection: this.collection,
+                filter: this.filter
+            })
+        }
+    });
 
     return OrdersController;
 });

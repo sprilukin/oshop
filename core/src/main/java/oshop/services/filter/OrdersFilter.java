@@ -24,7 +24,8 @@ public class OrdersFilter extends BaseFilter {
         totalPriceEquals("totalPrice"),
         totalPriceGreaterOrEquals("totalPriceGE"),
         totalPriceLessOrEquals("totalPriceLE"),
-        currentOrderStateLike("currentOrderStateName");
+        currentOrderStateLike("currentOrderStateName"),
+        orderStateNotIn("orderStateNotIn");
 
         private String name;
 
@@ -75,6 +76,8 @@ public class OrdersFilter extends BaseFilter {
                 return totalPriceLE(values.get(0), criteria);
             case currentOrderStateLike:
                 return currentOrderStateName(values, criteria);
+            case orderStateNotIn:
+                return orderStateNotIn(values, criteria);
             default:
                 throw new IllegalArgumentException("Invalid filter");
         }
@@ -129,4 +132,10 @@ public class OrdersFilter extends BaseFilter {
         return FilterUtils.stringLikeDisjunction("currentOrderStateName", values);
     }
 
+    private Criterion orderStateNotIn(List<String> values, Criteria criteria) {
+        return Restrictions.or(
+                Restrictions.isNull("currentOrderStateName"),
+                Restrictions.not(Restrictions.in("currentOrderStateName", values))
+        );
+    }
 }

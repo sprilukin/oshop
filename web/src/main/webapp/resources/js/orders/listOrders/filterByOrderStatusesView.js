@@ -6,9 +6,8 @@ define([
     'backbone',
     'mustache',
     'common/messages',
-    'orderStates/collection',
     'text!templates/orders/filterByOrderStatuses.html'
-], function ($, Backbone, Mustache, messages, OrderStatesCollection, filterByOrderStatusesTemplate) {
+], function ($, Backbone, Mustache, messages, filterByOrderStatusesTemplate) {
 
     var FilterByOrderStatusesView = Backbone.View.extend({
         el: '.orderStatus',
@@ -22,28 +21,17 @@ define([
                 this.render();
             }, this);
 
-            this.field = "orderStateIn";
+            this.field = "orderStateNotIn";
             this.filter = options.filter;
             this.model = {
-                skipSent: typeof options.skipSent !== "undefined" ?  options.skipSent : true,
-                skipRecieved: typeof options.skipRecieved !== "undefined" ?  options.skipRecieved : true,
-                skipPostponed: typeof options.skipPostponed !== "undefined" ?  options.skipPostponed : true
+                skipSent: typeof options.skipSent !== "undefined" ?  options.skipSent : false,
+                skipRecieved: typeof options.skipRecieved !== "undefined" ?  options.skipRecieved : false,
+                skipPostponed: typeof options.skipPostponed !== "undefined" ?  options.skipPostponed : false
             };
         },
 
         render: function () {
             this.$el.html(Mustache.render(filterByOrderStatusesTemplate, _.extend(this.model, messages)));
-
-            if (!this.allStatuses) {
-                var that = this;
-                new OrderStatesCollection().fetch({success: function(collection, result) {
-                    that.allStatuses = _.map(result, function(item) {
-                        return item.name;
-                    });
-
-                    that.change();
-                }});
-            }
         },
 
         change: function() {
@@ -59,8 +47,7 @@ define([
                 that.model[$el.attr("id")] = checked;
             });
 
-            var statuses = _.difference(this.allStatuses, toSkip).join(",");
-            this.filter.set(this.field, statuses);
+            this.filter.set(this.field, toSkip.join(","));
         }
     });
 
