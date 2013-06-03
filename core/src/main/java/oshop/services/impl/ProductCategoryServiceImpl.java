@@ -11,6 +11,7 @@ import oshop.model.Product;
 import oshop.model.ProductCategory;
 import oshop.services.ProductCategoryService;
 import oshop.services.converter.EntityConverter;
+import oshop.services.filter.Filter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,6 +34,9 @@ public class ProductCategoryServiceImpl extends GenericServiceImpl<ProductCatego
     @Resource(name = "productToDTOConverter")
     private EntityConverter<Product, Integer> productConverter;
 
+    @Resource
+    protected Filter productsFilter;
+
     @Override
     protected GenericDao<ProductCategory, Integer> getDao() {
         return productCategoryDao;
@@ -50,7 +54,7 @@ public class ProductCategoryServiceImpl extends GenericServiceImpl<ProductCatego
 
         Criteria criteria = productDao.createCriteria();
         criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-        getFilter().applyFilters(filters, criteria);
+        productsFilter.applyFilters(filters, criteria);
         getSorter().applySorters(sorters, criteria);
 
         List<Product> list = productConverter.convert(productDao.list(criteria, offset, limit));
