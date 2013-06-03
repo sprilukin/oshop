@@ -63,6 +63,6 @@ input.price {
 }
 
 .tile-list-item img {
-    width: 140px;
+    max-width: 140px;
     max-height: 120px;
 }
