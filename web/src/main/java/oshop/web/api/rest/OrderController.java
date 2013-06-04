@@ -21,7 +21,6 @@ import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
-import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -85,7 +84,7 @@ public class OrderController extends BaseController<Order, Integer> {
 
         return new ListReturningRestCallbackAdapter<Product>() {
             @Override
-            protected GenericListDto<Product> getListDto() throws Exception {
+            protected List<Product> getResult() throws Exception {
                 return orderService.getProductsByOrder(id);
             }
         }.invoke();
@@ -120,7 +119,7 @@ public class OrderController extends BaseController<Order, Integer> {
 
         return new ListReturningRestCallbackAdapter<OrderHasOrderStates>() {
             @Override
-            protected GenericListDto<OrderHasOrderStates> getListDto() throws Exception {
+            protected List<OrderHasOrderStates> getResult() throws Exception {
                 return orderService.getOrderHasStatesByOrder(id);
             }
         }.invoke();

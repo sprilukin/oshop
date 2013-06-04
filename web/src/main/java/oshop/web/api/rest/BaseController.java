@@ -18,7 +18,6 @@ import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
-import oshop.dto.GenericListDto;
 
 import javax.validation.Valid;
 import java.io.Serializable;
@@ -120,7 +119,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         return new ListReturningRestCallbackAdapter<T>() {
 
             @Override
-            protected GenericListDto<T> getListDto() throws Exception {
+            protected List<T> getResult() throws Exception {
                 return getService().list(filters, sorters, limit, offset);
             }
         }.invoke();

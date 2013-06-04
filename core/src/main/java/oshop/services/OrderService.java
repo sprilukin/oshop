@@ -1,7 +1,7 @@
 package oshop.services;
 
 import org.springframework.transaction.annotation.Transactional;
-import oshop.dto.GenericListDto;
+import oshop.dto.PaginatedCollectionList;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
@@ -18,14 +18,14 @@ public interface OrderService extends GenericService<Order, Integer> {
     @Transactional(readOnly = false)
     public void addProductsToOrder(final Integer orderId, final List<Integer> ids);
 
-    public GenericListDto<Product> getProductsByOrder(
+    public PaginatedCollectionList<Product> getProductsByOrder(
             Integer orderId, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception;
 
-    public GenericListDto<Product> getProductsByOrder(Integer orderId) throws Exception;
+    public PaginatedCollectionList<Product> getProductsByOrder(Integer orderId) throws Exception;
 
     @Transactional(readOnly = false)
     public OrderHasOrderStates addOrderHasStateToOrder(final Integer orderId, OrderHasOrderStates entity) throws Exception;
 
-    public GenericListDto<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception;
+    public PaginatedCollectionList<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception;
 }

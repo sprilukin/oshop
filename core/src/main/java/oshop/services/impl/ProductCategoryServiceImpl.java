@@ -6,7 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import oshop.dao.GenericDao;
-import oshop.dto.GenericListDto;
+import oshop.dto.PaginatedCollectionList;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
 import oshop.services.ProductCategoryService;
@@ -47,7 +47,7 @@ public class ProductCategoryServiceImpl extends GenericServiceImpl<ProductCatego
         return converter;
     }
 
-    public GenericListDto<Product> getProductsByCategory(
+    public PaginatedCollectionList<Product> getProductsByCategory(
             Integer id, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset)
                 throws Exception {

@@ -6,7 +6,8 @@ import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import oshop.dao.GenericDao;
-import oshop.dto.GenericListDto;
+import oshop.dto.ListWithTotalSize;
+import oshop.dto.PaginatedCollectionList;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
@@ -90,7 +91,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         getDao().update(order);
     }
 
-    public GenericListDto<Product> getProductsByOrder(
+    public PaginatedCollectionList<Product> getProductsByOrder(
             Integer orderId, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception {
 
@@ -102,14 +103,14 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
                 "select count(p.id) from oshop.model.Order o join o.products as p where o.id = :id").setInteger("id", orderId);
         Number total = (Number)totalQuery.uniqueResult();
 
-        return new GenericListDto<Product>(list, total.longValue());
+        return new ListWithTotalSize<Product>(list, total.longValue());
     }
 
-    public GenericListDto<Product> getProductsByOrder(Integer orderId) throws Exception {
+    public PaginatedCollectionList<Product> getProductsByOrder(Integer orderId) throws Exception {
         Order order = getDao().get(orderId);
         List<Product> list = productConverter.convert(order.getProducts());
 
-        return new GenericListDto<Product>(list, (long)list.size());
+        return new ListWithTotalSize<Product>(list, (long)list.size());
     }
 
     public OrderHasOrderStates addOrderHasStateToOrder(final Integer orderId, OrderHasOrderStates entity) throws Exception {
@@ -119,11 +120,11 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         return orderHasStateConverter.convert(orderHasOrderStatesDao.get(id));
     }
 
-    public GenericListDto<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception {
+    public PaginatedCollectionList<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception {
         Order order = getDao().get(orderId);
         List<OrderHasOrderStates> list = orderHasStateConverter.convert(order.getStates());
 
-        return new GenericListDto<OrderHasOrderStates>(list, (long)list.size());
+        return new ListWithTotalSize<OrderHasOrderStates>(list, (long)list.size());
     }
 
 }

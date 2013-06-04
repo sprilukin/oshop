@@ -16,7 +16,6 @@ import oshop.model.ProductCategory;
 import oshop.services.GenericService;
 import oshop.services.ProductCategoryService;
 import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
-import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -67,7 +66,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, I
         return new ListReturningRestCallbackAdapter<Product>() {
 
             @Override
-            protected GenericListDto<Product> getListDto() throws Exception {
+            protected List<Product> getResult() throws Exception {
                 return productsCategoryService.getProductsByCategory(id, filters, sorters, limit, offset);
             }
         }.invoke();

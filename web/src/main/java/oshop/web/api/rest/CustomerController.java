@@ -15,10 +15,8 @@ import oshop.model.Customer;
 import oshop.model.Order;
 import oshop.model.ShippingAddress;
 import oshop.services.CustomerService;
-import oshop.services.impl.CustomerServiceImpl;
 import oshop.services.GenericService;
 import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
-import oshop.dto.GenericListDto;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -69,7 +67,7 @@ public class CustomerController extends BaseController<Customer, Integer> {
         return new ListReturningRestCallbackAdapter<ShippingAddress>() {
 
             @Override
-            protected GenericListDto<ShippingAddress> getListDto() throws Exception {
+            protected List<ShippingAddress> getResult() throws Exception {
                 return customerService.getShippingAddressesByCustomer(id, filters, sorters, limit, offset);
             }
         }.invoke();
@@ -105,7 +103,7 @@ public class CustomerController extends BaseController<Customer, Integer> {
         return new ListReturningRestCallbackAdapter<Order>() {
 
             @Override
-            protected GenericListDto<Order> getListDto() throws Exception {
+            protected List<Order> getResult() throws Exception {
                 return customerService.getOrdersByCustomer(id, filters, sorters, limit, offset);
             }
         }.invoke();
