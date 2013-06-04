@@ -9,6 +9,7 @@ import oshop.model.Product;
 import java.util.List;
 import java.util.Map;
 
+@Transactional(readOnly = true)
 public interface OrderService extends GenericService<Order, Integer> {
 
     @Transactional(readOnly = false)
@@ -21,12 +22,10 @@ public interface OrderService extends GenericService<Order, Integer> {
             Integer orderId, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception;
 
-    @Transactional(readOnly = true)
     public GenericListDto<Product> getProductsByOrder(Integer orderId) throws Exception;
 
     @Transactional(readOnly = false)
     public OrderHasOrderStates addOrderHasStateToOrder(final Integer orderId, OrderHasOrderStates entity) throws Exception;
 
-    @Transactional(readOnly = true)
     public GenericListDto<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception;
 }

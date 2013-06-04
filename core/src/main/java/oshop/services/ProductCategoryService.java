@@ -8,9 +8,9 @@ import oshop.model.ProductCategory;
 import java.util.List;
 import java.util.Map;
 
+@Transactional(readOnly = true)
 public interface ProductCategoryService extends GenericService<ProductCategory, Integer> {
 
-    @Transactional(readOnly = true)
     public GenericListDto<Product> getProductsByCategory(
             Integer id, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset)
