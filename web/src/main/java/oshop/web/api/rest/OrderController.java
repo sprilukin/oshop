@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
@@ -24,7 +25,9 @@ import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/orders")
@@ -86,6 +89,43 @@ public class OrderController extends BaseController<Order, Integer> {
             @Override
             protected List<Product> getResult() throws Exception {
                 return orderService.getProductsByOrder(id);
+            }
+        }.invoke();
+    }
+
+    @RequestMapping(
+            value = "/{id}/products/withoutOrder",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> listAllProductsButOrder(
+            @PathVariable final Integer id,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
+
+        return listAllProductsButOrderWithFiltersAndSortes(
+                id,
+                Collections.<String, List<String>>emptyMap(),
+                Collections.<String, List<String>>emptyMap(),
+                limit, offset);
+    }
+
+    @RequestMapping(
+            value = "/{id}/products/withoutOrder/{filter}/{sort}",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> listAllProductsButOrderWithFiltersAndSortes(
+            @PathVariable final Integer id,
+            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
+
+        return new ListReturningRestCallbackAdapter<Product>() {
+            @Override
+            protected List<Product> getResult() throws Exception {
+                return orderService.getProductsAllButOrder(id, filters, sorters, limit, offset);
             }
         }.invoke();
     }

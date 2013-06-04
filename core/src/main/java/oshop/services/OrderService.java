@@ -18,8 +18,9 @@ public interface OrderService extends GenericService<Order, Integer> {
     @Transactional(readOnly = false)
     public void addProductsToOrder(final Integer orderId, final List<Integer> ids);
 
-    public PaginatedCollectionList<Product> getProductsByOrder(
-            Integer orderId, Map<String, List<String>> filters, Map<String, List<String>> sorters,
+    public PaginatedCollectionList<Product> getProductsAllButOrder(
+            Integer orderId, Map<String, List<String>> filters,
+            Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception;
 
     public PaginatedCollectionList<Product> getProductsByOrder(Integer orderId) throws Exception;

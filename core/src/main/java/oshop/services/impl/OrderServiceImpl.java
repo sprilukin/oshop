@@ -1,9 +1,9 @@
 package oshop.services.impl;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Service;
 import oshop.dao.GenericDao;
 import oshop.dto.ListWithTotalSize;
@@ -22,6 +22,14 @@ import java.util.Map;
 @Service("orderService")
 public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> implements OrderService {
 
+    public static final String DELETE_PRODUCTS_FROM_ORDER_SQL =
+            "delete from order_products where order_id = :id and product_id in :ids";
+
+    public static final String ALL_PRODUCTS_FROM_ORDER_EXCEPT_THIS_SQL =
+            "not ({alias}.id in (select p.id from orders o " +
+            "inner join order_products op on o.id=op.order_id " +
+            "inner join product p on op.product_id=p.id where o.id = ? ))";
+
     @Resource
     protected GenericDao<Order, Integer> orderDao;
 
@@ -36,6 +44,9 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
 
     @Resource
     private Filter ordersFilter;
+
+    @Resource
+    private Filter productsFilter;
 
     @Resource(name = "orderFromDTOConverter")
     private EntityConverter<Order, Integer> fromDtoConverter;
@@ -68,7 +79,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
 
     public void deleteProductsFromOrder(final Integer orderId, final List<Integer> ids) throws Exception {
         getDao().executeQuery(
-                "delete from order_products where order_id = :id and product_id in :ids",
+                DELETE_PRODUCTS_FROM_ORDER_SQL,
                 new GenericDao.SQLQueryManipulator() {
                     @Override
                     public void manipulateWithQuery(SQLQuery query) {
@@ -91,19 +102,21 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         getDao().update(order);
     }
 
-    public PaginatedCollectionList<Product> getProductsByOrder(
+    public PaginatedCollectionList<Product> getProductsAllButOrder(
             Integer orderId, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception {
 
-        Query query = productDao.getSession().createQuery(
-                "select p from oshop.model.Order o join o.products as p where o.id = :id").setInteger("id", orderId);
-        List<Product> list  = productConverter.convert(productDao.list(query, limit, offset));
+        Criteria criteria = productDao.createCriteria();
+        criteria.add(Restrictions.sqlRestriction(
+                ALL_PRODUCTS_FROM_ORDER_EXCEPT_THIS_SQL,
+                orderId, StandardBasicTypes.INTEGER));
 
-        Query totalQuery = productDao.getSession().createQuery(
-                "select count(p.id) from oshop.model.Order o join o.products as p where o.id = :id").setInteger("id", orderId);
-        Number total = (Number)totalQuery.uniqueResult();
+        productsFilter.applyFilters(filters, criteria);
+        getSorter().applySorters(sorters, criteria);
 
-        return new ListWithTotalSize<Product>(list, total.longValue());
+        List<Product> list = productConverter.convert(productDao.list(criteria, offset, limit));
+
+        return getCountAndPrepareListDto(list, criteria);
     }
 
     public PaginatedCollectionList<Product> getProductsByOrder(Integer orderId) throws Exception {
