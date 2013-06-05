@@ -52,7 +52,8 @@ define([
             searchView: new AdvancedSearchView({collection: collection, filter: filter, search: [
                 {field: "id", label: messages["products_filter_id_in"]},
                 {field: "name", label: messages["products_filter_name_like"]},
-                {field: "description", label: messages["products_description_like"]}
+                {field: "description", label: messages["products_description_like"]},
+                {field: "category", label: messages["products_category_like"]}
             ]})
         });
     };

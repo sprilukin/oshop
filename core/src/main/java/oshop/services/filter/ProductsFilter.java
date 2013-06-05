@@ -15,6 +15,7 @@ public class ProductsFilter extends BaseFilter {
         idIn("id"),
         nameLike("name"),
         descriptionLike("description"),
+        categoryLike("category"),
         orderStateIn("orderStateIn");
 
         private String name;
@@ -48,6 +49,8 @@ public class ProductsFilter extends BaseFilter {
                 return nameLike(values, criteria);
             case descriptionLike:
                 return descriptionLike(values, criteria);
+            case categoryLike:
+                return categoryLike(values, criteria);
             case orderStateIn:
                 return orderStateIn(values, criteria);
             default:
@@ -67,6 +70,11 @@ public class ProductsFilter extends BaseFilter {
 
     private Criterion descriptionLike(List<String> values, Criteria criteria) {
         return FilterUtils.stringLikeDisjunction("description", values);
+    }
+
+    private Criterion categoryLike(List<String> values, Criteria criteria) {
+        addAlias(criteria, "category", "c");
+        return FilterUtils.stringLikeDisjunction("c.name", values);
     }
 
     private Criterion orderStateIn(List<String> values, Criteria criteria) {
