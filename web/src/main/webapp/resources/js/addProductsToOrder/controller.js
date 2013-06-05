@@ -7,6 +7,7 @@ define([
     'addProductsToOrder/collection',
     'addProductsToOrder/listView',
     'addProductsToOrder/addProductsButtonView',
+    'addProductsToOrder/selectedModel',
     'products/filterByOrderStatusesView',
     'orders/model',
     'common/messages',
@@ -15,7 +16,7 @@ define([
     'common/sorter',
     'common/baseListRouter',
     'common/baseListController'
-], function (_, Model, Collection, ListView, AddProductsButtonView, FilterByOrderStatusesView, OrderModel, messages, AdvancedSearchView, Filter, Sorter, BaseListRouter, BaseListController) {
+], function (_, Model, Collection, ListView, AddProductsButtonView, SelectedModel, FilterByOrderStatusesView, OrderModel, messages, AdvancedSearchView, Filter, Sorter, BaseListRouter, BaseListController) {
 
     var getOrderId = function() {
         var matches = window.location.pathname.match(/orders\/([\d]+)\/addProducts([\/#\?].*)?$/);
@@ -30,12 +31,7 @@ define([
 
         routes: {
             '': 'list',
-            'list/filter;:filter/sort;:sort/:page': 'list',
-            'addProducts': 'addProducts'
-        },
-
-        addProducts: function () {
-            this.controller.addProducts();
+            'list/filter;:filter/sort;:sort/:page': 'list'
         }
     });
 
@@ -46,7 +42,7 @@ define([
         var filter = new Filter();
         var sorter = new Sorter();
 
-        this.selectedModel = {};
+        this.selectedModel = new SelectedModel();
         var listView = new ListView({
             collection: this.collection,
             sorter: sorter,
@@ -89,16 +85,8 @@ define([
         },
 
         addProducts: function() {
-            var ids = _.map(this.selectedModel, function(value, key) {
-                return key;
-            });
-
-            for (var prop in this.selectedModel) {
-                if (this.selectedModel.hasOwnProperty(prop)) {
-                    delete this.selectedModel[prop];
-                }
-            }
-
+            var ids = this.selectedModel.items();
+            this.selectedModel.clear();
             this.orderModel.addProducts.apply(this.orderModel, ids);
         }
     });

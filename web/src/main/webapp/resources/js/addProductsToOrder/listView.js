@@ -46,7 +46,7 @@ define([
 
         render: function () {
             _.each(this.collection.models, function(model) {
-                model.selected = this.selectedModel[model.id];
+                model.selected = this.selectedModel.contains(model.id);
                 model.skipMenu = true;
             }, this);
 
@@ -75,25 +75,14 @@ define([
             var id = $elem.attr("data-id");
 
             if (event.ctrlKey) {
-                var alreadySelected = !!this.selectedModel[id];
-
-                if (alreadySelected) {
-                    delete this.selectedModel[id];
-                } else {
-                    this.selectedModel[id] = true;
-                }
+                this.selectedModel.toggle(id);
 
                 $elem.toggleClass("selected");
             } else {
                 this.$el.find(".selected").removeClass("selected");
 
-                for (var prop in this.selectedModel) {
-                    if (this.selectedModel.hasOwnProperty(prop)) {
-                        delete this.selectedModel[prop];
-                    }
-                }
-                this.selectedModel[id] = true;
-                $elem.toggleClass("selected");
+                this.selectedModel.clear().add(id);
+                $elem.addClass("selected");
             }
         }
     });
