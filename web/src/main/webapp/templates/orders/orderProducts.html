@@ -17,22 +17,10 @@
     <tfoot>
     <tr>
         <td colspan="5">
-            <form class="form-horizontal" id="addProductContainer">
-                <div class="control-group">
-                    <label class="control-label">{{order_products_column_name}}</label>
-                    <div class="controls">
-                        <span class="span10"><input type="hidden" id="field_products" value=""></span>
-                        <span class="help-inline error"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <button id="addProduct" type="button" class="btn btn-primary">
-                            <i class="icon-plus icon-white"></i> {{order_add_product}}
-                        </button>
-                    </div>
-                </div>
-            </form>
+            <a href="{{context}}/orders/{{id}}/addProducts" role="button" class="btn btn-primary">
+                <i class="icon-plus icon-white"> </i>
+                {{order_add_product}}
+            </a>
         </td>
     </tr>
     </tfoot>
