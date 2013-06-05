@@ -29,7 +29,7 @@
 
 <div class="tile-list-container">
     {{#models}}
-    <div class="pull-left tile-list-item">
+    <div class="pull-left tile-list-item {{#selected}}selected{{/selected}}" data-id="{{id}}">
 
         <div class="image-wrapper">
             <div data-toggle="modal-gallery" data-target="#modal-gallery">
@@ -39,6 +39,7 @@
             </div>
         </div>
         <div>
+            {{^skipMenu}}
             <div class="btn-group pull-right">
                 <button class="btn btn-mini btn-info dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
@@ -54,6 +55,7 @@
                     </li>
                 </ul>
             </div>
+            {{/skipMenu}}
             <div>
                 <h6>№ {{id}}</h6>
             </div>

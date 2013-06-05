@@ -61,6 +61,12 @@ public class CommonUIController {
         return "orderEdit";
     }
 
+    @RequestMapping(value = "/orders/{id}/addProducts", method = RequestMethod.GET)
+    public String addProductsToOrder(@PathVariable Integer id, Model model) throws Exception {
+        model.addAttribute("orderId", id);
+        return "addProductsToOrder";
+    }
+
     @RequestMapping(value = "/shippingTypes", method = RequestMethod.GET)
     public String shippingTypes() throws Exception {
         return "shippingTypes";
