@@ -1,13 +1,27 @@
 <div class="input-append input-prepend">
     <div class="btn-group">
+        <div class="btn-group">
         <button class="btn dropdown-toggle" data-toggle="dropdown">
+            {{activeFilter.filter.label}}
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            {{#fields}}
-            <li {{#active}}class="active"{{/active}}><a href="#" data-field="{{field}}">{{label}}</a></li>
-            {{/fields}}
+            {{#filters}}
+            <li {{#active}}class="active"{{/active}}><a class="field" href="#" data-field="{{field}}">{{label}}</a></li>
+            {{/filters}}
         </ul>
+        </div>
+        <div class="btn-group2">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            {{activeFilter.comparison.shortLabel}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {{#activeFilter.filter.dataType.comparisons}}
+            <li {{#active}}class="active"{{/active}}><a class="comparison" href="#" data-suffix="{{suffix}}">{{label}}</a></li>
+            {{/activeFilter.filter.dataType.comparisons}}
+        </ul>
+        </div>
     </div>
     <input type="text" class="search-query" value="{{query}}">
     <button class="search-button btn"><i class="icon-search"></i></button>

@@ -103,3 +103,50 @@ tr.selected {
     margin-top: 3px;
     margin-bottom: 3px;
 }
+
+/* emulate btn-group */
+
+.input-append .add-on:last-child,
+.input-append .btn:last-child,
+.input-append .btn-group2:last-child > .dropdown-toggle {
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0;
+}
+
+.input-prepend.input-append .btn-group2:first-child {
+    margin-left: 0;
+}
+
+.btn-group2 {
+    position: relative;
+    display: inline-block;
+    *display: inline;
+    *margin-left: .3em;
+    font-size: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+    *zoom: 1;
+}
+
+.btn-group2 > .btn:hover,
+.btn-group2 > .btn:focus,
+.btn-group2 > .btn:active,
+.btn-group2 > .btn.active {
+    z-index: 2;
+}
+
+.btn-group2.open .dropdown-toggle {
+    outline: 0;
+}
+
+.btn-group2.open .dropdown-toggle {
+    background-image: none;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-group2.open .btn.dropdown-toggle {
+    background-color: #e6e6e6;
+}

@@ -9,9 +9,10 @@ define([
     'orders/listOrders/filterByOrderStatusesView',
     'common/baseListController',
     'common/advancedSearchView',
+    'common/advancedSearchFilters',
     'common/filter',
     'common/messages'
-], function (_, Model, Collection, ListView, FilterByOrderStatusesView, BaseListController, AdvancedSearchView, Filter, messages) {
+], function (_, Model, Collection, ListView, FilterByOrderStatusesView, BaseListController, AdvancedSearchView, AdvancedFilters, Filter, messages) {
 
     var getCustomerId = function() {
         var matches = window.location.pathname.match(/customers\/([\d]+)([\/#\?].*)?$/);
@@ -22,7 +23,7 @@ define([
         }
     };
 
-    var OrdersController = function() {
+    var OrdersController = function () {
         var collection = new Collection({customerId: getCustomerId()});
         var filter = new Filter();
 
@@ -31,21 +32,17 @@ define([
             collection: collection,
             View: ListView,
             filter: filter,
-            searchView: new AdvancedSearchView({collection: collection, filter: filter, search: [
-                //{field: "date", label: messages["order_filter_date_eq"]},
-                {field: "customer", label: messages["order_filter_customer_like"]},
-                {field: "productsCount", label: messages["order_filter_productsCount_eq"]},
-                {field: "productsCountGE", label: messages["order_filter_productsCount_ge"]},
-                {field: "productsCountLE", label: messages["order_filter_productsCount_le"]},
-                {field: "productsPrice", label: messages["order_filter_productsPrice_eq"]},
-                {field: "productsPriceGE", label: messages["order_filter_productsPrice_ge"]},
-                {field: "productsPriceLE", label: messages["order_filter_productsPrice_le"]},
-                {field: "totalPrice", label: messages["order_filter_totalPrice_eq"]},
-                {field: "totalPriceGE", label: messages["order_filter_totalPrice_ge"]},
-                {field: "totalPriceLE", label: messages["order_filter_totalPrice_le"]},
-                {field: "currentOrderStateName", label: messages["order_filter_currentOrderStateName_like"]}
-                //{field: "currentOrderStateDate", label: messages["order_filter_currentOrderStateDate_eq"]}
-            ]})
+            searchView: new AdvancedSearchView({collection: collection, filter: filter,
+                search: new AdvancedFilters([
+                    new AdvancedFilters.Filter("date", messages["order_filter_date_eq"], AdvancedFilters.DATE),
+                    new AdvancedFilters.Filter("customer", messages["order_filter_customer_like"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("productsCount", messages["order_filter_productsCount_eq"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("productsPrice", messages["order_filter_productsPrice_eq"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("totalPrice", messages["order_filter_totalPrice_eq"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("currentOrderStateName", messages["order_filter_currentOrderStateName_like"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("currentOrderStateDate", messages["order_filter_currentOrderStateDate_eq"], AdvancedFilters.DATE)
+                ])
+            })
         });
     };
 
