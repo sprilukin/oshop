@@ -11,9 +11,10 @@ define([
     'products/filterByOrderStatusesView',
     'common/messages',
     'common/advancedSearchView',
+    'common/advancedSearchFilters',
     'common/filter',
     'common/baseControllerWithListAndEdit'
-], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, messages, AdvancedSearchView, Filter, BaseControllerWithListAndEdit) {
+], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, messages, AdvancedSearchView, AdvancedFilters, Filter, BaseControllerWithListAndEdit) {
 
     var getProductCategoryId = function() {
         var matches = window.location.pathname.match(/productCategories\/([\d]+)([\/#\?].*)?$/);
@@ -49,12 +50,15 @@ define([
             View: ListView,
             EditView: EditView,
             filter: filter,
-            searchView: new AdvancedSearchView({collection: collection, filter: filter, search: [
-                {field: "id", label: messages["products_filter_id_in"]},
-                {field: "name", label: messages["products_filter_name_like"]},
-                {field: "description", label: messages["products_description_like"]},
-                {field: "category", label: messages["products_category_like"]}
-            ]})
+            searchView: new AdvancedSearchView({collection: collection, filter: filter,
+                search: new AdvancedFilters([
+                    new AdvancedFilters.Filter("id", messages["products_filter_id"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("name", messages["products_filter_name"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("description", messages["products_filter_description"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("category", messages["products_filter_category"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("price", messages["products_filter_price"], AdvancedFilters.NUMBER)
+                ])
+            })
         });
     };
 

@@ -12,11 +12,12 @@ define([
     'orders/model',
     'common/messages',
     'common/advancedSearchView',
+    'common/advancedSearchFilters',
     'common/filter',
     'common/sorter',
     'common/baseListRouter',
     'common/baseListController'
-], function (_, Model, Collection, ListView, AddProductsButtonView, SelectedModel, FilterByOrderStatusesView, OrderModel, messages, AdvancedSearchView, Filter, Sorter, BaseListRouter, BaseListController) {
+], function (_, Model, Collection, ListView, AddProductsButtonView, SelectedModel, FilterByOrderStatusesView, OrderModel, messages, AdvancedSearchView, AdvancedFilters, Filter, Sorter, BaseListRouter, BaseListController) {
 
     var getOrderId = function() {
         var matches = window.location.pathname.match(/orders\/([\d]+)\/addProducts([\/#\?].*)?$/);
@@ -56,11 +57,15 @@ define([
             filter: filter,
             sorter: sorter,
             router: new Router({controller: this}),
-            searchView: new AdvancedSearchView({collection: this.collection, filter: filter, search: [
-                {field: "id", label: messages["products_filter_id_in"]},
-                {field: "name", label: messages["products_filter_name_like"]},
-                {field: "description", label: messages["products_description_like"]}
-            ]})
+            searchView: new AdvancedSearchView({collection: this.collection, filter: filter,
+                search: new AdvancedFilters([
+                    new AdvancedFilters.Filter("id", messages["products_filter_id"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("name", messages["products_filter_name"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("description", messages["products_filter_description"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("category", messages["products_filter_category"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("price", messages["products_filter_price"], AdvancedFilters.NUMBER)
+                ])
+            })
         });
     };
 

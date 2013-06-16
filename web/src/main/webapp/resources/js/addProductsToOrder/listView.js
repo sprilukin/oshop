@@ -36,7 +36,7 @@ define([
             this.listTemplate = tileListEntityTemplate;
 
             this.sorterViews = [];
-            _.each(["id", "name", "description", "price"], function(column) {
+            _.each(["id", "name", "description", "category", "price"], function(column) {
                 this.sorterViews.push(new SortView({
                     column: column,
                     sorter: options.sorter

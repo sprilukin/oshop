@@ -145,7 +145,7 @@ public class OrdersFilter extends BaseFilter {
     }
 
     private Criterion dateEquals(List<String> values, Criteria criteria) {
-        return FilterUtils.createConjunction(new FilterUtils.CriterionFactory() {
+        return FilterUtils.createDisjunction(new FilterUtils.CriterionFactory() {
             @Override
             public Criterion createCriterion(String value) {
                 return Restrictions.eq("date", FilterUtils.parseDate(value));
@@ -205,7 +205,7 @@ public class OrdersFilter extends BaseFilter {
     }
 
     private Criterion productsCountEquals(List<String> values, Criteria criteria) {
-        return FilterUtils.createConjunction(new FilterUtils.CriterionFactory() {
+        return FilterUtils.createDisjunction(new FilterUtils.CriterionFactory() {
             @Override
             public Criterion createCriterion(String value) {
                 return Restrictions.eq("productsCount", Integer.parseInt(value));
@@ -244,7 +244,7 @@ public class OrdersFilter extends BaseFilter {
     }
 
     private Criterion productsPriceEquals(List<String> values, Criteria criteria) {
-        return FilterUtils.createConjunction(new FilterUtils.CriterionFactory() {
+        return FilterUtils.createDisjunction(new FilterUtils.CriterionFactory() {
             @Override
             public Criterion createCriterion(String value) {
                 return Restrictions.eq("productsPrice",
@@ -290,10 +290,11 @@ public class OrdersFilter extends BaseFilter {
     }
 
     private Criterion totalPriceEquals(List<String> values, Criteria criteria) {
-        return FilterUtils.createConjunction(new FilterUtils.CriterionFactory() {
+        return FilterUtils.createDisjunction(new FilterUtils.CriterionFactory() {
             @Override
             public Criterion createCriterion(String value) {
-                return Restrictions.eq("totalPrice", EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
+                return Restrictions.eq("totalPrice",
+                        EntityUtils.round(BigDecimal.valueOf(Integer.parseInt(value))));
             }
         }, values);
     }
