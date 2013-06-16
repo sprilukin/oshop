@@ -22,8 +22,8 @@
     </div>
 </div>
 
-<div class="row-fluid span12 listEntities"></div>
 <div class="row-fluid span12 forPagination"></div>
+<div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
 <script data-main="cities/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>

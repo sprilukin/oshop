@@ -30,8 +30,11 @@
     </div>
 </div>
 
+<div class="row-fluid span12">
+    <div class="orderStatus inline span3"></div>
+    <div class="row-fluid span5 offset4 forPagination"></div>
+</div>
 <div class="row-fluid span12 listEntities"></div>
-<div class="row-fluid span12 forPagination"></div>
 
 <script data-main="addProductsToOrder/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>

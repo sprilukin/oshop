@@ -13,8 +13,7 @@
 
 <div class="row-fluid span12 entity-controls">
     <div class="search inline span3"></div>
-    <div class="orderStatus inline span2 offset2"></div>
-    <div class="inline span3 offset2">
+    <div class="inline span3 offset5">
         <c:if test="${customerId eq null}">
             <c:set var="addPath" value="${pageContext.request.contextPath}/orders/add"/>
         </c:if>
@@ -28,8 +27,11 @@
     </div>
 </div>
 
+<div class="row-fluid span12">
+    <div class="orderStatus inline span3"></div>
+    <div class="row-fluid span5 offset4 forPagination"></div>
+</div>
 <div class="row-fluid span12 listEntities"></div>
-<div class="row-fluid span12 forPagination"></div>
 
 <script data-main="orders/listOrders/list" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
