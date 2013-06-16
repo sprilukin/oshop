@@ -1,13 +1,11 @@
 package oshop.services.filter;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.internal.CriteriaImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,6 +50,28 @@ public class FilterUtils {
         return disjunction;
     }
 
+    private static Criterion appendToJunction(CriterionFactory factory, Junction junction, List<String> values) {
+        for (String value : values) {
+            junction.add(factory.createCriterion(value));
+        }
+
+        return junction;
+    }
+
+    public static Criterion createDisjunction(CriterionFactory factory, List<String> values) {
+        Disjunction disjunction = Restrictions.disjunction();
+        return appendToJunction(factory, disjunction, values);
+    }
+
+    public static Criterion createConjunction(CriterionFactory factory, List<String> values) {
+        Conjunction conjunction = Restrictions.conjunction();
+        return appendToJunction(factory, conjunction, values);
+    }
+
+    public static Date parseDate(String dateAsString) {
+        return new Date(Long.parseLong(dateAsString));
+    }
+
     public static List<Integer> convertStringListToIntegerList(List<String> list) {
         List<Integer> integerList = new ArrayList<Integer>(list.size());
 
@@ -60,5 +80,9 @@ public class FilterUtils {
         }
 
         return integerList;
+    }
+
+    public static interface CriterionFactory {
+        public Criterion createCriterion(String value);
     }
 }

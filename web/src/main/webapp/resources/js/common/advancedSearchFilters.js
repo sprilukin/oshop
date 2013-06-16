@@ -3,8 +3,9 @@
  */
 define([
     'underscore',
-    'common/dateFormatter'
-], function (_, dateFormatter) {
+    'common/dateFormatter',
+    'common/messages'
+], function (_, dateFormatter, messages) {
 
     /* Comparison */
     var Comparison = function(options) {
@@ -21,48 +22,48 @@ define([
 
     var COMPARISONS = {
         EQUALS: new Comparison({
-            shortLabel: "=",
-            label: "Равно",
+            shortLabel: messages["advanced_filter_equals_short"],
+            label: messages["advanced_filter_equals"],
             suffix: "EQ"
         }),
         NOT_EQUALS: new Comparison({
-            shortLabel: "<>",
-            label: "Не равно",
+            shortLabel: messages["advanced_filter_not_equals_short"],
+            label: messages["advanced_filter_not_equals"],
             suffix: "NEQ"
         }),
         LIKE: new Comparison({
-            shortLabel: "~",
-            label: "Содержит",
-            suffix: "LK"
+            shortLabel: messages["advanced_filter_like_short"],
+            label: messages["advanced_filter_like"],
+            suffix: "LIKE"
         }),
         NOT_LIKE: new Comparison({
-            shortLabel: "!~",
-            label: "Не содержит",
-            suffix: "NLK"
+            shortLabel: messages["advanced_filter_not_like_short"],
+            label: messages["advanced_filter_not_like"],
+            suffix: "NLIKE"
         }),
         GREATER_OR_EQUALS: new Comparison({
-            shortLabel: ">=",
-            label: "Больше или равно",
+            shortLabel: messages["advanced_filter_greater_or_equals_short"],
+            label: messages["advanced_filter_greater_or_equals"],
             suffix: "GE"
         }),
         LESS_OR_EQUALS: new Comparison({
-            shortLabel: "<=",
-            label: "Меньше или равно",
+            shortLabel: messages["advanced_filter_less_or_equals_short"],
+            label: messages["advanced_filter_less_or_equals"],
             suffix: "LE"
         }),
         GREATER: new Comparison({
-            shortLabel: ">",
-            label: "Больше",
-            suffix: "GR"
+            shortLabel: messages["advanced_filter_greater_short"],
+            label: messages["advanced_filter_greater"],
+            suffix: "GT"
         }),
         LESS: new Comparison({
-            shortLabel: "<",
-            label: "Меньше",
-            suffix: "LESS"
+            shortLabel: messages["advanced_filter_less_short"],
+            label: messages["advanced_filter_less"],
+            suffix: "LT"
         }),
         BETWEEN: new Comparison({
-            shortLabel: ":",
-            label: "В диапазоне",
+            shortLabel: messages["advanced_filter_between_short"],
+            label: messages["advanced_filter_between"],
             suffix: "BTWN"
         })
     };

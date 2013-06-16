@@ -34,13 +34,13 @@ define([
             filter: filter,
             searchView: new AdvancedSearchView({collection: collection, filter: filter,
                 search: new AdvancedFilters([
-                    new AdvancedFilters.Filter("date", messages["order_filter_date_eq"], AdvancedFilters.DATE),
-                    new AdvancedFilters.Filter("customer", messages["order_filter_customer_like"], AdvancedFilters.STRING),
-                    new AdvancedFilters.Filter("productsCount", messages["order_filter_productsCount_eq"], AdvancedFilters.NUMBER),
-                    new AdvancedFilters.Filter("productsPrice", messages["order_filter_productsPrice_eq"], AdvancedFilters.NUMBER),
-                    new AdvancedFilters.Filter("totalPrice", messages["order_filter_totalPrice_eq"], AdvancedFilters.NUMBER),
-                    new AdvancedFilters.Filter("currentOrderStateName", messages["order_filter_currentOrderStateName_like"], AdvancedFilters.STRING),
-                    new AdvancedFilters.Filter("currentOrderStateDate", messages["order_filter_currentOrderStateDate_eq"], AdvancedFilters.DATE)
+                    new AdvancedFilters.Filter("date", messages["order_filter_date"], AdvancedFilters.DATE),
+                    new AdvancedFilters.Filter("customer", messages["order_filter_customer"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("productsCount", messages["order_filter_productsCount"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("productsPrice", messages["order_filter_productsPrice"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("totalPrice", messages["order_filter_totalPrice"], AdvancedFilters.NUMBER),
+                    new AdvancedFilters.Filter("currentOrderStateName", messages["order_filter_currentOrderStateName"], AdvancedFilters.STRING),
+                    new AdvancedFilters.Filter("currentOrderStateDate", messages["order_filter_currentOrderStateDate"], AdvancedFilters.DATE)
                 ])
             })
         });

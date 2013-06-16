@@ -23,10 +23,7 @@ define([
         initialize: function(options) {
             SearchView.prototype.initialize.call(this, options);
             this.searchOptions = options.search;
-            this.activeFilter = {
-                filter: null,
-                comparison: null
-            };
+            this.activeFilter = null;
         },
 
         setActiveFilter: function(filter) {
@@ -40,9 +37,10 @@ define([
 
             var activeFilter = this.searchOptions.findFirst(fieldNames);
 
-            activeFilter = activeFilter
-                || this.activeFilter
-                || {filter: this.searchOptions.filters[0], comparison: this.searchOptions.filters[0].comparisons[0]};
+            activeFilter = activeFilter || this.activeFilter || {
+                filter: this.searchOptions.filters[0],
+                comparison: this.searchOptions.filters[0].dataType.comparisons[0]
+            };
 
             return activeFilter;
         },
@@ -59,10 +57,11 @@ define([
 
         mapActiveFilterForRendering: function(activeFilter) {
             var filterClone = _.extend({}, activeFilter);
+            filterClone.filter = _.extend({}, activeFilter.filter);
             filterClone.filter.dataType = _.extend({}, activeFilter.filter.dataType);
             filterClone.filter.dataType.comparisons = _.map(activeFilter.filter.dataType.comparisons, function(comparison) {
                 if (comparison.shortLabel === activeFilter.comparison.shortLabel) {
-                    comparison = _.extend({active: true}, comparison);
+                    return _.extend({active: true}, comparison);
                 }
 
                 return comparison;
