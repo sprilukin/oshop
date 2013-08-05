@@ -18,7 +18,25 @@
     <build>
         <finalName>${final.name}</finalName>
         <plugins>
-
+            <plugin>
+                <groupId>com.github.mcheely</groupId>
+                <artifactId>requirejs-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <nodeExecutable>${require.js.optimizer.path.to.node.js}</nodeExecutable>
+                    <configFile>${basedir}/src/main/config/app.config.js</configFile>
+                    <optimizerFile>${basedir}/src/main/scripts/r.js</optimizerFile>
+                    <filterConfig>true</filterConfig>
+                    <skip>${require.js.optimizer.skip}</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
