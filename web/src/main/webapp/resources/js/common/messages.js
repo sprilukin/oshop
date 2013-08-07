@@ -3,8 +3,10 @@
  */
 define([
     'underscore',
-    'text!messagesBase/ru',
-    'text!messagesBase/en',
+    //'text!messagesBase/ru',
+    //'text!messagesBase/en',
+    'text!messagesBase/messages.js',
+    'text!messagesBase/messages_en.js',
     'common/settingsStorage'
 ], function (_, messages_ru, messages_en, settingsStorage) {
 

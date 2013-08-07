@@ -50,7 +50,8 @@
                 // Require.js plugins
                 text: 'lib/require.text',
                 templates: '../../templates',
-                messagesBase: '../../i18n/messages'
+                //messagesBase: '../../i18n/messages'
+                messagesBase: 'i18n'
             },
 
             shim: {
