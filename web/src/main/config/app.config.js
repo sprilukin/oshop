@@ -1,4 +1,5 @@
 ({
+    /*optimize: "none",*/
     optimizeAllPluginResources: false,
     appDir: "${basedir}/src/main/webapp/resources/js",
     baseUrl: "./",
@@ -28,10 +29,27 @@
         templates: '../../templates',
         messagesBase: '../../i18n/messages'
     },
+
+    shim: {
+        bootstrap: {
+            deps: ["jquery"]
+        },
+        select2: {
+            deps: ["jquery"]
+        },
+        underscore: {
+            exports: '_'
+        },
+        backbone: {
+            deps: ["underscore", "jquery"],
+            exports: "Backbone"
+        }
+    },
+
     inlineText: false,
     stubModules : ["messagesBase/ru", "messagesBase/en"],
     modules: [
-        /*{name: "additionalPayments/main"},
+        {name: "additionalPayments/main"},
         {name: "addProductsToOrder/main"},
         {name: "cities/main"},
         {name: "customers/main"},
@@ -43,6 +61,6 @@
         {name: "productCategories/main"},
         {name: "products/main"},
         {name: "shippingAddresses/main"},
-        {name: "shippingTypes/main"}*/
+        {name: "shippingTypes/main"}
     ]
 })

@@ -14,7 +14,7 @@ public abstract class HttpCacheRestCallbackAdapter<T> extends ReturningRestCallb
     private Long lastModified;
     private Long ifModifiedSince;
     private Integer size;
-    private Long maxAge = 300L;
+    private Long maxAge = 345600L;
 
     protected void setLastModified(Long lastModified) {
         this.lastModified = lastModified;
