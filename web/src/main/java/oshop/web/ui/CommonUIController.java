@@ -111,4 +111,9 @@ public class CommonUIController {
     public String cities() throws Exception {
         return "cities";
     }
+
+    @RequestMapping(value = "/invoicePrint", method = RequestMethod.GET)
+    public String invoicePrint() throws Exception {
+        return "invoicePrint";
+    }
 }
