@@ -48,13 +48,13 @@
                         <configuration>
                             <target unless="i18n.skip">
                                 <echo message="Make client side i18n bundles from messages properties"/>
-                                <copy todir="${project.build.directory}/${project.build.finalName}/resources/js/i18n">
+                                <copy todir="${basedir}/src/main/webapp/resources/js/i18n">
                                     <fileset dir="${basedir}/src/main/resources">
                                         <include name="messages*.properties"/>
                                     </fileset>
                                 </copy>
-                                <move todir="${project.build.directory}/${project.build.finalName}/resources/js/i18n" includeemptydirs="false">
-                                    <fileset dir="${project.build.directory}/${project.build.finalName}/resources/js/i18n">
+                                <move todir="${basedir}/src/main/webapp/resources/js/i18n" includeemptydirs="false">
+                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
                                         <include name="**/*.properties"/>
                                     </fileset>
                                     <mapper type="glob" from="*.properties" to="*.js"/>
@@ -62,28 +62,28 @@
                                 <replaceregexp byline="true" encoding="UTF-8">
                                     <regexp pattern="([^=]+)(=)(.*)"/>
                                     <substitution expression='"\1":"\3",'/>
-                                    <fileset dir="${project.build.directory}/${project.build.finalName}/resources/js/i18n">
+                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
                                         <include name="*.js"/>
                                     </fileset>
                                 </replaceregexp>
                                 <replaceregexp encoding="UTF-8" flags="gs">
                                     <regexp pattern="(.*),$"/>
                                     <substitution expression="\1"/>
-                                    <fileset dir="${project.build.directory}/${project.build.finalName}/resources/js/i18n">
+                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
                                         <include name="*.js"/>
                                     </fileset>
                                 </replaceregexp>
                                 <replaceregexp byline="true" encoding="UTF-8">
                                     <regexp pattern="#.*"/>
                                     <substitution expression=""/>
-                                    <fileset dir="${project.build.directory}/${project.build.finalName}/resources/js/i18n">
+                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
                                         <include name="*.js"/>
                                     </fileset>
                                 </replaceregexp>
                                 <replaceregexp encoding="UTF-8" flags="gs">
                                     <regexp pattern="^(.*)$"/>
                                     <substitution expression="{\0}"/>
-                                    <fileset dir="${project.build.directory}/${project.build.finalName}/resources/js/i18n">
+                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
                                         <include name="*.js"/>
                                     </fileset>
                                 </replaceregexp>
