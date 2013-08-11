@@ -1,8 +1,65 @@
-.block {
-    display: block;
+.ukrPost {
+    position: relative;
+    float: left;
+    padding: 35px 31px 0px 31px;
 }
 
-.inline {
-    display: inline;
+.ukrPost img {
+    width: 408px;
 }
 
+.ukrPost .text {
+    position: absolute;
+    line-height: 20px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.ukrPost .name {
+    top: 295px;
+    left: 40px;
+}
+
+.ukrPost .address {
+    top: 315px;
+    left: 40px;
+}
+
+.ukrPost .city {
+    top: 335px;
+    left: 40px;
+}
+
+.ukrPost .priceLess {
+    top: 247px;
+    left: 250px;
+}
+
+.ukrPost .priceLess1 {
+    top: 505px;
+    left: 175px;
+}
+
+.ukrPost .bird {
+    top: 420px;
+    left: 268px;
+}
+
+.ukrPost .phone {
+    display: none;
+}
+
+.ukrPost .name1 {
+    top: 555px;
+    left: 40px;
+}
+
+.ukrPost .address1 {
+    top: 575px;
+    left: 40px;
+}
+
+.ukrPost .city1 {
+    top: 600px;
+    left: 40px;
+}

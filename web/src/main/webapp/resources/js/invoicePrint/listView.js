@@ -6,9 +6,10 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'text!templates/invoicePrint/list.html',
+    'text!templates/invoicePrint/front.html',
+    'text!templates/invoicePrint/back.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, listTemplate) {
+], function ($, _, Backbone, Mustache, frontTemplate, backTemplate) {
 
     return Backbone.View.extend({
 
@@ -21,7 +22,7 @@ define([
         },
 
         render: function () {
-            this.$el.html(Mustache.render(listTemplate, this.collection));
+            this.$el.html(Mustache.render(frontTemplate, this.collection) + Mustache.render(backTemplate, this.collection));
         }
     });
 });
