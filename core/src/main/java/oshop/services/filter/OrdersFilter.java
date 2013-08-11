@@ -14,6 +14,7 @@ import java.util.List;
 public class OrdersFilter extends BaseFilter {
 
     static enum OrderFilterNames {
+        idEq("idEQ"),
         dateEq("dateEQ"),
         dateNeq("dateNEQ"),
         dateGe("dateGE"),
@@ -73,6 +74,8 @@ public class OrdersFilter extends BaseFilter {
     protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
 
         switch (OrderFilterNames.fromName(column)) {
+            case idEq:
+                return idEquals(values, criteria);
             case dateEq:
                 return dateEquals(values, criteria);
             case dateNeq:
@@ -142,6 +145,12 @@ public class OrdersFilter extends BaseFilter {
             default:
                 throw new IllegalArgumentException("Invalid filter");
         }
+    }
+
+    private Criterion idEquals(List<String> values, Criteria criteria) {
+        List<Integer> ids = FilterUtils.convertStringListToIntegerList(values);
+
+        return Restrictions.in("id", ids);
     }
 
     private Criterion dateEquals(List<String> values, Criteria criteria) {
