@@ -13,6 +13,7 @@
 
 <div class="content"></div>
 
-<script data-main="orders/editOrder/edit" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
+<script src="resources/js/requirejs.config.js"></script>
+<script data-main="orders/editOrder/edit" src="resources/js/lib/require.js"></script>
 </body>
 </html>
