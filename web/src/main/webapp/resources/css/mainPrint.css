@@ -67,6 +67,21 @@
     left: 40px;
 }
 
+.ukrPost .returnName {
+    top: 353px;
+    left: 190px;
+}
+
+.ukrPost .returnAddress {
+    top: 373px;
+    left: 190px;
+}
+
+.ukrPost .returnCity {
+    top: 390px;
+    left: 150px;
+}
+
 .ukrPost.address {
     border: 1px solid #000000;
     padding: 0px;
