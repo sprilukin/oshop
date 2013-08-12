@@ -7,12 +7,16 @@ define([
     'orders/collection',
     'orders/listOrders/listView',
     'orders/listOrders/filterByOrderStatusesView',
+    'orders/listOrders/printInvoicesButtonView',
+    'common/selectedModel',
     'common/baseListController',
     'common/advancedSearchView',
     'common/advancedSearchFilters',
     'common/filter',
-    'common/messages'
-], function (_, Model, Collection, ListView, FilterByOrderStatusesView, BaseListController, AdvancedSearchView, AdvancedFilters, Filter, messages) {
+    'common/sorter',
+    'common/messages',
+    'common/context'
+], function (_, Model, Collection, ListView, FilterByOrderStatusesView, PrintInvoicesButtonView, SelectedModel, BaseListController, AdvancedSearchView, AdvancedFilters, Filter, Sorter, messages, context) {
 
     var getCustomerId = function() {
         var matches = window.location.pathname.match(/customers\/([\d]+)([\/#\?].*)?$/);
@@ -26,11 +30,16 @@ define([
     var OrdersController = function () {
         var collection = new Collection({customerId: getCustomerId()});
         var filter = new Filter();
+        var sorter = new Sorter();
+
+        this.selectedModel = new SelectedModel();
+        var view = new ListView({collection: collection, sorter: sorter, selectedModel: this.selectedModel});
 
         this.initialize({
             Model: Model,
             collection: collection,
-            View: ListView,
+            sorter: sorter,
+            view: view,
             filter: filter,
             searchView: new AdvancedSearchView({collection: collection, filter: filter,
                 search: new AdvancedFilters([
@@ -54,6 +63,24 @@ define([
                 collection: this.collection,
                 filter: this.filter
             })
+
+            this.printInvoicesButtonView = new PrintInvoicesButtonView();
+            this.printInvoicesButtonView.on("print:invoices", function() {
+                this.printInvoices();
+            }, this);
+        },
+
+        printInvoices: function() {
+            var ids = this.selectedModel.items();
+            this.selectedModel.clear();
+
+            if (!ids || ids.length == 0) {
+                ids = _.map(this.collection.models, function(model) {
+                    return model.attributes.id;
+                });
+            }
+
+            window.location = context + "/invoicePrint?id=" + ids.join(",");
         }
     });
 

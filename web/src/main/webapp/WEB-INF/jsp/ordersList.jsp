@@ -24,6 +24,12 @@
             <i class="icon-plus icon-white"> </i>
             <spring:message code="orders.add.order"/>
         </a>
+        <div class="printInvoices" style="margin-top: 5px">
+            <a href="#" role="button" class="btn btn-primary">
+                <i class="icon-plus icon-white"> </i>
+                <spring:message code="orders.print.invoice"/>
+            </a>
+        </div>
     </div>
 </div>
 

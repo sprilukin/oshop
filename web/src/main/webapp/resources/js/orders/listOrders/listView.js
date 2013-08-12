@@ -20,13 +20,16 @@ define([
         el: '.listEntities',
 
         events: {
-            "click a.delete": "delete"
+            "click a.delete": "delete",
+            "click tr": "select"
         },
 
         initialize: function(options) {
             this.collection.on("sync", function() {
                 this.render();
             }, this);
+
+            this.selectedModel = options.selectedModel;
 
             this.sorterViews = [];
 
@@ -59,6 +62,22 @@ define([
         delete: function(event) {
             this.trigger("delete", {id: $(event.currentTarget).attr("data-id")});
             event.preventDefault();
+        },
+
+        select: function(event) {
+            var $elem = $(event.currentTarget);
+            var id = $elem.find("ul a").attr("data-id");
+
+            if (event.ctrlKey) {
+                this.selectedModel.toggle(id);
+
+                $elem.toggleClass("selected");
+            } else {
+                this.$el.find(".selected").removeClass("selected");
+
+                this.selectedModel.clear().add(id);
+                $elem.addClass("selected");
+            }
         }
     });
 });

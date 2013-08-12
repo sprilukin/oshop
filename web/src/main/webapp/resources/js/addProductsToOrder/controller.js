@@ -7,9 +7,9 @@ define([
     'addProductsToOrder/collection',
     'addProductsToOrder/listView',
     'addProductsToOrder/addProductsButtonView',
-    'addProductsToOrder/selectedModel',
     'products/filterByOrderStatusesView',
     'orders/model',
+    'common/selectedModel',
     'common/messages',
     'common/advancedSearchView',
     'common/advancedSearchFilters',
@@ -17,7 +17,7 @@ define([
     'common/sorter',
     'common/baseListRouter',
     'common/baseListController'
-], function (_, Model, Collection, ListView, AddProductsButtonView, SelectedModel, FilterByOrderStatusesView, OrderModel, messages, AdvancedSearchView, AdvancedFilters, Filter, Sorter, BaseListRouter, BaseListController) {
+], function (_, Model, Collection, ListView, AddProductsButtonView, FilterByOrderStatusesView, OrderModel, SelectedModel, messages, AdvancedSearchView, AdvancedFilters, Filter, Sorter, BaseListRouter, BaseListController) {
 
     var getOrderId = function() {
         var matches = window.location.pathname.match(/orders\/([\d]+)\/addProducts([\/#\?].*)?$/);
