@@ -18,6 +18,11 @@
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/mainPrint.css" />
 
+    <script src="${pageContext.request.contextPath}/resources/js/requirejs.config.js"></script>
+    <script language="JavaScript">
+        require.baseUrl = "${pageContext.request.contextPath}/resources/js";
+    </script>
+
     <decorator:head/>
 </head>
 <body>

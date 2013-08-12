@@ -10,7 +10,6 @@
 
 <div class="invoicesPlaceholder"></div>
 
-<script src="resources/js/requirejs.config.js"></script>
-<script data-main="invoicePrint/main" src="resources/js/lib/require.js"></script>
+<script data-main="invoicePrint/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
 </html>

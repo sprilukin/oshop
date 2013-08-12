@@ -33,7 +33,6 @@
 </div>
 <div class="row-fluid span12 listEntities"></div>
 
-<script src="resources/js/requirejs.config.js"></script>
-<script data-main="orders/listOrders/list" src="resources/js/lib/require.js"></script>
+<script data-main="orders/listOrders/list" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
 </html>
