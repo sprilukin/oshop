@@ -1,5 +1,6 @@
 {{#models}}
 <div class="ukrPost">
+   {{^fake}}
    <img src="resources/img/f116_front.png" />
     <div class="text name">
         {{attributes.shippingAddress.recipient}}
@@ -35,5 +36,6 @@
         {{attributes.shippingAddress.city.region}},
         {{attributes.shippingAddress.postalCode}}
     </div>
+   {{/fake}}
 </div>
 {{/models}}

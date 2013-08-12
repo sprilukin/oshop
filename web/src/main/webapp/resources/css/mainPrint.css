@@ -2,10 +2,13 @@
     position: relative;
     float: left;
     padding: 35px 31px 0px 31px;
+    width: 408px;
+    height: 610px;
 }
 
 .ukrPost img {
     width: 408px;
+    height: 610px;
 }
 
 .ukrPost .text {
