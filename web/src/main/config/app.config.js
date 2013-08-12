@@ -63,6 +63,7 @@
         {name: "productCategories/main"},
         {name: "products/main"},
         {name: "shippingAddresses/main"},
-        {name: "shippingTypes/main"}
+        {name: "shippingTypes/main"},
+        {name: "invoicePrint/main"}
     ]
 })
