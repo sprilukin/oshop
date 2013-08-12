@@ -5,7 +5,7 @@ define([
     'underscore',
     'common/filter',
     'orders/collection',
-    'invoicePrint/listView',
+    'invoicePrint/ukrPostView',
 ], function (_, Filter, Collection, View) {
 
     var getOrderIds = function() {

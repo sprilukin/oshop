@@ -63,3 +63,28 @@
     top: 600px;
     left: 40px;
 }
+
+.ukrPost.address {
+    border: 1px solid #000000;
+    padding: 0px;
+    margin: 3px 3px 3px 3px;
+    width: 450px;
+    height: 150px;
+}
+
+.ukrPost.address .text {
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+    top: 0px;
+    left: 0px;
+}
+
+.ukrPostSeparator {
+    position: relative;
+    height: 80px;
+    width: 100%;
+    float: left;
+}
+

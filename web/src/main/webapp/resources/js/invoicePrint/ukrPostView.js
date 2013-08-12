@@ -8,8 +8,10 @@ define([
     'mustache',
     'text!templates/invoicePrint/front.html',
     'text!templates/invoicePrint/back.html',
+    'text!templates/invoicePrint/address.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, frontTemplate, backTemplate) {
+], function ($, _, Backbone, Mustache, frontTemplate, backTemplate, addressTemplate) {
+
 
     return Backbone.View.extend({
 
@@ -22,7 +24,11 @@ define([
         },
 
         render: function () {
-            this.$el.html(Mustache.render(frontTemplate, this.collection) + Mustache.render(backTemplate, this.collection));
+            this.$el.html(
+                Mustache.render(frontTemplate, this.collection) +
+                    Mustache.render(backTemplate, this.collection) +
+                    Mustache.render(addressTemplate, this.collection)
+            );
         }
     });
 });

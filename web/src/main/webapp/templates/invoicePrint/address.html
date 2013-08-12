@@ -1,0 +1,21 @@
+<div class="ukrPostSeparator">&nbsp;</div>
+
+{{#models}}
+<div class="ukrPost address">
+    <div class="text name">
+        {{attributes.shippingAddress.recipient}}
+    </div>
+    <div class="text address">
+        {{attributes.shippingAddress.address}}
+    </div>
+    <div class="text city">
+        {{attributes.shippingAddress.city.name}}
+    </div>
+    <div class="text region">
+        {{attributes.shippingAddress.city.region}}
+    </div>
+    <div class="text postalCode">
+        {{attributes.shippingAddress.postalCode}}
+    </div>
+</div>
+{{/models}}
