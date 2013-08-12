@@ -26,9 +26,9 @@ define([
             });
 
             if (existingFilter) {
-                existingFilter.value = value;
+                existingFilter.value = encodeURIComponent(value);
             } else {
-                this.filters.push({name: name, value: value});
+                this.filters.push({name: name, value: encodeURIComponent(value)});
             }
 
             if (!options || !options.silent) {

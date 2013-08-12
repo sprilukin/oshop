@@ -66,6 +66,10 @@ define([
 
         select: function(event) {
             var $elem = $(event.currentTarget);
+            if ($elem.find("th").length > 0) {
+                return;
+            }
+
             var id = $elem.find("ul a").attr("data-id");
 
             if (event.ctrlKey) {
