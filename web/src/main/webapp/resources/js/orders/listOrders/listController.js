@@ -80,7 +80,7 @@ define([
                 });
             }
 
-            window.location = context + "/invoicePrint?id=" + ids.join(",");
+            window.open(context + "/invoicePrint?id=" + ids.join(","), "_blank");
         }
     });
 
