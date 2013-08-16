@@ -9,7 +9,6 @@
 <html>
 <head>
     <title><spring:message code="errorPage.title"/></title>
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/resources/styles/${appConfig["csstheme"]}/theme.css'/>" />
 </head>
 
 <body id="error">

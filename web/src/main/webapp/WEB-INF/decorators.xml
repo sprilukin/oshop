@@ -12,4 +12,7 @@
     <decorator name="print" page="print.jsp">
         <pattern>/invoicePrint*</pattern>
     </decorator>
+    <decorator name="login" page="login.jsp">
+        <pattern>/login*</pattern>
+    </decorator>
 </decorators>
