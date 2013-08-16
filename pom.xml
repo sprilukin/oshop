@@ -102,8 +102,8 @@
                 <require.js.optimizer.skip>true</require.js.optimizer.skip>
                 <user.admin.name>admin</user.admin.name>
                 <user.admin.password>password</user.admin.password>
-                <user.name>user</user.name>
-                <user.password>password</user.password>
+                <user.regular.name>user</user.regular.name>
+                <user.regular.password>password</user.regular.password>
             </properties>
         </profile>
         <profile>
@@ -122,8 +122,8 @@
                 <require.js.optimizer.skip>true</require.js.optimizer.skip>
                 <user.admin.name>admin</user.admin.name>
                 <user.admin.password>password</user.admin.password>
-                <user.name>user</user.name>
-                <user.password>password</user.password>
+                <user.regular.name>user</user.regular.name>
+                <user.regular.password>password</user.regular.password>
             </properties>
         </profile>
     </profiles>-->
