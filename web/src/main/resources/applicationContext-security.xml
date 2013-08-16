@@ -9,6 +9,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <global-method-security secured-annotations="enabled" />
 
     <http pattern="**" access-denied-page="/error403.jsp">
+        <intercept-url pattern="/favicon.ico" access="ROLE_ADMIN,ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/login.jsp" access="ROLE_ADMIN,ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/resources/**" access="ROLE_ADMIN,ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER"/>
