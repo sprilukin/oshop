@@ -11,8 +11,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <http pattern="**" access-denied-page="/error403.jsp">
         <intercept-url pattern="/login.jsp" access="ROLE_ADMIN,ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/resources/**" access="ROLE_ADMIN,ROLE_USER,ROLE_ANONYMOUS"/>
-        <intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER,ROLE_ANONYMOUS"/>
-        <!--<intercept-url pattern="/**" access="ROLE_ADMIN"/>-->
+        <intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER"/>
 
         <session-management invalid-session-url="/" session-authentication-error-url="/">
             <concurrency-control max-sessions="1" />
@@ -21,7 +20,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     authentication-failure-url="/login.jsp?error=true"/>
         <logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
-        <!--<remember-me user-service-ref="defaultUserDetailsService"/>-->
+        <remember-me key="342sdfsadf-342134-kjahkajh-wqwjqej"/>
     </http>
 
     <authentication-manager>

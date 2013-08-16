@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<h2>Oshop</h2>
 <div class="hero-unit">
     <c:if test="${not empty param.error}">
         <div class="alert alert-error">

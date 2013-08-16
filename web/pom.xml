@@ -37,64 +37,6 @@
                     <skip>${require.js.optimizer.skip}</skip>
                 </configuration>
             </plugin>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>makeI18nForJS</id>
-                        <phase>process-resources</phase>
-                        <configuration>
-                            <target unless="i18n.skip">
-                                <echo message="Make client side i18n bundles from messages properties"/>
-                                <copy todir="${basedir}/src/main/webapp/resources/js/i18n">
-                                    <fileset dir="${basedir}/src/main/resources">
-                                        <include name="messages*.properties"/>
-                                    </fileset>
-                                </copy>
-                                <move todir="${basedir}/src/main/webapp/resources/js/i18n" includeemptydirs="false">
-                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
-                                        <include name="**/*.properties"/>
-                                    </fileset>
-                                    <mapper type="glob" from="*.properties" to="*.js"/>
-                                </move>
-                                <replaceregexp byline="true" encoding="UTF-8">
-                                    <regexp pattern="([^=]+)(=)(.*)"/>
-                                    <substitution expression='"\1":"\3",'/>
-                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
-                                        <include name="*"/>
-                                    </fileset>
-                                </replaceregexp>
-                                <replaceregexp encoding="UTF-8" flags="gs">
-                                    <regexp pattern="(.*),$"/>
-                                    <substitution expression="\1"/>
-                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
-                                        <include name="*"/>
-                                    </fileset>
-                                </replaceregexp>
-                                <replaceregexp byline="true" encoding="UTF-8">
-                                    <regexp pattern="#.*"/>
-                                    <substitution expression=""/>
-                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
-                                        <include name="*"/>
-                                    </fileset>
-                                </replaceregexp>
-                                <replaceregexp encoding="UTF-8" flags="gs">
-                                    <regexp pattern="^(.*)$"/>
-                                    <substitution expression="{\0}"/>
-                                    <fileset dir="${basedir}/src/main/webapp/resources/js/i18n">
-                                        <include name="*"/>
-                                    </fileset>
-                                </replaceregexp>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
     </build>
 

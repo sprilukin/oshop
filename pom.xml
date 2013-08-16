@@ -100,6 +100,10 @@
                 <message.bundle.cache>10000</message.bundle.cache>
                 <require.js.optimizer.path.to.node.js>d:\work\install\nodejs\node-0.10.15\nodejs.exe</require.js.optimizer.path.to.node.js>
                 <require.js.optimizer.skip>true</require.js.optimizer.skip>
+                <user.admin.name>admin</user.admin.name>
+                <user.admin.password>password</user.admin.password>
+                <user.name>user</user.name>
+                <user.password>password</user.password>
             </properties>
         </profile>
         <profile>
@@ -116,6 +120,10 @@
                 <message.bundle.cache>10000</message.bundle.cache>
                 <require.js.optimizer.path.to.node.js>d:\work\install\nodejs\node-0.10.15\nodejs.exe</require.js.optimizer.path.to.node.js>
                 <require.js.optimizer.skip>true</require.js.optimizer.skip>
+                <user.admin.name>admin</user.admin.name>
+                <user.admin.password>password</user.admin.password>
+                <user.name>user</user.name>
+                <user.password>password</user.password>
             </properties>
         </profile>
     </profiles>-->
