@@ -18,6 +18,7 @@ define([
         el: '.invoicesPlaceholder',
 
         initialize: function(options) {
+            this.returnAddress = options.returnAddress;
             this.collection.on("sync", function() {
                 this.render();
             }, this);
@@ -27,14 +28,14 @@ define([
             this.$el.html(
                 Mustache.render(frontTemplate, this._getFrontModel()) +
                     Mustache.render(backTemplate, this._getBackModel()) +
-                    Mustache.render(addressTemplate, this.collection)
+                    Mustache.render(addressTemplate, {models: this.collection.models, returnAddress: this.returnAddress})
             );
         },
 
         _getFrontModel: function() {
             var front = {models: _.filter(this.collection.models, function() {
                 return true
-            })};
+            }), returnAddress: this.returnAddress};
 
             var size = this.collection.size();
             if (size % 4 > 0) {

@@ -80,7 +80,9 @@ define([
                 });
             }
 
-            window.open(context + "/invoicePrint?id=" + ids.join(","), "_blank");
+            //TODO: move to profile config
+            var defaultReturnAddress = ["Прилукина М. И.", "Капушанская 27/29", "Ужгород", "Закарпатская обл", "88018"];
+            window.open(context + "/invoicePrint?id=" + ids.join(",") + "&returnAddress=" + defaultReturnAddress.join("|"), "_blank");
         }
     });
 

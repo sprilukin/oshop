@@ -37,13 +37,15 @@
         {{attributes.shippingAddress.postalCode}}
     </div>
     <div class="text returnName">
-        Прилукина М. И.
+        {{returnAddress.recipient}}
     </div>
     <div class="text returnAddress">
-        Капушанская 27/29
+        {{returnAddress.address}}
     </div>
     <div class="text returnCity">
-        Ужгород, Закарпатская обл., 88018
+        {{returnAddress.city}},
+        {{returnAddress.region}},
+        {{returnAddress.postalCode}}
     </div>
    {{/fake}}
 </div>
