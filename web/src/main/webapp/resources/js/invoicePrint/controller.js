@@ -4,9 +4,8 @@
 define([
     'underscore',
     'common/filter',
-    'orders/collection',
-    'invoicePrint/ukrPostView',
-], function (_, Filter, Collection, View) {
+    'orders/collection'
+], function (_, Filter, Collection) {
 
     var Controller = function(options) {
         return this.initialize(options);
@@ -17,7 +16,8 @@ define([
         initialize: function(options) {
             this.collection = new Collection({customerId: null});
             this.filter = new Filter();
-            this.listView = new View({collection: this.collection, returnAddress: this.formatReturnAddress()});
+
+            this.listView = new options.View({collection: this.collection, returnAddress: this.formatReturnAddress()});
 
             this.filter.set("idEQ", this.getOrderIds());
             this.collection.setFilterString(this.filter.format());

@@ -4,12 +4,12 @@
 
 <html>
 <head>
-    <title><spring:message code="invoice.print.title"/></title>
+    <title><spring:message code="invoice.print.salesReceipt.title"/></title>
 </head>
 <body>
 
 <div class="invoicesPlaceholder"></div>
 
-<script data-main="invoicePrint/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
+<script data-main="invoicePrint/mainSalesReceipt" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
 </html>

@@ -24,10 +24,16 @@
             <i class="icon-plus icon-white"> </i>
             <spring:message code="orders.add.order"/>
         </a>
-        <div class="printInvoices" style="margin-top: 5px">
+        <div class="printUkrPostInvoices" style="margin-top: 5px">
             <a href="#" role="button" class="btn btn-primary">
                 <i class="icon-plus icon-white"> </i>
-                <spring:message code="orders.print.invoice"/>
+                <spring:message code="orders.print.ukrPost.invoice"/>
+            </a>
+        </div>
+        <div class="printSalesReceipt" style="margin-top: 5px">
+            <a href="#" role="button" class="btn btn-primary">
+                <i class="icon-plus icon-white"> </i>
+                <spring:message code="orders.print.salesReceipt"/>
             </a>
         </div>
     </div>

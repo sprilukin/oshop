@@ -9,7 +9,7 @@ define([
 
     return Backbone.View.extend({
 
-        el: '.printInvoices',
+        el: '.printUkrPostInvoices',
 
         events: {
             "click a": "printInvoices"

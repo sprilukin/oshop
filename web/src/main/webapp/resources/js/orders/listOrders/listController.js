@@ -7,7 +7,8 @@ define([
     'orders/collection',
     'orders/listOrders/listView',
     'orders/listOrders/filterByOrderStatusesView',
-    'orders/listOrders/printInvoicesButtonView',
+    'orders/listOrders/printUkrPostInvoicesButtonView',
+    'orders/listOrders/printSalesReceiptButtonView',
     'common/selectedModel',
     'common/baseListController',
     'common/advancedSearchView',
@@ -16,7 +17,7 @@ define([
     'common/sorter',
     'common/messages',
     'common/context'
-], function (_, Model, Collection, ListView, FilterByOrderStatusesView, PrintInvoicesButtonView, SelectedModel, BaseListController, AdvancedSearchView, AdvancedFilters, Filter, Sorter, messages, context) {
+], function (_, Model, Collection, ListView, FilterByOrderStatusesView, PrintInvoicesButtonView, SalesReceiptButtonView, SelectedModel, BaseListController, AdvancedSearchView, AdvancedFilters, Filter, Sorter, messages, context) {
 
     var getCustomerId = function() {
         var matches = window.location.pathname.match(/customers\/([\d]+)([\/#\?].*)?$/);
@@ -68,9 +69,29 @@ define([
             this.printInvoicesButtonView.on("print:invoices", function() {
                 this.printInvoices();
             }, this);
+
+            this.salesReceiptButtonView = new SalesReceiptButtonView();
+            this.salesReceiptButtonView.on("print:salesReceipt", function() {
+                this.printSalesReceipt();
+            }, this);
         },
 
         printInvoices: function() {
+            //TODO: move to profile config
+            var defaultReturnAddress = ["Прилукина М. И.", "Капушанская 27/29", "Ужгород", "Закарпатская обл", "88018"];
+            window.open(context + "/printUkrPostInvoice?id=" + this._getIds().join(",") + "&returnAddress=" + defaultReturnAddress.join("|"), "_blank");
+        },
+
+        printSalesReceipt: function() {
+            //window.open(context + "/invoicePrint/salesReceipt?id=" + this._getIds().join(","), "_blank");
+
+            //TODO: move to profile config
+            var defaultReturnAddress = ["Прилукина М. И.", "Капушанская 27/29", "Ужгород", "Закарпатская обл", "88018"];
+            window.open(context + "/printSalesReceipt?id=" + this._getIds().join(",") + "&returnAddress=" + defaultReturnAddress.join("|"), "_blank");
+
+        },
+
+        _getIds: function() {
             var ids = this.selectedModel.items();
             this.selectedModel.clear();
 
@@ -80,9 +101,7 @@ define([
                 });
             }
 
-            //TODO: move to profile config
-            var defaultReturnAddress = ["Прилукина М. И.", "Капушанская 27/29", "Ужгород", "Закарпатская обл", "88018"];
-            window.open(context + "/invoicePrint?id=" + ids.join(",") + "&returnAddress=" + defaultReturnAddress.join("|"), "_blank");
+            return ids;
         }
     });
 

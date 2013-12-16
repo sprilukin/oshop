@@ -10,7 +10,7 @@
         <pattern>/*</pattern>
     </decorator>
     <decorator name="print" page="print.jsp">
-        <pattern>/invoicePrint*</pattern>
+        <pattern>/print*</pattern>
     </decorator>
     <decorator name="login" page="login.jsp">
         <pattern>/login*</pattern>
