@@ -1,0 +1,82 @@
+<div class="salesReceipt-main">
+{{#models}}
+<div class="salesReceipt-item">
+    <div class="salesReceipt-title">
+        Товарный чек
+    </div>
+    <div class="salesReceipt-date">
+        <div class="">
+            Дата:
+        </div>
+        <div class="">
+            --33--33--33
+        </div>
+    </div>
+    <div class="salesReceipt-customer">
+        <div class="">
+            Клиент:
+        </div>
+        <div class="">
+            {{attributes.shippingAddress.recipient}}
+        </div>
+    </div>
+
+    <table class="salesReceipt-products-table">
+        <thead>
+        <tr>
+            <td class="number">№</td>
+            <td>Название</td>
+            <td>Цена, грн</td>
+        </tr>
+        </thead>
+        <tbody>
+        {{#attributes.products}}
+            <tr>
+                <td></td>
+                <td>{{name}}</td>
+                <td>{{price}}.00</td>
+            </tr>
+        {{/attributes.products}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            {{#attributes.discount}}
+            <tr>
+                <td colspan="2">Скидка</td>
+                <td>{{attributes.discount.amount}}.00{{attributes.discount.typeAsString}}</td>
+            </tr>
+            {{/attributes.discount}}
+            {{#attributes.additionalPayment}}
+            <tr>
+                <td colspan="2">Почтовые услуги</td>
+                <td>{{attributes.additionalPayment.amount}}.00</td>
+            </tr>
+            {{/attributes.additionalPayment}}
+            <tr>
+                <td colspan="2">К оплате</td>
+                <td>{{attributes.totalPrice}}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div>
+        <div>
+            Спасибо за покупки!
+        </div>
+        <div>
+            <div>
+                Марина Second Brand
+            </div>
+            <div>
+                http://www.odnoklassniki.ru/profile/527569830109
+            </div>
+            <div>
+                тел: +380991962366
+            </div>
+        </div>
+    </div>
+</div>
+{{/models}}
+</div>

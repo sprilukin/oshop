@@ -1,3 +1,5 @@
+/* UKRPOST */
+
 .ukrPost {
     position: relative;
     float: left;
@@ -106,3 +108,31 @@
     float: left;
 }
 
+/* SALES RECEIPT */
+.salesReceipt-main {
+    width: 940px;
+}
+
+.salesReceipt-item {
+    float: left;
+    width: 450px;
+    margin: 4px;
+    border: 1px dashed #000000;
+    padding: 4px;
+}
+
+.salesReceipt-products-table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.salesReceipt-products-table,
+.salesReceipt-products-table th,
+.salesReceipt-products-table td {
+    border-collapse:collapse;
+    border: 1px solid black;
+}
+
+.salesReceipt-products-table .number {
+    max-width: 50px;
+}

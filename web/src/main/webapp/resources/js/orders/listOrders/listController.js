@@ -83,12 +83,7 @@ define([
         },
 
         printSalesReceipt: function() {
-            //window.open(context + "/invoicePrint/salesReceipt?id=" + this._getIds().join(","), "_blank");
-
-            //TODO: move to profile config
-            var defaultReturnAddress = ["Прилукина М. И.", "Капушанская 27/29", "Ужгород", "Закарпатская обл", "88018"];
-            window.open(context + "/printSalesReceipt?id=" + this._getIds().join(",") + "&returnAddress=" + defaultReturnAddress.join("|"), "_blank");
-
+            window.open(context + "/printSalesReceipt?id=" + this._getIds().join(","), "_blank");
         },
 
         _getIds: function() {

@@ -9,7 +9,6 @@ define([
     'text!templates/invoicePrint/front.html',
     'text!templates/invoicePrint/back.html',
     'text!templates/invoicePrint/address.html',
-    'bootstrap'
 ], function ($, _, Backbone, Mustache, frontTemplate, backTemplate, addressTemplate) {
 
 
@@ -18,7 +17,7 @@ define([
         el: '.invoicesPlaceholder',
 
         initialize: function(options) {
-            this.returnAddress = options.returnAddress;
+            this.returnAddress = this.formatReturnAddress();
             this.collection.on("sync", function() {
                 this.render();
             }, this);
@@ -30,6 +29,31 @@ define([
                     Mustache.render(backTemplate, this._getBackModel()) +
                     Mustache.render(addressTemplate, {models: this.collection.models, returnAddress: this.returnAddress})
             );
+        },
+
+        getReturnAddress: function() {
+            var matches = window.location.search.match(/(\?|&)returnAddress=([^&]+)/);
+            if (matches && matches.length > 0) {
+                return matches[2];
+            } else {
+                return null;
+            }
+        },
+
+        formatReturnAddress: function() {
+            var returnAddress = this.getReturnAddress();
+            if (!returnAddress) {
+                return null;
+            }
+
+            var arr = returnAddress.split("|");
+            return {
+                recipient: decodeURIComponent(arr[0]),
+                address: decodeURIComponent(arr[1]),
+                city: decodeURIComponent(arr[2]),
+                region: decodeURIComponent(arr[3]),
+                postalCode: decodeURIComponent(arr[4])
+            }
         },
 
         _getFrontModel: function() {
