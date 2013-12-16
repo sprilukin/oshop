@@ -6,8 +6,9 @@ define([
     'underscore',
     'backbone',
     'mustache',
+    'common/dateFormatter',
     'text!templates/invoicePrint/salesReceipt.html',
-], function ($, _, Backbone, Mustache, template) {
+], function ($, _, Backbone, Mustache, dateFormatter, template) {
 
 
     return Backbone.View.extend({
@@ -22,7 +23,24 @@ define([
         },
 
         render: function () {
-            this.$el.html(Mustache.render(template, this.collection));
+            this.$el.html(Mustache.render(template, this._getModel()));
+        },
+
+        _getModel: function() {
+            var currentDate = dateFormatter(new Date().getTime()).format();
+
+            this.collection.each(function(model) {
+                _.each(model.attributes.products, function(product, index) {
+                    product.index = index + 1;
+                });
+            });
+
+            var model = {
+                models: this.collection.models,
+                currentDate: currentDate
+            };
+
+            return model;
         }
     });
 });

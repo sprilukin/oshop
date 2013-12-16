@@ -9,7 +9,7 @@
             Дата:
         </div>
         <div class="srValue">
-            --33--33--33
+            {{currentDate}}
         </div>
     </div>
     <div class="salesReceipt-customer">
@@ -32,7 +32,7 @@
         <tbody>
         {{#attributes.products}}
             <tr>
-                <td></td>
+                <td>{{index}}</td>
                 <td>{{name}}</td>
                 <td>{{price}}.00</td>
             </tr>
