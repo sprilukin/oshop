@@ -34,20 +34,6 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
     @Resource(name = "discountToDTOConverter")
     private EntityConverter<Discount, Integer> discountConverter;
 
-    protected void convertInternal(Order entity, Order convertedEntity) throws Exception {
-        convertedEntity.setCurrentOrderStateName(entity.getCurrentOrderStateName());
-        convertedEntity.setCurrentOrderStateDate(entity.getCurrentOrderStateDate());
-        convertedEntity.setProductsCount(entity.getProductsCount());
-        convertedEntity.setProductsPrice(entity.getProductsPrice());
-        convertedEntity.setTotalPrice(entity.getTotalPrice());
-        convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
-        convertedEntity.setDate(entity.getDate());
-        convertedEntity.setDescription(entity.getDescription());
-        convertedEntity.setDiscount(discountConverter.convert(entity.getDiscount()));
-        convertedEntity.setAdditionalPayment(additionalPaymentConverter.convert(entity.getAdditionalPayment()));
-        convertedEntity.setShippingAddress(shippingAddressConverter.convert(entity.getShippingAddress()));
-    }
-
     @Override
     protected Class<Order> entityClass() {
         return Order.class;
@@ -55,19 +41,18 @@ public class OrderToDTOConverter extends BaseEntityConverter<Order, Integer> {
 
     @Override
     protected void convert(Order entity, Order convertedEntity) throws Exception {
-        convertInternal(entity, convertedEntity);
-
+        convertedEntity.setCurrentOrderStateName(entity.getCurrentOrderStateName());
+        convertedEntity.setCurrentOrderStateDate(entity.getCurrentOrderStateDate());
+        convertedEntity.setProductsCount(entity.getProductsCount());
+        convertedEntity.setProductsPrice(entity.getProductsPrice());
         convertedEntity.setProducts(productsConverter.convert(entity.getProducts()));
         convertedEntity.setStates(orderStatesConverter.convert(entity.getStates()));
-    }
-
-    protected Order convertForCollection(Order entity) throws Exception {
-        Order convertedEntity = newInstance();
-        convertedEntity.setId(entity.getId());
-        //convertedEntity.setLastUpdate(entity.getLastUpdate());
-        convertedEntity.setVersion(entity.getVersion());
-
-        convertInternal(entity, convertedEntity);
-        return convertedEntity;
+        convertedEntity.setTotalPrice(entity.getTotalPrice());
+        convertedEntity.setCustomer(customerConverter.convert(entity.getCustomer()));
+        convertedEntity.setDate(entity.getDate());
+        convertedEntity.setDescription(entity.getDescription());
+        convertedEntity.setDiscount(discountConverter.convert(entity.getDiscount()));
+        convertedEntity.setAdditionalPayment(additionalPaymentConverter.convert(entity.getAdditionalPayment()));
+        convertedEntity.setShippingAddress(shippingAddressConverter.convert(entity.getShippingAddress()));
     }
 }
