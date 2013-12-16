@@ -5,18 +5,18 @@
         Товарный чек
     </div>
     <div class="salesReceipt-date">
-        <div class="">
+        <div class="srLabel">
             Дата:
         </div>
-        <div class="">
+        <div class="srValue">
             --33--33--33
         </div>
     </div>
     <div class="salesReceipt-customer">
-        <div class="">
+        <div class="srLabel">
             Клиент:
         </div>
-        <div class="">
+        <div class="srValue">
             {{attributes.shippingAddress.recipient}}
         </div>
     </div>
@@ -45,7 +45,7 @@
             {{#attributes.discount}}
             <tr>
                 <td colspan="2">Скидка</td>
-                <td>{{attributes.discount.amount}}.00{{attributes.discount.typeAsString}}</td>
+                <td>{{attributes.discount.amount}}{{#attributes.discount.type}}.00{{/attributes.discount.type}}{{^attributes.discount.type}}{{attributes.discount.typeAsString}}{{/attributes.discount.type}}</td>
             </tr>
             {{/attributes.discount}}
             {{#attributes.additionalPayment}}
@@ -61,18 +61,18 @@
         </tfoot>
     </table>
 
-    <div>
-        <div>
+    <div class="salesReceipt-footer">
+        <div class="thanks">
             Спасибо за покупки!
         </div>
         <div>
-            <div>
+            <div class="storeName">
                 Марина Second Brand
             </div>
-            <div>
+            <div class="webPage">
                 http://www.odnoklassniki.ru/profile/527569830109
             </div>
-            <div>
+            <div class="phone">
                 тел: +380991962366
             </div>
         </div>

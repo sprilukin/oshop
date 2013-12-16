@@ -111,6 +111,8 @@
 /* SALES RECEIPT */
 .salesReceipt-main {
     width: 940px;
+    font-size: 1.2em;
+    line-height: 20px;
 }
 
 .salesReceipt-item {
@@ -121,9 +123,29 @@
     padding: 4px;
 }
 
+.salesReceipt-date {
+    margin-top: 10px;
+}
+
+.salesReceipt-customer {
+    margin-top: 10px;
+}
+
+.salesReceipt-date,
+.salesReceipt-customer {
+    font-size: 1.2em;
+}
+
+.salesReceipt-date .srLabel,
+.salesReceipt-customer .srLabel {
+    float: left;
+    width: 80px;
+}
+
 .salesReceipt-products-table {
     border: 1px solid black;
     width: 100%;
+    margin-top: 15px;
 }
 
 .salesReceipt-products-table,
@@ -133,6 +155,40 @@
     border: 1px solid black;
 }
 
+.salesReceipt-products-table thead,
+.salesReceipt-products-table tfoot {
+    font-weight: bold;
+}
+
 .salesReceipt-products-table .number {
     max-width: 50px;
+}
+
+.salesReceipt-footer {
+    margin-top: 20px;
+}
+
+.salesReceipt-title,
+.salesReceipt-footer .thanks,
+.salesReceipt-footer .storeName {
+    font-size: 1.9em;
+    line-height: 35px;
+}
+
+.salesReceipt-footer .thanks {
+
+}
+
+.salesReceipt-footer .storeName {
+    margin-top: 15px;
+}
+
+.salesReceipt-footer .webPage {
+    font-size: 1.2em;
+    line-height: 35px;
+}
+
+.salesReceipt-footer .phone {
+    font-size: 1.3em;
+    line-height: 35px;
 }
