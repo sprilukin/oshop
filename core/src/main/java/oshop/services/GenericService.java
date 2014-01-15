@@ -1,7 +1,7 @@
 package oshop.services;
 
 import org.springframework.transaction.annotation.Transactional;
-import oshop.dto.PaginatedCollectionList;
+import oshop.dto.PaginatedList;
 import oshop.model.BaseEntity;
 
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public interface GenericService<T extends BaseEntity<ID>, ID extends Serializabl
 
     public T get(ID id) throws Exception;
 
-    public PaginatedCollectionList<T> list(
+    public PaginatedList<T> list(
             Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception;
 }

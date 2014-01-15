@@ -2,7 +2,7 @@ package oshop.web.api.rest.adapter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import oshop.dto.PaginatedCollectionList;
+import oshop.dto.PaginatedList;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ public abstract class ListReturningRestCallbackAdapter<T> extends ReturningRestC
         } else {
             long size = result.size();
 
-            if (result instanceof PaginatedCollectionList) {
-                size = ((PaginatedCollectionList<T>)result).getTotalCollectionSize();
+            if (result instanceof PaginatedList) {
+                size = ((PaginatedList<T>)result).getTotalSize();
             }
 
             addHeader(COLLECTION_SIZE_HEADER, String.valueOf(size));

@@ -5,8 +5,8 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.internal.CriteriaImpl;
 import oshop.dao.GenericDao;
 import oshop.dao.GenericSearchDao;
-import oshop.dto.ListWithTotalSize;
-import oshop.dto.PaginatedCollectionList;
+import oshop.dto.PaginatedListImpl;
+import oshop.dto.PaginatedList;
 import oshop.model.BaseEntity;
 import oshop.services.GenericService;
 import oshop.services.filter.Filter;
@@ -97,17 +97,17 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
         return criteria;
     }
 
-    protected <K> PaginatedCollectionList<K> getCountAndPrepareListDto(List<K> list, Criteria criteria) throws Exception {
+    protected <K> PaginatedList<K> getCountAndPrepareListDto(List<K> list, Criteria criteria) throws Exception {
 
         criteria = prepareCriteriaForCountProjection(criteria);
 
         Number length = searchDao.get(criteria);
 
-        return new ListWithTotalSize<K>(list, length.longValue());
+        return new PaginatedListImpl<K>(list, length.longValue());
     }
 
     @Override
-    public PaginatedCollectionList<T> list(Map<String, List<String>> filters, Map<String, List<String>> sorters, Integer limit, Integer offset) throws Exception {
+    public PaginatedList<T> list(Map<String, List<String>> filters, Map<String, List<String>> sorters, Integer limit, Integer offset) throws Exception {
         Criteria criteria = applyFiltersAndSortersToCriteria(getDao().createCriteria(), filters, sorters);
         List<T> list = getToDTOConverter().convert(getDao().list(criteria, offset, limit));
 

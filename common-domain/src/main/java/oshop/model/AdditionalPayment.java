@@ -37,6 +37,6 @@ public class AdditionalPayment extends BaseEntity<Integer> {
     }
 
     public void setAmount(BigDecimal amount) {
-        this.amount = EntityUtils.round(amount, 2);
+        this.amount = EntityUtils.round(amount);
     }
 }

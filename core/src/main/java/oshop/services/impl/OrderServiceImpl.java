@@ -6,8 +6,8 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Service;
 import oshop.dao.GenericDao;
-import oshop.dto.ListWithTotalSize;
-import oshop.dto.PaginatedCollectionList;
+import oshop.dto.PaginatedListImpl;
+import oshop.dto.PaginatedList;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.Product;
@@ -102,7 +102,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         getDao().update(order);
     }
 
-    public PaginatedCollectionList<Product> getProductsAllButOrder(
+    public PaginatedList<Product> getProductsAllButOrder(
             Integer orderId, Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception {
 
@@ -119,11 +119,11 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         return getCountAndPrepareListDto(list, criteria);
     }
 
-    public PaginatedCollectionList<Product> getProductsByOrder(Integer orderId) throws Exception {
+    public PaginatedList<Product> getProductsByOrder(Integer orderId) throws Exception {
         Order order = getDao().get(orderId);
         List<Product> list = productConverter.convert(order.getProducts());
 
-        return new ListWithTotalSize<Product>(list, (long)list.size());
+        return new PaginatedListImpl<Product>(list, (long)list.size());
     }
 
     public OrderHasOrderStates addOrderHasStateToOrder(final Integer orderId, OrderHasOrderStates entity) throws Exception {
@@ -133,11 +133,11 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         return orderHasStateConverter.convert(orderHasOrderStatesDao.get(id));
     }
 
-    public PaginatedCollectionList<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception {
+    public PaginatedList<OrderHasOrderStates> getOrderHasStatesByOrder(Integer orderId) throws Exception {
         Order order = getDao().get(orderId);
         List<OrderHasOrderStates> list = orderHasStateConverter.convert(order.getStates());
 
-        return new ListWithTotalSize<OrderHasOrderStates>(list, (long)list.size());
+        return new PaginatedListImpl<OrderHasOrderStates>(list, (long)list.size());
     }
 
 }

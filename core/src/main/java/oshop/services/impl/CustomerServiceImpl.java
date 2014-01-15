@@ -4,7 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import oshop.dao.GenericDao;
-import oshop.dto.PaginatedCollectionList;
+import oshop.dto.PaginatedList;
 import oshop.model.Customer;
 import oshop.model.Order;
 import oshop.model.ShippingAddress;
@@ -50,7 +50,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer, Integer> i
         return converter;
     }
 
-    public PaginatedCollectionList<ShippingAddress> getShippingAddressesByCustomer(Integer customerId,
+    public PaginatedList<ShippingAddress> getShippingAddressesByCustomer(Integer customerId,
             Map<String, List<String>> filters, Map<String, List<String>> sorters, Integer limit, Integer offset) throws Exception {
 
         Criteria criteria = shippingAddressDao.createCriteria();
@@ -62,7 +62,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer, Integer> i
         return getCountAndPrepareListDto(list, criteria);
     }
 
-    public PaginatedCollectionList<Order> getOrdersByCustomer(Integer customerId,
+    public PaginatedList<Order> getOrdersByCustomer(Integer customerId,
             Map<String, List<String>> filters, Map<String, List<String>> sorters, Integer limit, Integer offset) throws Exception {
 
         Criteria criteria = orderDao.createCriteria();
