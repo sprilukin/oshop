@@ -53,6 +53,9 @@
     <bean id="expenseDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.Expense" />
     </bean>
+    <bean id="incomeDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
+        <property name="entityClass" value="oshop.model.Income" />
+    </bean>
     <bean id="cityDao" class="oshop.dao.GenericDaoImpl" parent="genericDao">
         <property name="entityClass" value="oshop.model.City" />
     </bean>

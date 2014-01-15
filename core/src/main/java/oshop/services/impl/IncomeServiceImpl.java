@@ -2,23 +2,23 @@ package oshop.services.impl;
 
 import org.springframework.stereotype.Service;
 import oshop.dao.GenericDao;
-import oshop.model.Expense;
+import oshop.model.Income;
 import oshop.services.converter.EntityConverter;
 import oshop.services.filter.Filter;
 
 import javax.annotation.Resource;
 
-@Service("expenseService")
-public class ExpenseServiceImpl extends GenericServiceImpl<Expense, Integer> {
+@Service("incomeService")
+public class IncomeServiceImpl extends GenericServiceImpl<Income, Integer> {
 
     @Resource
     private Filter dateBetweenFilter;
 
     @Resource
-    protected GenericDao<Expense, Integer> expenseDao;
+    protected GenericDao<Income, Integer> incomeDao;
 
-    @Resource(name = "expenseToDTOConverter")
-    private EntityConverter<Expense, Integer> converter;
+    @Resource(name = "incomeToDTOConverter")
+    private EntityConverter<Income, Integer> converter;
 
     @Override
     protected Filter getFilter() {
@@ -26,12 +26,12 @@ public class ExpenseServiceImpl extends GenericServiceImpl<Expense, Integer> {
     }
 
     @Override
-    protected GenericDao<Expense, Integer> getDao() {
-        return expenseDao;
+    protected GenericDao<Income, Integer> getDao() {
+        return incomeDao;
     }
 
     @Override
-    protected EntityConverter<Expense, Integer> getToDTOConverter() {
+    protected EntityConverter<Income, Integer> getToDTOConverter() {
         return converter;
     }
 }
