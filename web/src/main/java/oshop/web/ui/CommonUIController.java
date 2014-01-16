@@ -92,6 +92,11 @@ public class CommonUIController {
         return "expenses";
     }
 
+    @RequestMapping(value = "/incomes", method = RequestMethod.GET)
+    public String incomes() throws Exception {
+        return "incomes";
+    }
+
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public String customers() throws Exception {
         return "customers";

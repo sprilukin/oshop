@@ -57,6 +57,7 @@
         {name: "customers/main"},
         {name: "discounts/main"},
         {name: "expenses/main"},
+        {name: "incomes/main"},
         {name: "orders/editOrder/edit"},
         {name: "orders/listOrders/list"},
         {name: "orderStates/main"},
