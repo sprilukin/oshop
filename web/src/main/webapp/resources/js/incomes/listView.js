@@ -10,9 +10,10 @@ define([
     'common/sortView',
     'common/context',
     'common/dateFormatter',
+    'incomes/chart/view',
     'text!templates/expenses/list.html',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, SortView, context, dateFormatter, listEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, SortView, context, dateFormatter, ChartView, listEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -35,6 +36,16 @@ define([
                     sorter: options.sorter
                 }))
             }, this);
+
+            $('#datepicker').datepicker({
+                format: "yyyy-mm-dd",
+                todayBtn: "linked",
+                todayHighlight: true,
+                language: settingsStorage.get("lang")
+            });
+
+            this.chartView = new ChartView();
+            this.chartView.fetch();
         },
 
         render: function () {

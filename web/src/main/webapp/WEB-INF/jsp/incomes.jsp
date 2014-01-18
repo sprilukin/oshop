@@ -12,7 +12,11 @@
 <h1><spring:message code="incomes.title"/></h1>
 
 <div class="row-fluid span12 entity-controls">
-    <div class="search inline span3"></div>
+    <div class="input-daterange inline span3" id="datepicker">
+        <input type="text" class="input-small" name="start" />
+        <span class="add-on">to</span>
+        <input type="text" class="input-small" name="end" />
+    </div>
 
     <div class="inline span3 offset6">
         <a href="#add" role="button" class="btn btn-primary">
@@ -20,6 +24,10 @@
             <spring:message code="incomes.add.income"/>
         </a>
     </div>
+</div>
+
+<div class="row-fluid span12">
+    <canvas id="expenseChart" width="1000" height="400"></canvas>
 </div>
 
 <div class="row-fluid span12 forPagination"></div>

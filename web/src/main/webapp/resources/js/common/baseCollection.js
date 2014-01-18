@@ -13,12 +13,14 @@ define([
         TOTAL_COLLECTION_SIZE_HEADER: "totalListSize",
 
         initialize: function(options) {
+            options = options || {};
+
             this.total = 0;
             this.template = context + this.URL_TEMPLATE;
-            this.filter = "";
-            this.sorter = "";
-            this.limit = undefined;
-            this.offset = 0;
+            this.filter = options.filter || "";
+            this.sorter = options.sorter || "";
+            this.limit = options.limit;
+            this.offset = options.offset || 0;
         },
 
         url: function () {
@@ -32,7 +34,7 @@ define([
                 options && options.success && options.success.apply(that, arguments);
             };
 
-            Backbone.Collection.prototype.fetch.call(
+            return Backbone.Collection.prototype.fetch.call(
                 this, _.extend({data: {limit: this.limit, offset: this.offset}}, options, {success: success})
             );
         },
