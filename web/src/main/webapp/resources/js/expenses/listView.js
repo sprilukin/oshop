@@ -40,7 +40,7 @@ define([
         render: function () {
             var model = _.extend({context: context}, {models: _.map(this.collection.models, function(model) {
                 var modelClone = _.extend({}, model.attributes);
-                modelClone.date = dateFormatter(modelClone.date).format();
+                modelClone.date = dateFormatter(modelClone.date).format("YYYY-MM-DD");
 
                 return {id: modelClone.id, attributes: modelClone};
             })}, messages);
