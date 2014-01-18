@@ -71,14 +71,16 @@ define([
             this.attributes.incomesMinusExpensesCumulative = [];
 
             var daysCount = (this.endDate - this.startDate) / 86400000;
+            var expenseSumForDate = 0;
+            var incomeSumForDate = 0;
 
             for (var i = 0; i < daysCount; i++) {
                 var date = this.startDate + i * 86400000;
 
                 var expenseForDate = this._getValueForDate(date, this.get("expenseCollection"));
                 var incomeForDate = this._getValueForDate(date, this.get("incomesCollection"));
-                var expenseSumForDate = this._getValueSumForDate(date, this.get("expenseCollection"));
-                var incomeSumForDate = this._getValueSumForDate(date, this.get("incomesCollection"));
+                expenseSumForDate += expenseForDate;
+                incomeSumForDate += incomeForDate;
 
                 this.attributes.labels.push(dateFormatter(date).format("YYYY MMM DD"));
                 this.attributes.expenses.push(expenseForDate);
@@ -95,18 +97,6 @@ define([
 
             collection.each(function(model) {
                 if ((model.get("date") >= date) && (model.get("date") < (date + 86400000))) {
-                    value += model.get("amount");
-                }
-            });
-
-            return value;
-        },
-
-        _getValueSumForDate: function(date, collection) {
-            var value = 0;
-
-            collection.each(function(model) {
-                if (model.get("date") <= date) {
                     value += model.get("amount");
                 }
             });

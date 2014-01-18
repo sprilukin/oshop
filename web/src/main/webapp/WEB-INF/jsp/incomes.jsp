@@ -12,12 +12,6 @@
 <h1><spring:message code="incomes.title"/></h1>
 
 <div class="row-fluid span12 entity-controls">
-    <div class="input-daterange inline span3" id="datepicker">
-        <input type="text" class="input-small" name="start" />
-        <span class="add-on">to</span>
-        <input type="text" class="input-small" name="end" />
-    </div>
-
     <div class="inline span3 offset6">
         <a href="#add" role="button" class="btn btn-primary">
             <i class="icon-plus icon-white"> </i>
@@ -26,13 +20,30 @@
     </div>
 </div>
 
-<div class="row-fluid span12">
-    <canvas id="expenseChart" width="1000" height="400"></canvas>
-</div>
-
 <div class="row-fluid span12 forPagination"></div>
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
+
+<div class="row-fluid span12 entity-controls">
+    <h1 style="margin-top: 50px">Графики</h1>
+
+    <div class="input-daterange inline span3" id="datepicker" style="float: none">
+        <input type="text" class="input-small" name="start"/>
+        <span class="add-on">to</span>
+        <input type="text" class="input-small" name="end"/>
+    </div>
+
+    <div style="margin-top: 50px">
+        <h1>Доходы и расходы</h1>
+        <canvas id="expenseChart" width="1000" height="400"></canvas>
+
+        <h1>Сумма доходов за день</h1>
+        <canvas id="expenseChart2" width="1000" height="400"></canvas>
+
+        <h1>Баланс на дату</h1>
+        <canvas id="expenseChart3" width="1000" height="400"></canvas>
+    </div>
+</div>
 
 <script data-main="incomes/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
 </body>
