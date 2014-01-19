@@ -13,6 +13,17 @@ define([
     return Backbone.View.extend({
 
         initialize: function(options) {
+            highcharts.setOptions({
+                global: {
+                    useUTC: false
+                },
+                lang: {
+                    months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                    weekdays: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+                    shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+                }
+            });
+
             this.model.on("sync", this.render, this);
         },
 

@@ -72,7 +72,7 @@ define([
             this.attributes.incomesMinusExpensesCumulative = [];
             this.attributes.incomesMinusExpensesCumulativeTimeSeries = [];
 
-            var daysCount = (this.endDate - this.startDate) / 86400000;
+            var daysCount = (this.endDate - this.startDate) / 86400000 + 1;
             var expenseSumForDate = 0;
             var incomeSumForDate = 0;
 
