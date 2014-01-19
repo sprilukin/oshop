@@ -27,7 +27,7 @@ var require = {
         templates: '../../templates',
         messagesBase: '../../i18n/messages',
         //messagesBase: 'i18n'
-        chart: 'lib/Chart'
+        highcharts: 'lib/highstock.src'
     },
 
     shim: {

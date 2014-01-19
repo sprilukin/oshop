@@ -34,14 +34,9 @@
     </div>
 
     <div style="margin-top: 50px">
-        <h1>Доходы и расходы</h1>
-        <canvas id="expenseChart" width="1000" height="400"></canvas>
-
-        <h1>Сумма доходов за день</h1>
-        <canvas id="expenseChart2" width="1000" height="400"></canvas>
-
-        <h1>Баланс на дату</h1>
-        <canvas id="expenseChart3" width="1000" height="400"></canvas>
+        <div id="expenseChart" style="width:100%;height:400px"></div>
+        <div id="expenseChart2" style="width:100%;height:400px"></div>
+        <div id="expenseChart3" style="width:100%;height:400px"></div>
     </div>
 </div>
 
