@@ -35,8 +35,8 @@ define([
             this.model.on("error", this.onError, this);
 
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
-                title: this.mode === "add" ? messages["expenses_add_expense"] : messages["expenses_edit_expense"],
-                submit: this.mode === "add" ? messages["expenses_add"] : messages["expenses_edit"],
+                title: this.mode === "add" ? messages["incomes_add_income"] : messages["incomes_edit_income"],
+                submit: this.mode === "add" ? messages["incomes_add"] : messages["incomes_edit"],
                 model: _.extend({}, this.model.attributes, {date: dateFormatter(this.model.attributes.date).format("YYYY-MM-DD")})
             }, messages)));
 
