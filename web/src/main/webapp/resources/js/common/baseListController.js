@@ -41,8 +41,10 @@ define([
             this.Model = options.Model;
             this.page = options.page || 1;
             this.itemsPerPage = options.itemsPerPage || settingsStorage.get("itemsPerPage");
-            this.filter = options.filter || new Filter();
-            this.sorter = options.sorter || new Sorter();
+            this.filter = new Filter();
+            this.defaultFilter = options.filter || new Filter();
+            this.sorter = new Sorter();
+            this.defaultSorter = options.sorter || new Sorter();
 
             this.collection = options.collection;
             this.listView = options.view || new options.View({collection: this.collection, sorter: this.sorter});
@@ -89,8 +91,8 @@ define([
 
         list: function (filter, sort, page) {
             this.page = parseInt(page, 10) || 1;
-            this.filter && this.filter.parse(filter, {silent:true});
-            this.sorter && this.sorter.parse(sort, {silent:true});
+            this.filter && this.filter.parse(filter ? filter : this.defaultFilter.format(), {silent:true});
+            this.sorter && this.sorter.parse(sort ? sort : this.defaultSorter.format(), {silent:true});
 
             this.collection.setLimit(this.itemsPerPage);
             this.collection.setOffset(this.page - 1);
