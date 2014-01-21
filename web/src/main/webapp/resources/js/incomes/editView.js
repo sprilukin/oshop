@@ -41,7 +41,7 @@ define([
             }, messages)));
 
             $('#field_date_container').datepicker({
-                format: "yyyy-mm-dd",
+                format: messages["common_dateFormat"].toLowerCase(),
                 weekStart: 1,
                 autoclose: true,
                 language: settingsStorage.get("lang")

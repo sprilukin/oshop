@@ -5,11 +5,11 @@
 <html>
 <head>
     <meta name="activePage" content="dashboard">
-    <title><spring:message code="dasahboard.title"/></title>
+    <title><spring:message code="dashboard.title"/></title>
 </head>
 <body>
 
-<h1><spring:message code="dasahboard.title"/></h1>
+<h1><spring:message code="dashboard.title"/></h1>
 
 <div class="row-fluid span12">
     <div class="input-daterange inline span3" id="datepicker" style="float: none">

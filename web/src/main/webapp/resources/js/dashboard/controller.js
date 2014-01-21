@@ -7,8 +7,8 @@ define([
     'common/dateFormatter',
     'common/settingsStorage',
     'common/messages',
-    'incomes/chart/view',
-    'incomes/chart/model',
+    'dashboard/view',
+    'dashboard/model',
     'datePickerRu'
 ], function ($, _, dateFormatter, settingsStorage, messages, ChartView, ChartModel) {
 
@@ -33,7 +33,7 @@ define([
 
         _initDatepicker: function() {
             $('#datepicker').datepicker({
-                format: "yyyy-mm-dd",
+                format: messages["common_dateFormat"].toLowerCase(),
                 todayBtn: "linked",
                 todayHighlight: true,
                 language: settingsStorage.get("lang")

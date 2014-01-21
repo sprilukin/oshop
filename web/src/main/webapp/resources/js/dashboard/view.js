@@ -7,8 +7,9 @@ define([
     'backbone',
     'mustache',
     'common/dateFormatter',
+    'common/messages',
     'highcharts'
-], function ($, _, Backbone, Mustache, dateFormatter, highcharts) {
+], function ($, _, Backbone, Mustache, dateFormatter, messages, highcharts) {
 
     return Backbone.View.extend({
 
@@ -18,9 +19,9 @@ define([
                     useUTC: false
                 },
                 lang: {
-                    months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                    weekdays: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-                    shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+                    months: messages["dashboard_chart_months"].split(","),
+                    weekdays: messages["dashboard_chart_weekdays"].split(","),
+                    shortMonths: messages["dashboard_chart_shortMonths"].split(",")
                 }
             });
 
@@ -40,11 +41,11 @@ define([
         expensesAndIncomesChart: function() {
             $('#expenseChart').highcharts({
                 title: {
-                    text: 'Доходы и расходы',
+                    text: messages["dashboard_chart1_title"],
                     x: -20 //center
                 },
                 subtitle: {
-                    text: 'Доход и расход за день',
+                    text: messages["dashboard_chart1_subtitle"],
                     x: -20
                 },
                 xAxis: {
@@ -52,7 +53,7 @@ define([
                 },
                 yAxis: {
                     title: {
-                        text: 'Сумма, ₴'
+                        text: messages["dashboard_chart1_yAxis_title"]
                     },
                     plotLines: [{
                         value: 0,
@@ -61,7 +62,7 @@ define([
                     }]
                 },
                 tooltip: {
-                    valueSuffix: '₴'
+                    valueSuffix: ' ₴'
                 },
                 legend: {
                     align: 'left',
@@ -71,10 +72,10 @@ define([
                     borderWidth: 0
                 },
                 series: [{
-                    name: 'Доход',
+                    name: messages["dashboard_chart1_series_income"],
                     data: this.model.get("incomes")
                 }, {
-                    name: 'Расход',
+                    name: messages["dashboard_chart1_series_expense"],
                     data: this.model.get("expenses")
                 }]
             });
@@ -89,11 +90,13 @@ define([
                     },
 
                     title : {
-                        text : 'Доход минус расход за день'
+                        text : messages["dashboard_chart2_title"]
                     },
-
+                    tooltip: {
+                        valueSuffix: ' ₴'
+                    },
                     series : [{
-                        name : 'Прибыль',
+                        name : messages["dashboard_chart2_series_name"],
                         data : this.model.get("incomesMinusExpenses"),
                         tooltip: {
                             valueDecimals: 2
@@ -104,18 +107,17 @@ define([
 
         incomesMinusExpensesCumulativeChart: function() {
             $('#expenseChart3').highcharts('StockChart', {
-
-
                 rangeSelector : {
                     selected : 1
                 },
-
                 title : {
-                    text : 'Баланс за период'
+                    text : messages["dashboard_chart3_title"]
                 },
-
+                tooltip: {
+                    valueSuffix: ' ₴'
+                },
                 series : [{
-                    name : 'Баланс',
+                    name : messages["dashboard_chart3_series_name"],
                     data : this.model.get("incomesMinusExpensesCumulative"),
                     tooltip: {
                         valueDecimals: 2
