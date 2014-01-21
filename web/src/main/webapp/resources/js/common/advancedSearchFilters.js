@@ -89,7 +89,7 @@ define([
         DATE: new DataType({
             isDate: true,
             validator: function(value) {
-                return dateFormatter(value, "YYYY-MM-DD").isValid();
+                return dateFormatter(value, messages["common_dateFormat"]).isValid();
             },
             comparisons: [
                 COMPARISONS.EQUALS,

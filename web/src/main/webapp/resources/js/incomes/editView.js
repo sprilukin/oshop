@@ -37,7 +37,7 @@ define([
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
                 title: this.mode === "add" ? messages["incomes_add_income"] : messages["incomes_edit_income"],
                 submit: this.mode === "add" ? messages["incomes_add"] : messages["incomes_edit"],
-                model: _.extend({}, this.model.attributes, {date: dateFormatter(this.model.attributes.date).format("YYYY-MM-DD")})
+                model: _.extend({}, this.model.attributes, {date: dateFormatter(this.model.attributes.date).format(messages["common_dateFormat"])})
             }, messages)));
 
             $('#field_date_container').datepicker({
@@ -89,7 +89,7 @@ define([
 
             this.model.save(
                 {
-                    "date": dateFormatter(this.$("#field_date").val(), "YYYY-MM-DD").toDate().getTime(),
+                    "date": dateFormatter(this.$("#field_date").val(), messages["common_dateFormat"]).toDate().getTime(),
                     "description": this.$("#field_description").val(),
                     "amount": this.$("#field_amount").val()
                 },

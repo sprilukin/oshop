@@ -37,11 +37,11 @@ define([
             this.$el.html(Mustache.render(editEntityTemplate, _.extend({
                 title: this.mode === "add" ? messages["expenses_add_expense"] : messages["expenses_edit_expense"],
                 submit: this.mode === "add" ? messages["expenses_add"] : messages["expenses_edit"],
-                model: _.extend({}, this.model.attributes, {date: dateFormatter(this.model.attributes.date).format("YYYY-MM-DD")})
+                model: _.extend({}, this.model.attributes, {date: dateFormatter(this.model.attributes.date).format(messages["common_dateFormat"])})
             }, messages)));
 
             $('#field_date_container').datepicker({
-                format: "yyyy-mm-dd",
+                format: messages["common_dateFormat"].toLowerCase(),
                 weekStart: 1,
                 autoclose: true,
                 language: settingsStorage.get("lang")
@@ -89,7 +89,7 @@ define([
 
             this.model.save(
                 {
-                    "date": dateFormatter(this.$("#field_date").val(), "YYYY-MM-DD").toDate().getTime(),
+                    "date": dateFormatter(this.$("#field_date").val(), messages["common_dateFormat"]).toDate().getTime(),
                     "description": this.$("#field_description").val(),
                     "amount": this.$("#field_amount").val()
                 },

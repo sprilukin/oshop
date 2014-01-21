@@ -97,6 +97,11 @@ public class CommonUIController {
         return "incomes";
     }
 
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String dashboard() throws Exception {
+        return "dashboard";
+    }
+
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public String customers() throws Exception {
         return "customers";
