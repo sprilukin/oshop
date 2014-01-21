@@ -5,12 +5,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'common/dateFormatter',
     'common/sorter',
     'common/filter',
     'expenses/collection',
     'incomes/collection'
-], function ($, _, Backbone, dateFormatter, Sorter, Filter, ExpensesCollection, IncomesCollection) {
+], function ($, _, Backbone, Sorter, Filter, ExpensesCollection, IncomesCollection) {
 
     return Backbone.Model.extend({
 
@@ -64,13 +63,10 @@ define([
         },
 
         _processData: function() {
-            this.attributes.labels = [];
             this.attributes.expenses = [];
             this.attributes.incomes = [];
             this.attributes.incomesMinusExpenses = [];
-            this.attributes.incomesMinusExpensesTimeSeries = [];
             this.attributes.incomesMinusExpensesCumulative = [];
-            this.attributes.incomesMinusExpensesCumulativeTimeSeries = [];
 
             var daysCount = (this.endDate - this.startDate) / 86400000 + 1;
             var expenseSumForDate = 0;
@@ -84,13 +80,10 @@ define([
                 expenseSumForDate += expenseForDate;
                 incomeSumForDate += incomeForDate;
 
-                this.attributes.labels.push(dateFormatter(date).format("YYYY MMM DD"));
-                this.attributes.expenses.push(expenseForDate);
-                this.attributes.incomes.push(incomeForDate);
-                this.attributes.incomesMinusExpenses.push(incomeForDate - expenseForDate);
-                this.attributes.incomesMinusExpensesTimeSeries.push([date, incomeForDate - expenseForDate]);
-                this.attributes.incomesMinusExpensesCumulative.push(incomeSumForDate - expenseSumForDate);
-                this.attributes.incomesMinusExpensesCumulativeTimeSeries.push([date, incomeSumForDate - expenseSumForDate]);
+                this.attributes.expenses.push([date, expenseForDate]);
+                this.attributes.incomes.push([date, incomeForDate]);
+                this.attributes.incomesMinusExpenses.push([date, incomeForDate - expenseForDate]);
+                this.attributes.incomesMinusExpensesCumulative.push([date, incomeSumForDate - expenseSumForDate]);
             }
 
             this.trigger('sync', this);

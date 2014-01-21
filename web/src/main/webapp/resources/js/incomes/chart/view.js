@@ -48,7 +48,7 @@ define([
                     x: -20
                 },
                 xAxis: {
-                    categories: this.model.get("labels")
+                    type: 'datetime'
                 },
                 yAxis: {
                     title: {
@@ -64,9 +64,10 @@ define([
                     valueSuffix: '₴'
                 },
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    y: 0,
+                    floating: true,
                     borderWidth: 0
                 },
                 series: [{
@@ -93,7 +94,7 @@ define([
 
                     series : [{
                         name : 'Прибыль',
-                        data : this.model.get("incomesMinusExpensesTimeSeries"),
+                        data : this.model.get("incomesMinusExpenses"),
                         tooltip: {
                             valueDecimals: 2
                         }
@@ -115,7 +116,7 @@ define([
 
                 series : [{
                     name : 'Баланс',
-                    data : this.model.get("incomesMinusExpensesCumulativeTimeSeries"),
+                    data : this.model.get("incomesMinusExpensesCumulative"),
                     tooltip: {
                         valueDecimals: 2
                     }
