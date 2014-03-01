@@ -76,6 +76,9 @@ define([
                     name: messages["dashboard_chart4_series_income"],
                     data: [this.model.get("incomesSum")]
 
+                }, {
+                    name: messages["dashboard_chart4_series_balans"],
+                    data: [this.model.get("incomesSum") - this.model.get("expensesSum")]
                 }]
             });
         },
