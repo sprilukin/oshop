@@ -34,6 +34,7 @@ define([
 
         render: function () {
             this.expensesIncomesSum();
+            this.expensesIncomesPieChart();
             this.expensesAndIncomesChart();
             this.incomesMinusExpensesCumulativeChart();
         },
@@ -45,9 +46,6 @@ define([
                 },
                 title: {
                     text: messages["dashboard_chart4_title"]
-                },
-                subtitle: {
-                    text: messages["dashboard_chart4_subtitle"]
                 },
                 xAxis: {},
                 yAxis: {
@@ -71,13 +69,54 @@ define([
                     }
                 },
                 series: [{
-                    name: 'Расход',
+                    name: messages["dashboard_chart4_series_expense"],
                     data: [this.model.get("expensesSum")]
 
                 }, {
-                    name: 'Доход',
+                    name: messages["dashboard_chart4_series_income"],
                     data: [this.model.get("incomesSum")]
 
+                }]
+            });
+        },
+
+        expensesIncomesPieChart: function() {
+            $('#expensesIncomesPieChart').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: messages["dashboard_chart4_title"]
+                },
+                tooltip: {
+                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    data: [
+                        [
+                            messages["dashboard_chart4_series_expense"],
+                            this.model.get("expensesSum") / (this.model.get("expensesSum") + this.model.get("incomesSum")) * 100
+                        ],
+                        [
+                            messages["dashboard_chart4_series_income"],
+                            this.model.get("incomesSum") / (this.model.get("expensesSum") + this.model.get("incomesSum")) * 100
+                        ]
+                    ]
                 }]
             });
         },
