@@ -33,9 +33,53 @@ define([
         },
 
         render: function () {
+            this.expensesIncomesSum();
             this.expensesAndIncomesChart();
-            this.incomesMinusExpensesChart();
             this.incomesMinusExpensesCumulativeChart();
+        },
+
+        expensesIncomesSum: function() {
+            $('#expensesIncomesSumChart').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: messages["dashboard_chart4_title"]
+                },
+                subtitle: {
+                    text: messages["dashboard_chart4_subtitle"]
+                },
+                xAxis: {},
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: messages["dashboard_chart4_yAxis_title"]
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} ₴</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Расход',
+                    data: [this.model.get("expensesSum")]
+
+                }, {
+                    name: 'Доход',
+                    data: [this.model.get("incomesSum")]
+
+                }]
+            });
         },
 
         expensesAndIncomesChart: function() {
@@ -79,30 +123,6 @@ define([
                     data: this.model.get("expenses")
                 }]
             });
-        },
-
-        incomesMinusExpensesChart: function() {
-                $('#expenseChart2').highcharts('StockChart', {
-
-
-                    rangeSelector : {
-                        selected : 1
-                    },
-
-                    title : {
-                        text : messages["dashboard_chart2_title"]
-                    },
-                    tooltip: {
-                        valueSuffix: ' ₴'
-                    },
-                    series : [{
-                        name : messages["dashboard_chart2_series_name"],
-                        data : this.model.get("incomesMinusExpenses"),
-                        tooltip: {
-                            valueDecimals: 2
-                        }
-                    }]
-                });
         },
 
         incomesMinusExpensesCumulativeChart: function() {

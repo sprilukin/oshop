@@ -18,8 +18,8 @@
         <input type="text" class="input-small" name="end"/>
     </div>
 
+    <div id="expensesIncomesSumChart" style="width:100%;height:400px;margin-top: 50px"></div>
     <div id="expenseChart" style="width:100%;height:400px;margin-top: 50px"></div>
-    <div id="expenseChart2" style="width:100%;height:400px;margin-top: 50px"></div>
     <div id="expenseChart3" style="width:100%;height:400px;margin-top: 50px"></div>
 </div>
 

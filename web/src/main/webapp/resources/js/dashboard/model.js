@@ -65,8 +65,11 @@ define([
         _processData: function() {
             this.attributes.expenses = [];
             this.attributes.incomes = [];
-            this.attributes.incomesMinusExpenses = [];
+            this.attributes.incomesCumulative = [];
+            this.attributes.expensesCumulative = [];
             this.attributes.incomesMinusExpensesCumulative = [];
+            this.attributes.expensesSum = 0;
+            this.attributes.incomesSum = 0;
 
             var daysCount = (this.endDate - this.startDate) / 86400000 + 1;
             var expenseSumForDate = 0;
@@ -82,9 +85,13 @@ define([
 
                 this.attributes.expenses.push([date, expenseForDate]);
                 this.attributes.incomes.push([date, incomeForDate]);
-                this.attributes.incomesMinusExpenses.push([date, incomeForDate - expenseForDate]);
+                this.attributes.incomesCumulative.push([date, incomeSumForDate]);
+                this.attributes.expensesCumulative.push([date, expenseSumForDate]);
                 this.attributes.incomesMinusExpensesCumulative.push([date, incomeSumForDate - expenseSumForDate]);
             }
+
+            this.attributes.expensesSum = expenseSumForDate;
+            this.attributes.incomesSum = incomeSumForDate;
 
             this.trigger('sync', this);
         },
