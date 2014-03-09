@@ -16,7 +16,8 @@ define([
         }, options);
 
         this.filterTemplate = options.template;
-        this.filters = options.filters;
+        this.filters = [];
+        this.filters.push.apply(this.filters, options.filters);
     };
 
     _.extend(Filter.prototype, {

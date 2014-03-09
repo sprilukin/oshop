@@ -17,8 +17,10 @@ define([
 
         this.sorterTemplate = options.template;
 
-        if (options.sorters) {
-            this.sorters = options.sorters;
+        this.sorters = [];
+
+        if (options.sorters.length > 0) {
+            this.sorters.push.apply(this.sorters, options.sorters);
             this.trigger("sort:change");
         }
     };
