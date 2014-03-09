@@ -7,7 +7,7 @@ define([
     'mustache',
     'common/messages',
     'orderStates/collection',
-    'text!templates/orders/filterByOrderStatuses.html'
+    'text!templates/products/filterByOrderStatuses.html'
 ], function ($, Backbone, Mustache, messages, OrderStatesCollection, filterByOrderStatusesTemplate) {
 
     var FilterByOrderStatusesView = Backbone.View.extend({
@@ -22,6 +22,13 @@ define([
                 this.render();
             }, this);
 
+            var that = this;
+            new OrderStatesCollection().fetch({success: function(collection, result) {
+                that.allStatuses = _.map(result, function(item) {
+                    return item.name;
+                });
+            }});
+
             this.field = "orderStateIn";
             this.filter = options.filter;
             this.model = {
@@ -33,17 +40,6 @@ define([
 
         render: function () {
             this.$el.html(Mustache.render(filterByOrderStatusesTemplate, _.extend(this.model, messages)));
-
-            if (!this.allStatuses) {
-                var that = this;
-                new OrderStatesCollection().fetch({success: function(collection, result) {
-                    that.allStatuses = _.map(result, function(item) {
-                        return item.name;
-                    });
-
-                    that.change();
-                }});
-            }
         },
 
         change: function() {

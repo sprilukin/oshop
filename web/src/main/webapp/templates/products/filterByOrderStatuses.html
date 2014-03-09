@@ -1,8 +1,12 @@
 <label for="skipSent" >
     <input id="skipSent" type="checkbox" data-status="Отправлено" {{#skipSent}}checked="checked"{{/skipSent}}>
-    {{& products_hide_sent}}
+    {{& orders_hide_sent}}
 </label>
 <label for="skipRecieved" >
     <input id="skipRecieved" type="checkbox" data-status="Получен" {{#skipRecieved}}checked="checked"{{/skipRecieved}}>
-    {{& products_hide_recieved}}
+    {{& orders_hide_recieved}}
+</label>
+<label for="skipPostponed" >
+    <input id="skipPostponed" type="checkbox" data-status="Отложено" {{#skipPostponed}}checked="checked"{{/skipPostponed}}>
+    {{& orders_hide_postponed}}
 </label>

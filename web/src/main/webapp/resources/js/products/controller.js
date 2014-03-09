@@ -42,7 +42,12 @@ define([
     var ProductsController = function() {
         this.productCategoryId = getProductCategoryId();
         var collection = new Collection({productCategoryId: this.productCategoryId});
-        var filter = new Filter();
+        var filter = new Filter({
+            filters: [{
+                name: "orderStateIn",
+                value: "Новый,Бронь,Оплачено,Возврат,Возвращено,Готов к отправке"
+            }]
+        });
 
         this.initialize({
             Model: Model,
@@ -67,6 +72,9 @@ define([
             BaseControllerWithListAndEdit.prototype.initialize.call(this, options);
 
             this.filterByOrderStatusesView = new FilterByOrderStatusesView({
+                skipSent: true,
+                skipRecieved: true,
+                skipPostponed: true,
                 collection: this.collection,
                 filter: this.filter
             })
