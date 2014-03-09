@@ -1,24 +1,19 @@
 package oshop.services.filter;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Component
 public class AndStringLikeFilter extends BaseFilter {
 
+    @Resource
+    private CriterionFactory criterionFactory;
 
-    protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
-        Conjunction conjunction = Restrictions.conjunction();
-        for (String likeExpression : values) {
-            conjunction.add(Restrictions.like(column, likeExpression, MatchMode.ANYWHERE));
-        }
-
-        return conjunction;
+    protected Criterion getRestrictionForFilter(final String column, List<String> values, Criteria criteria) {
+        return criterionFactory.getCriterion(column, values, "LIKE", String.class);
     }
 }

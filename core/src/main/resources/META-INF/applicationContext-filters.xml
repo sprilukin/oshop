@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+
+    <context:component-scan base-package="oshop.services.filter">
+        <context:include-filter expression="org.springframework.stereotype.Repository" type="annotation"/>
+    </context:component-scan>
+
+    <bean id="comparisonMap" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="oshop.services.filter.comparison.Comparison">
+                <entry key="EQ">
+                    <bean class="oshop.services.filter.comparison.Equals"/>
+                </entry>
+                <entry key="NE">
+                    <bean class="oshop.services.filter.comparison.NotEquals"/>
+                </entry>
+                <entry key="LE">
+                    <bean class="oshop.services.filter.comparison.LessOrEquals"/>
+                </entry>
+                <entry key="LT">
+                    <bean class="oshop.services.filter.comparison.LessThan"/>
+                </entry>
+                <entry key="GE">
+                    <bean class="oshop.services.filter.comparison.GreaterOrEquals"/>
+                </entry>
+                <entry key="GT">
+                    <bean class="oshop.services.filter.comparison.GreaterThan"/>
+                </entry>
+                <entry key="IN">
+                    <bean class="oshop.services.filter.comparison.In"/>
+                </entry>
+                <entry key="NOTIN">
+                    <bean class="oshop.services.filter.comparison.NotIn"/>
+                </entry>
+                <entry key="LIKE">
+                    <bean class="oshop.services.filter.comparison.Like"/>
+                </entry>
+                <entry key="NLIKE">
+                    <bean class="oshop.services.filter.comparison.NotLike"/>
+                </entry>
+                <entry key="BTWN">
+                    <bean class="oshop.services.filter.comparison.Beetween"/>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="converterMap" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.Class" value-type="oshop.services.filter.converter.Converter">
+                <entry key="java.lang.String">
+                    <bean class="oshop.services.filter.converter.StringConverter"/>
+                </entry>
+                <entry key="java.lang.Integer">
+                    <bean class="oshop.services.filter.converter.IntegerConverter"/>
+                </entry>
+                <entry key="java.util.Date">
+                    <bean class="oshop.services.filter.converter.DateConverter"/>
+                </entry>
+                <entry key="java.math.BigDecimal">
+                    <bean class="oshop.services.filter.converter.BigDecimalConverter"/>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!-- ORDERS -->
+    <bean id="ordersFieldsMapping" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.Class">
+                <entry key="id" value="java.lang.Integer"/>
+                <entry key="date" value="java.util.Date"/>
+                <entry key="customer" value="java.lang.String"/>
+                <entry key="productsCount" value="java.lang.Integer"/>
+                <entry key="productsPrice" value="java.math.BigDecimal"/>
+                <entry key="totalPrice" value="java.math.BigDecimal"/>
+                <entry key="currentOrderStateName" value="java.lang.String"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="ordersAliasesMapping" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="customer" value="name"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!-- PRODUCTS -->
+    <bean id="productsFieldsMapping" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.Class">
+                <entry key="id" value="java.lang.Integer"/>
+                <entry key="name" value="java.lang.String"/>
+                <entry key="description" value="java.lang.String"/>
+                <entry key="category" value="java.lang.String"/>
+                <entry key="price" value="java.math.BigDecimal"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="productsAliasesMapping" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="category" value="name"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!-- DATE -->
+    <bean id="dateBeetweenFieldsMapping" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.Class">
+                <entry key="date" value="java.util.Date"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="dateBeetweenAliasesMapping" class="java.util.HashMap"/>
+
+</beans>

@@ -1,53 +1,26 @@
 package oshop.services.filter;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.Map;
 
 @Component
-public class DateBetweenFilter extends BaseFilter {
+public class DateBetweenFilter extends ComparisonBasedFilter {
 
-    static enum ExpenseFilterNames {
-        dateBtwn("dateBTWN");
+    @Resource
+    private Map<String, Class> dateBeetweenFieldsMapping;
 
-        private String name;
+    @Resource
+    private Map<String, String> dateBeetweenAliasesMapping;
 
-        ExpenseFilterNames(String name) {
-            this.name = name;
-        }
-
-        String getName() {
-            return name;
-        }
-
-        static ExpenseFilterNames fromName(String name) {
-            for (ExpenseFilterNames filter: ExpenseFilterNames.values()) {
-                if (filter.getName().equals(name)) {
-                    return filter;
-                }
-            }
-
-            throw new IllegalArgumentException();
-        }
+    @Override
+    protected Map<String, Class> getFieldsMapping() {
+        return dateBeetweenFieldsMapping;
     }
 
     @Override
-    protected Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria) {
-
-        switch (ExpenseFilterNames.fromName(column)) {
-            case dateBtwn:
-                return dateBetween(values, criteria);
-            default:
-                throw new IllegalArgumentException("Invalid filter");
-        }
-    }
-
-    private Criterion dateBetween(List<String> values, Criteria criteria) {
-        return Restrictions.between(
-                "date",
-                FilterUtils.parseDate(values.get(0)), FilterUtils.parseDate(values.get(1)));
+    protected Map<String, String> getAliasesMapping() {
+        return dateBeetweenAliasesMapping;
     }
 }

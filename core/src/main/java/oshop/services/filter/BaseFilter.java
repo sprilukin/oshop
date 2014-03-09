@@ -4,7 +4,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 
 import java.util.List;
 import java.util.Map;
@@ -19,18 +18,6 @@ public abstract class BaseFilter implements Filter {
         }
 
         criteria.add(conjunction);
-    }
-
-    protected Criteria addAlias(Criteria criteria, String path, String alias, JoinType joinType) {
-        if (!FilterUtils.aliasExists(criteria, path, alias)) {
-            return criteria.createAlias(path, alias, joinType);
-        }
-
-        return criteria;
-    }
-
-    protected Criteria addAlias(Criteria criteria, String path, String alias) {
-        return addAlias(criteria, path, alias, JoinType.INNER_JOIN);
     }
 
     protected abstract Criterion getRestrictionForFilter(String column, List<String> values, Criteria criteria);

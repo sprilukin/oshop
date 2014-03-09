@@ -3,9 +3,8 @@ package oshop.services.filter;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 import org.hibernate.internal.CriteriaImpl;
+import org.hibernate.sql.JoinType;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,21 +40,16 @@ public class FilterUtils {
         }
     }
 
-    public static Criterion stringLikeDisjunction(String column, List<String> values) {
-        Disjunction disjunction = Restrictions.disjunction();
-        for (String likeExpression : values) {
-            disjunction.add(Restrictions.like(column, likeExpression, MatchMode.ANYWHERE));
+    public static Criteria addAlias(Criteria criteria, String path, String alias, JoinType joinType) {
+        if (!aliasExists(criteria, path, alias)) {
+            return criteria.createAlias(path, alias, joinType);
         }
 
-        return disjunction;
+        return criteria;
     }
 
-    private static Criterion appendToJunction(CriterionFactory factory, Junction junction, List<String> values) {
-        for (String value : values) {
-            junction.add(factory.createCriterion(value));
-        }
-
-        return junction;
+    public static Criteria addAlias(Criteria criteria, String path, String alias) {
+        return addAlias(criteria, path, alias, JoinType.INNER_JOIN);
     }
 
     public static Criterion createDisjunction(CriterionFactory factory, List<String> values) {
@@ -68,18 +62,12 @@ public class FilterUtils {
         return appendToJunction(factory, conjunction, values);
     }
 
-    public static Date parseDate(String dateAsString) {
-        return new Date(Long.parseLong(dateAsString));
-    }
-
-    public static List<Integer> convertStringListToIntegerList(List<String> list) {
-        List<Integer> integerList = new ArrayList<Integer>(list.size());
-
-        for (String value: list) {
-            integerList.add(Integer.parseInt(value));
+    private static Criterion appendToJunction(CriterionFactory factory, Junction junction, List<String> values) {
+        for (String value : values) {
+            junction.add(factory.createCriterion(value));
         }
 
-        return integerList;
+        return junction;
     }
 
     public static interface CriterionFactory {

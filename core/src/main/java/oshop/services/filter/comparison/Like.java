@@ -1,18 +1,17 @@
-package oshop.services.filter;
+package oshop.services.filter.comparison;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Component;
+import oshop.services.filter.FilterUtils;
+import oshop.services.filter.converter.Converter;
 
 import java.util.List;
 
-@Component
-public class OrStringLikeFilter extends BaseFilter {
+public class Like implements Comparison {
 
-
-    protected Criterion getRestrictionForFilter(final String column, List<String> values, Criteria criteria) {
+    @Override
+    public <T> Criterion getComparison(final String column, List<String> values, Converter<T> converter) {
         return FilterUtils.createDisjunction(new FilterUtils.CriterionFactory() {
             @Override
             public Criterion createCriterion(String value) {
