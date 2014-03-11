@@ -111,8 +111,8 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
                 ALL_PRODUCTS_FROM_ORDER_EXCEPT_THIS_SQL,
                 orderId, StandardBasicTypes.INTEGER));
 
-        productsFilter.applyFilters(filters, criteria);
-        getSorter().applySorters(sorters, criteria);
+        productsFilter.apply(filters, criteria);
+        getSorter().apply(sorters, criteria);
 
         List<Product> list = productConverter.convert(productDao.list(criteria, offset, limit));
 

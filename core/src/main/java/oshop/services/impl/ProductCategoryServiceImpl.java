@@ -54,8 +54,8 @@ public class ProductCategoryServiceImpl extends GenericServiceImpl<ProductCatego
 
         Criteria criteria = productDao.createCriteria();
         criteria.createAlias("category", "c").add(Restrictions.eq("c.id", id));
-        productsFilter.applyFilters(filters, criteria);
-        getSorter().applySorters(sorters, criteria);
+        productsFilter.apply(filters, criteria);
+        getSorter().apply(sorters, criteria);
 
         List<Product> list = productConverter.convert(productDao.list(criteria, offset, limit));
 

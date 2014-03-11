@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface Sorter {
-    public void applySorters(Map<String, List<String>> sorters, Criteria criteria);
+    public void apply(Map<String, List<String>> sorters, Criteria criteria);
 }

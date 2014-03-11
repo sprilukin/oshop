@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class BaseFilter implements Filter {
 
 
-    public void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
+    public void apply(Map<String, List<String>> filters, Criteria criteria) {
         Conjunction conjunction = Restrictions.conjunction();
         for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
             Criterion criterion = getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria);

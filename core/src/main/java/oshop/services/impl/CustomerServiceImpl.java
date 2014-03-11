@@ -67,8 +67,8 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer, Integer> i
 
         Criteria criteria = orderDao.createCriteria();
         criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", customerId));
-        ordersFilter.applyFilters(filters, criteria);
-        getSorter().applySorters(sorters, criteria);
+        ordersFilter.apply(filters, criteria);
+        getSorter().apply(sorters, criteria);
 
         List<Order> list = orderConverter.convert(orderDao.list(criteria, offset, limit));
 

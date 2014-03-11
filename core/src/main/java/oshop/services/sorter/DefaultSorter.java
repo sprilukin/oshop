@@ -13,7 +13,7 @@ public class DefaultSorter implements Sorter {
     public static final String ASC_SORT = "asc";
     public static final String DESC_SORT = "desc";
 
-    public void applySorters(Map<String, List<String>> sorters, Criteria criteria) {
+    public void apply(Map<String, List<String>> sorters, Criteria criteria) {
         for (Map.Entry<String, List<String>> entry: sorters.entrySet()) {
             String fieldName = entry.getKey();
             String sortType = entry.getValue().get(0);

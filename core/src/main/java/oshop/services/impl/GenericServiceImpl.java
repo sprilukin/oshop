@@ -75,8 +75,8 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
     }
 
     protected Criteria applyFiltersAndSortersToCriteria(Criteria criteria, Map<String, List<String>> filters, Map<String, List<String>> sorters) {
-        getFilter().applyFilters(filters, criteria);
-        getSorter().applySorters(sorters, criteria);
+        getFilter().apply(filters, criteria);
+        getSorter().apply(sorters, criteria);
 
         return criteria;
     }
