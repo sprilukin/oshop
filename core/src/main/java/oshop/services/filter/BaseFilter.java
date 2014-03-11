@@ -14,7 +14,10 @@ public abstract class BaseFilter implements Filter {
     public void applyFilters(Map<String, List<String>> filters, Criteria criteria) {
         Conjunction conjunction = Restrictions.conjunction();
         for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
-            conjunction.add(getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria));
+            Criterion criterion = getRestrictionForFilter(entry.getKey(), entry.getValue(), criteria);
+            if (criterion != null) {
+                conjunction.add(criterion);
+            }
         }
 
         criteria.add(conjunction);

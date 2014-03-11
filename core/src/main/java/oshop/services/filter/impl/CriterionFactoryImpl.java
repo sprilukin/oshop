@@ -1,7 +1,8 @@
-package oshop.services.filter;
+package oshop.services.filter.impl;
 
 import org.hibernate.criterion.Criterion;
 import org.springframework.stereotype.Component;
+import oshop.services.filter.CriterionFactory;
 import oshop.services.filter.comparison.Comparison;
 import oshop.services.filter.converter.Converter;
 

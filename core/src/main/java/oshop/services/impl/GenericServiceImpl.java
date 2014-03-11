@@ -88,13 +88,8 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
             iterator.remove();
         }
 
-        //this is done just to clear criteria's first result and max results
-        criteria.setFirstResult(0);
-        criteria.setMaxResults(1);
-
-        criteria = criteria.setProjection(Projections.countDistinct("id"));
-
-        return criteria;
+        return criteria.setFirstResult(0).setMaxResults(1)
+                .setProjection(Projections.rowCount());
     }
 
     protected <K> PaginatedList<K> getCountAndPrepareListDto(List<K> list, Criteria criteria) throws Exception {

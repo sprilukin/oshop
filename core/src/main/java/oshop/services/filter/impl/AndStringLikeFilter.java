@@ -1,8 +1,10 @@
-package oshop.services.filter;
+package oshop.services.filter.impl;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.springframework.stereotype.Component;
+import oshop.services.filter.BaseFilter;
+import oshop.services.filter.CriterionFactory;
 
 import javax.annotation.Resource;
 import java.util.List;

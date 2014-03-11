@@ -1,6 +1,7 @@
-package oshop.services.filter;
+package oshop.services.filter.impl;
 
 import org.springframework.stereotype.Component;
+import oshop.services.filter.ComparisonBasedFilter;
 
 import javax.annotation.Resource;
 import java.util.Map;
