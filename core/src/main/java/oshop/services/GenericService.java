@@ -25,4 +25,10 @@ public interface GenericService<T extends BaseEntity<ID>, ID extends Serializabl
     public PaginatedList<T> list(
             Map<String, List<String>> filters, Map<String, List<String>> sorters,
             Integer limit, Integer offset) throws Exception;
+
+    public PaginatedList list(
+            Map<String, List<String>> filters,
+            Map<String, List<String>> sorters,
+            Map<String, List<String>> projections,
+            Integer limit, Integer offset) throws Exception;
 }

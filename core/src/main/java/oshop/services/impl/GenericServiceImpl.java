@@ -10,6 +10,7 @@ import oshop.dto.PaginatedList;
 import oshop.model.BaseEntity;
 import oshop.services.GenericService;
 import oshop.services.filter.Filter;
+import oshop.services.projection.Projection;
 import oshop.services.sorter.Sorter;
 import oshop.services.converter.EntityConverter;
 
@@ -31,6 +32,9 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
     private Sorter defaultSorter;
 
     @Resource
+    private Projection projection;
+
+    @Resource
     protected GenericSearchDao searchDao;
 
     protected abstract GenericDao<T, ID> getDao();
@@ -47,6 +51,10 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
 
     protected Sorter getSorter() {
         return defaultSorter;
+    }
+
+    protected Projection getProjection() {
+        return projection;
     }
 
     @Override
@@ -74,11 +82,9 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
         return getToDTOConverter().convert(getDao().get(id));
     }
 
-    protected Criteria applyFiltersAndSortersToCriteria(Criteria criteria, Map<String, List<String>> filters, Map<String, List<String>> sorters) {
+    protected void applyFiltersAndSortersToCriteria(Criteria criteria, Map<String, List<String>> filters, Map<String, List<String>> sorters) {
         getFilter().apply(filters, criteria);
         getSorter().apply(sorters, criteria);
-
-        return criteria;
     }
 
     protected Criteria prepareCriteriaForCountProjection(Criteria criteria) {
@@ -102,9 +108,31 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
     }
 
     @Override
-    public PaginatedList<T> list(Map<String, List<String>> filters, Map<String, List<String>> sorters, Integer limit, Integer offset) throws Exception {
-        Criteria criteria = applyFiltersAndSortersToCriteria(getDao().createCriteria(), filters, sorters);
+    public PaginatedList<T> list(
+            Map<String, List<String>> filters,
+            Map<String, List<String>> sorters,
+            Integer limit, Integer offset) throws Exception {
+
+        Criteria criteria = getDao().createCriteria();
+        applyFiltersAndSortersToCriteria(criteria, filters, sorters);
         List<T> list = getToDTOConverter().convert(getDao().list(criteria, offset, limit));
+
+        return getCountAndPrepareListDto(list, criteria);
+    }
+
+    @Override
+    public PaginatedList list(
+            Map<String, List<String>> filters,
+            Map<String, List<String>> sorters,
+            Map<String, List<String>> projections,
+            Integer limit, Integer offset) throws Exception {
+
+        Criteria criteria = getDao().createCriteria();
+        applyFiltersAndSortersToCriteria(criteria, filters, sorters);
+        getProjection().apply(projections, criteria);
+
+        //use List list = critelia.list(); to disregard offset and limit
+        List list = searchDao.list(criteria, offset, limit);
 
         return getCountAndPrepareListDto(list, criteria);
     }

@@ -124,4 +124,25 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
             }
         }.invoke();
     }
+
+    @RequestMapping(
+            value = "/{filter}/{sort}/{projection}",
+            method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> listWithFiltersSortersAndProjections(
+            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
+            @MatrixVariable(pathVar="projection", required = false) final Map<String, List<String>> projections,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
+
+        return new ListReturningRestCallbackAdapter() {
+
+            @Override
+            protected List getResult() throws Exception {
+                return getService().list(filters, sorters, projections, limit, offset);
+            }
+        }.invoke();
+    }
 }

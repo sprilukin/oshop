@@ -55,7 +55,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer, Integer> i
 
         Criteria criteria = shippingAddressDao.createCriteria();
         criteria.createAlias("customer", "c").add(Restrictions.eq("c.id", customerId));
-        criteria = applyFiltersAndSortersToCriteria(criteria, filters, sorters);
+        applyFiltersAndSortersToCriteria(criteria, filters, sorters);
 
         List<ShippingAddress> list = shippingAddressConverter.convert(shippingAddressDao.list(criteria, offset, limit));
 
