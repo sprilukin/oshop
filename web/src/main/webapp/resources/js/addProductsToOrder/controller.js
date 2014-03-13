@@ -39,8 +39,13 @@ define([
     var ProductsController = function() {
         this.orderId = getOrderId();
         this.collection = new Collection({orderId: this.orderId});
+        var filter = new Filter({
+            filters: [{
+                name: "orderStateIn",
+                value: "Новый,Бронь,Оплачено,Возврат,Возвращено,Готов к отправке"
+            }]
+        });
 
-        var filter = new Filter();
         var sorter = new Sorter();
 
         this.selectedModel = new SelectedModel();
