@@ -31,7 +31,12 @@ define([
     var OrdersController = function () {
         var collection = new Collection({customerId: getCustomerId()});
         var filter = new Filter();
-        var sorter = new Sorter();
+        var sorter = new Sorter({
+            sorters: [{
+                name: "id",
+                type: "desc"
+            }]
+        });
 
         this.selectedModel = new SelectedModel();
         var view = new ListView({collection: collection, sorter: sorter, selectedModel: this.selectedModel});

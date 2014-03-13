@@ -46,7 +46,12 @@ define([
             }]
         });
 
-        var sorter = new Sorter();
+        var sorter = new Sorter({
+            sorters: [{
+                name: "id",
+                type: "desc"
+            }]
+        });
 
         this.selectedModel = new SelectedModel();
         var listView = new ListView({

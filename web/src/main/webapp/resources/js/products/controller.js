@@ -13,8 +13,9 @@ define([
     'common/advancedSearchView',
     'common/advancedSearchFilters',
     'common/filter',
+    'common/sorter',
     'common/baseControllerWithListAndEdit'
-], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, messages, AdvancedSearchView, AdvancedFilters, Filter, BaseControllerWithListAndEdit) {
+], function (_, ProductCategoryModel, Model, Collection, ListView, EditView, FilterByOrderStatusesView, messages, AdvancedSearchView, AdvancedFilters, Filter, Sorter, BaseControllerWithListAndEdit) {
 
     var getProductCategoryId = function() {
         var matches = window.location.pathname.match(/productCategories\/([\d]+)([\/#\?].*)?$/);
@@ -42,6 +43,14 @@ define([
     var ProductsController = function() {
         this.productCategoryId = getProductCategoryId();
         var collection = new Collection({productCategoryId: this.productCategoryId});
+
+        var sorter = new Sorter({
+            sorters: [{
+                name: "id",
+                type: "desc"
+            }]
+        });
+
         var filter = new Filter({
             filters: [{
                 name: "orderStateIn",
@@ -55,6 +64,7 @@ define([
             View: ListView,
             EditView: EditView,
             filter: filter,
+            sorter: sorter,
             searchView: new AdvancedSearchView({collection: collection, filter: filter,
                 search: new AdvancedFilters([
                     new AdvancedFilters.Filter("id", messages["products_filter_id"], AdvancedFilters.NUMBER),
