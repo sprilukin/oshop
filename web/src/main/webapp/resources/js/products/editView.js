@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'common/fileUploadView',
     'common/context',
     'common/dropDownWithSearch',

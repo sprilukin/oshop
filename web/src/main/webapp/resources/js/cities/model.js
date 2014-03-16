@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'common/context'
 ], function ($, _, Backbone, Mustache, messages, context) {
 

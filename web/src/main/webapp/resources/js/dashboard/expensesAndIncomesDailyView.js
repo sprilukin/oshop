@@ -7,7 +7,7 @@ define([
     'backbone',
     'mustache',
     'common/dateFormatter',
-    'common/messages',
+    "bundle!messages",
     'common/highchartsConfig'
 ], function ($, _, Backbone, Mustache, dateFormatter, messages) {
 

@@ -10,7 +10,7 @@ define([
     'products/filterByOrderStatusesView',
     'orders/model',
     'common/selectedModel',
-    'common/messages',
+    "bundle!messages",
     'common/advancedSearchView',
     'common/advancedSearchFilters',
     'common/filter',

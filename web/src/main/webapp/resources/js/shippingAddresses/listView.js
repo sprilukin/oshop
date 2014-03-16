@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'common/sortView',
     'common/context',
     'text!shippingAddresses/templates/list.html',

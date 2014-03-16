@@ -2,7 +2,7 @@
  * ShippingTypes View
  */
 define([
-    'common/messages',
+    "bundle!messages",
     'highcharts'
 ], function (messages, highcharts) {
 

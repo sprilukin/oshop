@@ -6,7 +6,7 @@ define([
     'underscore',
     'common/dateFormatter',
     'common/settingsStorage',
-    'common/messages',
+    "bundle!messages",
     'dashboard/expensesAndIncomesSumView',
     'dashboard/expensesAndIncomesDailyView',
     'dashboard/dailyModel',

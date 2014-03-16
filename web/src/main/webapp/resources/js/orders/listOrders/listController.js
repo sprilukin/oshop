@@ -15,7 +15,7 @@ define([
     'common/advancedSearchFilters',
     'common/filter',
     'common/sorter',
-    'common/messages',
+    "bundle!messages",
     'common/context'
 ], function (_, Model, Collection, ListView, FilterByOrderStatusesView, PrintInvoicesButtonView, SalesReceiptButtonView, SelectedModel, BaseListController, AdvancedSearchView, AdvancedFilters, Filter, Sorter, messages, context) {
 

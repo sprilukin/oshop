@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'text!discounts/templates/edit.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, editEntityTemplate) {

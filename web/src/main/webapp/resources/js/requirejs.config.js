@@ -15,16 +15,20 @@ var require = {
         moment: 'lib/moment',
         momentRu: 'lib/moment_ru',
         highcharts: 'lib/highstock.src',
+
         //fileupload
         fileupload: 'lib/fileup/jquery.fileupload',
         iframeTransport: 'lib/fileup/jquery.iframe-transport',
         jqueryUiWidget: 'lib/fileup/jquery.ui-widget',
+
         //image-gallery
         "load-image": 'lib/load-image',
         "image-gallery": 'lib/bootstrap-image-gallery',
+
         // Require.js plugins
         text: 'lib/require.text',
-        messagesBase: '../../i18n/messages'
+        bundle: 'common/bundle',
+        bundleBase: "../../i18n/messages"
     },
 
     shim: {

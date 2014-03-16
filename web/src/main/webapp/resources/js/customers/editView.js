@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'common/fileUploadView',
     'text!customers/templates/edit.html',
     'bootstrap'

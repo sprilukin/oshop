@@ -5,7 +5,7 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'text!orders/templates/filterByOrderStatuses.html'
 ], function ($, Backbone, Mustache, messages, filterByOrderStatusesTemplate) {
 

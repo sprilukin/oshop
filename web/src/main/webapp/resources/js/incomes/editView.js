@@ -6,7 +6,7 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'common/messages',
+    "bundle!messages",
     'common/settingsStorage',
     'common/dateFormatter',
     'text!expenses/templates/edit.html',

@@ -6,7 +6,7 @@ define([
     'backbone',
     'mustache',
     'text!common/templates/pagination.html',
-    'common/messages',
+    "bundle!messages",
     'bootstrap'
 ], function ($, Backbone, Mustache, paginationTemplate, messages) {
 

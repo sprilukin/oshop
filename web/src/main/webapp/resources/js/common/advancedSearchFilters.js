@@ -4,7 +4,7 @@
 define([
     'underscore',
     'common/dateFormatter',
-    'common/messages'
+    "bundle!messages"
 ], function (_, dateFormatter, messages) {
 
     /* Comparison */

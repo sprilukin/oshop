@@ -9,7 +9,7 @@ define([
     'products/listView',
     'products/editView',
     'products/filterByOrderStatusesView',
-    'common/messages',
+    "bundle!messages",
     'common/advancedSearchView',
     'common/advancedSearchFilters',
     'common/filter',

@@ -19,9 +19,9 @@
         <finalName>${final.name}</finalName>
         <plugins>
             <plugin>
-                <groupId>com.github.mcheely</groupId>
+                <groupId>com.github.bringking</groupId>
                 <artifactId>requirejs-maven-plugin</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.4</version>
                 <executions>
                     <execution>
                         <goals>
@@ -31,9 +31,14 @@
                 </executions>
                 <configuration>
                     <nodeExecutable>${require.js.optimizer.path.to.node.js}</nodeExecutable>
-                    <configFile>${basedir}/src/main/config/app.config.js</configFile>
+                    <configFile>${basedir}/src/main/webapp/resources/js/build.js</configFile>
                     <optimizerFile>${basedir}/src/main/scripts/r.js</optimizerFile>
-                    <filterConfig>true</filterConfig>
+                    <optimizerParameters>
+                        <parameter>appDir=${basedir}/src/main/webapp/resources/js</parameter>
+                        <parameter>dir=${project.build.directory}/${project.build.finalName}/resources/js</parameter>
+                    </optimizerParameters>
+                    <!-- use this if you want to resolve maven props inside build.js -->
+                    <!--<filterConfig>true</filterConfig>-->
                     <skip>${require.js.optimizer.skip}</skip>
                 </configuration>
             </plugin>

@@ -6,7 +6,7 @@ define([
     'backbone',
     'mustache',
     'text!common/templates/navbar.html',
-    'common/messages',
+    "bundle!messages",
     'common/context',
     'common/settingsStorage',
     'bootstrap'

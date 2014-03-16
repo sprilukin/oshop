@@ -7,7 +7,7 @@ define([
     'backbone',
     'mustache',
     'common/imageGallery',
-    'common/messages',
+    "bundle!messages",
     'common/context',
     'common/dropDownWithSearch',
     'text!orders/templates/orderProducts.html',
