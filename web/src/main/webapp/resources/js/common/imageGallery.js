@@ -4,7 +4,7 @@
 require([
     'jquery',
     'mustache',
-    'text!templates/imageGallery.html',
+    'text!common/templates/imageGallery.html',
     'bootstrap',
     'image-gallery'
 ], function ($, Mustache, imageGalleryTemplate) {

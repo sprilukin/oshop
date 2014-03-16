@@ -7,7 +7,7 @@ define([
     'backbone',
     'mustache',
     'common/dateFormatter',
-    'text!templates/invoicePrint/salesReceipt.html',
+    'text!invoicePrint/templates/salesReceipt.html',
 ], function ($, _, Backbone, Mustache, dateFormatter, template) {
 
 

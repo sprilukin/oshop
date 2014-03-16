@@ -5,7 +5,7 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text!templates/sorter.html'
+    'text!common/templates/sorter.html'
 ], function ($, Backbone, Mustache, sortTemplate) {
 
     var SortView = Backbone.View.extend({

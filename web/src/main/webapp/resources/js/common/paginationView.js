@@ -5,7 +5,7 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text!templates/pagination.html',
+    'text!common/templates/pagination.html',
     'common/messages',
     'bootstrap'
 ], function ($, Backbone, Mustache, paginationTemplate, messages) {

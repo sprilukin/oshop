@@ -14,6 +14,7 @@ var require = {
         datePickerRu: 'lib/bootstrap-datepicker.ru',
         moment: 'lib/moment',
         momentRu: 'lib/moment_ru',
+        highcharts: 'lib/highstock.src',
         //fileupload
         fileupload: 'lib/fileup/jquery.fileupload',
         iframeTransport: 'lib/fileup/jquery.iframe-transport',
@@ -23,10 +24,7 @@ var require = {
         "image-gallery": 'lib/bootstrap-image-gallery',
         // Require.js plugins
         text: 'lib/require.text',
-        templates: '../../templates',
-        messagesBase: '../../i18n/messages',
-        //messagesBase: 'i18n'
-        highcharts: 'lib/highstock.src'
+        messagesBase: '../../i18n/messages'
     },
 
     shim: {

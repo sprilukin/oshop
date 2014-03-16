@@ -9,7 +9,7 @@ define([
     'common/messages',
     'common/sortView',
     'common/context',
-    'text!templates/discounts/list.html',
+    'text!discounts/templates/list.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, SortView, context, listEntityTemplate) {
 

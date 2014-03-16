@@ -12,7 +12,7 @@ define([
     'common/dateFormatter',
     'orders/editOrder/orderProductsView',
     'orders/editOrder/orderStatesView',
-    'text!templates/orders/edit.html',
+    'text!orders/templates/edit.html',
     'bootstrap',
     'select2'
 ], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, OrderProductsView, OrderStatesView, editTemplate) {

@@ -10,7 +10,7 @@ define([
     'common/context',
     'common/dropDownWithSearch',
     'common/dateFormatter',
-    'text!templates/orders/orderStates.html',
+    'text!orders/templates/orderStates.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, dateFormatter, listEntityTemplate) {
 

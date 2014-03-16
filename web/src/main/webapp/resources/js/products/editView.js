@@ -11,7 +11,7 @@ define([
     'common/context',
     'common/dropDownWithSearch',
     'productCategories/collection',
-    'text!templates/products/edit.html',
+    'text!products/templates/edit.html',
     'bootstrap',
     'select2'
 ], function ($, _, Backbone, Mustache, messages, FileUploadView, context, DropDownWithSearch, ProductCategoriesCollection, editEntityTemplate) {

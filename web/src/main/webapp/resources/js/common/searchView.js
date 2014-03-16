@@ -5,7 +5,7 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text!templates/search.html',
+    'text!common/templates/search.html',
     'bootstrap'
 ], function ($, Backbone, Mustache, searchTemplate) {
 

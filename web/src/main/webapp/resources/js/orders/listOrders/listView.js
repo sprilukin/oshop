@@ -10,7 +10,7 @@ define([
     'common/sortView',
     'common/context',
     'common/dateFormatter',
-    'text!templates/orders/list.html',
+    'text!orders/templates/list.html',
     'common/imageGallery',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, SortView, context, dateFormatter, listEntityTemplate) {

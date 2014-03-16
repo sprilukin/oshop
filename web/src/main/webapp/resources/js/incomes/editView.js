@@ -9,7 +9,7 @@ define([
     'common/messages',
     'common/settingsStorage',
     'common/dateFormatter',
-    'text!templates/expenses/edit.html',
+    'text!expenses/templates/edit.html',
     'bootstrap',
     'datePickerRu'
 ], function ($, _, Backbone, Mustache, messages, settingsStorage, dateFormatter, editEntityTemplate) {

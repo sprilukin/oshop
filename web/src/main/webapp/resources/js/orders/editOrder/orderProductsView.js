@@ -10,8 +10,8 @@ define([
     'common/messages',
     'common/context',
     'common/dropDownWithSearch',
-    'text!templates/orders/orderProducts.html',
-    'text!templates/orders/orderProductsSelectProduct.html',
+    'text!orders/templates/orderProducts.html',
+    'text!orders/templates/orderProductsSelectProduct.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, imageGallery, messages, context, DropDownWithSearch, listEntityTemplate, selectProductTemplate) {
 

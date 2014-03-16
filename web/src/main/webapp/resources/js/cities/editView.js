@@ -8,7 +8,7 @@ define([
     'mustache',
     'common/messages',
     'common/regions',
-    'text!templates/cities/edit.html',
+    'text!cities/templates/edit.html',
     'select2',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, regions, editEntityTemplate) {

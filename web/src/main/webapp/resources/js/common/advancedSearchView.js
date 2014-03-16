@@ -8,7 +8,7 @@ define([
     'common/searchView',
     'common/dateFormatter',
     'common/advancedSearchFilters',
-    'text!templates/advancedSearch.html'
+    'text!common/templates/advancedSearch.html'
 ], function ($, Backbone, Mustache, SearchView, dateFormatter, advancedSearchFilters, advancedSearchTemplate) {
 
     var AdvancedSearchView = SearchView.extend({

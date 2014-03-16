@@ -10,8 +10,8 @@ define([
     'common/messages',
     'common/sortView',
     'common/context',
-    'text!templates/products/list.html',
-    'text!templates/products/tileList.html',
+    'text!products/templates/list.html',
+    'text!products/templates/tileList.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, imageGallery, messages, SortView, context, listEntityTemplate, tileListEntityTemplate) {
 

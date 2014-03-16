@@ -7,7 +7,7 @@ define([
     'backbone',
     'mustache',
     'common/messages',
-    'text!templates/productCategories/edit.html',
+    'text!productCategories/templates/edit.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, editEntityTemplate) {
 

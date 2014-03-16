@@ -5,7 +5,7 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text!templates/warning.html',
+    'text!common/templates/warning.html',
     'bootstrap'
 ], function ($, Backbone, Mustache, warningTemplate) {
 

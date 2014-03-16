@@ -6,9 +6,9 @@ define([
     'underscore',
     'backbone',
     'mustache',
-    'text!templates/invoicePrint/front.html',
-    'text!templates/invoicePrint/back.html',
-    'text!templates/invoicePrint/address.html',
+    'text!invoicePrint/templates/front.html',
+    'text!invoicePrint/templates/back.html',
+    'text!invoicePrint/templates/address.html',
 ], function ($, _, Backbone, Mustache, frontTemplate, backTemplate, addressTemplate) {
 
 

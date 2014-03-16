@@ -8,7 +8,7 @@ define([
     'mustache',
     'common/messages',
     'common/fileUploadView',
-    'text!templates/customers/edit.html',
+    'text!customers/templates/edit.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, FileUploadView, editEntityTemplate) {
 

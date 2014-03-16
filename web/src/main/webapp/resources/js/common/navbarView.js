@@ -5,7 +5,7 @@ define([
     'jquery',
     'backbone',
     'mustache',
-    'text!templates/navbar.html',
+    'text!common/templates/navbar.html',
     'common/messages',
     'common/context',
     'common/settingsStorage',

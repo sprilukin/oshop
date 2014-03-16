@@ -9,7 +9,7 @@ define([
     'common/messages',
     'common/context',
     'common/dropDownWithSearch',
-    'text!templates/orders/add.html',
+    'text!orders/templates/add.html',
     'bootstrap'
 ], function ($, _, Backbone, Mustache, messages, context, DropDownWithSearch, addEntityTemplate) {
 

@@ -7,7 +7,7 @@ define([
     'mustache',
     'common/messages',
     'orderStates/collection',
-    'text!templates/products/filterByOrderStatuses.html'
+    'text!products/templates/filterByOrderStatuses.html'
 ], function ($, Backbone, Mustache, messages, OrderStatesCollection, filterByOrderStatusesTemplate) {
 
     var FilterByOrderStatusesView = Backbone.View.extend({
