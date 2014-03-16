@@ -4,6 +4,7 @@
     appDir: "${basedir}/src/main/webapp/resources/js",
     baseUrl: "./",
     dir: "${project.build.directory}/${project.build.finalName}/resources/js",
+    skipDirOptimize: true,
     paths: {
         // Major libraries
         //jquery: 'lib/jquery-1.9.1',
