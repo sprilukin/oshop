@@ -18,10 +18,12 @@
         <input type="text" class="input-small" name="end"/>
     </div>
 
-    <div id="expensesIncomesSumChart" style="width:100%;height:400px;margin-top: 50px"></div>
-    <div id="expensesIncomesPieChart" style="width:100%;height:400px;margin-top: 50px"></div>
-    <div id="expensesAndIncomesDailyChart" style="width:100%;height:400px;margin-top: 50px"></div>
-    <div id="expenseChart3" style="width:100%;height:400px;margin-top: 50px"></div>
+    <div class="row">
+        <div id="expensesIncomesSumChart" class="span6" style="height:400px;margin-top: 50px;float:left"></div>
+        <div id="expensesIncomesPieChart" class="span6" style="height:400px;margin-top: 50px;float: left"></div>
+    </div>
+    <div id="expensesAndIncomesDailyChart" class="row span12" style="height:400px;margin-top: 50px"></div>
+    <div id="incomesMinusExpensesCumulativeChart" class="row span12" style="height:400px;margin-top: 50px"></div>
 </div>
 
 <script data-main="dashboard/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>

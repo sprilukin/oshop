@@ -81,7 +81,7 @@ define([
         },
 
         incomesMinusExpensesCumulativeChart: function() {
-            $('#expenseChart3').highcharts('StockChart', {
+            $('#incomesMinusExpensesCumulativeChart').highcharts('StockChart', {
                 rangeSelector : {
                     selected : 1
                 },

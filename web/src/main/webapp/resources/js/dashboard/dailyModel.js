@@ -102,13 +102,15 @@ define([
         _getValueForDate: function(date, collection) {
             var value = 0;
 
-            for (var i = 0; i < collection.length; i++) {
-                if (collection[i][0] < date) {
-                    continue;
-                } else if (collection[i][0] >= (date + 86400000)) {
-                    return value;
-                } else {
-                    value += collection[i][1];
+            if (collection) {
+                for (var i = 0; i < collection.length; i++) {
+                    if (collection[i][0] < date) {
+                        continue;
+                    } else if (collection[i][0] >= (date + 86400000)) {
+                        return value;
+                    } else {
+                        value += collection[i][1];
+                    }
                 }
             }
 
