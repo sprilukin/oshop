@@ -7,9 +7,10 @@ define([
     'backbone',
     'common/sorter',
     'common/filter',
-    'expenses/collection',
-    'incomes/collection'
-], function ($, _, Backbone, Sorter, Filter, ExpensesCollection, IncomesCollection) {
+    'common/projection',
+    'dashboard/expensesModel',
+    'dashboard/incomesModel'
+], function ($, _, Backbone, Sorter, Filter, Projection, ExpensesModel, IncomesModel) {
 
     return Backbone.Model.extend({
 
@@ -35,24 +36,39 @@ define([
                 }]
             });
 
+            this.projection = new Projection({
+                projections: [{
+                    name: "date",
+                    value: "GROUP"
+                }, {
+                    name: "amount",
+                    value: "SUM"
+                }]
+            }).format();
+
             var opts = {
                 filter: this.filter.format(),
-                sorter: this.sorter
+                sorter: this.sorter,
+                projection: this.projection
             };
 
-            this.attributes.expenseCollection = new ExpensesCollection(opts);
-            this.attributes.incomesCollection = new IncomesCollection(opts);
+            this.attributes.expenseModel = new ExpensesModel(opts);
+            this.attributes.incomesModel = new IncomesModel(opts);
 
             this.filter.on("filter:change", this.fetch, this);
         },
 
         fetch: function(options) {
-            this.get("expenseCollection").setFilterString(this.filter.format());
-            this.get("incomesCollection").setFilterString(this.filter.format());
+            this.get("expenseModel").setFilterString(this.filter.format());
+            this.get("incomesModel").setFilterString(this.filter.format());
 
-            return $.when(this.get("expenseCollection").fetch(),
-                    this.get("incomesCollection").fetch())
-                .then(this._processData);
+            var that = this;
+            return $.when(
+                    this.get("expenseModel").fetch(),
+                    this.get("incomesModel").fetch()
+                ).then(this._processData).then(function() {
+                    that.trigger("sync");
+                })
         },
 
         setRange: function(startDate, endDate) {
@@ -63,13 +79,7 @@ define([
         },
 
         _processData: function() {
-            this.attributes.expenses = [];
-            this.attributes.incomes = [];
-            this.attributes.incomesCumulative = [];
-            this.attributes.expensesCumulative = [];
             this.attributes.incomesMinusExpensesCumulative = [];
-            this.attributes.expensesSum = 0;
-            this.attributes.incomesSum = 0;
 
             var daysCount = (this.endDate - this.startDate) / 86400000 + 1;
             var expenseSumForDate = 0;
@@ -78,20 +88,13 @@ define([
             for (var i = 0; i < daysCount; i++) {
                 var date = this.startDate + i * 86400000;
 
-                var expenseForDate = this._getValueForDate(date, this.get("expenseCollection"));
-                var incomeForDate = this._getValueForDate(date, this.get("incomesCollection"));
+                var expenseForDate = this._getValueForDate(date, this.get("expenseModel").get("data"));
+                var incomeForDate = this._getValueForDate(date, this.get("incomesModel").get("data"));
                 expenseSumForDate += expenseForDate;
                 incomeSumForDate += incomeForDate;
 
-                this.attributes.expenses.push([date, expenseForDate]);
-                this.attributes.incomes.push([date, incomeForDate]);
-                this.attributes.incomesCumulative.push([date, incomeSumForDate]);
-                this.attributes.expensesCumulative.push([date, expenseSumForDate]);
                 this.attributes.incomesMinusExpensesCumulative.push([date, incomeSumForDate - expenseSumForDate]);
             }
-
-            this.attributes.expensesSum = expenseSumForDate;
-            this.attributes.incomesSum = incomeSumForDate;
 
             this.trigger('sync', this);
         },
@@ -99,11 +102,15 @@ define([
         _getValueForDate: function(date, collection) {
             var value = 0;
 
-            collection.each(function(model) {
-                if ((model.get("date") >= date) && (model.get("date") < (date + 86400000))) {
-                    value += model.get("amount");
+            for (var i = 0; i < collection.length; i++) {
+                if (collection[i][0] < date) {
+                    continue;
+                } else if (collection[i][0] >= (date + 86400000)) {
+                    return value;
+                } else {
+                    value += collection[i][1];
                 }
-            });
+            }
 
             return value;
         }

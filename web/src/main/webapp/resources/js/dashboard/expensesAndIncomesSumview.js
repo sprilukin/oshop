@@ -33,13 +33,14 @@ define([
         },
 
         render: function () {
-            this.expensesIncomesSum();
-            this.expensesIncomesPieChart();
-            this.expensesAndIncomesChart();
-            this.incomesMinusExpensesCumulativeChart();
+            var expenses = this.model.get("expenseModel").get("data");
+            var incomes = this.model.get("incomesModel").get("data");
+
+            this.expensesIncomesSum(expenses, incomes);
+            this.expensesIncomesPieChart(expenses, incomes);
         },
 
-        expensesIncomesSum: function() {
+        expensesIncomesSum: function(expenses, incomes) {
             $('#expensesIncomesSumChart').highcharts({
                 chart: {
                     type: 'column'
@@ -70,20 +71,20 @@ define([
                 },
                 series: [{
                     name: messages["dashboard_chart4_series_expense"],
-                    data: [this.model.get("expensesSum")]
+                    data: expenses
 
                 }, {
                     name: messages["dashboard_chart4_series_income"],
-                    data: [this.model.get("incomesSum")]
+                    data: incomes
 
                 }, {
                     name: messages["dashboard_chart4_series_balans"],
-                    data: [this.model.get("incomesSum") - this.model.get("expensesSum")]
+                    data: [incomes - expenses]
                 }]
             });
         },
 
-        expensesIncomesPieChart: function() {
+        expensesIncomesPieChart: function(expenses, incomes) {
             $('#expensesIncomesPieChart').highcharts({
                 chart: {
                     plotBackgroundColor: null,
@@ -113,77 +114,13 @@ define([
                     data: [
                         [
                             messages["dashboard_chart4_series_expense"],
-                            this.model.get("expensesSum") / (this.model.get("expensesSum") + this.model.get("incomesSum")) * 100
+                            expenses[0] / (expenses[0] + incomes[0]) * 100
                         ],
                         [
                             messages["dashboard_chart4_series_income"],
-                            this.model.get("incomesSum") / (this.model.get("expensesSum") + this.model.get("incomesSum")) * 100
+                            incomes[0] / (expenses[0] + incomes[0]) * 100
                         ]
                     ]
-                }]
-            });
-        },
-
-        expensesAndIncomesChart: function() {
-            $('#expenseChart').highcharts({
-                title: {
-                    text: messages["dashboard_chart1_title"],
-                    x: -20 //center
-                },
-                subtitle: {
-                    text: messages["dashboard_chart1_subtitle"],
-                    x: -20
-                },
-                xAxis: {
-                    type: 'datetime'
-                },
-                yAxis: {
-                    title: {
-                        text: messages["dashboard_chart1_yAxis_title"]
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                tooltip: {
-                    valueSuffix: ' ₴'
-                },
-                legend: {
-                    align: 'left',
-                    verticalAlign: 'top',
-                    y: 0,
-                    floating: true,
-                    borderWidth: 0
-                },
-                series: [{
-                    name: messages["dashboard_chart1_series_income"],
-                    data: this.model.get("incomes")
-                }, {
-                    name: messages["dashboard_chart1_series_expense"],
-                    data: this.model.get("expenses")
-                }]
-            });
-        },
-
-        incomesMinusExpensesCumulativeChart: function() {
-            $('#expenseChart3').highcharts('StockChart', {
-                rangeSelector : {
-                    selected : 1
-                },
-                title : {
-                    text : messages["dashboard_chart3_title"]
-                },
-                tooltip: {
-                    valueSuffix: ' ₴'
-                },
-                series : [{
-                    name : messages["dashboard_chart3_series_name"],
-                    data : this.model.get("incomesMinusExpensesCumulative"),
-                    tooltip: {
-                        valueDecimals: 2
-                    }
                 }]
             });
         }

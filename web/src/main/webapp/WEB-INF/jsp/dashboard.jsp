@@ -20,7 +20,7 @@
 
     <div id="expensesIncomesSumChart" style="width:100%;height:400px;margin-top: 50px"></div>
     <div id="expensesIncomesPieChart" style="width:100%;height:400px;margin-top: 50px"></div>
-    <div id="expenseChart" style="width:100%;height:400px;margin-top: 50px"></div>
+    <div id="expensesAndIncomesDailyChart" style="width:100%;height:400px;margin-top: 50px"></div>
     <div id="expenseChart3" style="width:100%;height:400px;margin-top: 50px"></div>
 </div>
 

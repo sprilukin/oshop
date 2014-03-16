@@ -23,8 +23,12 @@ define([
             this.offset = options.offset || 0;
         },
 
+        getUrlParams: function() {
+            return {filter: this.filter, sort: this.sorter};
+        },
+
         url: function () {
-            return Mustache.render(this.template, {filter: this.filter, sort: this.sorter})
+            return Mustache.render(this.template, this.getUrlParams());
         },
 
         fetch: function(options) {
