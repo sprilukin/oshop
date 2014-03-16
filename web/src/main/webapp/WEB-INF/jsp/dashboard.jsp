@@ -26,6 +26,6 @@
     <div id="incomesMinusExpensesCumulativeChart" class="row span12" style="height:400px;margin-top: 50px"></div>
 </div>
 
-<script data-main="dashboard/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
+<script data-main="dashboard/main" src="${scriptSources}/lib/require.js"></script>
 </body>
 </html>

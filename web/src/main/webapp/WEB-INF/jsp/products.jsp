@@ -28,6 +28,6 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script data-main="products/main" src="${pageContext.request.contextPath}/resources/js/lib/require.js"></script>
+<script data-main="products/main" src="${scriptSources}/lib/require.js"></script>
 </body>
 </html>
