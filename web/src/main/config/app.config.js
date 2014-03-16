@@ -67,6 +67,7 @@
         {name: "shippingAddresses/main"},
         {name: "shippingTypes/main"},
         {name: "invoicePrint/mainUkrPost"},
-        {name: "invoicePrint/mainSalesReceipt"}
+        {name: "invoicePrint/mainSalesReceipt"},
+        {name: "dashboard/main"}
     ]
 })
