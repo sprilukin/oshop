@@ -1,7 +1,7 @@
 ({
-    //appDir: "${basedir}/src/main/webapp/resources",
+    appDir: ".",
     mainConfigFile: 'js/requirejs.config.js',
-    baseUrl: "./",
+    baseUrl: "js",
     optimize: "uglify",
     skipDirOptimize: false,
     removeCombined: true,

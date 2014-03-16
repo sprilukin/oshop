@@ -34,8 +34,8 @@
                     <configFile>${basedir}/src/main/webapp/resources/build.js</configFile>
                     <optimizerFile>${basedir}/src/main/scripts/r.js</optimizerFile>
                     <optimizerParameters>
-                        <parameter>appDir=${basedir}/src/main/webapp/resources</parameter>
-                        <parameter>baseUrl=js</parameter>
+                        <!--<parameter>appDir=${basedir}/src/main/webapp/resources</parameter>-->
+                        <!--<parameter>baseUrl=js</parameter>-->
                         <!--<parameter>optimize=none</parameter>-->
                         <parameter>dir=${project.build.directory}/${project.build.finalName}/resources</parameter>
                     </optimizerParameters>
