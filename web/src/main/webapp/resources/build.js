@@ -1,18 +1,17 @@
 ({
-    //appDir: "${basedir}/src/main/webapp/resources/js",
-    mainConfigFile: 'requirejs.config.js',
+    //appDir: "${basedir}/src/main/webapp/resources",
+    mainConfigFile: 'js/requirejs.config.js',
     baseUrl: "./",
     optimize: "uglify",
     skipDirOptimize: false,
     removeCombined: true,
     preserveLicenseComments: false,
-    //dir: "${project.build.directory}/${project.build.finalName}/resources/js",
+    //dir: "${project.build.directory}/${project.build.finalName}/resources",
 
     optimizeCss: "standard",
     cssImportIgnore: null,
 
     paths: {
-        "bundleBase": "empty:"
     },
 
     modules: [

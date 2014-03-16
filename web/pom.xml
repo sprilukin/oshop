@@ -31,7 +31,7 @@
                 </executions>
                 <configuration>
                     <nodeExecutable>${require.js.optimizer.path.to.node.js}</nodeExecutable>
-                    <configFile>${basedir}/src/main/webapp/resources/js/build.js</configFile>
+                    <configFile>${basedir}/src/main/webapp/resources/build.js</configFile>
                     <optimizerFile>${basedir}/src/main/scripts/r.js</optimizerFile>
                     <optimizerParameters>
                         <parameter>appDir=${basedir}/src/main/webapp/resources</parameter>
