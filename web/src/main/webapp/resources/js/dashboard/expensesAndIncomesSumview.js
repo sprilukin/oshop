@@ -8,28 +8,13 @@ define([
     'mustache',
     'common/dateFormatter',
     'common/messages',
-    'highcharts'
-], function ($, _, Backbone, Mustache, dateFormatter, messages, highcharts) {
+    'common/highchartsConfig'
+], function ($, _, Backbone, Mustache, dateFormatter, messages) {
 
     return Backbone.View.extend({
 
         initialize: function(options) {
-            highcharts.setOptions({
-                global: {
-                    useUTC: false
-                },
-                lang: {
-                    months: messages["dashboard_chart_months"].split(","),
-                    weekdays: messages["dashboard_chart_weekdays"].split(","),
-                    shortMonths: messages["dashboard_chart_shortMonths"].split(",")
-                }
-            });
-
             this.model.on("sync", this.render, this);
-        },
-
-        setRange: function(startDate, endDate) {
-            this.model.setRange(startDate, endDate);
         },
 
         render: function () {
@@ -50,7 +35,7 @@ define([
                 },
                 xAxis: {},
                 yAxis: {
-                    min: 0,
+                    /*min: 0,*/
                     title: {
                         text: messages["dashboard_chart4_yAxis_title"]
                     }
@@ -114,11 +99,11 @@ define([
                     data: [
                         [
                             messages["dashboard_chart4_series_expense"],
-                            expenses[0] / (expenses[0] + incomes[0]) * 100
+                            expenses[0] * 100 / incomes[0]
                         ],
                         [
                             messages["dashboard_chart4_series_income"],
-                            incomes[0] / (expenses[0] + incomes[0]) * 100
+                            (incomes[0] - expenses[0]) * 100 / incomes[0]
                         ]
                     ]
                 }]
