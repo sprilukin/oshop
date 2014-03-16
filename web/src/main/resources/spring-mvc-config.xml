@@ -29,7 +29,6 @@
     </beans:bean>-->
 
     <resources mapping="/resources/**" location="/resources/"/>
-    <resources mapping="/templates/**" location="/templates/"/>
     <resources mapping="/favicon.ico" location="/favicon.ico"/>
 
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -49,6 +48,7 @@
     <beans:bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
         <beans:property name="basenamePrefix" value="themes/theme-" />
     </beans:bean>
+
     <beans:bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
         <beans:property name="defaultThemeName" value="default" />
         <beans:property name="cookieName" value="theme" />

@@ -15,13 +15,8 @@
 
     <title><decorator:title/> | <spring:message code="webapp.name"/></title>
 
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/select2.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/datepicker.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/base.css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/<spring:theme code='css'/>"/>
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-image-gallery.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
     <script src="${pageContext.request.contextPath}/resources/js/requirejs.config.js"></script>
     <script language="JavaScript">

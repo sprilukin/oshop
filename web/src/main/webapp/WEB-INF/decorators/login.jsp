@@ -15,9 +15,7 @@
 
     <title><decorator:title/> | <spring:message code="webapp.name"/></title>
 
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/login.css" />
 
     <script src="${pageContext.request.contextPath}/resources/js/requirejs.config.js"></script>
     <script language="JavaScript">

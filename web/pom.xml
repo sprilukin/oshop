@@ -34,8 +34,10 @@
                     <configFile>${basedir}/src/main/webapp/resources/js/build.js</configFile>
                     <optimizerFile>${basedir}/src/main/scripts/r.js</optimizerFile>
                     <optimizerParameters>
-                        <parameter>appDir=${basedir}/src/main/webapp/resources/js</parameter>
-                        <parameter>dir=${project.build.directory}/${project.build.finalName}/resources/js</parameter>
+                        <parameter>appDir=${basedir}/src/main/webapp/resources</parameter>
+                        <parameter>baseUrl=js</parameter>
+                        <!--<parameter>optimize=none</parameter>-->
+                        <parameter>dir=${project.build.directory}/${project.build.finalName}/resources</parameter>
                     </optimizerParameters>
                     <!-- use this if you want to resolve maven props inside build.js -->
                     <!--<filterConfig>true</filterConfig>-->

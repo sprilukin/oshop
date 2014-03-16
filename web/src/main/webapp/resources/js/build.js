@@ -3,10 +3,13 @@
     mainConfigFile: 'requirejs.config.js',
     baseUrl: "./",
     optimize: "uglify",
-    skipDirOptimize: true,
+    skipDirOptimize: false,
     removeCombined: true,
     preserveLicenseComments: false,
     //dir: "${project.build.directory}/${project.build.finalName}/resources/js",
+
+    optimizeCss: "standard",
+    cssImportIgnore: null,
 
     paths: {
         "bundleBase": "empty:"
