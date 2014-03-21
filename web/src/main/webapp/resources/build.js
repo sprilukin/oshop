@@ -4,7 +4,7 @@
     baseUrl: "js",
     optimize: "uglify",
     skipDirOptimize: false,
-    removeCombined: true,
+    removeCombined: false,
     preserveLicenseComments: false,
     //dir: "${project.build.directory}/${project.build.finalName}/resources",
 
