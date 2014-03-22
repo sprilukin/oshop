@@ -26,6 +26,8 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script data-main="customers/main" src="${scriptSources}/lib/require.js"></script>
+<script type="text/javascript">
+    require(["customers/main"]);
+</script>
 </body>
 </html>

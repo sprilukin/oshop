@@ -11,3 +11,4 @@
 <script language="JavaScript">
     require.baseUrl = "${scriptSources}";
 </script>
+<script src="${scriptSources}/lib/require-2.1.5.js"></script>

@@ -13,6 +13,8 @@
 
 <div class="content"></div>
 
-<script data-main="orders/editOrder/edit" src="${scriptSources}/lib/require.js"></script>
+<script type="text/javascript">
+    require(["orders/editOrder/edit"]);
+</script>
 </body>
 </html>

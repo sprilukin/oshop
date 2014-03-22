@@ -10,6 +10,8 @@
 
 <div class="invoicesPlaceholder"></div>
 
-<script data-main="invoicePrint/mainUkrPost" src="${scriptSources}/lib/require.js"></script>
+<script type="text/javascript">
+    require(["invoicePrint/mainUkrPost"]);
+</script>
 </body>
 </html>

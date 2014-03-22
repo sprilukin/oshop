@@ -35,6 +35,9 @@
 </div>
 <div class="row-fluid span12 listEntities"></div>
 
-<script data-main="addProductsToOrder/main" src="${scriptSources}/lib/require.js"></script>
+<script type="text/javascript">
+    require(["addProductsToOrder/main"]);
+</script>
+
 </body>
 </html>
