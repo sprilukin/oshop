@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="discounts">
     <title><spring:message code="discounts.title"/></title>
+    <c:set var="moduleName" scope="request" value="discounts/main"/>
 </head>
 <body>
 
@@ -26,8 +27,5 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script type="text/javascript">
-    require(["discounts/main"]);
-</script>
 </body>
 </html>

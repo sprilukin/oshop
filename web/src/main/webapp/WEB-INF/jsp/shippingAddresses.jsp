@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="customers">
     <title><spring:message code="shipping.addresses.title"/></title>
+    <c:set var="moduleName" scope="request" value="shippingAddresses/main"/>
 </head>
 <body>
 
@@ -26,8 +27,5 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script type="text/javascript">
-    require(["shippingAddresses/main"]);
-</script>
 </body>
 </html>

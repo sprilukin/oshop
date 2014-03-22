@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="cities">
     <title><spring:message code="cities.title"/></title>
+    <c:set var="moduleName" scope="request" value="cities/main"/>
 </head>
 <body>
 
@@ -26,8 +27,5 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script type="text/javascript">
-    require(["cities/main"]);
-</script>
 </body>
 </html>

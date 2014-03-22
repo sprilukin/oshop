@@ -5,13 +5,11 @@
 <html>
 <head>
     <title><spring:message code="invoice.print.ukrPost.title"/></title>
+    <c:set var="moduleName" scope="request" value="invoicePrint/mainUkrPost"/>
 </head>
 <body>
 
 <div class="invoicesPlaceholder"></div>
 
-<script type="text/javascript">
-    require(["invoicePrint/mainUkrPost"]);
-</script>
 </body>
 </html>

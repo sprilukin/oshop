@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="incomes">
     <title><spring:message code="incomes.title"/></title>
+    <c:set var="moduleName" scope="request" value="incomes/main"/>
 </head>
 <body>
 
@@ -24,8 +25,5 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script type="text/javascript">
-    require(["incomes/main"]);
-</script>
 </body>
 </html>

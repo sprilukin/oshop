@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="orders">
     <title><spring:message code="orders.title"/></title>
+    <c:set var="moduleName" scope="request" value="orders/listOrders/list"/>
 </head>
 <body>
 
@@ -45,8 +46,5 @@
 </div>
 <div class="row-fluid span12 listEntities"></div>
 
-<script type="text/javascript">
-    require(["orders/listOrders/list"]);
-</script>
 </body>
 </html>

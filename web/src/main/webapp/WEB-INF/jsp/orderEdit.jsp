@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="orders">
     <title><spring:message code="orders.edit.order"/></title>
+    <c:set var="moduleName" scope="request" value="orders/editOrder/edit"/>
 </head>
 <body>
 
@@ -13,8 +14,5 @@
 
 <div class="content"></div>
 
-<script type="text/javascript">
-    require(["orders/editOrder/edit"]);
-</script>
 </body>
 </html>

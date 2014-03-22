@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="products">
     <title><spring:message code="products.title"/></title>
+    <c:set var="moduleName" scope="request" value="addProductsToOrder/main"/>
 </head>
 <body>
 
@@ -34,10 +35,6 @@
     <div class="row-fluid span5 offset4 forPagination"></div>
 </div>
 <div class="row-fluid span12 listEntities"></div>
-
-<script type="text/javascript">
-    require(["addProductsToOrder/main"]);
-</script>
 
 </body>
 </html>

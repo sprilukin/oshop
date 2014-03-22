@@ -25,6 +25,8 @@
 
 <div class="container">
     <decorator:body/>
+
+    <jsp:include page="includeRequirejsModule.jsp"/>
 </div>
 </body>
 </html>

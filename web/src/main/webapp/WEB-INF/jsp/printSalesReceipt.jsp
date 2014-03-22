@@ -5,13 +5,11 @@
 <html>
 <head>
     <title><spring:message code="invoice.print.salesReceipt.title"/></title>
+    <c:set var="moduleName" scope="request" value="invoicePrint/mainSalesReceipt"/>
 </head>
 <body>
 
 <div class="invoicesPlaceholder"></div>
 
-<script type="text/javascript">
-    require(["invoicePrint/mainSalesReceipt"]);
-</script>
 </body>
 </html>

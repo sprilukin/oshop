@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="dashboard">
     <title><spring:message code="dashboard.title"/></title>
+    <c:set var="moduleName" scope="request" value="dashboard/main"/>
 </head>
 <body>
 
@@ -26,8 +27,5 @@
     <div id="incomesMinusExpensesCumulativeChart" class="row span12" style="height:400px;margin-top: 50px"></div>
 </div>
 
-<script type="text/javascript">
-    require(["dashboard/main"]);
-</script>
 </body>
 </html>

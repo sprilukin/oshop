@@ -17,8 +17,6 @@
 
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/login.css" />
 
-    <jsp:include page="require.jsp"/>
-
     <decorator:head/>
 </head>
 <body>

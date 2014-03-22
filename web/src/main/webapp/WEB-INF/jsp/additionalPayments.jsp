@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="additionalPayments">
     <title><spring:message code="additional.payment.title"/></title>
+    <c:set var="moduleName" scope="request" value="additionalPayments/main"/>
 </head>
 <body>
 
@@ -25,9 +26,5 @@
 <div class="row-fluid span12 forPagination"></div>
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
-
-<script type="text/javascript">
-    require(["additionalPayments/main"]);
-</script>
 </body>
 </html>

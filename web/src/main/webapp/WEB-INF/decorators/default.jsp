@@ -33,6 +33,8 @@
     <div id="imageGallery" style="position: absolute"></div>
 
     <decorator:body/>
+
+    <jsp:include page="includeRequirejsModule.jsp"/>
 </div>
 </body>
 </html>

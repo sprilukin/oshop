@@ -6,6 +6,7 @@
 <head>
     <meta name="activePage" content="orderStates">
     <title><spring:message code="order.status.title"/></title>
+    <c:set var="moduleName" scope="request" value="orderStates/main"/>
 </head>
 <body>
 
@@ -26,8 +27,5 @@
 <div class="row-fluid span12 listEntities"></div>
 <div class="editEntity"></div>
 
-<script type="text/javascript">
-    require(["orderStates/main"]);
-</script>
 </body>
 </html>
