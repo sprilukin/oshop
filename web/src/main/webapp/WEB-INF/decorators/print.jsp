@@ -15,8 +15,7 @@
 
     <title><decorator:title/> | <spring:message code="webapp.name"/></title>
 
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/mainPrint.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/resources/css/print.css" />
 
     <jsp:include page="require.jsp"/>
 
