@@ -3,9 +3,9 @@ var require = {
 
     paths: {
         // Major libraries
-        jquery: 'lib/jquery-2.0.3',
-        underscore: 'lib/underscore-1.4.4',
-        backbone: 'lib/backbone-1.0.0',
+        jquery: 'lib/jquery-2.1.0',
+        underscore: 'lib/underscore-1.6.0',
+        backbone: 'lib/backbone-1.1.2',
         mustache: 'lib/mustache-0.7.2',
         bootstrap: 'lib/bootstrap-2.3.1',
         select2: 'lib/select2-3.3.2',
@@ -37,13 +37,13 @@ var require = {
         },
         select2: {
             deps: ["jquery"]
-        },
-        underscore: {
+        }
+        /*underscore: {
             exports: '_'
-        },
-        backbone: {
+        }*/
+        /*backbone: {
             deps: ["underscore", "jquery"],
             exports: "Backbone"
-        }
+        }*/
     }
 };

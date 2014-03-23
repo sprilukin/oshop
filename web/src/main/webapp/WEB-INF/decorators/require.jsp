@@ -23,3 +23,8 @@
     require.baseUrl = "${scriptSources}";
 </script>
 <script src="${scriptSources}/lib/require-2.1.5.js"></script>
+<c:if test="${optimizeJavascript == true}">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="${scriptSources}/lib/underscore-1.6.0.js"></script>
+    <script src="${scriptSources}/lib/backbone-1.1.2.js"></script>
+</c:if>

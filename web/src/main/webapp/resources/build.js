@@ -12,6 +12,9 @@
     cssImportIgnore: null,
 
     paths: {
+        "jquery": "empty:",
+        "underscore": "empty:",
+        "backbone": "empty:"
     },
 
     modules: [
