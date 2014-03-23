@@ -22,6 +22,14 @@
         <beans:bean id="themeChangeInterceptor" class="org.springframework.web.servlet.theme.ThemeChangeInterceptor">
             <beans:property name="paramName" value="theme" />
         </beans:bean>
+        <interceptor>
+            <mapping path="/resources/**"/>
+            <beans:ref bean="webContentInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/favicon.ico"/>
+            <beans:ref bean="webContentInterceptor"/>
+        </interceptor>
     </interceptors>
 
     <!--<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
@@ -34,6 +42,14 @@
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/jsp/"/>
         <beans:property name="suffix" value=".jsp"/>
+    </beans:bean>
+
+    <beans:bean id="webContentInterceptor"
+                class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+        <beans:property name="cacheSeconds" value="31556926"/>
+        <beans:property name="useExpiresHeader" value="true"/>
+        <beans:property name="useCacheControlHeader" value="true"/>
+        <beans:property name="useCacheControlNoStore" value="true"/>
     </beans:bean>
 
     <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
