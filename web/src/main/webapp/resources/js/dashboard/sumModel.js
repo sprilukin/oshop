@@ -6,26 +6,17 @@ define([
     'underscore',
     'backbone',
     'common/sorter',
-    'common/filter',
     'common/projection',
     'dashboard/expensesModel',
     'dashboard/incomesModel'
-], function ($, _, Backbone, Sorter, Filter, Projection, ExpensesModel, IncomesModel) {
+], function ($, _, Backbone, Sorter, Projection, ExpensesModel, IncomesModel) {
 
     return Backbone.Model.extend({
 
         initialize: function(options) {
             options = options || {};
 
-            this.startDate = options.startDate;
-            this.endDate = options.endDate;
-
-            this.filter = new Filter({
-                filters: [{
-                    name: "dateBTWN",
-                    value: this.startDate + (this.endDate ? "," + this.endDate : "")
-                }]
-            });
+            this.filter = options.filter;
 
             this.projection = new Projection({
                 projections: [{
@@ -55,13 +46,6 @@ define([
                     this.get("incomesModel").fetch()).then(function() {
                         that.trigger("sync");
                     });
-        },
-
-        setRange: function(startDate, endDate) {
-            this.startDate = startDate;
-            this.endDate = endDate;
-
-            this.filter.set("dateBTWN", startDate + "," + endDate);
         }
     });
 });

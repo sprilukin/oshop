@@ -6,11 +6,10 @@ define([
     'underscore',
     'backbone',
     'common/sorter',
-    'common/filter',
     'common/projection',
     'dashboard/expensesModel',
     'dashboard/incomesModel'
-], function ($, _, Backbone, Sorter, Filter, Projection, ExpensesModel, IncomesModel) {
+], function ($, _, Backbone, Sorter, Projection, ExpensesModel, IncomesModel) {
 
     return Backbone.Model.extend({
 
@@ -19,9 +18,6 @@ define([
 
             _.bindAll(this, "_processData");
 
-            this.startDate = options.startDate;
-            this.endDate = options.endDate;
-
             this.sorter = new Sorter({
                 sorters: [{
                     name: "date",
@@ -29,12 +25,7 @@ define([
                 }]
             }).format();
 
-            this.filter = new Filter({
-                filters: [{
-                    name: "dateBTWN",
-                    value: this.startDate + (this.endDate ? "," + this.endDate : "")
-                }]
-            });
+            this.filter = options.filter;
 
             this.projection = new Projection({
                 projections: [{
@@ -71,22 +62,17 @@ define([
                 })
         },
 
-        setRange: function(startDate, endDate) {
-            this.startDate = startDate;
-            this.endDate = endDate;
-
-            this.filter.set("dateBTWN", startDate + "," + endDate);
-        },
-
         _processData: function() {
             this.attributes.incomesMinusExpensesCumulative = [];
+            var startDate = parseInt(this.filter.get("dateBTWN").split(",")[0], 10);
+            var endDate = parseInt(this.filter.get("dateBTWN").split(",")[1], 10);
 
-            var daysCount = (this.endDate - this.startDate) / 86400000 + 1;
+            var daysCount = (endDate - startDate) / 86400000 + 1;
             var expenseSumForDate = 0;
             var incomeSumForDate = 0;
 
             for (var i = 0; i < daysCount; i++) {
-                var date = this.startDate + i * 86400000;
+                var date = startDate + i * 86400000;
 
                 var expenseForDate = this._getValueForDate(date, this.get("expenseModel").get("data"));
                 var incomeForDate = this._getValueForDate(date, this.get("incomesModel").get("data"));
