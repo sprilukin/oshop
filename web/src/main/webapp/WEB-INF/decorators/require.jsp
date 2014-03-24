@@ -30,7 +30,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
 </c:if>
 <script language="JavaScript">
-    require.baseUrl = "${scriptSources}";
+    require.config({
+        baseUrl: "${scriptSources}"
+    });
+
     <c:if test="${optimizeJavascript == true}">
         define("backbone", Backbone);
     </c:if>

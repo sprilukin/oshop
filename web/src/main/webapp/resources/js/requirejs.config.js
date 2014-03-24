@@ -1,5 +1,5 @@
 var require = {
-    baseUrl: "resources/js",
+    //baseUrl: "resources/js",
 
     paths: {
         // Major libraries
@@ -27,8 +27,7 @@ var require = {
 
         // Require.js plugins
         text: 'lib/require.text-2.0.5',
-        bundle: 'common/bundle',
-        bundleBase: "../../i18n/messages"
+        bundle: 'common/bundle'
     },
 
     shim: {
@@ -37,6 +36,9 @@ var require = {
         },
         select2: {
             deps: ["jquery"]
+        },
+        googlemaps: {
+            exports: 'google'
         }
         /*underscore: {
             exports: '_'
