@@ -8,10 +8,11 @@ define([
     'mustache',
     "bundle!messages",
     'common/regions',
+    'common/geocodeService',
     'text!cities/templates/edit.html',
     'select2',
     'bootstrap'
-], function ($, _, Backbone, Mustache, messages, regions, editEntityTemplate) {
+], function ($, _, Backbone, Mustache, messages, regions, GeocodeService, editEntityTemplate) {
 
     return Backbone.View.extend({
 
@@ -20,10 +21,12 @@ define([
         events: {
             "click .editEntitySubmitButton": "onSubmit",
             "hidden .editEntityModal": "onHidden",
-            "keypress .editEntityModal input": "onKeyPress"
+            "keypress .editEntityModal input": "onKeyPress",
+            "click .find-geocode button": "onFindGeocodeClick"
         },
 
         initialize: function() {
+            this.geocodeService = new GeocodeService();
             this.model.on("change", this.render, this);
         },
 
@@ -104,6 +107,38 @@ define([
                 success: function() {
                     that.dialog.modal("hide");
                 }
+            });
+        },
+
+        onFindGeocodeClick: function() {
+            var self = this,
+                addr = this.$("#field_name").val() + " " + this.$("#field_region").val() + " Украина";
+
+            this.$(".find-geocode")
+                .removeClass("success").removeClass("info")
+                .removeClass("warning").find("span").html("");
+
+            this.geocodeService.find(addr).done(function(json) {
+                if (json.status === "OK") {
+                    if (json.results.length == 1) {
+                        self.$(".find-geocode")
+                            .addClass("success").find("span").html(json.status);
+                    } else {
+                        self.$(".find-geocode").addClass("info")
+                            .find("span").html("Более одного результата");
+                    }
+                } else if (json.status === "ZERO_RESULTS") {
+                    self.$(".find-geocode").addClass("warning")
+                        .find("span").html("Нет результатов");
+                    return;
+                } else {
+                    throw new ("Unknown GEO result: " + json.result);
+                }
+
+                var location = json.results[0].geometry.location;
+
+                self.$("#field_latitude").val(location.lat);
+                self.$("#field_longitude").val(location.lng);
             });
         }
     });
