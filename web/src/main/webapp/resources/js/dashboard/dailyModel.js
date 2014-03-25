@@ -64,8 +64,9 @@ define([
 
         _processData: function() {
             this.attributes.incomesMinusExpensesCumulative = [];
-            var startDate = parseInt(this.filter.get("dateBTWN").split(",")[0], 10);
-            var endDate = parseInt(this.filter.get("dateBTWN").split(",")[1], 10);
+            var datesArray = this.filter.get("dateBTWN").split("%2C");
+            var startDate = parseInt(datesArray[0], 10);
+            var endDate = parseInt(datesArray[1], 10);
 
             var daysCount = (endDate - startDate) / 86400000 + 1;
             var expenseSumForDate = 0;
