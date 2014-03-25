@@ -15,6 +15,7 @@ var require = {
         moment: 'lib/moment-2.0.0',
         momentRu: 'lib/moment_ru',
         highcharts: 'lib/highstock.src-1.3.9',
+        googlemapsLoader: "https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCMwyEdvR3chyzoi34mr78Jr0Xai52AHZY&sensor=false&callback=onLoadGoogleMaps",
 
         //fileupload
         fileupload: 'lib/fileup/jquery.fileupload-5.30',
@@ -37,15 +38,19 @@ var require = {
         select2: {
             deps: ["jquery"]
         },
-        googlemaps: {
-            exports: 'google'
+        googlemapsLoader: {
+            deps: ["jquery"],
+            init: function($) {
+                var mapsloader = new $.Deferred(),
+                    self = this;
+
+                this.onLoadGoogleMaps = function() {
+                    delete self.onLoadGoogleMaps;
+                    mapsloader.resolve(self.google);
+                }
+
+                return mapsloader;
+            }
         }
-        /*underscore: {
-            exports: '_'
-        }*/
-        /*backbone: {
-            deps: ["underscore", "jquery"],
-            exports: "Backbone"
-        }*/
     }
 };

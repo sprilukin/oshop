@@ -25,6 +25,7 @@
     </div>
     <div id="expensesAndIncomesDailyChart" class="row span12" style="height:400px;margin-top: 50px"></div>
     <div id="incomesMinusExpensesCumulativeChart" class="row span12" style="height:400px;margin-top: 50px"></div>
+    <div id="googlemap" class="row span12" style="height:800px;width:100%;margin-top: 50px;"></div>
 </div>
 
 </body>

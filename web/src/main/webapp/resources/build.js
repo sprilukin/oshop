@@ -14,7 +14,8 @@
     paths: {
         "jquery": "empty:",
         "underscore": "empty:",
-        "backbone": "empty:"
+        "backbone": "empty:",
+        "googlemapsLoader": "empty:"
     },
 
     modules: [

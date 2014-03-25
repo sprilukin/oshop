@@ -10,11 +10,11 @@ define([
     "bundle!messages",
     'dashboard/expensesAndIncomesSumView',
     'dashboard/expensesAndIncomesDailyView',
-    //'dashboard/ordersMapView',
+    'dashboard/ordersMapView',
     'dashboard/dailyModel',
     'dashboard/sumModel',
     'datePickerRu'
-], function ($, _, dateFormatter, settingsStorage, Filter, messages, SumView, DailyView, /*OrdersMapView,*/ DailyModel, SumModel) {
+], function ($, _, dateFormatter, settingsStorage, Filter, messages, SumView, DailyView, OrdersMapView, DailyModel, SumModel) {
 
     var DEFAULT_INTERVAL = 14 * (24 * 60 * 60 * 1000); //14 days
 
@@ -45,7 +45,9 @@ define([
 
             this.sumView = new SumView({model: this.sumModel});
             this.dailyView = new DailyView({model: this.dailyModel});
-            //this.ordersMapView = new DailyView({model: this.dailyModel});
+            this.ordersMapView = new OrdersMapView({
+                filter: this.filter
+            });
 
             this._changeDate();
         },
