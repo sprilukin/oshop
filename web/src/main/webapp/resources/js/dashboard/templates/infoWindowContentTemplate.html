@@ -1,0 +1,12 @@
+<div>
+    <h4>{{city.name}}</h4>
+
+    {{#orders}}
+    <div>
+        <div style="display: inline">
+            <a href="{{context}}/orders/{{id}}" title="{{id}}" target="_blank">{{id}}</a>
+        </div>
+        <div style="display: inline; margin-left: 5px">{{customer.name}} ({{shippingAddress.recipient}})</div>
+    </div>
+    {{/orders}}
+</div>
