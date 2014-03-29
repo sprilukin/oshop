@@ -104,6 +104,94 @@ tr.selected {
     margin-bottom: 3px;
 }
 
+/* dashboard */
+
+#expensesIncomesSumChart,
+#expensesIncomesPieChart {
+    margin-top: 50px;
+    float:left;
+}
+
+#expensesAndIncomesDailyChart,
+#incomesMinusExpensesCumulativeChart,
+#googlemap {
+    margin-top: 50px;
+}
+
+#googlemap {
+    width: 100%
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+    #expensesIncomesSumChart,
+    #expensesIncomesPieChart,
+    #expensesAndIncomesDailyChart,
+    #incomesMinusExpensesCumulativeChart {
+        height: 400px
+    }
+
+    #googlemap {
+        height: 800px
+    }
+}
+
+/* Small desktop */
+@media (min-width: 980px) and (max-width: 1199px) {
+    #expensesIncomesSumChart,
+    #expensesIncomesPieChart,
+    #expensesAndIncomesDailyChart,
+    #incomesMinusExpensesCumulativeChart {
+        height: 400px
+    }
+
+    #googlemap {
+        height: 700px
+    }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    #expensesIncomesSumChart,
+    #expensesIncomesPieChart,
+    #expensesAndIncomesDailyChart,
+    #incomesMinusExpensesCumulativeChart {
+        height: 400px
+    }
+
+    #googlemap {
+        height: 600px
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+    #expensesIncomesSumChart,
+    #expensesIncomesPieChart,
+    #expensesAndIncomesDailyChart,
+    #incomesMinusExpensesCumulativeChart {
+        height: 300px
+    }
+
+    #googlemap {
+        height: 500px
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    #expensesIncomesSumChart,
+    #expensesIncomesPieChart,
+    #expensesAndIncomesDailyChart,
+    #incomesMinusExpensesCumulativeChart {
+        height: 200px
+    }
+
+    #googlemap {
+        height: 300px
+    }
+}
+
 /* emulate btn-group */
 
 .input-append .add-on:last-child,
