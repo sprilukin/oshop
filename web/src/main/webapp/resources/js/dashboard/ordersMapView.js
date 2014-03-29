@@ -46,6 +46,11 @@ define([
             this.infoWindow = new google.maps.InfoWindow({
                 content: ""
             });
+
+            var self = this;
+            this.google.maps.event.addListener(this.map, 'click', function() {
+                self.infoWindow.close();
+            });
         },
 
         _addMarker: function(order) {
