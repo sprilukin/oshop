@@ -12,6 +12,14 @@ define([
     "text!dashboard/templates/infoWindowContentTemplate.html"
 ], function ($, _, Backbone, Mustache, context, Collection, mapsloader, contentTemplate) {
 
+    var ICON_TEMPLATE = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld={{letter}}|{{color}}",
+        ONE_COLOR = "FE7569",
+        TWO_TO_FIVE_COLOR = "FA9D41",
+        FIVE_TO_TEN_COLOR = "5CB34D",
+        TEN_TO_TWENTY_COLOR = "4D83B3",
+        TWENTY_PLUS_COLOR = "E23DFF";
+
+
     return Backbone.View.extend({
         el : "#googlemap",
 
@@ -33,6 +41,13 @@ define([
             var self = this;
             _.each(this.collection.models, function(model) {
                 self._addMarker(model.attributes);
+            })
+
+            _.each(this.markers, function(data) {
+                var ordersCount = data.orders.length;
+                if (ordersCount > 1) {
+                    data.marker.setIcon(self._getMarkerIcon(ordersCount));
+                }
             })
         },
 
@@ -80,6 +95,7 @@ define([
         _createMarker: function(position, order) {
             var marker = new this.google.maps.Marker({
                 position: position,
+                icon: this._getMarkerIcon(1),
                 map: this.map
             });
 
@@ -99,6 +115,29 @@ define([
 
         _addOrderToMarker: function(data, order) {
             data.orders.push(order);
+        },
+
+        _getMarkerIcon: function(ordersCount) {
+            var color = TWENTY_PLUS_COLOR;
+
+            if (ordersCount == 1) {
+                color = ONE_COLOR;
+            } else if (ordersCount >= 2 && ordersCount < 5) {
+                color = TWO_TO_FIVE_COLOR;
+            } else if (ordersCount >= 5 && ordersCount < 10) {
+                color = FIVE_TO_TEN_COLOR;
+            } else if (ordersCount >= 10 && ordersCount < 20) {
+                color = TEN_TO_TWENTY_COLOR;
+            }
+
+            var url = Mustache.render(ICON_TEMPLATE, {
+                color: color,
+                letter: "" + ordersCount
+            });
+
+            return new google.maps.MarkerImage(
+                url, new google.maps.Size(21, 34),
+                new google.maps.Point(0,0), new google.maps.Point(10, 34));
         },
 
         _getInfoWindowContent: function(orders) {

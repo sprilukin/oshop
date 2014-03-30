@@ -1,6 +1,8 @@
 <div>
     <h4>{{city.name}}</h4>
+    <h5>{{city.region}}</h5>
 
+    <div style="max-height: 300px; overflow-y: auto">
     {{#orders}}
     <div>
         <div style="display: inline">
@@ -9,4 +11,5 @@
         <div style="display: inline; margin-left: 5px">{{customer.name}} ({{shippingAddress.recipient}})</div>
     </div>
     {{/orders}}
+    </div>
 </div>
