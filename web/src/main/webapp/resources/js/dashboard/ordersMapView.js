@@ -1,3 +1,6 @@
+/*jslint nomen: true, regexp: true */
+/*global define, google */
+
 /**
  * Item Categories module
  */
@@ -8,9 +11,9 @@ define([
     'mustache',
     "common/context",
     'orders/collection',
-    "googlemapsLoader",
-    "text!dashboard/templates/infoWindowContentTemplate.html"
-], function ($, _, Backbone, Mustache, context, Collection, mapsloader, contentTemplate) {
+    "text!dashboard/templates/infoWindowContentTemplate.html",
+    "async!https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCMwyEdvR3chyzoi34mr78Jr0Xai52AHZY&sensor=false!callback"
+], function ($, _, Backbone, Mustache, context, Collection, contentTemplate) {
 
     var ICON_TEMPLATE = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld={{letter}}|{{color}}",
         ONE_COLOR = "FE7569",
@@ -24,15 +27,14 @@ define([
         el : "#googlemap",
 
         initialize: function(options) {
-            _.bindAll(this, "render", "_initMap");
             this.collection = new Collection({customerId: null});
             this.filter = options.filter;
             this.markers = {};
 
-            mapsloader.done(this._initMap);
-
             this.filter.on("filter:change", this.onFilterChange, this);
             this.collection.on("sync", this.onCollectionSync, this);
+
+            this._initMap();
         },
 
         render: function () {
@@ -51,8 +53,7 @@ define([
             })
         },
 
-        _initMap: function(google) {
-            this.google = google;
+        _initMap: function() {
             this.map = new google.maps.Map($(this.el).get(0), {
                 center: new google.maps.LatLng(49.4333333, 32.0666667),
                 zoom: 6
@@ -63,7 +64,7 @@ define([
             });
 
             var self = this;
-            this.google.maps.event.addListener(this.map, 'click', function() {
+            google.maps.event.addListener(this.map, 'click', function() {
                 self.infoWindow.close();
             });
         },
@@ -84,7 +85,7 @@ define([
             if (!this.markers[key]) {
                 var lat = parseFloat(city.latitude),
                     long = parseFloat(city.longitude),
-                    position = new this.google.maps.LatLng(lat, long);
+                    position = new google.maps.LatLng(lat, long);
 
                 this.markers[key] = this._createMarker(position, order);
             } else {
@@ -93,7 +94,7 @@ define([
         },
 
         _createMarker: function(position, order) {
-            var marker = new this.google.maps.Marker({
+            var marker = new google.maps.Marker({
                 position: position,
                 icon: this._getMarkerIcon(1),
                 map: this.map
@@ -105,7 +106,7 @@ define([
             };
 
             var self = this;
-            this.google.maps.event.addListener(marker, 'click', function() {
+            google.maps.event.addListener(marker, 'click', function() {
                 self.infoWindow.setContent(self._getInfoWindowContent(data.orders));
                 self.infoWindow.open(self.map, marker);
             });
@@ -153,7 +154,7 @@ define([
                 for (var key in this.markers) {
                     if (this.markers.hasOwnProperty(key)) {
                         var data = this.markers[key];
-                        this.google.maps.event.clearInstanceListeners(data.marker);
+                        google.maps.event.clearInstanceListeners(data.marker);
                         data.marker.setMap(null);
                     }
                 }
@@ -170,12 +171,9 @@ define([
         },
 
         onFilterChange: function() {
-            var self = this;
-            mapsloader.done(function() {
-                self.collection.setFilterString(self.filter.format());
-                self.collection.reset({silent: true});
-                self.collection.fetch();
-            });
+            this.collection.setFilterString(this.filter.format());
+            this.collection.reset({silent: true});
+            this.collection.fetch();
         }
     });
 });
