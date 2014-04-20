@@ -15,7 +15,7 @@
         "jquery": "empty:",
         "underscore": "empty:",
         "backbone": "empty:",
-        "googlemapsLoader": "empty:"
+        "returnAddress": "empty:"
     },
 
     modules: [
@@ -33,7 +33,7 @@
         {name: "products/main"},
         {name: "shippingAddresses/main"},
         {name: "shippingTypes/main"},
-        {name: "invoicePrint/mainUkrPost", exclude: ["returnAddress"]},
+        {name: "invoicePrint/mainUkrPost"},
         {name: "invoicePrint/mainSalesReceipt"},
         {name: "dashboard/main"}
     ]
