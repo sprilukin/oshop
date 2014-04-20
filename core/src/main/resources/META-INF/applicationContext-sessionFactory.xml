@@ -8,6 +8,7 @@
 
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="fileEncoding" value="UTF-8"/>
         <property name="locations">
             <list>
                 <value>classpath*:jdbc.properties</value>

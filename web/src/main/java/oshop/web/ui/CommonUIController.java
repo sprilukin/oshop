@@ -1,14 +1,19 @@
 package oshop.web.ui;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "")
 public class CommonUIController {
+
+    @Value("${returnAddress}")
+    private String returnAddress;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() throws Exception {
@@ -123,7 +128,11 @@ public class CommonUIController {
     }
 
     @RequestMapping(value = "/printUkrPostInvoice", method = RequestMethod.GET)
-    public String ukrPost() throws Exception {
+    public String ukrPost(
+            @RequestParam(value = "returnAddress", required = false) final String returnAddress,
+            Model model) throws Exception {
+
+        model.addAttribute("returnAddress", returnAddress != null ? returnAddress : this.returnAddress);
         return "printUkrPost";
     }
 

@@ -5,6 +5,9 @@
 <html>
 <head>
     <title><spring:message code="invoice.print.ukrPost.title"/></title>
+    <script>
+        define("returnAddress", "${returnAddress}");
+    </script>
     <c:set var="moduleName" scope="request" value="invoicePrint/mainUkrPost"/>
 </head>
 <body>

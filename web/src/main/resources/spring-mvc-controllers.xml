@@ -11,4 +11,5 @@
         <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 
+    <context:property-placeholder location="classpath:runtime-config.properties" file-encoding="UTF-8"/>
 </beans:beans>

@@ -104,6 +104,7 @@
                 <user.admin.password>password</user.admin.password>
                 <user.regular.name>user</user.regular.name>
                 <user.regular.password>password</user.regular.password>
+                <default.returnAddress><Name>|<Address>|<City>|<Region>|<Postal Code></default.returnAddress>
             </properties>
         </profile>
         <profile>
@@ -124,6 +125,7 @@
                 <user.admin.password>password</user.admin.password>
                 <user.regular.name>user</user.regular.name>
                 <user.regular.password>password</user.regular.password>
+                <default.returnAddress><Name>|<Address>|<City>|<Region>|<Postal Code></default.returnAddress>
             </properties>
         </profile>
     </profiles>-->

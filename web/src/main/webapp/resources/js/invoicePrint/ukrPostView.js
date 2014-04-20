@@ -6,10 +6,11 @@ define([
     'underscore',
     'backbone',
     'mustache',
+    'returnAddress',
     'text!invoicePrint/templates/front.html',
     'text!invoicePrint/templates/back.html',
     'text!invoicePrint/templates/address.html',
-], function ($, _, Backbone, Mustache, frontTemplate, backTemplate, addressTemplate) {
+], function ($, _, Backbone, Mustache, retAddr, frontTemplate, backTemplate, addressTemplate) {
 
 
     return Backbone.View.extend({
@@ -31,28 +32,14 @@ define([
             );
         },
 
-        getReturnAddress: function() {
-            var matches = window.location.search.match(/(\?|&)returnAddress=([^&]+)/);
-            if (matches && matches.length > 0) {
-                return matches[2];
-            } else {
-                return null;
-            }
-        },
-
         formatReturnAddress: function() {
-            var returnAddress = this.getReturnAddress();
-            if (!returnAddress) {
-                return null;
-            }
-
-            var arr = returnAddress.split("|");
+            var arr = retAddr.split("|");
             return {
-                recipient: decodeURIComponent(arr[0]),
-                address: decodeURIComponent(arr[1]),
-                city: decodeURIComponent(arr[2]),
-                region: decodeURIComponent(arr[3]),
-                postalCode: decodeURIComponent(arr[4])
+                recipient: arr[0],
+                address: arr[1],
+                city: arr[2],
+                region: arr[3],
+                postalCode: arr[4]
             }
         },
 
