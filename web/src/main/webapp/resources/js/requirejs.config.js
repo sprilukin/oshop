@@ -8,6 +8,7 @@ var require = {
         backbone: 'lib/backbone-1.1.2',
         mustache: 'lib/mustache-0.7.2',
         bootstrap: 'lib/bootstrap-2.3.1',
+        marionette: 'lib/backbone.marionette-1.8.5',
         select2: 'lib/select2-3.3.2',
         cookies: 'lib/cookies-0.3.1',
         datePicker: 'lib/bootstrap-datepicker',
