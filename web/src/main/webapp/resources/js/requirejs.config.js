@@ -4,8 +4,10 @@ var require = {
     paths: {
         // Major libraries
         jquery: 'lib/jquery-2.1.0',
-        underscore: 'lib/underscore-1.6.0',
+        underscore: 'common/underscoreTemplateSettings',
         backbone: 'lib/backbone-1.1.2',
+        "backbone.wreqr": 'lib/backbone.wreqr-1.3.1',
+        "backbone.babysitter": 'lib/backbone.babysitter-0.1.4',
         mustache: 'lib/mustache-0.7.2',
         bootstrap: 'lib/bootstrap-2.3.1',
         marionette: 'lib/backbone.marionette-1.8.5',

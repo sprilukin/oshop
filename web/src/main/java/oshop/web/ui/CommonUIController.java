@@ -140,4 +140,9 @@ public class CommonUIController {
     public String salesReceipt() throws Exception {
         return "printSalesReceipt";
     }
+
+    @RequestMapping(value = "/marionette", method = RequestMethod.GET)
+    public String marionette() throws Exception {
+        return "app";
+    }
 }

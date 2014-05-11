@@ -5,7 +5,7 @@
     <c:set var="scriptSources" scope="session" value="${null}"/>
 </c:if>
 <c:if test="${optimizeJavascript == null}">
-    <c:set var="optimizeJavascript" scope="session" value="${true}"/>
+    <c:set var="optimizeJavascript" scope="session" value="${false}"/>
     <c:set var="scriptSources" scope="session" value="${null}"/>
 </c:if>
 

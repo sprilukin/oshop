@@ -4,6 +4,7 @@
         <pattern>/40*.jsp</pattern>
         <pattern>/api/*</pattern>
         <pattern>/resources/*</pattern>
+        <pattern>/marionette*</pattern>
     </excludes>
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
