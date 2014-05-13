@@ -14,19 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.model.Order;
-import oshop.model.OrderHasOrderStates;
-import oshop.model.Product;
 import oshop.services.GenericService;
 import oshop.services.OrderService;
-import oshop.web.api.rest.v2.BaseController;
-import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
-import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
-import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
-import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,16 +36,15 @@ public class OrdersController extends BaseController<Order, Integer> {
         return orderService;
     }
 
-    @RequestMapping(
-            value = "/orders",
-            method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> add(@RequestBody @Valid final Order entity, final BindingResult result) {
-        return super.add(entity, result);
-    }
+    /* ===== Model ===== */
 
+
+    /**
+     * Delete order
+     *
+     * @param id the id if the order to remove
+     * @return nothing
+     */
     @RequestMapping(
             value = "/orders/{id}",
             method = RequestMethod.DELETE)
@@ -61,6 +52,12 @@ public class OrdersController extends BaseController<Order, Integer> {
         return super.delete(id);
     }
 
+    /**
+     * Get order by id
+     *
+     * @param id the id if the order
+     * @return order
+     */
     @RequestMapping(
             value = "/orders/{id}",
             method = RequestMethod.GET,
@@ -70,6 +67,12 @@ public class OrdersController extends BaseController<Order, Integer> {
         return super.get(id);
     }
 
+    /**
+     * Update order with given id
+     *
+     * @param id the id if the order
+     * @return order with updates
+     */
     @RequestMapping(
             value = "/orders/{id}",
             method = RequestMethod.PUT,
@@ -82,6 +85,32 @@ public class OrdersController extends BaseController<Order, Integer> {
         return super.update(id, entity, result);
     }
 
+    /* ===== Collection ===== */
+
+    /**
+     * Add new order
+     *
+     * @param entity order
+     * @param result binding result
+     * @return
+     */
+    @RequestMapping(
+            value = "/orders",
+            method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> add(@RequestBody @Valid final Order entity, final BindingResult result) {
+        return super.add(entity, result);
+    }
+
+    /**
+     * List orders
+     *
+     * @param limit max results count
+     * @param offset offset from the beginning of the collection
+     * @return orders
+     */
     @RequestMapping(
             value = "/orders",
             method = RequestMethod.GET,
@@ -94,6 +123,28 @@ public class OrdersController extends BaseController<Order, Integer> {
         return super.list(limit, offset);
     }
 
+    /**
+     * <p>List orders
+     * using filters and sorters.<p/>
+     *
+     * <p>Example:</p>
+     *
+     * <code>
+     *     /orders/filter;orderStateNotIn=Sent;customerLIKE=Customer;/sort;id=desc;?limit=50&offset=0
+     * </code>
+     *
+     * @param filters filters:
+     *                <code>filter;{filterName1}={filterValue1};...;{filterNameN}={filterValueN};</code>
+     *                or
+     *                <code>filter;;</code>
+     * @param sorters sorters:
+     *                <code>sorter;{field1}={asc|desc};...;{fieldN}={asc|desc};</code>
+     *                or
+     *                <code>sorter;;</code>
+     * @param limit max results count
+     * @param offset offset from the beginning of the collection
+     * @return orders
+     */
     @RequestMapping(
             value = "/orders/{filter}/{sort}",
             method = RequestMethod.GET,
@@ -108,6 +159,26 @@ public class OrdersController extends BaseController<Order, Integer> {
         return super.listWithFiltersAndSorters(filters, sorters, limit, offset);
     }
 
+    /**
+     * <p>List orders
+     * using filters and sorters.<p/>
+     *
+     * <p>Example:</p>
+     *
+     * <code>
+     *     /orders/filter;orderStateNotIn=Sent;customerLIKE=Customer;/sort;id=desc;/projection;date=GROUP;amount=SUM?limit=50&offset=0
+     * </code>
+     *
+     * @param filters same as in {@link #listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * @param sorters same as in {@link #listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * @param projections projections:
+     *                <code>projection;{field1}={projectionType1};...;{fieldN}={projectionTypeN};</code>
+     *                or
+     *                <code>projection;;</code>
+     * @param limit max results count
+     * @param offset offset from the beginning of the collection
+     * @return orders
+     */
     @RequestMapping(
             value = "/orders/{filter}/{sort}/{projection}",
             method = RequestMethod.GET,
