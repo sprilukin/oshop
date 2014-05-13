@@ -10,6 +10,6 @@ define([
     return Backbone.Collection.extend({
         model: Order,
 
-        url: "api/orders"
+        url: "api/v2/orders/"
     });
 });
