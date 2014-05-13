@@ -6,7 +6,7 @@ define([
     "bundle!messages"
 ], function (Backbone, messages) {
 
-    return Backbone.Model.extend({
+    return Backbone.AssociatedModel.extend({
 
         validate: function(attributes) {
             var validationFailed = false;
