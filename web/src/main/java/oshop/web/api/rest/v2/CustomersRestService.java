@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/api/v2")
-public class CustomersService extends BaseService<Customer, Integer> {
+public class CustomersRestService extends BaseRestService<Customer, Integer> {
 
     @Resource
     protected CustomerService customerService;
@@ -115,7 +115,7 @@ public class CustomersService extends BaseService<Customer, Integer> {
     /**
      * <p>List customers using filters and sorters.<p/>
      *
-     * see {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * see {@link oshop.web.api.rest.v2.OrdersRestService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
      *
      * @param limit max results count
      * @param offset offset from the beginning of the collection
@@ -138,11 +138,11 @@ public class CustomersService extends BaseService<Customer, Integer> {
     /**
      * <p>List customers using filters and sorters.<p/>
      *
-     * see {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersSortersAndProjections(java.util.Map, java.util.Map, java.util.Map, Integer, Integer)}
+     * see {@link oshop.web.api.rest.v2.OrdersRestService#listWithFiltersSortersAndProjections(java.util.Map, java.util.Map, java.util.Map, Integer, Integer)}
      *
-     * @param filters same as in {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
-     * @param sorters same as in {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
-     * @param projections same as in {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersSortersAndProjections(java.util.Map, java.util.Map, java.util.Map, Integer, Integer)}
+     * @param filters same as in {@link oshop.web.api.rest.v2.OrdersRestService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * @param sorters same as in {@link oshop.web.api.rest.v2.OrdersRestService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * @param projections same as in {@link oshop.web.api.rest.v2.OrdersRestService#listWithFiltersSortersAndProjections(java.util.Map, java.util.Map, java.util.Map, Integer, Integer)}
      * @param limit max results count
      * @param offset offset from the beginning of the collection
      * @return customers

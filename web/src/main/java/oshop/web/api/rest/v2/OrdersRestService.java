@@ -24,9 +24,9 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/api/v2")
-public class OrdersService extends BaseService<Order, Integer> {
+public class OrdersRestService extends BaseRestService<Order, Integer> {
 
-    private static final Log log = LogFactory.getLog(OrdersService.class);
+    private static final Log log = LogFactory.getLog(OrdersRestService.class);
 
     @Resource
     protected OrderService orderService;

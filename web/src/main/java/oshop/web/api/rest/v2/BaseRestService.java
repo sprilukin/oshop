@@ -16,9 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseService<T extends BaseEntity<ID>, ID extends Serializable> {
+public abstract class BaseRestService<T extends BaseEntity<ID>, ID extends Serializable> {
 
-    private static final Log log = LogFactory.getLog(BaseService.class);
+    private static final Log log = LogFactory.getLog(BaseRestService.class);
 
     protected abstract GenericService<T, ID> getService();
 
