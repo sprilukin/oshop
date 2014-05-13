@@ -7,7 +7,7 @@ define([
     '../models/order'
 ], function (Backbone, Mustache, Order) {
 
-    return BaseCollection.extend({
+    return Backbone.Collection.extend({
         model: Order,
 
         url: "api/orders"

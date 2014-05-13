@@ -1,31 +1,23 @@
 define(function(require){
-    var Marionette = require("marionette"),
+    var Orders = require("entities/collections/orders"),
+        _ = require("underscore"),
         Backbone = require("backbone");
 
-    var Oshop = new Marionette.Application();
-
-    Oshop.addRegions({
-        mainRegion: "#main-region"
-    });
-
-    Oshop.navigate = function(route,  options){
-        options || (options = {});
-        Backbone.history.navigate(route, options);
+    var Start = function() {
+        this.initialize();
     };
 
-    Oshop.getCurrentRoute = function(){
-        return Backbone.history.fragment
-    };
+    _.extend(Start.prototype, {
+        initialize: function() {
+            this.orders = new Orders();
+            this.orders.on("sync", this.render, this);
+            this.orders.fetch();
+        },
 
-    Oshop.on("initialize:after", function(){
-        if(Backbone.history){
-            Backbone.history.start();
-
-            if(this.getCurrentRoute() === ""){
-                Oshop.trigger("orders:list");
-            }
+        render: function() {
+            console.log(this.orders);
         }
     });
 
-    return Oshop;
+    return Start;
 });

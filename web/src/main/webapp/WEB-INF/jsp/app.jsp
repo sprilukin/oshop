@@ -40,8 +40,8 @@
     <div class="row-fluid span12 listEntities"></div>
 
     <script type="text/javascript">
-        require(["oshop"], function(oshop) {
-            oshop.start();
+        require(["oshop"], function(Oshop) {
+            new Oshop();
         });
     </script>
 </div>
