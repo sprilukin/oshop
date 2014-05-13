@@ -1,5 +1,5 @@
 /**
- * Orders collection
+ * Customers collection
  */
 define([
     'backbone',

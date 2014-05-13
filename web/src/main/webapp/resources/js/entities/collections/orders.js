@@ -3,9 +3,8 @@
  */
 define([
     'backbone',
-    'mustache',
     '../models/order'
-], function (Backbone, Mustache, Order) {
+], function (Backbone, Order) {
 
     return Backbone.Collection.extend({
         model: Order,

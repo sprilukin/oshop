@@ -4,8 +4,9 @@
 define([
     "backbone",
     "./customer",
+    "./product",
     "bundle!messages"
-], function (Backbone, Customer, messages) {
+], function (Backbone, Customer, Product, messages) {
 
     return Backbone.AssociatedModel.extend({
         relations: [
@@ -13,6 +14,11 @@ define([
                 type: Backbone.One,
                 key: 'customer',
                 relatedModel: Customer
+            },
+            {
+                type: Backbone.Many,
+                key: 'products',
+                relatedModel: Product
             }
         ],
 
