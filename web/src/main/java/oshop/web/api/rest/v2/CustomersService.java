@@ -1,21 +1,13 @@
 package oshop.web.api.rest.v2;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import oshop.model.Order;
+import org.springframework.web.bind.annotation.*;
+import oshop.model.Customer;
+import oshop.services.CustomerService;
 import oshop.services.GenericService;
-import oshop.services.OrderService;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -24,42 +16,39 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/api/v2")
-public class OrdersController extends BaseController<Order, Integer> {
-
-    private static final Log log = LogFactory.getLog(OrdersController.class);
+public class CustomersService extends BaseService<Customer, Integer> {
 
     @Resource
-    protected OrderService orderService;
+    protected CustomerService customerService;
 
     @Override
-    protected GenericService<Order, Integer> getService() {
-        return orderService;
+    protected GenericService<Customer, Integer> getService() {
+        return customerService;
     }
 
     /* ===== Model ===== */
 
-
     /**
-     * Delete order
+     * Delete customer
      *
-     * @param id the id of the order to remove
+     * @param id the id of the customer to remove
      * @return nothing
      */
     @RequestMapping(
-            value = "/orders/{id}",
+            value = "/customers/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable final Integer id) {
         return super.delete(id);
     }
 
     /**
-     * Get order by id
+     * Get customer by id
      *
-     * @param id the id of the order
-     * @return order
+     * @param id the id of the customer
+     * @return customer
      */
     @RequestMapping(
-            value = "/orders/{id}",
+            value = "/customers/{id}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -68,19 +57,19 @@ public class OrdersController extends BaseController<Order, Integer> {
     }
 
     /**
-     * Update order with given id
+     * Update customer with given id
      *
-     * @param id the id of the order
-     * @return order with updates
+     * @param id the id of the customer
+     * @return customer with updates
      */
     @RequestMapping(
-            value = "/orders/{id}",
+            value = "/customers/{id}",
             method = RequestMethod.PUT,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<?> update(
             @PathVariable final Integer id,
-            @RequestBody @Valid final Order entity, final BindingResult result) {
+            @RequestBody @Valid final Customer entity, final BindingResult result) {
 
         return super.update(id, entity, result);
     }
@@ -88,31 +77,31 @@ public class OrdersController extends BaseController<Order, Integer> {
     /* ===== Collection ===== */
 
     /**
-     * Add new order
+     * Add new customer
      *
-     * @param entity order
+     * @param entity customer
      * @param result binding result
-     * @return newly created order
+     * @return newly created customer
      */
     @RequestMapping(
-            value = "/orders",
+            value = "/customers",
             method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> add(@RequestBody @Valid final Order entity, final BindingResult result) {
+    public ResponseEntity<?> add(@RequestBody @Valid final Customer entity, final BindingResult result) {
         return super.add(entity, result);
     }
 
     /**
-     * List orders
+     * List customers
      *
      * @param limit max results count
      * @param offset offset from the beginning of the collection
      * @return orders
      */
     @RequestMapping(
-            value = "/orders",
+            value = "/customers",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -124,29 +113,16 @@ public class OrdersController extends BaseController<Order, Integer> {
     }
 
     /**
-     * <p>List orders
-     * using filters and sorters.<p/>
+     * <p>List customers using filters and sorters.<p/>
      *
-     * <p>Example:</p>
+     * see {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
      *
-     * <code>
-     *     /orders/filter;orderStateNotIn=Sent;customerLIKE=Customer;/sort;id=desc;?limit=50&offset=0
-     * </code>
-     *
-     * @param filters filters:
-     *                <code>filter;{filterName1}={filterValue1};...;{filterNameN}={filterValueN};</code>
-     *                or
-     *                <code>filter;;</code>
-     * @param sorters sorters:
-     *                <code>sorter;{field1}={asc|desc};...;{fieldN}={asc|desc};</code>
-     *                or
-     *                <code>sorter;;</code>
      * @param limit max results count
      * @param offset offset from the beginning of the collection
-     * @return orders
+     * @return customers
      */
     @RequestMapping(
-            value = "/orders/{filter}/{sort}",
+            value = "/customers/{filter}/{sort}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -160,27 +136,19 @@ public class OrdersController extends BaseController<Order, Integer> {
     }
 
     /**
-     * <p>List orders
-     * using filters and sorters.<p/>
+     * <p>List customers using filters and sorters.<p/>
      *
-     * <p>Example:</p>
+     * see {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersSortersAndProjections(java.util.Map, java.util.Map, java.util.Map, Integer, Integer)}
      *
-     * <code>
-     *     /orders/filter;orderStateNotIn=Sent;customerLIKE=Customer;/sort;id=desc;/projection;date=GROUP;amount=SUM?limit=50&offset=0
-     * </code>
-     *
-     * @param filters same as in {@link #listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
-     * @param sorters same as in {@link #listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
-     * @param projections projections:
-     *                <code>projection;{field1}={projectionType1};...;{fieldN}={projectionTypeN};</code>
-     *                or
-     *                <code>projection;;</code>
+     * @param filters same as in {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * @param sorters same as in {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersAndSorters(java.util.Map, java.util.Map, Integer, Integer)}
+     * @param projections same as in {@link oshop.web.api.rest.v2.OrdersService#listWithFiltersSortersAndProjections(java.util.Map, java.util.Map, java.util.Map, Integer, Integer)}
      * @param limit max results count
      * @param offset offset from the beginning of the collection
-     * @return orders
+     * @return customers
      */
     @RequestMapping(
-            value = "/orders/{filter}/{sort}/{projection}",
+            value = "/customers/{filter}/{sort}/{projection}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody

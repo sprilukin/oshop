@@ -2,16 +2,8 @@ package oshop.web.api.rest.v2;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.model.BaseEntity;
 import oshop.services.GenericService;
 import oshop.web.api.rest.adapter.ListReturningRestCallbackAdapter;
@@ -19,15 +11,14 @@ import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ValidationRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serializable> {
+public abstract class BaseService<T extends BaseEntity<ID>, ID extends Serializable> {
 
-    private static final Log log = LogFactory.getLog(BaseController.class);
+    private static final Log log = LogFactory.getLog(BaseService.class);
 
     protected abstract GenericService<T, ID> getService();
 
