@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/api/v2/orders")
+@RequestMapping("/api/v2")
 public class OrdersController extends BaseController<Order, Integer> {
 
     private static final Log log = LogFactory.getLog(OrdersController.class);
@@ -44,125 +44,82 @@ public class OrdersController extends BaseController<Order, Integer> {
         return orderService;
     }
 
-    // /api/orders/1/products/batch;ids=1,2/delete
     @RequestMapping(
-            value = "/{id}/products/{batch}/delete",
+            value = "/orders",
+            method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> add(@RequestBody @Valid final Order entity, final BindingResult result) {
+        return super.add(entity, result);
+    }
+
+    @RequestMapping(
+            value = "/orders/{id}",
             method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteOrderProduct(
-            @PathVariable final Integer id,
-            @MatrixVariable(value = "ids", pathVar="batch", required = true) final List<Integer> ids) {
-
-        return new VoidRestCallbackAdapter() {
-            @Override
-            protected void perform() throws Exception {
-                orderService.deleteProductsFromOrder(id, ids);
-            }
-        }.invoke();
-    }
-
-    // /api/orders/1/products/batch;ids=1,2/add
-    @RequestMapping(
-            value = "/{id}/products/{batch}/add",
-            method = RequestMethod.POST
-            )
-    @ResponseBody
-    public ResponseEntity<?> addOrderProduct(
-            @PathVariable final Integer id,
-            @MatrixVariable(value = "ids", pathVar="batch", required = true) final List<Integer> ids) {
-
-        return new VoidRestCallbackAdapter() {
-            @Override
-            protected void perform() throws Exception {
-                orderService.addProductsToOrder(id, ids);
-            }
-        }.invoke();
+    public ResponseEntity<?> delete(@PathVariable final Integer id) {
+        return super.delete(id);
     }
 
     @RequestMapping(
-            value = "/{id}/products",
+            value = "/orders/{id}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> listOrderProduct(
-            @PathVariable final Integer id) {
-
-        return new ListReturningRestCallbackAdapter<Product>() {
-            @Override
-            protected List<Product> getResult() throws Exception {
-                return orderService.getProductsByOrder(id);
-            }
-        }.invoke();
+    public ResponseEntity<?> get(@PathVariable final Integer id) {
+        return super.get(id);
     }
 
     @RequestMapping(
-            value = "/{id}/products/withoutOrder",
+            value = "/orders/{id}",
+            method = RequestMethod.PUT,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<?> update(
+            @PathVariable final Integer id,
+            @RequestBody @Valid final Order entity, final BindingResult result) {
+
+        return super.update(id, entity, result);
+    }
+
+    @RequestMapping(
+            value = "/orders",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> listAllProductsButOrder(
-            @PathVariable final Integer id,
+    public ResponseEntity<?> list(
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return listAllProductsButOrderWithFiltersAndSortes(
-                id,
-                Collections.<String, List<String>>emptyMap(),
-                Collections.<String, List<String>>emptyMap(),
-                limit, offset);
+        return super.list(limit, offset);
     }
 
     @RequestMapping(
-            value = "/{id}/products/withoutOrder/{filter}/{sort}",
+            value = "/orders/{filter}/{sort}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> listAllProductsButOrderWithFiltersAndSortes(
-            @PathVariable final Integer id,
+    public ResponseEntity<?> listWithFiltersAndSorters(
             @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
             @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
             @RequestParam(value = "limit", required = false) final Integer limit,
             @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new ListReturningRestCallbackAdapter<Product>() {
-            @Override
-            protected List<Product> getResult() throws Exception {
-                return orderService.getProductsAllButOrder(id, filters, sorters, limit, offset);
-            }
-        }.invoke();
+        return super.listWithFiltersAndSorters(filters, sorters, limit, offset);
     }
 
     @RequestMapping(
-            value = "/{id}/orderHasStates",
-            method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> addOrderHasState(
-            @PathVariable final Integer id,
-            @RequestBody @Valid final OrderHasOrderStates entity, final BindingResult result) {
-
-        return new ValidationRestCallbackAdapter(result,
-                new ReturningRestCallbackAdapter<OrderHasOrderStates>() {
-                    @Override
-                    protected OrderHasOrderStates getResult() throws Exception {
-                        return orderService.addOrderHasStateToOrder(id, entity);
-                    }
-                }).invoke();
-    }
-
-    @RequestMapping(
-            value = "/{id}/orderHasStates",
+            value = "/orders/{filter}/{sort}/{projection}",
             method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> listOrderHasStates(
-            @PathVariable final Integer id) {
+    public ResponseEntity<?> listWithFiltersSortersAndProjections(
+            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
+            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
+            @MatrixVariable(pathVar="projection", required = false) final Map<String, List<String>> projections,
+            @RequestParam(value = "limit", required = false) final Integer limit,
+            @RequestParam(value = "offset", required = false) final Integer offset) {
 
-        return new ListReturningRestCallbackAdapter<OrderHasOrderStates>() {
-            @Override
-            protected List<OrderHasOrderStates> getResult() throws Exception {
-                return orderService.getOrderHasStatesByOrder(id);
-            }
-        }.invoke();
+        return super.listWithFiltersSortersAndProjections(filters, sorters, projections, limit, offset);
     }
 }

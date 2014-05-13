@@ -31,13 +31,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
 
     protected abstract GenericService<T, ID> getService();
 
-    @RequestMapping(
-            value = "/",
-            method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> add(@RequestBody @Valid final T entity, final BindingResult result) {
+    protected ResponseEntity<?> add(final T entity, final BindingResult result) {
         return new ValidationRestCallbackAdapter(result,
                 new ReturningRestCallbackAdapter<T>() {
                     @Override
@@ -47,10 +41,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
                 }).invoke();
     }
 
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable final ID id) {
+    protected ResponseEntity<?> delete(final ID id) {
         return new VoidRestCallbackAdapter() {
             @Override
             protected void perform() throws Exception {
@@ -59,12 +50,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         }.invoke();
     }
 
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> get(@PathVariable final ID id) {
+    protected ResponseEntity<?> get(final ID id) {
         return new ReturningRestCallbackAdapter<T>() {
             @Override
             protected T getResult() throws Exception {
@@ -73,14 +59,7 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         }.invoke();
     }
 
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.PUT,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> update(
-            @PathVariable final ID id,
-            @RequestBody @Valid final T entity, final BindingResult result) {
+    protected ResponseEntity<?> update(final ID id, final T entity, final BindingResult result) {
 
         return new ValidationRestCallbackAdapter(result,
                 new ReturningRestCallbackAdapter<T>() {
@@ -91,30 +70,19 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
                 }).invoke();
     }
 
-    @RequestMapping(
-            value = "/",
-            method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> list(
-            @RequestParam(value = "limit", required = false) final Integer limit,
-            @RequestParam(value = "offset", required = false) final Integer offset) {
+    protected ResponseEntity<?> list(
+            final Integer limit, final Integer offset) {
 
         return listWithFiltersAndSorters(
                 Collections.<String, List<String>>emptyMap(),
                 Collections.<String, List<String>>emptyMap(), limit, offset);
     }
 
-    @RequestMapping(
-            value = "/{filter}/{sort}",
-            method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> listWithFiltersAndSorters(
-            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
-            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
-            @RequestParam(value = "limit", required = false) final Integer limit,
-            @RequestParam(value = "offset", required = false) final Integer offset) {
+    protected ResponseEntity<?> listWithFiltersAndSorters(
+            final Map<String, List<String>> filters,
+            final Map<String, List<String>> sorters,
+            final Integer limit,
+            final Integer offset) {
 
         return new ListReturningRestCallbackAdapter<T>() {
 
@@ -125,17 +93,12 @@ public abstract class BaseController<T extends BaseEntity<ID>, ID extends Serial
         }.invoke();
     }
 
-    @RequestMapping(
-            value = "/{filter}/{sort}/{projection}",
-            method = RequestMethod.GET,
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public ResponseEntity<?> listWithFiltersSortersAndProjections(
-            @MatrixVariable(pathVar="filter", required = false) final Map<String, List<String>> filters,
-            @MatrixVariable(pathVar="sort", required = false) final Map<String, List<String>> sorters,
-            @MatrixVariable(pathVar="projection", required = false) final Map<String, List<String>> projections,
-            @RequestParam(value = "limit", required = false) final Integer limit,
-            @RequestParam(value = "offset", required = false) final Integer offset) {
+    protected ResponseEntity<?> listWithFiltersSortersAndProjections(
+            final Map<String, List<String>> filters,
+            final Map<String, List<String>> sorters,
+            final Map<String, List<String>> projections,
+            final Integer limit,
+            final Integer offset) {
 
         return new ListReturningRestCallbackAdapter() {
 
