@@ -5,7 +5,7 @@ var require = {
         // Major libraries
         jquery: 'lib/jquery-2.1.0',
         underscore: 'common/underscoreTemplateSettings',
-        backbone: 'lib/backbone-1.1.2',
+        backbone: 'lib/backbone-associations-0.6.1-patched',
         "backbone.wreqr": 'lib/backbone.wreqr-1.3.1',
         "backbone.babysitter": 'lib/backbone.babysitter-0.1.4',
         mustache: 'lib/mustache-0.7.2',
