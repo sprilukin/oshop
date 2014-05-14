@@ -11,8 +11,6 @@
     <name>Oshop</name>
 
     <properties>
-        <hibernate.version>4.1.1.Final</hibernate.version>
-        <jpa.version>2.0-cr-1</jpa.version>
         <java.encoding>UTF-8</java.encoding>
         <project.build.sourceEncoding>${java.encoding}</project.build.sourceEncoding>
         <final.name>oshop</final.name>
