@@ -20,6 +20,7 @@ import oshop.dao.GenericDao;
 import oshop.model.Image;
 import oshop.services.ImageConverterService;
 import oshop.web.api.rest.adapter.HttpCacheRestCallbackAdapter;
+import oshop.web.api.rest.adapter.NewHttpCacheRestCallbackAdapter;
 import oshop.web.api.rest.adapter.ReturningRestCallbackAdapter;
 import oshop.web.api.rest.adapter.VoidRestCallbackAdapter;
 import oshop.web.dto.FileUploadDto;
@@ -176,22 +177,13 @@ public class ImagesRestService {
             @PathVariable final Integer id,
             final @RequestHeader(value = "If-Modified-Since", required = false) String ifModifiedSinceHeader) {
 
-        return new HttpCacheRestCallbackAdapter<byte[]>() {
-            private Image image;
+        final Image image = imageDao.get(id);
 
-            @Override
-            protected void setModifiedTimes() throws Exception {
-                this.image = imageDao.get(id);
-
-                this.getHeaders().setContentType(MediaType.parseMediaType(image.getContentType()));
-
-                this.setLastModified(image.getLastUpdate().getTime());
-                this.setIfModifiedSince(ifModifiedSinceHeader);
-            }
-
+        return new NewHttpCacheRestCallbackAdapter<byte[]>(image.getLastUpdate().getTime(), ifModifiedSinceHeader) {
             @Override
             protected byte[] getResult() throws Exception {
-                this.setSize(image.getData().length);
+                this.getHeaders().setContentType(MediaType.parseMediaType(image.getContentType()));
+                this.getHeaders().setContentLength(image.getData().length);
                 return image.getData();
             }
         }.invoke();
