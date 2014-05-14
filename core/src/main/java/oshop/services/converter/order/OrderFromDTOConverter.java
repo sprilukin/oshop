@@ -3,6 +3,7 @@ package oshop.services.converter.order;
 import org.springframework.stereotype.Component;
 import oshop.dao.GenericDao;
 import oshop.model.Order;
+import oshop.model.OrderHasOrderStates;
 import oshop.services.converter.EntityConverter;
 
 import javax.annotation.Resource;
@@ -17,6 +18,10 @@ public class OrderFromDTOConverter implements EntityConverter<Order, Integer> {
     @Override
     public Order convert(Order entity) throws Exception {
         if (entity.getId() == null) {
+            for (OrderHasOrderStates orderHasOrderStates: entity.getStates()) {
+                orderHasOrderStates.setOrder(entity);
+            }
+
             return entity;
         }
 
