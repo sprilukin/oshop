@@ -24,11 +24,11 @@ import java.util.Map;
 public class ExpensesRestService extends BaseRestService<Expense, Integer> {
 
     @Resource
-    private GenericService<Expense, Integer> expensesService;
+    private GenericService<Expense, Integer> expenseService;
 
     @Override
     protected GenericService<Expense, Integer> getService() {
-        return expensesService;
+        return expenseService;
     }
 
     /* ===== Model ===== */
