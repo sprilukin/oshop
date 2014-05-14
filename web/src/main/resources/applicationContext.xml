@@ -12,6 +12,16 @@
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 
+    <bean id="propertyConfigurerWeb" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="locations">
+            <list>
+                <value>classpath*:message-bundle.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <bean id="messageSource" class="oshop.i18n.ExposedResourceBundleMessageSource">
         <property name="useCodeAsDefaultMessage" value="true"/>
         <property name="cacheInSeconds" value="${cache.in.seconds}"/>

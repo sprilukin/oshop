@@ -37,6 +37,8 @@ import java.util.List;
         "classpath*:applicationContext.xml",
         "classpath:META-INF/applicationContext-sessionFactory.xml",
         "classpath:META-INF/applicationContext-testDataSource.xml",
+        "classpath:META-INF/applicationContext-projections.xml",
+        "classpath:META-INF/applicationContext-filters.xml",
         "classpath:META-INF/applicationContext-dao.xml"
 })
 @Transactional
