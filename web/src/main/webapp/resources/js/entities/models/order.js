@@ -3,41 +3,10 @@
  */
 define([
     "backbone",
-    "./customer",
-    "./product",
     "bundle!messages"
-], function (Backbone, Customer, Product, messages) {
+], function (Backbone, messages) {
 
-    return Backbone.AssociatedModel.extend({
-        relations: [
-            {
-                type: Backbone.One,
-                key: 'customer',
-                relatedModel: Customer
-            },
-            {
-                type: Backbone.Many,
-                key: 'products',
-                relatedModel: Product
-            }
-        ],
-
-        defaults: {
-            currentOrderStateDate: -1,
-            currentOrderStateName: "",
-            customer: {},
-            date: -1,
-            discount: {},
-            id: undefined,
-            products: [],
-            productsCount: 0,
-            productsPrice: 0,
-            shippingAddress: {},
-            states: [],
-            totalPrice: 0,
-            version: 0
-        },
-
+    return Backbone.Model.extend({
         validate: function(attributes) {
             if (!attributes.customer || !attributes.customer.id) {
                 return messages["ui_validation_select_customer"];
