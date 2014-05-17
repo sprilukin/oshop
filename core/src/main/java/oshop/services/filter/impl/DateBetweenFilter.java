@@ -10,14 +10,14 @@ import java.util.Map;
 public class DateBetweenFilter extends ComparisonBasedFilter {
 
     @Resource
-    private Map<String, Class> dateBeetweenFieldsMapping;
+    private Map<String, Class> dateBeetweenFieldTypesMapping;
 
     @Resource
     private Map<String, String> dateBeetweenAliasesMapping;
 
     @Override
     protected Map<String, Class> getFieldsMapping() {
-        return dateBeetweenFieldsMapping;
+        return dateBeetweenFieldTypesMapping;
     }
 
     @Override

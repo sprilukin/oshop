@@ -69,7 +69,10 @@
         </constructor-arg>
     </bean>
 
-    <!-- ORDERS -->
+    <!--==============================
+                ORDERS
+    ==================================-->
+
     <bean id="ordersFieldTypesMapping" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.String" value-type="java.lang.Class">
@@ -92,7 +95,10 @@
         </constructor-arg>
     </bean>
 
-    <!-- PRODUCTS -->
+    <!--==============================
+                PRODUCTS
+    ==================================-->
+
     <bean id="productsFieldTypesMapping" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.String" value-type="java.lang.Class">
@@ -113,8 +119,10 @@
         </constructor-arg>
     </bean>
 
-    <!-- DATE -->
-    <bean id="dateBeetweenFieldsMapping" class="java.util.HashMap">
+    <!--==============================
+                DATE
+    ==================================-->
+    <bean id="dateBeetweenFieldTypesMapping" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.String" value-type="java.lang.Class">
                 <entry key="date" value="java.util.Date"/>
