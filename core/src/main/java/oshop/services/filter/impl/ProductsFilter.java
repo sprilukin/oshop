@@ -16,7 +16,7 @@ import java.util.Map;
 public class ProductsFilter extends ComparisonBasedFilter {
 
     @Resource
-    private Map<String, Class> productsFieldsMapping;
+    private Map<String, Class> productsFieldTypesMapping;
 
     @Resource
     private Map<String, String> productsAliasesMapping;
@@ -24,7 +24,7 @@ public class ProductsFilter extends ComparisonBasedFilter {
 
     @Override
     protected Map<String, Class> getFieldsMapping() {
-        return productsFieldsMapping;
+        return productsFieldTypesMapping;
     }
 
     @Override

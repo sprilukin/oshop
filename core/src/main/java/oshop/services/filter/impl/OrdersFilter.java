@@ -14,14 +14,14 @@ import java.util.Map;
 public class OrdersFilter extends ComparisonBasedFilter {
 
     @Resource
-    private Map<String, Class> ordersFieldsMapping;
+    private Map<String, Class> ordersFieldTypesMapping;
 
     @Resource
     private Map<String, String> ordersAliasesMapping;
 
     @Override
     protected Map<String, Class> getFieldsMapping() {
-        return ordersFieldsMapping;
+        return ordersFieldTypesMapping;
     }
 
     @Override

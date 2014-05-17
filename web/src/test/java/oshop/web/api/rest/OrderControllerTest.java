@@ -293,7 +293,7 @@ public class OrderControllerTest extends BaseControllerTest {
         Order order2 = addOrder("customer2", null);
 
         MvcResult result = this.mockMvc.perform(
-                get("/api/customers/" + order1.getCustomer().getId() + "/orders/filter;customer=customer2;/sorter;")
+                get("/api/customers/" + order1.getCustomer().getId() + "/orders/filter;customerEQ=customer2;/sorter;")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())

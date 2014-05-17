@@ -10,7 +10,7 @@
         <context:include-filter expression="org.springframework.stereotype.Repository" type="annotation"/>
     </context:component-scan>
 
-    <bean id="comparisonMap" class="java.util.HashMap">
+    <bean id="filtersComparisonMap" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.String" value-type="oshop.services.filter.comparison.Comparison">
                 <entry key="EQ">
@@ -50,7 +50,7 @@
         </constructor-arg>
     </bean>
 
-    <bean id="converterMap" class="java.util.HashMap">
+    <bean id="filtersConverterMap" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.Class" value-type="oshop.services.filter.converter.Converter">
                 <entry key="java.lang.String">
@@ -70,7 +70,7 @@
     </bean>
 
     <!-- ORDERS -->
-    <bean id="ordersFieldsMapping" class="java.util.HashMap">
+    <bean id="ordersFieldTypesMapping" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.String" value-type="java.lang.Class">
                 <entry key="id" value="java.lang.Integer"/>
@@ -93,7 +93,7 @@
     </bean>
 
     <!-- PRODUCTS -->
-    <bean id="productsFieldsMapping" class="java.util.HashMap">
+    <bean id="productsFieldTypesMapping" class="java.util.HashMap">
         <constructor-arg>
             <map key-type="java.lang.String" value-type="java.lang.Class">
                 <entry key="id" value="java.lang.Integer"/>

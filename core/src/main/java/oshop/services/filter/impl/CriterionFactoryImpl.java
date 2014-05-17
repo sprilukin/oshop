@@ -13,10 +13,10 @@ import java.util.Map;
 @Component
 public class CriterionFactoryImpl implements CriterionFactory {
 
-    @Resource(name ="comparisonMap")
+    @Resource(name = "filtersComparisonMap")
     private Map<String, Comparison> comparisonMap;
 
-    @Resource(name ="converterMap")
+    @Resource(name = "filtersConverterMap")
     private Map<Class, Converter> converterMap;
 
     public <T> Criterion getCriterion(String field, List<String> values, String comparisonAsString, Class<T> fieldType) {
