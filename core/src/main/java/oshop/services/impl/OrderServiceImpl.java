@@ -93,38 +93,6 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
         getDao().getSession().flush();
     }
 
-    @Override
-    public Order add(Order entity) throws Exception {
-        Integer id = getDao().add(getFromDTOConverter().convert(entity));
-        Order order = getDao().get(id);
-
-        //Save products if any
-        List<Product> products = entity.getProducts();
-        if (products != null && !products.isEmpty()) {
-            order.setProducts(getPersistentProductsByDtos(products));
-            getDao().update(order);
-        }
-
-        getDao().getSession().clear();
-        return getToDTOConverter().convert(getDao().get(id));
-    }
-
-    private List<Product> getPersistentProductsByDtos(List<Product> dtos) {
-        if (dtos == null || dtos.isEmpty()) {
-            return null;
-        }
-
-        Criteria productsCriteria = productDao.createCriteria();
-        productsCriteria.add(Restrictions.in("id", CollectionUtils.collect(dtos, new Transformer<Product, Integer>() {
-            @Override
-            public Integer transform(Product input) {
-                return input.getId();
-            }
-        })));
-
-        return productDao.list(productsCriteria);
-    }
-
     public void addProductsToOrder(final Integer orderId, final List<Integer> ids) {
         Order order = getDao().get(orderId);
 

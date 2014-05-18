@@ -17,12 +17,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import oshop.dao.GenericDao;
+import oshop.model.AdditionalPayment;
+import oshop.model.City;
 import oshop.model.Customer;
+import oshop.model.Discount;
 import oshop.model.Order;
 import oshop.model.OrderHasOrderStates;
 import oshop.model.OrderState;
 import oshop.model.Product;
 import oshop.model.ProductCategory;
+import oshop.model.ShippingAddress;
+import oshop.model.ShippingType;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -69,6 +74,21 @@ public abstract class BaseControllerTest {
 
     @Resource
     protected GenericDao<OrderHasOrderStates, Integer> orderHasOrderStatesDao;
+
+    @Resource
+    protected GenericDao<AdditionalPayment, Integer> additionalPaymentDao;
+
+    @Resource
+    protected GenericDao<Discount, Integer> discountDao;
+
+    @Resource
+    protected GenericDao<City, Integer> cityDao;
+
+    @Resource
+    protected GenericDao<ShippingType, Integer> shippingTypeDao;
+
+    @Resource
+    protected GenericDao<ShippingAddress, Integer> shippingAddressDao;
 
     @Resource
     protected MessageSource messageSource;
@@ -159,6 +179,55 @@ public abstract class BaseControllerTest {
         state.setId(orderStateDao.add(state));
 
         return state;
+    }
+
+    protected AdditionalPayment addAdditionalPayment(BigDecimal amount, String description) {
+        AdditionalPayment ap = new AdditionalPayment();
+        ap.setAmount(amount);
+        ap.setDescription(description);
+        ap.setId(additionalPaymentDao.add(ap));
+
+        return ap;
+    }
+
+    protected Discount addDiscount(BigDecimal amount, String description, Byte type) {
+        Discount discount = new Discount();
+        discount.setAmount(amount);
+        discount.setDescription(description);
+        discount.setType(type);
+        discount.setId(discountDao.add(discount));
+
+        return discount;
+    }
+
+    protected City addCity(String name, String region) {
+        City city = new City();
+        city.setName(name);
+        city.setRegion(region);
+        city.setId(cityDao.add(city));
+
+        return city;
+    }
+
+    protected ShippingType addShippingType(String type) {
+        ShippingType shippingType = new ShippingType();
+        shippingType.setName(type);
+        shippingType.setId(shippingTypeDao.add(shippingType));
+
+        return shippingType;
+    }
+
+    protected ShippingAddress addShippingAddress(String address, String cityName, Customer customer, String shippingType, String recipient) {
+        ShippingAddress shippingAddress = new ShippingAddress();
+        shippingAddress.setAddress(address);
+        shippingAddress.setCity(addCity(cityName, "region"));
+        shippingAddress.setCustomer(customer);
+        shippingAddress.setShippingType(addShippingType(shippingType));
+        shippingAddress.setRecipient(recipient);
+
+        shippingAddress.setId(shippingAddressDao.add(shippingAddress));
+
+        return shippingAddress;
     }
 
     protected OrderHasOrderStates createOrderHasStates(String descr, Date date, OrderState state) {

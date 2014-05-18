@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import oshop.model.Order;
 import oshop.services.GenericService;
-import oshop.services.OrderService;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -28,8 +27,8 @@ public class OrdersRestService extends BaseRestService<Order, Integer> {
 
     private static final Log log = LogFactory.getLog(OrdersRestService.class);
 
-    @Resource
-    protected OrderService orderService;
+    @Resource(name = "orderServiceV2")
+    protected GenericService<Order, Integer> orderService;
 
     @Override
     protected GenericService<Order, Integer> getService() {
