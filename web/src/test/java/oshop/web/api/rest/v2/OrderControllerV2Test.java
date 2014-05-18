@@ -127,6 +127,7 @@ public class OrderControllerV2Test extends BaseControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.states").isArray())
                 .andExpect(jsonPath("$.states[0].description").value("os2"))
+                .andExpect(jsonPath("$.states[0].id").value(order.getStates().get(0).getId()))
                 .andExpect(jsonPath("$.states[1].description").value("os3"))
                 .andExpect(jsonPath("$.products").isArray())
                 .andExpect(jsonPath("$.customer.name").value("customer2"))
