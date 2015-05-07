@@ -138,7 +138,9 @@ public class GenericDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> i
         }
 
         entity.setLastUpdate(new Date());
-        return (ID)getSession().save(entity);
+        ID id = (ID) getSession().save(entity);
+        getSession().flush();
+        return id;
     }
 
     public void update(T entity) {

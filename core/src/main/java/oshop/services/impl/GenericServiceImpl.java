@@ -59,17 +59,19 @@ public abstract class GenericServiceImpl<T extends BaseEntity<ID>, ID extends Se
 
     @Override
     public T add(T entity) throws Exception {
-        ID id = getDao().add(getFromDTOConverter().convert(entity));
-        getDao().getSession().clear();
-        return getToDTOConverter().convert(getDao().get(id));
+        T domainEntity = getFromDTOConverter().convert(entity);
+        getDao().add(domainEntity);
+        //getDao().getSession().refresh(domainEntity);
+        return getToDTOConverter().convert(domainEntity);
     }
 
     @Override
     public T update(T entity, ID id) throws Exception {
         entity.setId(id);
-        getDao().update(getFromDTOConverter().convert(entity));
-        getDao().getSession().clear();
-        return getToDTOConverter().convert(getDao().get(id));
+        T domainEntity = getFromDTOConverter().convert(entity);
+        getDao().update(domainEntity);
+        //getDao().getSession().refresh(domainEntity);
+        return getToDTOConverter().convert(domainEntity);
     }
 
     @Override
