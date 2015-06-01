@@ -1,10 +1,9 @@
 'use strict';
 
 var Sequelize = require("sequelize"),
-    sequelize = require("../db/sequelize"),
-    ProductCategory = require("./ProductCategory");
+    sequelize = require("../db/sequelize");
 
-var Product  = sequelize.define('product', {
+module.exports = sequelize.define('product', {
         name: {
             type: Sequelize.STRING(255),
             allowNull: false,
@@ -22,12 +21,12 @@ var Product  = sequelize.define('product', {
         },
         description: {
             type: Sequelize.STRING(255)
+        },
+        imageId: {
+            type:Sequelize.INTEGER,
+            fieldName: "image_id"
         }
     }, {
         tableName: "product"
     }
 );
-
-Product.hasOne(ProductCategory, {as: "ProductCategory"});
-
-module.exports = Product;
