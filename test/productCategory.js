@@ -1,9 +1,10 @@
 var should = require('should'),
     sequelize = require("../db/sequelize"),
     ProductCategory = require("../model/ProductCategory"),
+    Product = require("../model/Product"),
     dropQuery = require("config").get("dropQuery");
 
-describe("test", function () {
+describe("ProductCategory tests", function () {
 
     before(function (done) {
         sequelize.query(dropQuery).spread(function (results, metadata) {
@@ -23,7 +24,7 @@ describe("test", function () {
         })
     });
 
-    it("Should create ProductCategory with specified name", function (done) {
+    it("Should create instance with specified name", function (done) {
         ProductCategory.create({
             name: "test"
         }).then(function (pc) {
@@ -38,7 +39,7 @@ describe("test", function () {
         });
     });
 
-    it("Should create only one instance of Product Category with same name because each test transaction rolls back", function (done) {
+    it("Should create only one instance with same name because each test drops all data", function (done) {
         ProductCategory.create({
             name: "test"
         }).then(function (pc) {
@@ -52,5 +53,29 @@ describe("test", function () {
                 done();
             });
         })
+    });
+
+    it("Should not allow to create with empty name", function (done) {
+        ProductCategory.create({
+            name: null
+        }).then(function (productCategory) {
+            throw "Should not allow to create with empty name"
+        }).catch(function(err) {
+            done();
+        })
+    });
+
+    it("Should not allow to create with same name", function (done) {
+        ProductCategory.create({
+            name: "name1"
+        }).then(function () {
+            ProductCategory.create({
+                name: "name1"
+            }).then(function (productCategory) {
+                throw "Should not allow to create with same name"
+            }).catch(function(err) {
+                done();
+            })
+        });
     })
 });
