@@ -5,7 +5,7 @@ var Sequelize = require("sequelize"),
 
 module.exports = sequelize.define('image', {
         data: {
-            type: BLOB,
+            type: Sequelize.BLOB,
             allowNull: false,
             validate: {
                 maxSize: function(img) {

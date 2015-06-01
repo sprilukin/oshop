@@ -1,6 +1,6 @@
 require("./customer");
 require("./order");
-require("./orderSate");
+require("./orderState");
 require("./product");
 require("./productCategory");
 require("./shippingAddress");

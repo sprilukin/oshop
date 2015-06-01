@@ -2,7 +2,7 @@
 
 var Order = require("../Order"),
     OrderState = require("../OrderState"),
-    OrderHasOrderState = require("../OrderHasOrderState"),
+    OrderHasOrderStates = require("../OrderHasOrderStates"),
     Customer = require("../Customer"),
     ShippingAddress = require("../ShippingAddress"),
     Discount = require("../Discount"),
@@ -26,7 +26,7 @@ Order.belongsTo(AdditionalPayment, {
     foreignKey: "additional_payment_id"
 });
 Order.belongsToMany(OrderState, {
-    through: OrderHasOrderState
+    through: OrderHasOrderStates
 });
 Order.belongsToMany(Product, {
     through: "order_products"

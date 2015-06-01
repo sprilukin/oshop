@@ -1,6 +1,6 @@
 exports.Order = require("./Order");
 exports.OrderState = require("./OrderState");
-exports.OrderHasOrderState = require("./OrderHasOrderState");
+exports.OrderHasOrderStates = require("./OrderHasOrderStates");
 exports.Customer = require("./Customer");
 exports.Discount = require("./Discount");
 exports.AdditionalPayment = require("./AdditionalPayment");

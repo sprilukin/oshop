@@ -2,10 +2,9 @@
 
 var Sequelize = require("sequelize"),
     _ = require("underscore"),
-    config = require('/../db-config.json'),
-    dbConfig = JSON.parse(config);
+    dbConfig = require('../config.js').database;
 
-var sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password, {
+module.exports = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
 
@@ -20,12 +19,3 @@ var sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password, {
 
     isolationLevel: Sequelize.REPEATABLE_READ
 });
-
-//mix optimistic locking behaviour
-sequelize.addHook("beforeDefine", optimisticLockingBeforeDefineHook);
-sequelize.addHook("afterDefine", optimisticLockingAfterDefineHook);
-
-//fix dialect for optimistic locking
-dialectPatch(sequelize, sequelize.dialect);
-
-module.exports = sequelize;
