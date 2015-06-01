@@ -25,5 +25,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('default', ['env:test', 'mochaTest']);
+    grunt.registerTask('test', ['env:test', 'mochaTest']);
+
+    grunt.registerTask('default', ['test']);
 };

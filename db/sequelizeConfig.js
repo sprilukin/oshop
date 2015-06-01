@@ -1,27 +1,32 @@
 'use strict';
 
 var Sequelize = require("sequelize"),
-    dbConfig = require('config').get('database'),
+    config = require('config'),
     log = require("../logging/log");
 
-module.exports = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
+module.exports = new Sequelize(
+    config.get("database.name"),
+    config.get("database.user"),
+    config.get("database.password"),
+    {
+        host: config.get("database.host"),
+        dialect: config.get("database.dialect"),
 
-    pool: dbConfig.pool,
+        pool: config.get("database.pool"),
 
-    //general table options
-    freezeTableName: true,  //do not use plural table names
-    timestamps: true,       //use timestamp tables to save timestamp when entity was created
-                            //and last updated (true is default value)
-    createdAt: 'created_at', //name of the createdAt table (createdAt is default)
-    updatedAt: 'updated_at',  //name of the updatedAt table (updatedAt is default)
+        //general table options
+        freezeTableName: true,  //do not use plural table names
+        timestamps: true,       //use timestamp tables to save timestamp when entity was created
+                                //and last updated (true is default value)
+        createdAt: 'created_at', //name of the createdAt table (createdAt is default)
+        updatedAt: 'updated_at',  //name of the updatedAt table (updatedAt is default)
 
-    isolationLevel: Sequelize.REPEATABLE_READ,
+        isolationLevel: Sequelize.REPEATABLE_READ,
 
-    logging: function() {
-        if (dbConfig.showSql) {
-            log.debug.apply(log, arguments);
+        logging: function () {
+            if (config.get("database.showSql")) {
+                log.debug.apply(log, arguments);
+            }
         }
     }
-});
+);

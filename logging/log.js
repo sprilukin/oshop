@@ -1,34 +1,31 @@
 var winston = require('winston'),
-    config = require("config").get("logger");
+    config = require("config"),
+    _ = require("underscore");
 
-var logger = new (winston.Logger)({
+var defaultExceptionOpts = {
+        name: "console-exception-log",
+        json: config.get("logger.json"),
+        timestamp: config.get("logger.timestamp")
+    },
+    defaultOpts = _.defaults({
+        name: "console-log",
+        level: config.get("logger.logLevel")
+    }, defaultExceptionOpts);
+
+var logger = new winston.Logger({
     transports: [
-        new (winston.transports.Console)({
-            name: "console-log",
-            json: config.json,
-            timestamp: config.timestamp,
-            level: config.logLevel
-        }),
-        new winston.transports.File({
+        new winston.transports.Console(defaultOpts),
+        new winston.transports.File(_.defaults({
             name: "file-log",
-            filename: __dirname + "/" + config.logFile,
-            json: config.json,
-            timestamp: config.timestamp,
-            level: config.logLevel
-        })
+            filename: __dirname + "/" + config.get("logger.logFile")
+        }, defaultOpts))
     ],
     exceptionHandlers: [
-        new (winston.transports.Console)({
-            name: "console-exception-log",
-            json: config.json,
-            timestamp: config.timestamp
-        }),
-        new winston.transports.File({
+        new winston.transports.Console(defaultExceptionOpts),
+        new winston.transports.File(_.defaults({
             name: "file-exception-log",
-            filename: __dirname + "/" + config.exceptionLogFile,
-            json: config.json,
-            timestamp: config.timestamp
-        })
+            filename: __dirname + "/" + config.get("logger.exceptionLogFile")
+        }, defaultExceptionOpts))
     ],
     exitOnError: false
 });
