@@ -1,8 +1,6 @@
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
-    require('time-grunt')(grunt, {
-        exportPath: "build/metrics/time.json"
-    });
+    require('time-grunt')(grunt);
 
     grunt.initConfig({
         // Configure a mochaTest task
@@ -16,8 +14,16 @@ module.exports = function (grunt) {
                 },
                 src: ['test/**/*.js']
             }
+        },
+        env : {
+            dev : {
+                NODE_ENV : 'development'
+            },
+            test : {
+                NODE_ENV : 'test'
+            }
         }
     });
 
-    grunt.registerTask('default', 'mochaTest');
+    grunt.registerTask('default', ['env:test', 'mochaTest']);
 };

@@ -9,6 +9,14 @@
       "max": 5,
       "min": 0,
       "idle": 10000
-    }
+    },
+    "showSql": false
+  },
+  "logger": {
+    "json": false,
+    "timestamp": false,
+    "logLevel": "debug",
+    "logFile": "oshop.log",
+    "exceptionLogFile": "oshop-exception.log"
   }
 }

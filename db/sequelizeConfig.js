@@ -1,7 +1,8 @@
 'use strict';
 
 var Sequelize = require("sequelize"),
-    dbConfig = require('config').get('database');
+    dbConfig = require('config').get('database'),
+    log = require("../logging/log");
 
 module.exports = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
     host: dbConfig.host,
@@ -18,12 +19,9 @@ module.exports = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, 
 
     isolationLevel: Sequelize.REPEATABLE_READ,
 
-    logging: console.log
-    /*logging: function() {
-        console.log.apply(null, arguments);
-        var sql = arguments[0];
-        if (sql.indexOf("CREATE TABLE IF NOT EXISTS") < 0 && sql.indexOf("PRAGMA INDEX") < 0) {
-            console.log(sql);
+    logging: function() {
+        if (dbConfig.showSql) {
+            log.debug.apply(log, arguments);
         }
-    }*/
+    }
 });
