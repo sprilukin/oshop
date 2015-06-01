@@ -1,7 +1,6 @@
 'use strict';
 
-var Sequelize = require("sequelize"),
-    sequelize = require("./sequelizeConfig"),
+var sequelizeConfig = require("./sequelizeConfig"),
     model = require('../model');
 
-module.exports = sequelize;
+module.exports = sequelizeConfig;
