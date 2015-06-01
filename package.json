@@ -13,7 +13,7 @@
     "express": "^4.12.4",
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "git+https://git@github.com/sprilukin/sequelize.git",
+    "sequelize": "^3.1.1",
     "underscore": "^1.8.3"
   }
 }
