@@ -1,7 +1,7 @@
 'use strict';
 
 var Sequelize = require("sequelize"),
-    sequelize = require("../db/sequelize"),
+    sequelize = require("../db/sequelizeConfig"),
     discountEnum = require("./enum/discount");
 
 var UK_DESCRIPTION_TYPE_AMOUNT = "UK_description_type_amount";

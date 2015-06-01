@@ -1,7 +1,7 @@
 'use strict';
 
 var Sequelize = require("sequelize"),
-    sequelize = require("../db/sequelize");
+    sequelize = require("../db/sequelizeConfig");
 
 module.exports = sequelize.define('income', {
         date: {
