@@ -16,5 +16,14 @@ module.exports = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, 
     createdAt: 'created_at', //name of the createdAt table (createdAt is default)
     updatedAt: 'updated_at',  //name of the updatedAt table (updatedAt is default)
 
-    isolationLevel: Sequelize.REPEATABLE_READ
+    isolationLevel: Sequelize.REPEATABLE_READ,
+
+    logging: console.log
+    /*logging: function() {
+        console.log.apply(null, arguments);
+        var sql = arguments[0];
+        if (sql.indexOf("CREATE TABLE IF NOT EXISTS") < 0 && sql.indexOf("PRAGMA INDEX") < 0) {
+            console.log(sql);
+        }
+    }*/
 });
