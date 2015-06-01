@@ -1,7 +1,7 @@
 'use strict';
 
 var Sequelize = require("sequelize"),
-    dbConfig = require("../configLoader").database;
+    dbConfig = require('config').get('database');
 
 module.exports = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
     host: dbConfig.host,
