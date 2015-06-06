@@ -1,27 +1,20 @@
 var should = require('should'),
     sequelize = require("../db/sequelize"),
     ProductCategory = require("../model/ProductCategory"),
-    Product = require("../model/Product"),
-    dropQuery = require("config").get("dropQuery");
+    testUtils = require("./testUtils");
 
 describe("ProductCategory tests", function () {
 
     before(function (done) {
-        sequelize.query(dropQuery).spread(function (results, metadata) {
-            done();
-        })
+        testUtils.before(done);
     });
 
     beforeEach(function (done) {
-        sequelize.sync().then(function () {
-            done()
-        });
+        testUtils.beforeEach(done);
     });
 
     afterEach(function (done) {
-        sequelize.query(dropQuery).spread(function (results, metadata) {
-            done()
-        })
+        testUtils.afterEach(done);
     });
 
     it("Should create instance with specified name", function (done) {

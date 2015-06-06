@@ -1,6 +1,6 @@
 {
   "database": {
-    "dbName": "dbname",
+    "name": "dbname",
     "user": "username",
     "password": "password",
     "host": "localhost",
@@ -18,5 +18,6 @@
     "logLevel": "debug",
     "logFile": "oshop.log",
     "exceptionLogFile": "oshop-exception.log"
-  }
+  },
+  "dropQuery": "drop SCHEMA public CASCADE; create SCHEMA public;"
 }

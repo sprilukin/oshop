@@ -2,27 +2,21 @@ var should = require('should'),
     sequelize = require("../db/sequelize"),
     ProductCategory = require("../model/ProductCategory"),
     Product = require("../model/Product"),
-    dropQuery = require("config").get("dropQuery"),
-    Promise = require("promise");
+    Promise = require("promise"),
+    testUtils = require("./testUtils");
 
 describe("Product - ProductCategory associations tests", function () {
 
     before(function (done) {
-        sequelize.query(dropQuery).spread(function (results, metadata) {
-            done();
-        })
+        testUtils.before(done);
     });
 
     beforeEach(function (done) {
-        sequelize.sync().then(function () {
-            done()
-        });
+        testUtils.beforeEach(done);
     });
 
     afterEach(function (done) {
-        sequelize.query(dropQuery).spread(function (results, metadata) {
-            done()
-        })
+        testUtils.afterEach(done);
     });
 
     var fillWithData = function () {
@@ -114,25 +108,4 @@ describe("Product - ProductCategory associations tests", function () {
             })
         })
     });
-
-    xit("Should", function(done) {
-        associate().then(function(res) {
-            var updateAt1 = res[1].updatedAt,
-                updateAt2 = res[2].updatedAt;
-
-            res[0].update({
-                name: "name2"
-            }).then(function() {
-                Product.findAll({include: [{
-                    model: ProductCategory,
-                    as: "ProductCategory"
-                }]}).then(function (products) {
-                    var p1 = products[0].updatedAt,
-                        p2 = products[1].updatedAt;
-
-                    done();
-                });
-            })
-        })
-    })
 });
