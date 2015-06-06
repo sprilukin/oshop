@@ -59,8 +59,6 @@ describe("Product - ProductCategory associations tests", function () {
             pc.save().then(function (pc) {
                 pc.getProducts().then(function (products) {
                     (products.length).should.be.equal(2);
-                    (products[0]).name.should.be.equal("product1");
-                    (products[1]).name.should.be.equal("product2");
                     done();
                 });
             })

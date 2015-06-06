@@ -20,7 +20,8 @@ module.exports = function (grunt) {
                 NODE_ENV : 'development'
             },
             test : {
-                NODE_ENV : 'test'
+                NODE_ENV : 'test',
+                NODE_CONFIG: '{"database":{"showSql":false}}'
             }
         }
     });
