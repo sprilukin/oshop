@@ -21,7 +21,7 @@ module.exports = new Sequelize(
         createdAt: 'created_at', //name of the createdAt table (createdAt is default)
         updatedAt: 'updated_at',  //name of the updatedAt table (updatedAt is default)
 
-        isolationLevel: Sequelize.REPEATABLE_READ,
+        isolationLevel: config.get("database.isolationLevel"),
 
         logging: function () {
             if (config.get("database.showSql")) {

@@ -18,5 +18,15 @@ module.exports = {
         sequelize.query(dropQuery).spread(function (results, metadata) {
             done()
         })
+    },
+
+    tryCatch: function(fail) {
+        return function(callback) {
+            try {
+                callback()
+            } catch (e) {
+                fail(e);
+            }
+        }
     }
 };

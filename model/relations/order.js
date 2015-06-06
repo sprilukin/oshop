@@ -10,7 +10,7 @@ var Order = require("../Order"),
     Product = require("../Product");
 
 Order.belongsTo(Customer, {
-    as: "Customer",
+    as: 'Customer',
     foreignKey: "customer_id"
 });
 Order.belongsTo(ShippingAddress, {
@@ -26,6 +26,7 @@ Order.belongsTo(AdditionalPayment, {
     foreignKey: "additional_payment_id"
 });
 Order.belongsToMany(OrderState, {
+    as: 'OrderState',
     through: OrderHasOrderStates
 });
 Order.belongsToMany(Product, {

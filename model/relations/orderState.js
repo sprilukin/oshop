@@ -5,5 +5,6 @@ var Order = require("../Order"),
     OrderHasOrderStates = require("../OrderHasOrderStates");
 
 OrderState.belongsToMany(Order, {
+    as: "Order",
     through: OrderHasOrderStates
 });
